@@ -1,0 +1,26 @@
+
+.footer {
+  background: rgba(26, 26, 46, 0.9);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2rem 0;
+  margin-top: 4rem;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-text p {
+  color: #a0aec0;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .footer-content {
+    text-align: center;
+  }
+}
