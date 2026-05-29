@@ -58,13 +58,7 @@ const testimonialsData = [
 const Testimonials = ({ t, language }) => {
   return (
     <section id="testimonials" className="section testimonials">
-      <motion.div
-        className="container"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.8 }}
-      >
+      <div className="container">
         <h2 className="section-title">{t.testimonials?.title || 'Testimonios'}</h2>
 
         <div className="testimonials-grid">
@@ -96,7 +90,7 @@ const Testimonials = ({ t, language }) => {
             </div>
           ))}
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 };

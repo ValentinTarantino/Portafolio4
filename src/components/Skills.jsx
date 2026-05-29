@@ -73,13 +73,7 @@ const Skills = ({ t }) => {
 
   return (
     <section id="skills" className="section skills">
-      <motion.div 
-        className="container"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.8 }}
-      >
+      <div className="container">
         <h2 className="section-title">{t.skills.title}</h2>
         <p className="section-subtitle">{t.skills.subtitle}</p>
         
@@ -98,7 +92,7 @@ const Skills = ({ t }) => {
             </div>
           ))}
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 };

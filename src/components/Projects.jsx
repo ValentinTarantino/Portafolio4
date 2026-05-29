@@ -176,13 +176,7 @@ const Projects = ({ t, language }) => {
 
   return (
     <section id="projects" className="section projects">
-      <motion.div 
-        className="container"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ duration: 0.8 }}
-      >
+      <div className="container">
         <h2 className="section-title">{t.projects.title}</h2>
         <p className="section-subtitle">{t.projects.subtitle}</p>
         
@@ -202,10 +196,7 @@ const Projects = ({ t, language }) => {
           </button>
         </div>
 
-        <motion.div 
-          layout={!isMobile ? "position" : false}
-          className="projects-grid"
-        >
+        <div className="projects-grid">
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, index) => (
               <motion.div 
@@ -259,8 +250,8 @@ const Projects = ({ t, language }) => {
               </motion.div>
             ))}
           </AnimatePresence>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
 
       {/* Case Study Modal */}
       <AnimatePresence>

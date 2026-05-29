@@ -80,13 +80,7 @@ const Contact = ({ t }) => {
 
   return (
     <section id="contact" className="section contact">
-      <motion.div
-        className="container"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.15 }}
-        transition={{ duration: 0.8 }}
-      >
+      <div className="container">
         <h2 className="section-title">{t.contact.title}</h2>
         <p className="section-subtitle">{t.contact.subtitle}</p>
 
@@ -344,7 +338,7 @@ const Contact = ({ t }) => {
             </AnimatePresence>
           </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 };

@@ -550,12 +550,7 @@ const Hero = ({ t, language }) => {
       </div>
       
       <div className="container">
-        <motion.div 
-          className="hero-content"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
+        <div className="hero-content">
           <div className="hero-text">
             <div className="typing-container">
               <h1 className="hero-name fade-in-up">
@@ -665,7 +660,7 @@ const Hero = ({ t, language }) => {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
         
         <div className="scroll-indicator" onClick={scrollToAbout}>
           <div className="scroll-arrow"></div>
