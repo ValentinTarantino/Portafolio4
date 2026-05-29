@@ -74,11 +74,6 @@ const Footer = ({ t }) => {
                   {t.footer.available}
                 </span>
               </div>
-              
-              <a href="/cv-valentin-tarantino.pdf" download className="cv-download-btn">
-                <FiDownload className="cv-icon" />
-                <span>Descargar CV</span>
-              </a>
             </div>
 
             {/* Navigation Column */}

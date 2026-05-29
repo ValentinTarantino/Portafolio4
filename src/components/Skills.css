@@ -69,6 +69,16 @@
   transform: scale(1.02);
 }
 
+@media (max-width: 768px) {
+  .skill-category-box:hover,
+  .skill-item:hover {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.05);
+    transform: none;
+    box-shadow: none;
+  }
+}
+
 .skill-icon-small {
   display: flex;
   align-items: center;

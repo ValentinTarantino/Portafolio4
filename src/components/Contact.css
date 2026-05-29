@@ -44,6 +44,38 @@
   box-shadow: 0 8px 32px rgba(102, 126, 234, 0.12);
 }
 
+.contact-item:hover,
+.social-link:hover,
+.form-submit-btn:hover::before,
+.form-submit-btn:not(:disabled):hover .send-icon {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (max-width: 768px) {
+  .contact-item:hover {
+    transform: none;
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.09);
+    box-shadow: none;
+  }
+
+  .social-link:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.75);
+    transform: none;
+    box-shadow: none;
+  }
+
+  .form-submit-btn:hover::before {
+    opacity: 0;
+  }
+
+  .form-submit-btn:not(:disabled):hover .send-icon {
+    transform: none;
+  }
+}
+
 .contact-icon {
   width: 52px;
   height: 52px;

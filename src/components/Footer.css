@@ -115,7 +115,7 @@
   text-align: center;
   gap: 1.5rem;
   padding: 2rem 0 3rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
 }
 
 .cta-badge {
@@ -514,7 +514,7 @@
   align-items: center;
   justify-content: space-between;
   padding-top: 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.03);
+  border-top: 1px solid rgba(255, 255, 255, 0.02);
   flex-wrap: wrap;
   gap: 1.5rem;
 }
@@ -586,178 +586,148 @@
    ═══════════════════════════════════════════════════════════════════════ */
 
 @media (max-width: 1024px) {
+  .footer {
+    padding: 4rem 1rem 2rem 1rem;
+  }
+
   .footer-main-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 2.5rem;
+    padding: 1.5rem 0 0 0;
   }
-  
-  .footer-brand-col {
-    grid-column: span 2;
+
+  .footer-content {
+    gap: 3rem;
   }
-  
+
+  .footer-cta-section {
+    padding: 1.8rem 0 2.5rem 0;
+  }
+
+  .footer-brand-col,
+  .footer-nav-col,
   .footer-tech-col {
-    grid-column: span 2;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-nav {
+    align-items: center;
+  }
+
+  .footer-nav-link {
+    width: 100%;
+    padding: 0.9rem 1.1rem;
+    justify-content: center;
+  }
+
+  .tech-stack-grid {
+    grid-template-columns: repeat(2, minmax(140px, 1fr));
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .tech-item {
+    justify-content: center;
+  }
+
+  .footer-bottom-bar {
+    justify-content: center;
+    padding-top: 1.8rem;
   }
 }
 
 @media (max-width: 768px) {
   .footer {
-    padding: 4rem 0 2rem 0;
+    padding: 3rem 1rem 2rem 1rem;
   }
 
-  /* Hide performance-heavy effects on mobile */
-  .footer-glow {
-    display: none !important;
+  .footer-cta-section {
+    padding: 1.5rem 0 2rem 0;
   }
 
-  .footer-particles {
-    display: none !important;
-  }
-
-  .cta-icon {
-    animation: none !important;
-  }
-
-  .heart-icon {
-    animation: none !important;
-  }
-
-  .pulse-dot {
-    animation: none !important;
-  }
-  
-  .footer-main-grid {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-    text-align: center;
-    justify-items: center;
-  }
-  
-  .footer-brand-col {
-    grid-column: span 1;
-    align-items: center;
-    text-align: center;
-    width: 100%;
-  }
-  
   .footer-logo {
-    font-size: 0.9rem;
     justify-content: center;
   }
-  
-  .logo-accent {
-    font-size: 1.8rem;
-  }
-  
+
   .logo-text {
     font-size: 1.4rem;
   }
-  
+
   .footer-tagline {
-    max-width: 280px;
-    text-align: center;
-    font-size: 0.9rem;
-    margin: 0 auto;
+    max-width: 100%;
+    font-size: 0.95rem;
   }
-  
+
   .availability-badge {
     margin: 0 auto;
   }
-  
-  .cv-download-btn {
-    margin: 0.5rem auto 0;
-  }
-  
-  .footer-nav-col {
-    align-items: center;
+
+  .footer-nav-link {
     width: 100%;
-  }
-  
-  .footer-nav {
-    align-items: center;
-  }
-  
-  .footer-col-title {
-    text-align: center;
     justify-content: center;
-    margin-bottom: 1rem;
+    padding: 1rem 0.8rem;
   }
-  
-  .footer-tech-col {
-    align-items: center;
-    width: 100%;
-  }
-  
+
   .tech-stack-grid {
-    max-width: 240px;
+    grid-template-columns: 1fr;
+    max-width: 320px;
     margin: 0 auto;
-    justify-content: center;
   }
-  
-  .tech-item {
-    justify-content: center;
-  }
-  
+
   .footer-bottom-bar {
     flex-direction: column;
     text-align: center;
     gap: 1rem;
     padding-top: 1.5rem;
   }
-  
-  .footer-copyright-wrapper {
-    flex: none;
-  }
-  
-  .footer-copyright {
-    font-size: 0.8rem;
-    line-height: 1.5;
-  }
-  
-  .cta-subtitle {
-    font-size: 1.2rem;
+
+  .back-to-top-btn {
+    width: 100%;
+    justify-content: center;
   }
 }
 
 @media (max-width: 480px) {
   .footer {
-    padding: 3rem 0 1.5rem 0;
+    padding: 2.4rem 0.8rem 1.5rem 0.8rem;
   }
-  
+
   .footer-cta-section {
-    padding: 2rem 0;
+    padding: 1.5rem 0;
   }
-  
+
   .footer-logo {
     font-size: 0.85rem;
   }
-  
+
   .logo-accent {
     font-size: 1.6rem;
   }
-  
+
   .logo-text {
     font-size: 1.2rem;
   }
-  
+
   .footer-tagline {
     font-size: 0.85rem;
   }
-  
+
   .btn-text {
     display: none;
   }
-  
+
   .back-to-top-btn {
-    padding: 0.7rem;
+    padding: 0.9rem;
   }
-  
+
   .footer-main-grid {
-    gap: 2.5rem;
+    gap: 2rem;
   }
-  
+
   .tech-stack-grid {
     grid-template-columns: 1fr;
-    max-width: 200px;
+    max-width: 220px;
   }
 }
