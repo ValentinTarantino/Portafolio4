@@ -526,20 +526,18 @@
   }
 }
 
-/* Mobile grande (481px - 600px) - Separador visible */
+/* Mobile grande (481px - 600px) - Separador oculto */
 @media (max-width: 600px) and (min-width: 481px) {
   .header-actions {
-    border-left: 1px solid;
-    border-image: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%) 1;
-    padding-left: 1.5rem;
+    border-left: none;
+    padding-left: 1rem;
   }
 }
 
-/* Mobile pequeño (< 480px) - Separador visible */
+/* Mobile pequeño (< 480px) - Separador oculto */
 @media (max-width: 480px) {
   .header-actions {
-    border-left: 1px solid;
-    border-image: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%) 1;
-    padding-left: 1.5rem;
+    border-left: none;
+    padding-left: 1rem;
   }
 }
