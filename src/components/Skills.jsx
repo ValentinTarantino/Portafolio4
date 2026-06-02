@@ -3,7 +3,7 @@ import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import './Skills.css';
 import { motion } from 'framer-motion';
-import { SiNextdotjs, SiTypescript, SiTailwindcss, SiReact, SiHtml5, SiJavascript, SiCss, SiSass, SiFirebase, SiFigma, SiGit, SiGithub, SiNodedotjs, SiExpress, SiPostgresql, SiPython, SiPrisma, SiFastapi, SiBootstrap } from 'react-icons/si';
+import { SiNextdotjs, SiTypescript, SiTailwindcss, SiReact, SiHtml5, SiJavascript, SiCss, SiSass, SiFirebase, SiFigma, SiGit, SiGithub, SiNodedotjs, SiExpress, SiPostgresql, SiPython, SiPrisma, SiFastapi, SiBootstrap, SiVite } from 'react-icons/si';
 import postgresImg from '../assets/postgres.webp';
 import exImg from '../assets/ex.webp';
 import claudeIcon from '../assets/icons/claude.png';
@@ -51,6 +51,7 @@ const Skills = ({ t }) => {
       skills: [
         { name: 'Git', icon: <SiGit size={32} color="#F05032" /> },
         { name: 'GitHub', icon: <SiGithub size={32} color="#ffffff" /> },
+        { name: 'Vite', icon: <SiVite size={32} color="#646CFF" /> },
         { name: 'Figma', icon: <SiFigma size={32} color="#F24E1E" /> },
       ]
     },

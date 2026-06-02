@@ -34,7 +34,15 @@ const es = {
     },
     months: {
       january: 'Enero',
-      june: 'Junio'
+      june: 'Junio',
+      march: 'Marzo',
+      august: 'Agosto'
+    },
+    educationItems: {
+      coderhouse: 'Coderhouse',
+      frontEndCourse: 'Curso de desarrollo Front End',
+      utn: 'Centro de e-Learning, UTN',
+      trainingProgram: 'Programa de formación'
     }
   },
   skills: {

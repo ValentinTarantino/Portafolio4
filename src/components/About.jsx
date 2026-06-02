@@ -90,10 +90,10 @@ const About = ({ t }) => {
               
               <div className="education-item">
                 <div className="education-header">
-                  <h4>Coderhouse</h4>
+                  <h4>{t.about.educationItems.coderhouse}</h4>
                   <span className="completion-badge">{t.about.certified}</span>
                 </div>
-                <p className="course-name">Curso de desarrollo Front End</p>
+                <p className="course-name">{t.about.educationItems.frontEndCourse}</p>
                 <div className="timeline">
                   <span className="date-start">{t.about.months.june} 2024</span>
                   <div className="timeline-line"></div>
@@ -104,14 +104,14 @@ const About = ({ t }) => {
               
               <div className="education-item">
                 <div className="education-header">
-                  <h4>Centro de e-Learning, UTN</h4>
+                  <h4>{t.about.educationItems.utn}</h4>
                   <span className="completion-badge">{t.about.certified}</span>
                 </div>
-                <p className="course-name">Programa de formación</p>
+                <p className="course-name">{t.about.educationItems.trainingProgram}</p>
                 <div className="timeline">
-                  <span className="date-start">Marzo 2025</span>
+                  <span className="date-start">{t.about.months.march} 2025</span>
                   <div className="timeline-line"></div>
-                  <span className="date-end">Agosto 2025</span>
+                  <span className="date-end">{t.about.months.august} 2025</span>
                 </div>
               </div>
             </div>
