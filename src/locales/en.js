@@ -141,7 +141,7 @@ const en = {
     title: 'Contact Me',
     subtitle: 'Have a project in mind?',
     info: {
-      email: 'zaheil444@gmail.com',
+      email: 'valentinthomastarantino@gmail.com',
       phone: '+54 1149476457',
       location: 'Argentina, Buenos Aires'
     },
