@@ -98,6 +98,8 @@
   gap: 2rem;
   margin: 0;
   padding: 0;
+  align-items: center;
+  position: relative;
 }
 
 .nav-link {
@@ -107,23 +109,54 @@
   font-size: 0.95rem;
   position: relative;
   cursor: pointer;
-  transition: all 0.25s ease-out;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   padding: 0.6rem 0.8rem;
-  /* Mejor espaciado tipográfico */
   letter-spacing: 0.5px;
   border-radius: 8px;
+  outline: none;
+  border: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* Hover sin glow ni línea */
+.nav-link:focus,
+.nav-link:active {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+/* Hover effects sofisticados */
 .nav-link:hover {
   color: #ffffff;
   font-weight: 600;
-  transform: scale(1.02);
+  transform: scale(1.05);
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(240, 147, 251, 0.1) 100%);
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.2);
 }
 
+/* Indicador activo mejorado - Pill animado */
 .nav-link.active {
   color: #ffffff;
   font-weight: 600;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.25) 0%, rgba(244, 208, 63, 0.15) 100%);
+  box-shadow: 
+    0 0 20px rgba(212, 175, 55, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  animation: activePillPulse 2s ease-in-out infinite;
+}
+
+@keyframes activePillPulse {
+  0%, 100% {
+    box-shadow: 
+      0 0 20px rgba(212, 175, 55, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+  50% {
+    box-shadow: 
+      0 0 30px rgba(212, 175, 55, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
 }
 
 .header-actions {
@@ -131,6 +164,9 @@
   align-items: center;
   gap: 1rem;
   position: relative;
+  padding-left: 1.5rem;
+  border-left: 1px solid;
+  border-image: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%) 1;
 }
 
 /* Toggle de idioma - Switch moderno tipo interruptor */
@@ -461,4 +497,49 @@
 .header .language-toggle,
 .header .menu-toggle span {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* MEDIA QUERIES - Separador visual */
+
+/* Tablets grandes (1024px - 1440px) - Separador visible */
+@media (max-width: 1440px) and (min-width: 1025px) {
+  .header-actions {
+    border-left: 1px solid;
+    border-image: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%) 1;
+    padding-left: 1.5rem;
+  }
+}
+
+/* Tablets medianas (768px - 1024px) - Desaparece el separador */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .header-actions {
+    border-left: none;
+    padding-left: 1rem;
+  }
+}
+
+/* Tablets pequeñas (600px - 768px) - Desaparece el separador */
+@media (max-width: 768px) and (min-width: 601px) {
+  .header-actions {
+    border-left: none;
+    padding-left: 1rem;
+  }
+}
+
+/* Mobile grande (481px - 600px) - Separador visible */
+@media (max-width: 600px) and (min-width: 481px) {
+  .header-actions {
+    border-left: 1px solid;
+    border-image: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%) 1;
+    padding-left: 1.5rem;
+  }
+}
+
+/* Mobile pequeño (< 480px) - Separador visible */
+@media (max-width: 480px) {
+  .header-actions {
+    border-left: 1px solid;
+    border-image: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%) 1;
+    padding-left: 1.5rem;
+  }
 }
