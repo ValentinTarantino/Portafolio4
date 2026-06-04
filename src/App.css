@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap');
 
+:root {
+  --bg-dark: #0c0c0c;
+  --bg-mid: #1a1a2e;
+  --bg-rich: #16213e;
+  --bg-glow-blue: rgba(102, 126, 234, 0.16);
+  --bg-glow-pink: rgba(240, 147, 251, 0.14);
+  --bg-glow-cyan: rgba(0, 243, 254, 0.1);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -12,36 +21,66 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
   color: #ffffff;
   overflow-x: hidden;
+  overflow-y: visible;
+  background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-mid) 45%, var(--bg-rich) 100%);
 }
 
 .App {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
   position: relative;
+  background: linear-gradient(135deg, rgba(12, 12, 12, 0.88) 0%, rgba(26, 26, 46, 0.88) 45%, rgba(22, 33, 62, 0.88) 100%);
 }
 
 .App::before {
   content: '';
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+  inset: 0;
+  background:
+    radial-gradient(circle at 10% 15%, rgba(102, 126, 234, 0.26), transparent 18%),
+    radial-gradient(circle at 85% 18%, rgba(240, 147, 251, 0.22), transparent 20%),
+    radial-gradient(circle at 28% 78%, rgba(0, 243, 254, 0.16), transparent 18%),
+    linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-mid) 45%, var(--bg-rich) 100%);
+  background-blend-mode: screen;
+  opacity: 0.5;
   z-index: -2;
+  pointer-events: none;
 }
 
 .App .hero-shapes {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   z-index: -1;
   pointer-events: none;
+  overflow: hidden;
+}
+
+.App .hero-shapes .shape {
+  filter: blur(24px);
+  opacity: 0.24;
+  mix-blend-mode: screen;
+}
+
+.App .hero-shapes .shape-1 {
+  width: 340px;
+  height: 340px;
+  top: 4%;
+  right: 8%;
+}
+
+.App .hero-shapes .shape-2 {
+  width: 300px;
+  height: 300px;
+  bottom: 18%;
+  left: 8%;
+}
+
+.App .hero-shapes .shape-3 {
+  width: 260px;
+  height: 260px;
+  top: 48%;
+  left: 45%;
 }
 
 /* Smooth scrolling */
@@ -266,6 +305,16 @@ html {
     font-size: 1rem;
   }
 
+  /* Mantener efectos de glow en tablet */
+  .App::before {
+    background:
+      radial-gradient(circle at 10% 15%, rgba(102, 126, 234, 0.24), transparent 18%),
+      radial-gradient(circle at 85% 18%, rgba(240, 147, 251, 0.20), transparent 20%),
+      radial-gradient(circle at 28% 78%, rgba(0, 243, 254, 0.14), transparent 18%),
+      linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-mid) 45%, var(--bg-rich) 100%);
+    opacity: 0.55;
+  }
+
   /* Optimize glassmorphism for mobile devices to reduce GPU load and eliminate lag */
   .glass-card {
     background: rgba(255, 255, 255, 0.07);
@@ -281,6 +330,58 @@ html {
   
   .btn {
     padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+
+  /* Ocultar glow effects en celulares */
+  .App::before {
+    display: none !important;
+  }
+}
+
+/* Responsive - Modo Claro */
+@media (max-width: 768px) {
+  /* Títulos de sección en modo claro */
+  :root.lamp-light-mode .section-title,
+  html.lamp-light-mode .section-title {
+    color: #0f172a !important;
+  }
+
+  :root.lamp-light-mode .section-subtitle,
+  html.lamp-light-mode .section-subtitle {
+    color: #475569 !important;
+  }
+
+  /* Glass card en modo claro */
+  :root.lamp-light-mode .glass-card,
+  html.lamp-light-mode .glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(59, 130, 246, 0.15);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Botones en modo claro */
+  :root.lamp-light-mode .btn,
+  html.lamp-light-mode .btn {
+    box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2);
+  }
+
+  :root.lamp-light-mode .btn-outline,
+  html.lamp-light-mode .btn-outline {
+    border: 2px solid #3b82f6;
+    color: #3b82f6;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Títulos más pequeños en móvil modo claro */
+  :root.lamp-light-mode .section-title,
+  html.lamp-light-mode .section-title {
+    font-size: 1.6rem;
+  }
+
+  :root.lamp-light-mode .section-subtitle,
+  html.lamp-light-mode .section-subtitle {
     font-size: 0.9rem;
   }
 }

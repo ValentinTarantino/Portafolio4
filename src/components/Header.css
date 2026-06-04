@@ -19,6 +19,7 @@
               border-color 0.4s ease,
               box-shadow 0.4s ease;
   will-change: background-color;
+  overflow: visible;
 }
 
 .header.scrolled {
@@ -259,6 +260,7 @@
   cursor: pointer;
   padding: 0.5rem;
   -webkit-tap-highlight-color: transparent;
+  z-index: 1000;
 }
 
 .menu-toggle:focus,
@@ -305,34 +307,94 @@
     min-width: 170px;
     max-width: 240px;
     z-index: 1001;
-    background: linear-gradient(145deg, rgba(25, 25, 40, 0.98) 0%, rgba(15, 15, 28, 1) 100%);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 2px solid rgba(255, 255, 255, 0.15);
     border-radius: 26px;
     transform: scale(0.8) translateY(-10px);
     transform-origin: top right;
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: visible;
+  }
+
+  /* Modo oscuro - fondo oscuro */
+  .header.nav-dark .nav {
+    background: linear-gradient(145deg, rgba(25, 25, 40, 0.98) 0%, rgba(15, 15, 28, 1) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 2px solid rgba(255, 255, 255, 0.15);
     box-shadow: 
       0 10px 40px rgba(0, 0, 0, 0.5),
       0 4px 20px rgba(212, 175, 55, 0.1);
-    overflow: visible;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                background 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+  }
+
+  /* Modo claro - fondo blanco con borde azul grueso */
+  html.lamp-light-mode .header .nav,
+  body.lamp-light-mode .header .nav {
+    background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 4px solid rgba(59, 130, 246, 0.3);
+    box-shadow: 
+      0 10px 40px rgba(0, 0, 0, 0.15),
+      0 4px 20px rgba(59, 130, 246, 0.15);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                background 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+  }
+
+  /* Links en modo claro - texto oscuro */
+  html.lamp-light-mode .header .nav-link,
+  body.lamp-light-mode .header .nav-link {
+    color: #1e293b !important;
+  }
+
+  html.lamp-light-mode .header .nav-link.active,
+  body.lamp-light-mode .header .nav-link.active {
+    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%) !important;
+    color: #ffffff !important;
+  }
+
+  /* Sin hover en modo claro */
+  html.lamp-light-mode .header .nav-link:hover,
+  body.lamp-light-mode .header .nav-link:hover,
+  html.lamp-light-mode .header .nav-link:focus,
+  body.lamp-light-mode .header .nav-link:focus,
+  html.lamp-light-mode .header .nav-link:active,
+  body.lamp-light-mode .header .nav-link:active {
+    background: transparent !important;
+    color: #1e293b !important;
+    transform: none !important;
+    box-shadow: none !important;
   }
 
   .nav::before {
     content: '';
     position: absolute;
-    top: -7px;
+    top: -8px;
     right: 1.2rem;
     width: 14px;
     height: 14px;
     background: inherit;
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
     transform: rotate(45deg);
     z-index: -1;
+  }
+
+  /* Tooltip modo oscuro */
+  .header.nav-dark .nav::before {
+    border-left: 2px solid rgba(255, 255, 255, 0.15);
+    border-top: 2px solid rgba(255, 255, 255, 0.15);
+  }
+
+  /* Tooltip modo claro */
+  html.lamp-light-mode .header .nav::before,
+  body.lamp-light-mode .header .nav::before {
+    border-left: 4px solid rgba(59, 130, 246, 0.3) !important;
+    border-top: 4px solid rgba(59, 130, 246, 0.3) !important;
   }
 
   .nav-open {
@@ -368,6 +430,14 @@
   .nav-link::after {
     bottom: 0.6rem;
     height: 2px;
+  }
+
+  /* Sin hover en menú responsive modo claro */
+  .header.nav-light .nav-link:hover {
+    background: transparent !important;
+    color: #1e293b !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 
   .language-toggle {
@@ -467,26 +537,51 @@
   -webkit-text-fill-color: transparent;
 }
 
-.header.nav-light .lang-text {
-  color: #1e1e32;
+.header.nav-light .lang-label {
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+  font-size: 0.85rem;
+  min-width: 22px;
+}
+
+.header.nav-light .lang-label.active {
+  color: #ffffff;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
 
 .header.nav-light .language-toggle {
-  background: rgba(102, 126, 234, 0.15);
-  border-color: rgba(102, 126, 234, 0.3);
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+  padding: 0.4rem 0.6rem;
 }
 
 .header.nav-light .language-toggle:hover {
-  background: rgba(102, 126, 234, 0.25);
-  border-color: rgba(102, 126, 234, 0.5);
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
 }
 
-.header.nav-light .menu-toggle span {
-  background: linear-gradient(90deg, #1e1e32, rgba(30, 30, 50, 0.7));
-}
+/* Menú hamburguesa - solo visible en responsive (<=1024px) */
+@media (max-width: 1024px) {
+  .header.nav-light .menu-toggle,
+  body.lamp-light-mode .header .menu-toggle,
+  html.lamp-light-mode .header .menu-toggle {
+    display: flex !important;
+  }
 
-.header.nav-light .menu-toggle.open span {
-  background: #667eea;
+  .header.nav-light .menu-toggle span,
+  body.lamp-light-mode .header .menu-toggle span,
+  html.lamp-light-mode .header .menu-toggle span {
+    background: #000000 !important;
+    height: 2.5px !important;
+  }
+
+  .header.nav-light .menu-toggle.open span,
+  body.lamp-light-mode .header .menu-toggle.open span,
+  html.lamp-light-mode .header .menu-toggle.open span {
+    background: #3b82f6 !important;
+  }
 }
 
 /* Transiciones suaves */
@@ -499,18 +594,54 @@
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* MEDIA QUERIES - Separador visual */
+/* Separador visual solo en modo oscuro */
+.header.nav-dark .header-actions {
+  border-left: 1px solid transparent;
+  border-image: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.25) 50%, transparent 100%) 1;
+  padding-left: 1.5rem;
+}
 
-/* Tablets grandes (1024px - 1440px) - Separador visible */
-@media (max-width: 1440px) and (min-width: 1025px) {
-  .header-actions {
-    border-left: 1px solid;
-    border-image: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%) 1;
-    padding-left: 1.5rem;
+/* Sin separador en modo claro - solo en pantallas pequeñas */
+@media (max-width: 1024px) {
+  .header.nav-light .header-actions,
+  html.lamp-light-mode .header .header-actions,
+  body.lamp-light-mode .header .header-actions {
+    border-left: none !important;
+    border-image: none !important;
+    padding-left: 0.5rem;
   }
 }
 
-/* Tablets medianas (768px - 1024px) - Desaparece el separador */
+/* Separador negro en modo claro - solo en pantallas grandes (estilo igual al modo oscuro) */
+@media (min-width: 1025px) {
+  .header.nav-light .header-actions,
+  html.lamp-light-mode .header .header-actions,
+  body.lamp-light-mode .header .header-actions {
+    border-left: 1px solid transparent !important;
+    border-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%) 1 !important;
+    padding-left: 1.5rem !important;
+  }
+}
+
+/* Ocultar separador en modo responsive y modo claro */
+@media (max-width: 768px) {
+  .header.nav-dark .header-actions {
+    border-left: none !important;
+    border-image: none !important;
+    padding-left: 0 !important;
+  }
+  
+  html.lamp-light-mode .header .header-actions,
+  body.lamp-light-mode .header .header-actions {
+    border-left: none !important;
+    border-image: none !important;
+    padding-left: 0 !important;
+  }
+}
+
+/* MEDIA QUERIES - Separador visual */
+
+/* Tablets grandes (1024px - 1440px) */
 @media (max-width: 1024px) and (min-width: 769px) {
   .header-actions {
     border-left: none;

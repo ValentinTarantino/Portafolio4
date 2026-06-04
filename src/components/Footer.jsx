@@ -48,7 +48,7 @@ const Footer = ({ t }) => {
           <div className="footer-cta-section">
             <div className="cta-badge">
               <FiZap className="cta-icon" />
-              <span>{t.footer.cta}</span>
+              <span className="cta-text">{t.footer.cta}</span>
             </div>
             <p className="cta-subtitle">Construyamos algo increíble juntos</p>
           </div>

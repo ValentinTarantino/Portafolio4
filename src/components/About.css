@@ -216,12 +216,13 @@
 
 .stat-card:hover {
   transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(102, 126, 234, 0.3);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(102, 126, 234, 0.18);
 }
 
 .stat-card:hover::before {
   left: 100%;
+  background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.06), transparent);
 }
 
 @media (max-width: 768px) {
@@ -359,8 +360,8 @@
 }
 
 .tech-item:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: translateX(5px);
+  background: rgba(255, 255, 255, 0.07);
+  transform: translateX(2px);
 }
 
 .tech-icon {
@@ -453,14 +454,15 @@
 }
 
 .certificate-card:hover {
-  transform: translateY(-5px);
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(102, 126, 234, 0.3);
-  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(102, 126, 234, 0.2);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.12);
 }
 
 .certificate-card:hover::before {
   left: 100%;
+  background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.06), transparent);
 }
 
 .certificate-icon {

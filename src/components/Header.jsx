@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 
 import './Header.css';
+import LampToggle from './LampToggle';
 
 
 
@@ -393,6 +394,8 @@ const Header = ({ t, language, toggleLanguage }) => {
 
 
           <div className="header-actions">
+
+            <LampToggle />
 
             <div 
 

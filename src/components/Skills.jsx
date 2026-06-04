@@ -25,7 +25,7 @@ const Skills = ({ t }) => {
         { name: 'Next.js', icon: <SiNextdotjs size={32} color="#ffffff" /> },
         { name: 'React', icon: <SiReact size={32} color="#61DAFB" /> },
         { name: 'TypeScript', icon: <SiTypescript size={32} color="#3178C6" /> },
-        { name: 'Tailwind CSS', icon: <SiTailwindcss size={32} color="#38BDF8" /> },
+        { name: 'Tailwind', icon: <SiTailwindcss size={32} color="#38BDF8" /> },
         { name: 'JavaScript', icon: <SiJavascript size={32} color="#F7DF1E" /> },
         { name: 'HTML5', icon: <SiHtml5 size={32} color="#E34F26" /> },
         { name: 'CSS', icon: <SiCss size={32} color="#1572B6" /> },
@@ -85,7 +85,7 @@ const Skills = ({ t }) => {
               <div className="category-skills">
                 {category.skills.map((skill) => (
                   <div key={skill.name} className="skill-item glass-card">
-                    <div className="skill-icon-small">{skill.icon}</div>
+                    <div className="skill-icon-wrapper">{skill.icon}</div>
                     <span className="skill-name-small">{skill.name}</span>
                   </div>
                 ))}

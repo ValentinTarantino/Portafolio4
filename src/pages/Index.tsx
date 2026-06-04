@@ -21,7 +21,7 @@ const translations = {
     },
     hero: {
       greeting: '',
-      name: 'Valentín Tarantino',
+      name: 'Valentín Thomas Tarantino',
       title: 'Desarrollador Full Stack',
       description: 'Apasionado por crear experiencias web únicas y funcionales. Especializado en React, JavaScript y diseño UI/UX.',
       downloadCV: 'Descargar CV',
@@ -62,7 +62,7 @@ const translations = {
       }
     },
     footer: {
-      copyright: '© 2025 Valentín Tarantino. Todos los derechos reservados.'
+      copyright: '© 2025 Valentín Thomas Tarantino. Todos los derechos reservados.'
     }
   },
   en: {
@@ -75,7 +75,7 @@ const translations = {
     },
     hero: {
       greeting: '',
-      name: 'Valentín Tarantino',
+      name: 'Valentín Thomas Tarantino',
       title: 'Full Stack Developer',
       description: 'Passionate about creating unique and functional web experiences. Specialized in React, JavaScript and UI/UX design.',
       downloadCV: 'Download CV',
@@ -116,7 +116,7 @@ const translations = {
       }
     },
     footer: {
-      copyright: '© 2025 Valentín Tarantino. All rights reserved.'
+      copyright: '© 2025 Valentín Thomas Tarantino. All rights reserved.'
     }
   }
 };

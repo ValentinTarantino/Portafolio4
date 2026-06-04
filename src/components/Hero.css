@@ -478,6 +478,16 @@
   .hero-name {
     font-size: 2.8rem;
   }
+
+  /* Optimizar gradiente para tablet */
+  .name-highlight {
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 3s ease infinite;
+  }
   
   .hero-title {
     font-size: 1.8rem;
@@ -519,6 +529,15 @@
   .hero-name {
     font-size: 2.2rem;
   }
+
+  /* Color sólido en celular para mejor legibilidad */
+  .name-highlight {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: none;
+  }
   
   .hero-title {
     font-size: 1.5rem;
@@ -527,5 +546,74 @@
   .code-block {
     font-size: 0.8rem;
     padding: 0.3rem 0.6rem;
+  }
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Responsive - Modo Claro */
+@media (max-width: 768px) {
+  /* Ajustes de texto en modo claro */
+  :root.lamp-light-mode .hero-description,
+  html.lamp-light-mode .hero-description {
+    color: #475569 !important;
+  }
+
+  :root.lamp-light-mode .hero-title,
+  html.lamp-light-mode .hero-title {
+    color: #64748b !important;
+  }
+
+  /* Terminal en modo claro - mantener fondo oscuro pero ajustar borde */
+  :root.lamp-light-mode .terminal-container,
+  html.lamp-light-mode .terminal-container {
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    background: #000000 !important;
+  }
+
+  /* CTA buttons en modo claro */
+  :root.lamp-light-mode .cta-button.primary,
+  html.lamp-light-mode .cta-button.primary {
+    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.25);
+  }
+}
+
+@media (max-width: 480px) {
+  /* Hero name más pequeño en móvil modo claro */
+  :root.lamp-light-mode .hero-name,
+  html.lamp-light-mode .hero-name {
+    font-size: 2rem;
+  }
+
+  :root.lamp-light-mode .hero-title,
+  html.lamp-light-mode .hero-title {
+    font-size: 1.3rem;
+  }
+
+  /* Badge en modo claro */
+  :root.lamp-light-mode .hero-badge,
+  html.lamp-light-mode .hero-badge {
+    background: rgba(39, 202, 63, 0.08);
+    border: 1px solid rgba(39, 202, 63, 0.15);
+  }
+
+  /* Terminal más compacto en móvil */
+  :root.lamp-light-mode .terminal-container,
+  html.lamp-light-mode .terminal-container {
+    max-width: 280px;
+  }
+
+  :root.lamp-light-mode .terminal-body,
+  html.lamp-light-mode .terminal-body {
+    height: 220px;
+    padding: 1rem;
   }
 }

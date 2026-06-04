@@ -86,23 +86,23 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.03) 0%, transparent 50%, rgba(102, 126, 234, 0.03) 100%);
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.02) 0%, transparent 50%, rgba(102, 126, 234, 0.02) 100%);
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.4s ease;
 }
 
 .project-card:hover::before {
-  opacity: 1;
+  opacity: 0.6;
 }
 
 .project-card:hover {
-  transform: translateY(-12px) scale(1.02);
+  transform: translateY(-10px) scale(1.01);
   box-shadow: 
-    0 25px 50px -12px rgba(0, 0, 0, 0.4),
-    0 0 40px rgba(255, 215, 0, 0.1),
-    0 0 80px rgba(102, 126, 234, 0.15);
-  border-color: rgba(255, 215, 0, 0.3);
+    0 20px 40px -10px rgba(0, 0, 0, 0.33),
+    0 0 18px rgba(255, 215, 0, 0.08),
+    0 0 50px rgba(102, 126, 234, 0.1);
+  border-color: rgba(255, 215, 0, 0.22);
 }
 
 /* Standard cards (not featured) - More subtle design */
@@ -461,5 +461,82 @@
   .tech-tag {
     font-size: 0.75rem;
     padding: 0.3rem 0.6rem;
+  }
+}
+
+/* Responsive - Modo Claro */
+@media (max-width: 768px) {
+  /* Cards en modo claro - fondo más claro */
+  :root.lamp-light-mode .project-card,
+  html.lamp-light-mode .project-card {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  :root.lamp-light-mode .project-card:hover,
+  html.lamp-light-mode .project-card:hover {
+    border-color: rgba(59, 130, 246, 0.35);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Cards standard en modo claro */
+  :root.lamp-light-mode .project-card--standard,
+  html.lamp-light-mode .project-card--standard {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.9) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.15);
+  }
+
+  /* Títulos y descripciones en modo claro */
+  :root.lamp-light-mode .project-title,
+  html.lamp-light-mode .project-title {
+    color: #1e293b !important;
+  }
+
+  :root.lamp-light-mode .project-description,
+  html.lamp-light-mode .project-description {
+    color: #475569 !important;
+  }
+
+  :root.lamp-light-mode .project-card--standard .project-title,
+  html.lamp-light-mode .project-card--standard .project-title {
+    color: #1e293b !important;
+  }
+
+  :root.lamp-light-mode .project-card--standard .project-description,
+  html.lamp-light-mode .project-card--standard .project-description {
+    color: #475569 !important;
+  }
+
+  /* Botones en modo claro */
+  :root.lamp-light-mode .project-btn,
+  html.lamp-light-mode .project-btn {
+    border-color: rgba(59, 130, 246, 0.3);
+    color: #3b82f6;
+  }
+
+  /* Tech tags en modo claro */
+  :root.lamp-light-mode .tech-tag,
+  html.lamp-light-mode .tech-tag {
+    background: linear-gradient(145deg, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0.02) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.15);
+  }
+}
+
+@media (max-width: 480px) {
+  /* Cards más compactas en móvil modo claro */
+  :root.lamp-light-mode .project-card,
+  html.lamp-light-mode .project-card {
+    border-radius: 16px;
+  }
+
+  :root.lamp-light-mode .project-content,
+  html.lamp-light-mode .project-content {
+    padding: 1rem;
+  }
+
+  :root.lamp-light-mode .project-title,
+  html.lamp-light-mode .project-title {
+    font-size: 1.1rem;
   }
 }
