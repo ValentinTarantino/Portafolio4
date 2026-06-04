@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 
 import './Header.css';
 import LampToggle from './LampToggle';
+import MobileThemeToggle from './MobileThemeToggle';
 
 
 
@@ -396,6 +397,8 @@ const Header = ({ t, language, toggleLanguage }) => {
           <div className="header-actions">
 
             <LampToggle />
+
+            <MobileThemeToggle />
 
             <div 
 

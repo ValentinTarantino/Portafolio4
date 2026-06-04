@@ -25,12 +25,10 @@ html.lamp-light-mode {
   filter: drop-shadow(0 0 25px rgba(255, 140, 0, 0.5));
 }
 
-/* Transiciones suaves entre modos */
+/* Transiciones suaves entre modos - solo en html para no afectar rendimiento */
 :root.lamp-light-mode,
-html.lamp-light-mode,
-:root.lamp-light-mode *,
-html.lamp-light-mode * {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+html.lamp-light-mode {
+  transition: background-color 0.3s ease;
 }
 
 /* Lámpara en el navbar */

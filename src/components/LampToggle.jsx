@@ -5,7 +5,7 @@ import './LampToggle.css';
 const LampToggle = () => {
   const [isLightMode, setIsLightMode] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [chainPosition, setChainPosition] = useState({ top: 60, left: 0 });
+  const [chainPosition, setChainPosition] = useState({ top: -9999, left: -9999 });
   const [chainPullY, setChainPullY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const lampRef = useRef(null);
@@ -24,11 +24,31 @@ const LampToggle = () => {
     }
   }, []);
 
+  // Sincronizar estado con MobileThemeToggle
+  useEffect(() => {
+    const handleThemeChange = (e) => {
+      setIsLightMode(e.detail);
+      setTimeout(() => {
+        if (lampRef.current) {
+          const rect = lampRef.current.getBoundingClientRect();
+          if (rect.width === 0 || rect.height === 0) return;
+          setChainPosition({
+            top: rect.bottom,
+            left: rect.left + rect.width / 2
+          });
+        }
+      }, 100);
+    };
+    window.addEventListener('themeToggle', handleThemeChange);
+    return () => window.removeEventListener('themeToggle', handleThemeChange);
+  }, []);
+
   // Calcular posición de la cadena basada en la posición de la lámpara
   useEffect(() => {
     const updateChainPosition = () => {
       if (lampRef.current) {
         const rect = lampRef.current.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) return;
         setChainPosition({
           top: rect.bottom,
           left: rect.left + rect.width / 2
@@ -112,6 +132,7 @@ const LampToggle = () => {
       setIsLightMode(newMode);
       localStorage.setItem('lampMode', JSON.stringify(newMode));
       applyLampMode(newMode);
+      window.dispatchEvent(new CustomEvent('themeToggle', { detail: newMode }));
       setIsAnimating(false);
     }, 600);
   };
