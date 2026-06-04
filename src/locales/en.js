@@ -74,7 +74,7 @@ const en = {
     descriptions: {
       DolarARG: 'Fullstack platform for monitoring dollar, euro, real and cryptocurrency exchange rates in Argentina in real-time. Includes historical data, charts, calculator, email alert system, BCRA exchange rate bands, and works as an installable PWA. Data updated every 5 minutes with serverless backend on Vercel.',
       todoApp: 'Creation of an interactive application to manage tasks with JavaScript and DOM manipulation. Implementation of events and higher-order functions to enhance user experience.',
-      WeatherReport: 'Weather report app in React. Using an API to retrieve real-time weather data from https://openweathermap.org/. State management with hooks.',
+      WeatherReport: 'Weather report app in React. Using an API to retrieve real-time weather data from https://openweathermap.org/. Global state management with Zustand.',
       googleKeep: 'Replica of the Google Keep notes app, developed in React. Allows you to create, edit, and delete notes. Includes dark mode and translations in Spanish and English. Uses LocalStorage to save the notes.',
       ClipDrop: 'High-performance video downloader optimized for TikTok. YouTube and Instagram support is currently restricted due to platform updates.',
       LuminaCommerce: 'Ultra-modern tech E-commerce. Full-stack built with Next.js, Python (FastAPI), PostgreSQL, and Prisma. Premium design with fluid animations and Zustand state management.',

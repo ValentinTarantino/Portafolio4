@@ -577,7 +577,11 @@ const Hero = ({ t, language }) => {
               </h2>
               <p className="hero-description fade-in-up">{t.hero.description}</p>
               <div className="hero-cta fade-in-up">
-                <a href="/CV_Valentin_Tarantino.pdf" download className="cta-button primary">
+                <a
+                  href={language === 'es' ? '/CV_Valentin_Tarantino_ES.pdf' : '/CV_Valentin_Tarantino.pdf'}
+                  download
+                  className="cta-button primary"
+                >
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 15V3M12 15L8 11M12 15L16 11M2 17L2.621 19.485C2.72915 19.9177 2.97881 20.3018 3.32754 20.572C3.67627 20.8422 4.10267 20.9823 4.534 20.969H19.466C19.8973 20.9823 20.3237 20.8422 20.6725 20.572C21.0212 20.3018 21.2708 19.9177 21.379 19.485L22 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>

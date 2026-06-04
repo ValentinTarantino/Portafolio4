@@ -5,7 +5,7 @@ import './Projects.css';
 import ProjectModal from './ProjectModal';
 import dolarImg from '../assets/dolar.webp';
 import ecommerceImg from '../assets/ecommerce.webp';
-import clima from '../assets/clima.webp';
+import clima from '../assets/clima.png';
 import googlekeepImg from '../assets/googlekeep.webp';
 import youtubeImg from '../assets/youtube.webp';
 import flowImg from "../assets/flow.webp";
@@ -164,7 +164,7 @@ const Projects = ({ t, language }) => {
       featured: false,
       description: t.projects.descriptions.WeatherReport,
       image: clima,
-      technologies: ['React', 'JavaScript', 'CSS3', 'API'],
+      technologies: ['React', 'JavaScript', 'CSS3', 'API', 'Zustand'],
       liveUrl: 'https://weather-report-oraora.vercel.app',
       codeUrl: 'https://github.com/ValentinTarantino/Weather'
     },
