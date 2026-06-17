@@ -62,7 +62,7 @@ const es = {
     viewCode: 'Ver Código',
     filterFeatured: 'Destacados',
     filterAll: 'Todos los Proyectos',
-    viewCaseStudy: 'Caso de Estudio 🎯',
+    viewCaseStudy: 'Caso de Estudio ',
     caseStudyBadge: 'Caso de Estudio',
     showMore: 'Ver más',
     showLess: 'Ver menos',
@@ -85,8 +85,8 @@ const es = {
     },
     caseStudies: {
       tabs: {
-        overview: 'Resumen 📋',
-        architecture: 'Arquitectura 🏗️'
+        overview: 'Resumen ',
+        architecture: 'Arquitectura '
       },
       LuminaCommerce: {
         challenge: 'Diseñar y desplegar una plataforma de comercio electrónico de alta fidelidad que mantenga un rendimiento óptimo de carga (<1.5s) mientras maneja consultas relacionales complejas y control de estados persistentes del cliente en tiempo real.',

@@ -51,7 +51,7 @@ const ProjectModal = ({ project, t, onClose }) => {
 
         <div className="modal-body">
           <div className="modal-project-header">
-            <span className="modal-badge">⭐️ {t.projects.caseStudyBadge}</span>
+            <span className="modal-badge"> {t.projects.caseStudyBadge}</span>
             <h2 className="modal-project-title">{project.title}</h2>
           </div>
 
@@ -164,10 +164,10 @@ const ProjectModal = ({ project, t, onClose }) => {
             </div>
             <div className="modal-actions-row">
               <a href={project.liveUrl} className="modal-action-btn primary" target="_blank" rel="noopener noreferrer">
-                🔗 {t.projects.viewProject}
+                {t.projects.viewProject}
               </a>
               <a href={project.codeUrl} className="modal-action-btn secondary" target="_blank" rel="noopener noreferrer">
-                💻 {t.projects.viewCode}
+                {t.projects.viewCode}
               </a>
             </div>
           </div>

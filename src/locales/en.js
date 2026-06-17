@@ -60,9 +60,9 @@ const en = {
     subtitle: 'Some featured work',
     viewProject: 'View Project',
     viewCode: 'View Code',
-    filterFeatured: 'Featured ⭐️',
-    filterAll: 'All Projects 📁',
-    viewCaseStudy: 'Case Study 🎯',
+    filterFeatured: 'Featured ',
+    filterAll: 'All Projects ',
+    viewCaseStudy: 'Case Study ',
     caseStudyBadge: 'Case Study',
     showMore: 'Show more',
     showLess: 'Show less',
@@ -85,8 +85,8 @@ const en = {
     },
       caseStudies: {
       tabs: {
-        overview: 'Overview 📋',
-        architecture: 'Architecture 🏗️'
+        overview: 'Overview ',
+        architecture: 'Architecture '
       },
       LuminaCommerce: {
         challenge: 'Design and deploy a high-fidelity e-commerce platform that maintains optimal load performance (<1.5s) while handling complex relational queries and real-time client persistent state management.',

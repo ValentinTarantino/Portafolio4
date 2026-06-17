@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SiReact, SiSass, SiBootstrap, SiHtml5, SiJavascript, SiFirebase, SiNextdotjs, SiTypescript, SiTailwindcss, SiVite, SiPostgresql, SiPostman, SiCss, SiPython, SiPrisma, SiFastapi } from 'react-icons/si';
+import { FiStar } from 'react-icons/fi';
 import './Projects.css';
 import ProjectModal from './ProjectModal';
 import dolarImg from '../assets/dolar.webp';
@@ -221,10 +222,10 @@ const Projects = ({ t, language }) => {
                         </button>
                       )}
                       <a href={project.liveUrl} className="project-btn" target="_blank" rel="noopener noreferrer">
-                        🔗 {t.projects.viewProject}
+                        {t.projects.viewProject}
                       </a>
                       <a href={project.codeUrl} className="project-btn" target="_blank" rel="noopener noreferrer">
-                        💻 {t.projects.viewCode}
+                        {t.projects.viewCode}
                       </a>
                     </div>
                   </div>
@@ -233,9 +234,9 @@ const Projects = ({ t, language }) => {
                 <div className="project-content">
                   <div className="project-header-row">
                     <h3 className="project-title">{project.title}</h3>
-                    {project.featured && (
-                      <span className="featured-badge">⭐️ {language === 'en' ? 'Featured' : 'Destacado'}</span>
-                    )}
+                  </div>
+                  <div className="featured-badge-row">
+                    <span className="featured-badge"><FiStar className="featured-badge-icon" /> {language === 'en' ? 'Featured' : 'Destacado'}</span>
                   </div>
                   <ProjectDescription text={project.description} t={t} />
                   
