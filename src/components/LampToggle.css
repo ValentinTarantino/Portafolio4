@@ -1412,20 +1412,6 @@ html.lamp-light-mode .footer .cta-badge {
   color: #334155 !important;
 }
 
-/* CERTIFICACIONES */
-:root.lamp-light-mode .certification-card {
-  background: rgba(255, 255, 255, 0.9) !important;
-  border: 1px solid rgba(0, 0, 0, 0.1) !important;
-}
-
-:root.lamp-light-mode .certification-card h4 {
-  color: #0f172a !important;
-}
-
-:root.lamp-light-mode .certification-card p {
-  color: #64748b !important;
-}
-
 /* ABOUT - Arreglar texto */
 :root.lamp-light-mode .about-description {
   color: #334155 !important;
@@ -1512,8 +1498,8 @@ html.lamp-light-mode .footer .cta-badge {
 :root.lamp-light-mode input.terminal-hidden-input {
   background: transparent !important;
   border: none !important;
-  color: transparent !important;
-  caret-color: #10b981 !important;
+  color: #f6ad55 !important;
+  caret-color: #667eea !important;
   outline: none !important;
   box-shadow: none !important;
 }
@@ -1541,9 +1527,7 @@ html.lamp-light-mode .footer .cta-badge {
 :root.lamp-light-mode .about-card,
 :root.lamp-light-mode .profile-card,
 :root.lamp-light-mode .education-card,
-:root.lamp-light-mode .stat-card,
-:root.lamp-light-mode .certification-card,
-:root.lamp-light-mode .certificate-card {
+:root.lamp-light-mode .stat-card {
   background: #f1f5f9 !important;
   border: 2px solid rgba(59, 130, 246, 0.4) !important;
   box-shadow: 0 4px 15px rgba(59, 130, 246, 0.1) !important;
@@ -1555,8 +1539,7 @@ html.lamp-light-mode .footer .cta-badge {
 :root.lamp-light-mode .stat-card .stat-number,
 :root.lamp-light-mode .stat-card .stat-label,
 :root.lamp-light-mode .education-card h4,
-:root.lamp-light-mode .education-card p,
-:root.lamp-light-mode .certificate-title {
+:root.lamp-light-mode .education-card p {
   font-weight: 600 !important;
 }
 
@@ -1594,20 +1577,6 @@ html.lamp-light-mode .footer .cta-badge {
   height: 1px !important;
   width: 100% !important;
   margin: 1.5rem 0 !important;
-}
-
-/* Certificaciones */
-:root.lamp-light-mode .certification-card h4,
-:root.lamp-light-mode .certificate-title {
-  color: #0f172a !important;
-}
-
-:root.lamp-light-mode .certification-card p {
-  color: #475569 !important;
-}
-
-:root.lamp-light-mode .certificates-title {
-  color: #0f172a !important;
 }
 
 /* Testimonios */

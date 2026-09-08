@@ -67,13 +67,6 @@ const Footer = ({ t }) => {
               <p className="footer-tagline">
                 Desarrollador Full Stack especializado en crear experiencias digitales excepcionales.
               </p>
-              
-              <div className="availability-badge">
-                <span className="pulse-dot"></span>
-                <span className="availability-text">
-                  {t.footer.available}
-                </span>
-              </div>
             </div>
 
             {/* Navigation Column */}
@@ -110,14 +103,7 @@ const Footer = ({ t }) => {
             </div>
           </div>
 
-          {/* Bottom Bar */}
           <div className="footer-bottom-bar">
-            <div className="footer-copyright-wrapper">
-              <p className="footer-copyright">
-                {t.footer.copyright}
-              </p>
-            </div>
-
             <button onClick={scrollToTop} className="back-to-top-btn" aria-label="Volver arriba">
               <span className="btn-text">Volver arriba</span>
               <FiArrowUp />

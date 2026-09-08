@@ -23,26 +23,24 @@ const en = {
     experienceLabel: 'Years of experience',
     projectsLabel: 'Solutions delivered',
     cleanCodeLabel: 'Clean code',
-    certificationsTitle: 'Certifications',
     stackTitle: 'Main stack',
     certified: 'Certified',
-    certificates: {
-      webDev: 'Web development certification',
-      javascript: 'Javascript certification',
-      react: 'React certification',
-      frontend: 'React Frontend Development Certification'
-    },
     months: {
       january: 'January',
       june: 'June',
       march: 'March',
-      august: 'August'
+      august: 'August',
+      may: 'May',
+      april: 'April'
     },
     educationItems: {
       coderhouse: 'Coderhouse',
       frontEndCourse: 'Front End Development Course',
       utn: 'e-Learning Center, UTN',
-      trainingProgram: 'Training Program'
+      trainingProgram: 'Training Program',
+      fullStackCareer: 'Full Stack Developer Career',
+      aiAutomation: 'AI Automation',
+      aiAutomationAdvanced: 'AI Automation (Advanced)'
     }
   },
   skills: {

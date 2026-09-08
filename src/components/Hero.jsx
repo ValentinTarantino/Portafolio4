@@ -146,7 +146,7 @@ const renderHistoryItem = (item, index, isSpanish) => {
           <div className="terminal-line output-line success">
             <span>{isSpanish ? 'MODO SUPER DESARROLLADOR ACTIVADO' : 'SUPER DEVELOPER MODE ACTIVATED'}</span>
           </div>
-          <div className="terminal-line output-line" style={{ color: '#a0aec0', marginTop: '0.25rem' }}>
+          <div className="terminal-line output-line" style={{ color: '#718096', marginTop: '0.25rem' }}>
             <span>{isSpanish ? 'Pista: Se ha desbloqueado una trivia secreta. Escribe "game" para iniciar.' : 'Tip: A secret trivia has been unlocked. Type "game" to start.'}</span>
           </div>
         </div>
@@ -184,7 +184,7 @@ const renderHistoryItem = (item, index, isSpanish) => {
             'Answer by typing the letter of the option (A, B or C) and press Enter.'
           ];
       return lines.map((line, lIdx) => (
-        <div key={`${index}-${lIdx}`} className="terminal-line output-line" style={{ color: '#38bdf8' }}>
+        <div key={`${index}-${lIdx}`} className="terminal-line output-line" style={{ color: '#63b3ed' }}>
           <span>{line}</span>
         </div>
       ));
@@ -257,7 +257,7 @@ const renderHistoryItem = (item, index, isSpanish) => {
       );
     case 'trivia_incorrect':
       return (
-        <div key={index} className="terminal-line output-line" style={{ color: '#ff5f56' }}>
+        <div key={index} className="terminal-line output-line" style={{ color: '#e85d75' }}>
           <span>
             {isSpanish 
               ? `✗ Incorrecto. La respuesta correcta era la ${item.correctOpt}.` 
@@ -267,7 +267,7 @@ const renderHistoryItem = (item, index, isSpanish) => {
       );
     case 'trivia_invalid':
       return (
-        <div key={index} className="terminal-line output-line" style={{ color: '#ffbd2e' }}>
+        <div key={index} className="terminal-line output-line" style={{ color: '#e8a64c' }}>
           <span>{isSpanish ? 'Respuesta no valida. Por favor escribe A, B o C.' : 'Invalid answer. Please type A, B or C.'}</span>
         </div>
       );
@@ -306,7 +306,7 @@ const renderHistoryItem = (item, index, isSpanish) => {
             </pre>
           )}
           {lines.map((line, lIdx) => (
-            <div key={`${index}-${lIdx}`} className="terminal-line output-line" style={{ color: score === 3 ? '#10b981' : '#cbd5e0' }}>
+            <div key={`${index}-${lIdx}`} className="terminal-line output-line" style={{ color: score === 3 ? '#48bb78' : '#a0aec0' }}>
               <span>{line}</span>
             </div>
           ))}

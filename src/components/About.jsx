@@ -1,26 +1,6 @@
 import './About.css';
 
 const About = ({ t }) => {
-  const certificates = [
-    {
-      title: t.about.certificates.webDev,
-      url: "https://pub.coderhouse.com/legacy-certificates/66fb5b5ed1c51d20ed892171?lang=es"
-    },
-    {
-      title: t.about.certificates.javascript,
-      url: "https://pub.coderhouse.com/legacy-certificates/674135608f408874aed9a83a?lang=es"
-    },
-    {
-      title: t.about.certificates.react,
-      url: "https://pub.coderhouse.com/legacy-certificates/679fa826e9330b55412d204a?lang=es"
-    },
-    {
-      title: t.about.certificates.frontend,
-      url: "https://pub.coderhouse.com/legacy-certificates/67a05912f390738459733a87?lang=es"
-    }
-  ];
-
-
   return (
     <section id="about" className="section about">
       <div className="container">
@@ -111,7 +91,49 @@ const About = ({ t }) => {
                 <div className="timeline">
                   <span className="date-start">{t.about.months.march} 2025</span>
                   <div className="timeline-line"></div>
-                  <span className="date-end">{t.about.months.august} 2025</span>
+                  <span className="date-end">{t.about.months.may} 2025</span>
+                </div>
+              </div>
+              <div className="education-divider" style={{ width: '100%', height: '1px', background: 'rgba(255,255,255,0.1)', margin: '1.5rem 0' }}></div>
+
+              <div className="education-item">
+                <div className="education-header">
+                  <h4>{t.about.educationItems.coderhouse}</h4>
+                  <span className="completion-badge">{t.about.certified}</span>
+                </div>
+                <p className="course-name">{t.about.educationItems.fullStackCareer}</p>
+                <div className="timeline">
+                  <span className="date-start">{t.about.months.may} 2025</span>
+                  <div className="timeline-line"></div>
+                  <span className="date-end">{t.about.months.june} 2026</span>
+                </div>
+              </div>
+              <div className="education-divider" style={{ width: '100%', height: '1px', background: 'rgba(255,255,255,0.1)', margin: '1.5rem 0' }}></div>
+
+              <div className="education-item">
+                <div className="education-header">
+                  <h4>{t.about.educationItems.coderhouse}</h4>
+                  <span className="completion-badge">{t.about.certified}</span>
+                </div>
+                <p className="course-name">{t.about.educationItems.aiAutomation}</p>
+                <div className="timeline">
+                  <span className="date-start">{t.about.months.april} 2026</span>
+                  <div className="timeline-line"></div>
+                  <span className="date-end">{t.about.months.june} 2026</span>
+                </div>
+              </div>
+              <div className="education-divider" style={{ width: '100%', height: '1px', background: 'rgba(255,255,255,0.1)', margin: '1.5rem 0' }}></div>
+
+              <div className="education-item">
+                <div className="education-header">
+                  <h4>{t.about.educationItems.coderhouse}</h4>
+                  <span className="completion-badge">{t.about.certified}</span>
+                </div>
+                <p className="course-name">{t.about.educationItems.aiAutomationAdvanced}</p>
+                <div className="timeline">
+                  <span className="date-start">{t.about.months.june} 2026</span>
+                  <div className="timeline-line"></div>
+                  <span className="date-end">{t.about.months.august} 2026</span>
                 </div>
               </div>
             </div>
@@ -120,32 +142,7 @@ const About = ({ t }) => {
           </div>
         </div>
 
-        <div className="certificates-section">
-          <h3 className="certificates-title">{t.about.certificationsTitle}</h3>
-          <div className="certificates-grid">
-            {certificates.map((cert, index) => (
-              <a 
-                key={index} 
-                href={cert.url} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="certificate-card glass-card"
-              >
-                <div className="certificate-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L15.09 8.26L22 9L16 14.74L17.18 21.02L12 18.27L6.82 21.02L8 14.74L2 9L8.91 8.26L12 2Z" fill="currentColor"/>
-                  </svg>
-                </div>
-                <h4 className="certificate-title">{cert.title}</h4>
-                <div className="certificate-arrow">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
+
       </div>
     </section>
   );

@@ -235,66 +235,87 @@
 
 .terminal-container {
   width: 100%;
-  max-width: 400px;
-  background: rgba(0, 0, 0, 0.8);
-  border-radius: 12px;
+  max-width: 420px;
+  background: #0a0e17;
+  border-radius: 4px;
   overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 25px 60px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  position: relative;
+}
+
+.terminal-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.4), transparent);
 }
 
 .terminal-header {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 0.75rem 1rem;
+  background: #0d1220;
+  padding: 0.65rem 1rem;
   display: flex;
   align-items: center;
-  gap: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .terminal-buttons {
   display: flex;
-  gap: 0.5rem;
+  gap: 6px;
 }
 
 .terminal-buttons span {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.terminal-buttons:hover span {
+  opacity: 1;
 }
 
 .btn-close {
-  background: #ff5f56;
+  background: #e85d75;
 }
 
 .btn-minimize {
-  background: #ffbd2e;
+  background: #e8a64c;
 }
 
 .btn-maximize {
-  background: #27ca3f;
+  background: #5cb85c;
 }
 
 .terminal-title {
-  color: #a0aec0;
-  font-size: 0.9rem;
-  font-weight: 500;
+  color: #4a5568;
+  font-size: 0.8rem;
+  font-weight: 400;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  letter-spacing: 0.02em;
 }
 
 .terminal-body {
-  padding: 1.5rem;
-  font-family: 'Courier New', monospace;
-  font-size: 0.9rem;
-  line-height: 1.6;
+  padding: 1.25rem 1.5rem;
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.85rem;
+  line-height: 1.7;
   height: 280px;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  scrollbar-color: rgba(255, 255, 255, 0.08) transparent;
   scroll-behavior: smooth;
 }
 
 .terminal-body::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 .terminal-body::-webkit-scrollbar-track {
@@ -302,12 +323,12 @@
 }
 
 .terminal-body::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
 }
 
 .terminal-line {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
@@ -315,37 +336,37 @@
 }
 
 .terminal-line.output-line {
-  color: #a0aec0;
+  color: #718096;
 }
 
 .terminal-line.output-line.success {
-  color: #10b981;
-  font-weight: bold;
-  text-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+  color: #48bb78;
+  font-weight: 500;
 }
 
 .terminal-line.output-line.link {
-  color: #38bdf8;
+  color: #63b3ed;
 }
 
 .prompt {
-  color: #10b981;
+  color: #48bb78;
   margin-right: 0.5rem;
-  font-weight: 600;
+  font-weight: 500;
   white-space: nowrap;
+  font-size: 0.8rem;
 }
 
 .command {
-  color: #f7fafc;
+  color: #e2e8f0;
 }
 
 .indent {
-  color: #a0aec0;
-  margin-left: 1rem;
+  color: #718096;
+  margin-left: 1.5rem;
 }
 
 .string {
-  color: #fbbf24;
+  color: #f6ad55;
 }
 
 .terminal-input-wrapper {
@@ -359,9 +380,9 @@
   background: transparent;
   border: none;
   outline: none;
-  color: #fbbf24;
-  font-family: 'Courier New', monospace;
-  font-size: 0.9rem;
+  color: #f6ad55;
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.85rem;
   width: 100%;
   padding: 0;
   margin: 0;
@@ -375,12 +396,13 @@
 }
 
 .cursor-blink {
-  width: 8px;
-  height: 1.1rem;
+  width: 7px;
+  height: 1rem;
   background: #667eea;
   animation: blink 1s infinite;
   display: inline-block;
   vertical-align: middle;
+  border-radius: 1px;
 }
 
 @keyframes blink {
@@ -389,19 +411,31 @@
 }
 
 .terminal-container.super-active {
-  border-color: #667eea;
-  box-shadow: 0 0 35px rgba(102, 126, 234, 0.7);
-  animation: borderGlow 3s linear infinite;
+  border-color: transparent;
+  box-shadow: 
+    0 25px 60px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(102, 126, 234, 0.3),
+    inset 0 0 30px rgba(102, 126, 234, 0.05);
+  animation: terminalPulse 2s ease-in-out infinite;
 }
 
-@keyframes borderGlow {
+.terminal-container.super-active::before {
+  background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.8), transparent);
+  height: 2px;
+}
+
+@keyframes terminalPulse {
   0%, 100% { 
-    border-color: #667eea; 
-    box-shadow: 0 0 25px rgba(102, 126, 234, 0.6); 
+    box-shadow: 
+      0 25px 60px rgba(0, 0, 0, 0.5),
+      0 0 40px rgba(102, 126, 234, 0.3),
+      inset 0 0 30px rgba(102, 126, 234, 0.05);
   }
   50% { 
-    border-color: #f093fb; 
-    box-shadow: 0 0 35px rgba(240, 147, 251, 0.6); 
+    box-shadow: 
+      0 25px 60px rgba(0, 0, 0, 0.5),
+      0 0 50px rgba(102, 126, 234, 0.4),
+      inset 0 0 40px rgba(102, 126, 234, 0.08);
   }
 }
 
@@ -574,9 +608,15 @@
   /* Terminal en modo claro - mantener fondo oscuro pero ajustar borde */
   :root.lamp-light-mode .terminal-container,
   html.lamp-light-mode .terminal-container {
-    border: 1px solid rgba(59, 130, 246, 0.3);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-    background: #000000 !important;
+    box-shadow: 
+      0 25px 60px rgba(0, 0, 0, 0.2),
+      0 0 0 1px rgba(59, 130, 246, 0.15);
+    background: #080c14 !important;
+  }
+
+  :root.lamp-light-mode .terminal-container::before,
+  html.lamp-light-mode .terminal-container::before {
+    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
   }
 
   /* CTA buttons en modo claro */
@@ -609,6 +649,9 @@
   :root.lamp-light-mode .terminal-container,
   html.lamp-light-mode .terminal-container {
     max-width: 280px;
+    box-shadow: 
+      0 15px 40px rgba(0, 0, 0, 0.2),
+      0 0 0 1px rgba(59, 130, 246, 0.1);
   }
 
   :root.lamp-light-mode .terminal-body,
