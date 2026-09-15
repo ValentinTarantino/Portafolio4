@@ -235,9 +235,11 @@ const Projects = ({ t, language }) => {
                   <div className="project-header-row">
                     <h3 className="project-title">{project.title}</h3>
                   </div>
-                  <div className="featured-badge-row">
-                    <span className="featured-badge"><FiStar className="featured-badge-icon" /> {language === 'en' ? 'Featured' : 'Destacado'}</span>
-                  </div>
+                  {project.featured && (
+                    <div className="featured-badge-row">
+                      <span className="featured-badge"><FiStar className="featured-badge-icon" /> {language === 'en' ? 'Featured' : 'Destacado'}</span>
+                    </div>
+                  )}
                   <ProjectDescription text={project.description} t={t} />
                   
                   <div className="project-technologies">

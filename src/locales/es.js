@@ -177,6 +177,11 @@ const es = {
   },
   footer: {
     cta: '¿Trabajamos juntos?',
+    subtitle: 'Construyamos algo increíble juntos',
+    tagline: 'Desarrollador Full Stack especializado en crear experiencias digitales excepcionales.',
+    navigation: 'Navegación',
+    madeWith: 'Hecho con',
+    backToTop: 'Volver arriba',
     copyright: '© 2026 Valentín Thomas Tarantino. Todos los derechos reservados.',
     available: 'Disponible para nuevas oportunidades'
   }

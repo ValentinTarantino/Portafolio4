@@ -50,7 +50,7 @@ const Footer = ({ t }) => {
               <FiZap className="cta-icon" />
               <span className="cta-text">{t.footer.cta}</span>
             </div>
-            <p className="cta-subtitle">Construyamos algo increíble juntos</p>
+            <p className="cta-subtitle">{t.footer.subtitle}</p>
           </div>
           
           {/* Main Grid Section */}
@@ -64,14 +64,12 @@ const Footer = ({ t }) => {
                 <span className="logo-accent">T</span>
                 <span className="logo-text">arantino</span>
               </a>
-              <p className="footer-tagline">
-                Desarrollador Full Stack especializado en crear experiencias digitales excepcionales.
-              </p>
+              <p className="footer-tagline">{t.footer.tagline}</p>
             </div>
 
             {/* Navigation Column */}
             <div className="footer-nav-col">
-              <h4 className="footer-col-title">Navegación</h4>
+              <h4 className="footer-col-title">{t.footer.navigation}</h4>
               <nav className="footer-nav">
                 {navLinks.map((link) => (
                   <a 
@@ -90,7 +88,7 @@ const Footer = ({ t }) => {
             <div className="footer-tech-col">
               <h4 className="footer-col-title">
                 <FiCode className="col-icon" />
-                Hecho con
+                {t.footer.madeWith}
               </h4>
               <div className="tech-stack-grid">
                 {techStack.map((tech, index) => (
@@ -104,8 +102,8 @@ const Footer = ({ t }) => {
           </div>
 
           <div className="footer-bottom-bar">
-            <button onClick={scrollToTop} className="back-to-top-btn" aria-label="Volver arriba">
-              <span className="btn-text">Volver arriba</span>
+            <button onClick={scrollToTop} className="back-to-top-btn" aria-label={t.footer.backToTop}>
+              <span className="btn-text">{t.footer.backToTop}</span>
               <FiArrowUp />
             </button>
           </div>

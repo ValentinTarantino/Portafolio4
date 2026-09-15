@@ -177,6 +177,11 @@ const en = {
   },
   footer: {
     cta: 'Shall we work together?',
+    subtitle: "Let's build something amazing together",
+    tagline: 'Full Stack Developer specialized in creating exceptional digital experiences.',
+    navigation: 'Navigation',
+    madeWith: 'Made with',
+    backToTop: 'Back to top',
     copyright: '© 2026 Valentín Thomas Tarantino. All rights reserved.',
     available: 'Available for new opportunities'
   }
