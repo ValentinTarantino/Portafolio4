@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 import './Hero.css';
+import DinoGame from './DinoGame';
 
 // Dynamic terminal outputs renderer for seamless real-time bilingual updates
 const renderHistoryItem = (item, index, isSpanish) => {
@@ -25,6 +26,7 @@ const renderHistoryItem = (item, index, isSpanish) => {
             '  skills       - Mi stack de tecnologias principal',
             '  projects     - Ver mis proyectos destacados',
             '  npm run dev  - Activa el modo Super Desarrollador',
+            '  dino         - Juega al juego del dinosaurio',
             '  clear        - Limpia la consola'
           ]
         : [
@@ -33,6 +35,7 @@ const renderHistoryItem = (item, index, isSpanish) => {
             '  skills       - My main tech stack',
             '  projects     - View featured projects',
             '  npm run dev  - Run live Super Developer compilation',
+            '  dino         - Play the dinosaur game',
             '  clear        - Clear the terminal'
           ];
       return lines.map((line, lIdx) => (
@@ -333,6 +336,7 @@ const Hero = ({ t, language }) => {
   const [isCompiling, setIsCompiling] = useState(false);
   const [superActive, setSuperActive] = useState(false);
   const [trivia, setTrivia] = useState(null); // { step: 1|2|3, score: 0 }
+  const [dinoActive, setDinoActive] = useState(false);
 
   const terminalBodyRef = useRef(null);
   const inputRef = useRef(null);
@@ -466,7 +470,15 @@ const Hero = ({ t, language }) => {
         setTerminalHistory([...newHistory, { type: 'output', cmdType: 'skills' }]);
       } else if (cleanCommand === 'projects') {
         setTerminalHistory([...newHistory, { type: 'output', cmdType: 'projects' }]);
-      } else if (cleanCommand === 'game') {
+      } else if (cleanCommand === 'dino') {
+        const launchText = isSpanish
+          ? 'Iniciando juego del dinosaurio... ¡Presiona ESPACIO para saltar!'
+          : 'Starting dinosaur game... Press SPACE to jump!';
+        setTerminalHistory([...newHistory, { type: 'output', cmdType: 'raw', text: launchText }]);
+        setInputValue('');
+        setDinoActive(true);
+        return;
+    } else if (cleanCommand === 'game') {
         if (!superActive) {
           const lockedText = isSpanish
             ? 'La trivia secreta esta bloqueada. Ejecuta "npm run dev" primero para desbloquearla.'
@@ -632,8 +644,23 @@ const Hero = ({ t, language }) => {
                 {/* Commands history mapping */}
                 {terminalHistory.map((item, index) => renderHistoryItem(item, index, isSpanish))}
 
+                {/* Dino Game Canvas */}
+                {dinoActive && (
+                  <DinoGame
+                    isSpanish={isSpanish}
+                    onExit={() => {
+                      setDinoActive(false);
+                      const exitText = isSpanish
+                        ? 'Juego del dinosaurio finalizado. Escribe "dino" para jugar de nuevo.'
+                        : 'Dinosaur game ended. Type "dino" to play again.';
+                      setTerminalHistory(prev => [...prev, { type: 'output', cmdType: 'raw', text: exitText }]);
+                      setTimeout(() => focusInput(), 100);
+                    }}
+                  />
+                )}
+
                 {/* Active interactive prompt input */}
-                {!isCompiling && (
+                {!isCompiling && !dinoActive && (
                   <div className="terminal-input-wrapper">
                     <span className="prompt">
                       {trivia 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SiReact, SiSass, SiBootstrap, SiHtml5, SiJavascript, SiFirebase, SiNextdotjs, SiTypescript, SiTailwindcss, SiVite, SiPostgresql, SiPostman, SiCss, SiPython, SiPrisma, SiFastapi } from 'react-icons/si';
+import { SiReact, SiSass, SiBootstrap, SiHtml5, SiJavascript, SiFirebase, SiNextdotjs, SiTypescript, SiTailwindcss, SiVite, SiPostgresql, SiPostman, SiCss, SiPython, SiPrisma, SiFastapi, SiJest, SiDocker, SiTestinglibrary } from 'react-icons/si';
 import { FiStar } from 'react-icons/fi';
 import './Projects.css';
 import ProjectModal from './ProjectModal';
@@ -13,6 +13,7 @@ import flowImg from "../assets/flow.webp";
 import blogImg from "../assets/blog.webp";
 import turnosImg from "../assets/turnos.webp";
 import consorcioImg from "../assets/consorcio.webp";
+import goltvImg from "../assets/goltv.webp";
 
 const techIcons = {
   'React': <SiReact className="tech-icon" color="#61DAFB" />,
@@ -31,6 +32,9 @@ const techIcons = {
   'Python': <SiPython className="tech-icon" color="#3776AB" />,
   'Prisma': <SiPrisma className="tech-icon" color="#ffffff" />,
   'FastAPI': <SiFastapi className="tech-icon" color="#05998B" />,
+  'Jest': <SiJest className="tech-icon" color="#C21325" />,
+  'Docker': <SiDocker className="tech-icon" color="#2496ED" />,
+  'Testing Library': <SiTestinglibrary className="tech-icon" color="#E33332" />,
   'Zustand': <span className="tech-icon-text">🐻</span>
 };
 
@@ -48,8 +52,8 @@ const ProjectDescription = ({ text, t }) => {
     <p className="project-description">
       {displayText}
       {!isExpanded && '...'}
-      <button 
-        type="button" 
+      <button
+        type="button"
         className="read-more-btn"
         onClick={() => setIsExpanded(!isExpanded)}
       >
@@ -75,6 +79,28 @@ const Projects = ({ t, language }) => {
 
   const projects = [
     {
+      id: 11,
+      title: 'GolTV Libre',
+      featured: true,
+      caseStudyKey: 'GolTV',
+      description: t.projects.descriptions.GolTV,
+      image: goltvImg,
+      technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Docker', 'Jest', 'Testing Library'],
+      liveUrl: 'https://goltv.vercel.app/',
+      codeUrl: 'https://github.com/ValentinTarantino/GolTV'
+    },
+    {
+      id: 1,
+      title: 'DolarARG',
+      featured: true,
+      caseStudyKey: 'DolarARG',
+      description: t.projects.descriptions.DolarARG,
+      image: dolarImg,
+      technologies: ['Next.js', 'TypeScript', 'SASS', 'Prisma', 'PostgreSQL', 'API'],
+      liveUrl: 'https://dolar-arg-hoy.vercel.app/',
+      codeUrl: 'https://github.com/ValentinTarantino/DolarArg'
+    },
+    {
       id: 3,
       title: 'Lumina Commerce',
       featured: true,
@@ -85,17 +111,7 @@ const Projects = ({ t, language }) => {
       liveUrl: 'https://lumina-commerce-beta.vercel.app/',
       codeUrl: 'https://github.com/ValentinTarantino/lumina-commerce'
     },
-    {
-      id: 9,
-      title: 'TurnoApp',
-      featured: true,
-      caseStudyKey: 'TurnoApp',
-      description: t.projects.descriptions.TurnoApp,
-      image: turnosImg,
-      technologies: ['React', 'JavaScript', 'CSS3', 'Bootstrap', 'PostgreSQL'],
-      liveUrl: 'https://turno-app.vercel.app/',
-      codeUrl: 'https://github.com/ValentinTarantino/TurnoApp'
-    },
+
     {
       id: 8,
       title: 'Lucas Caudana Blog',
@@ -119,15 +135,15 @@ const Projects = ({ t, language }) => {
       codeUrl: 'https://github.com/ValentinTarantino/claudiaconsorcio'
     },
     {
-      id: 1,
-      title: 'DolarARG',
+      id: 9,
+      title: 'TurnoApp',
       featured: true,
-      caseStudyKey: 'DolarARG',
-      description: t.projects.descriptions.DolarARG,
-      image: dolarImg,
-      technologies: ['Next.js', 'TypeScript', 'SASS', 'Prisma', 'PostgreSQL', 'API'],
-      liveUrl: 'https://dolar-arg-hoy.vercel.app/',
-      codeUrl: 'https://github.com/ValentinTarantino/DolarArg'
+      caseStudyKey: 'TurnoApp',
+      description: t.projects.descriptions.TurnoApp,
+      image: turnosImg,
+      technologies: ['React', 'JavaScript', 'CSS3', 'Bootstrap', 'PostgreSQL'],
+      liveUrl: 'https://turno-app.vercel.app/',
+      codeUrl: 'https://github.com/ValentinTarantino/TurnoApp'
     },
     {
       id: 6,
@@ -171,7 +187,7 @@ const Projects = ({ t, language }) => {
     },
   ];
 
-  const filteredProjects = projects.filter(project => 
+  const filteredProjects = projects.filter(project =>
     filter === 'all' ? true : project.featured
   );
 
@@ -180,16 +196,16 @@ const Projects = ({ t, language }) => {
       <div className="container">
         <h2 className="section-title">{t.projects.title}</h2>
         <p className="section-subtitle">{t.projects.subtitle}</p>
-        
+
         {/* Category Filter Tabs */}
         <div className="filter-container">
-          <button 
+          <button
             className={`filter-btn filter-btn--featured ${filter === 'featured' ? 'active' : ''}`}
             onClick={() => setFilter('featured')}
           >
             {t.projects.filterFeatured}
           </button>
-          <button 
+          <button
             className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
             onClick={() => setFilter('all')}
           >
@@ -200,21 +216,21 @@ const Projects = ({ t, language }) => {
         <div className="projects-grid">
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, index) => (
-              <motion.div 
+              <motion.div
                 layout={!isMobile ? "position" : false}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3 }}
-                key={project.id} 
-                className={`project-card glass-card ${project.featured ? 'project-card--featured' : 'project-card--standard'}`} 
+                key={project.id}
+                className={`project-card glass-card ${project.featured ? 'project-card--featured' : 'project-card--standard'}`}
               >
                 <div className="project-image">
                   <img src={project.image} alt={project.title} />
                   <div className="project-overlay">
                     <div className="project-actions">
                       {project.featured && project.caseStudyKey && (
-                        <button 
+                        <button
                           onClick={() => setActiveProject(project)}
                           className="project-btn case-study-btn"
                         >
@@ -230,7 +246,7 @@ const Projects = ({ t, language }) => {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="project-content">
                   <div className="project-header-row">
                     <h3 className="project-title">{project.title}</h3>
@@ -241,7 +257,7 @@ const Projects = ({ t, language }) => {
                     </div>
                   )}
                   <ProjectDescription text={project.description} t={t} />
-                  
+
                   <div className="project-technologies">
                     {project.technologies.map((tech, techIndex) => (
                       <span key={techIndex} className="tech-tag" data-name={tech}>
@@ -259,10 +275,10 @@ const Projects = ({ t, language }) => {
       {/* Case Study Modal */}
       <AnimatePresence>
         {activeProject && (
-          <ProjectModal 
-            project={activeProject} 
-            t={t} 
-            onClose={() => setActiveProject(null)} 
+          <ProjectModal
+            project={activeProject}
+            t={t}
+            onClose={() => setActiveProject(null)}
           />
         )}
       </AnimatePresence>

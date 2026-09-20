@@ -49,7 +49,7 @@ const es = {
     categories: {
       frontend: 'Dominio Frontend',
       backend: 'Backend y Cloud',
-      tools: 'Herramientas y Diseño',
+      tools: 'Herramientas, DevOps y Testing',
       ai: 'Inteligencia Artificial'
     }
   },
@@ -70,6 +70,7 @@ const es = {
     solutionLabel: 'Solución y Arquitectura',
     metricsLabel: 'Resultados e Impacto',
     descriptions: {
+      GolTV: 'Plataforma web gratuita para seguir y ver partidos de fútbol en vivo. Interfaz Neo-Brutalista, reproductor HLS integrado, chat en vivo y cobertura de más de 25 ligas con actualizaciones en tiempo real.',
       DolarARG: 'Plataforma fullstack para monitorear cotizaciones del dólar, euro, real y criptomonedas en Argentina en tiempo real. Incluye historial, gráficos, calculadora, sistema de alertas por email, bandas cambiarias del BCRA y funciona como PWA instalable. Datos actualizados cada 5 minutos con backend serverless en Vercel.',
       todoApp: 'Creación de una aplicación interactiva para gestionar tareas con JavaScript y manipulación del DOM. Implementación de eventos y funciones de orden superior para mejorar la experiencia del usuario.',
       WeatherReport: 'Aplicación de informe meteorológico en React. Utilización de una API para obtener datos climáticos en tiempo real, la información es traida desde https://openweathermap.org/. Manejo del estado global con Zustand.',
@@ -85,6 +86,16 @@ const es = {
       tabs: {
         overview: 'Resumen ',
         architecture: 'Arquitectura '
+      },
+      GolTV: {
+        challenge: 'Desarrollar una plataforma de streaming deportivo en tiempo real que pueda manejar múltiples transmisiones HLS, estados en vivo, y un chat concurrente, manteniendo una interfaz rápida, bilingüe y optimizada para SEO.',
+        solution: 'Arquitectura frontend robusta con Next.js 16 (App Router) y React 19. Integración de Hls.js para reproducción de video fluida y Tailwind CSS v4 para un diseño Neo-Brutalista. Se implementó auto-refresh inteligente de marcadores, persistencia de scroll y un chat con smart scroll. Entorno dockerizado y testeado con Jest.',
+        metrics: 'Soporte para más de 25 ligas globales, transmisiones estables y una experiencia de usuario altamente interactiva y bilingüe.',
+        architectureNodes: [
+          { title: 'Frontend', tech: 'Next.js 16 + React 19', desc: 'App Router, TypeScript, Neo-Brutalism' },
+          { title: 'Video & UI', tech: 'Hls.js + Tailwind v4', desc: 'HLS Streams, Tailwind CSS, Lucide' },
+          { title: 'Testing & DevOps', tech: 'Jest + Docker', desc: 'RTL, Docker Compose, CI/CD' }
+        ]
       },
       LuminaCommerce: {
         challenge: 'Diseñar y desplegar una plataforma de comercio electrónico de alta fidelidad que mantenga un rendimiento óptimo de carga (<1.5s) mientras maneja consultas relacionales complejas y control de estados persistentes del cliente en tiempo real.',

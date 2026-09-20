@@ -1038,13 +1038,18 @@ html:not(.lamp-dark-mode) .hanging-chain {
 :root.lamp-light-mode .skill-item {
   background: #f1f5f9 !important;
   border: 2px solid rgba(59, 130, 246, 0.3) !important;
-  min-width: 150px !important;
-  padding: 0.8rem 1.2rem !important;
+  min-width: auto !important;
+  padding: 0.6rem 0.8rem !important;
 }
 
 :root.lamp-light-mode .skill-name-small {
   color: #0f172a !important;
   font-weight: 600 !important;
+  font-size: 0.82rem !important;
+  line-height: 1.25 !important;
+  white-space: normal !important;
+  overflow-wrap: break-word !important;
+  word-break: normal !important;
 }
 
 :root.lamp-light-mode .skill-icon-wrapper {

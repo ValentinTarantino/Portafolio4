@@ -49,7 +49,7 @@ const en = {
     categories: {
       frontend: 'Frontend Mastery',
       backend: 'Backend & Cloud',
-      tools: 'Design & DevTools',
+      tools: 'DevOps, Testing & Tools',
       ai: 'Artificial Intelligence'
     }
   },
@@ -70,6 +70,7 @@ const en = {
     solutionLabel: 'Solution & Architecture',
     metricsLabel: 'Results & Impact',
     descriptions: {
+      GolTV: 'Free web platform to track and watch live football matches. Features a Neo-Brutalist interface, integrated HLS player, live chat, and coverage of 25+ leagues with real-time updates.',
       DolarARG: 'Fullstack platform for monitoring dollar, euro, real and cryptocurrency exchange rates in Argentina in real-time. Includes historical data, charts, calculator, email alert system, BCRA exchange rate bands, and works as an installable PWA. Data updated every 5 minutes with serverless backend on Vercel.',
       todoApp: 'Creation of an interactive application to manage tasks with JavaScript and DOM manipulation. Implementation of events and higher-order functions to enhance user experience.',
       WeatherReport: 'Weather report app in React. Using an API to retrieve real-time weather data from https://openweathermap.org/. Global state management with Zustand.',
@@ -85,6 +86,16 @@ const en = {
       tabs: {
         overview: 'Overview ',
         architecture: 'Architecture '
+      },
+      GolTV: {
+        challenge: 'Develop a real-time sports streaming platform capable of handling multiple HLS streams, live states, and concurrent chat while maintaining a fast, bilingual, and SEO-optimized interface.',
+        solution: 'Robust frontend architecture using Next.js 16 (App Router) and React 19. Integrated Hls.js for smooth video playback and Tailwind CSS v4 for a Neo-Brutalist design. Implemented smart scoreboard auto-refresh, scroll restoration, and a chat with smart scroll. Containerized with Docker and tested using Jest.',
+        metrics: 'Support for 25+ global leagues, stable streams, and a highly interactive, bilingual user experience.',
+        architectureNodes: [
+          { title: 'Frontend', tech: 'Next.js 16 + React 19', desc: 'App Router, TypeScript, Neo-Brutalism' },
+          { title: 'Video & UI', tech: 'Hls.js + Tailwind v4', desc: 'HLS Streams, Tailwind CSS, Lucide' },
+          { title: 'Testing & DevOps', tech: 'Jest + Docker', desc: 'RTL, Docker Compose, CI/CD' }
+        ]
       },
       LuminaCommerce: {
         challenge: 'Design and deploy a high-fidelity e-commerce platform that maintains optimal load performance (<1.5s) while handling complex relational queries and real-time client persistent state management.',
