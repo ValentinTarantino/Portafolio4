@@ -27,7 +27,9 @@ const renderHistoryItem = (item, index, isSpanish) => {
             '  projects     - Ver mis proyectos destacados',
             '  npm run dev  - Activa el modo Super Desarrollador',
             '  dino         - Juega al juego del dinosaurio',
-            '  clear        - Limpia la consola'
+            '  clear        - Limpia la consola',
+            '',
+            '  Tip: usa el boton ↻ para reiniciar la consola'
           ]
         : [
             'Available commands:',
@@ -36,7 +38,9 @@ const renderHistoryItem = (item, index, isSpanish) => {
             '  projects     - View featured projects',
             '  npm run dev  - Run live Super Developer compilation',
             '  dino         - Play the dinosaur game',
-            '  clear        - Clear the terminal'
+            '  clear        - Clear the terminal',
+            '',
+            '  Tip: use the ↻ button to reset the console'
           ];
       return lines.map((line, lIdx) => (
         <div key={`${index}-${lIdx}`} className="terminal-line output-line">
@@ -341,6 +345,16 @@ const Hero = ({ t, language }) => {
   const terminalBodyRef = useRef(null);
   const inputRef = useRef(null);
 
+  const handleReset = () => {
+    setTerminalHistory([]);
+    setInputValue('');
+    setIsCompiling(false);
+    setSuperActive(false);
+    setTrivia(null);
+    setDinoActive(false);
+    setTimeout(() => inputRef.current?.focus(), 50);
+  };
+
   // Auto scroll to bottom
   useEffect(() => {
     if (terminalBodyRef.current) {
@@ -472,8 +486,8 @@ const Hero = ({ t, language }) => {
         setTerminalHistory([...newHistory, { type: 'output', cmdType: 'projects' }]);
       } else if (cleanCommand === 'dino') {
         const launchText = isSpanish
-          ? 'Iniciando juego del dinosaurio... ¡Presiona ESPACIO para saltar!'
-          : 'Starting dinosaur game... Press SPACE to jump!';
+          ? 'Iniciando juego del dinosaurio...'
+          : 'Starting dinosaur game...';
         setTerminalHistory([...newHistory, { type: 'output', cmdType: 'raw', text: launchText }]);
         setInputValue('');
         setDinoActive(true);
@@ -612,6 +626,9 @@ const Hero = ({ t, language }) => {
                   <span className="btn-maximize"></span>
                 </div>
                 <div className="terminal-title">developer.js</div>
+                <button className="terminal-reset-btn" onClick={handleReset} title="Reset terminal" type="button" tabIndex={-1} onMouseDown={(e) => e.preventDefault()}>
+                  ↻
+                </button>
               </div>
               <div className="terminal-body" onClick={focusInput} ref={terminalBodyRef}>
                 {/* Initial object structure */}

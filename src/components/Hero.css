@@ -300,6 +300,25 @@
   font-weight: 400;
   font-family: 'SF Mono', 'Fira Code', monospace;
   letter-spacing: 0.02em;
+  margin-left: auto;
+}
+
+.terminal-reset-btn {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #4a5568;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  transition: all 0.2s;
+  line-height: 1;
+}
+
+.terminal-reset-btn:hover {
+  color: #e85d75;
+  border-color: #e85d75;
+  background: rgba(232, 93, 117, 0.1);
 }
 
 .terminal-body {
@@ -500,7 +519,7 @@
   }
   
   .terminal-container {
-    max-width: 350px;
+    max-width: 500px;
   }
 }
 
@@ -533,12 +552,18 @@
   }
   
   .terminal-container {
-    max-width: 300px;
+    max-width: 95vw;
+    margin: 0 auto;
   }
   
   .terminal-body {
-    padding: 1rem;
+    padding: 0.75rem;
     font-size: 0.8rem;
+    height: 340px;
+  }
+
+  .terminal-reset-btn {
+    font-size: 0.9rem;
   }
 
   /* Hide shapes and floating elements on mobile to improve performance and eliminate visual lag */
@@ -648,7 +673,7 @@
   /* Terminal más compacto en móvil */
   :root.lamp-light-mode .terminal-container,
   html.lamp-light-mode .terminal-container {
-    max-width: 280px;
+    max-width: 95vw;
     box-shadow: 
       0 15px 40px rgba(0, 0, 0, 0.2),
       0 0 0 1px rgba(59, 130, 246, 0.1);
@@ -656,7 +681,7 @@
 
   :root.lamp-light-mode .terminal-body,
   html.lamp-light-mode .terminal-body {
-    height: 220px;
+    height: 340px;
     padding: 1rem;
   }
 }
