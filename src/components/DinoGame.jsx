@@ -12,6 +12,7 @@ const DinoGame = ({ onExit, isSpanish }) => {
 
   const W = 600;
   const H = 270;
+  const SCALE = 2;
   const GROUND = 170;
 
   const INITIAL_SPEED = 2.6;
@@ -79,7 +80,10 @@ const DinoGame = ({ onExit, isSpanish }) => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    canvas.width = W * SCALE;
+    canvas.height = H * SCALE;
     const ctx = canvas.getContext('2d');
+    ctx.scale(SCALE, SCALE);
 
     let destroyed = false;
     getDoc(DOC_REF).then(snap => {
@@ -683,18 +687,46 @@ const DinoGame = ({ onExit, isSpanish }) => {
     };
   }, [onExit, isSpanish]);
 
+  const handleTouch = useCallback((e) => {
+    e.preventDefault();
+    const g = gameRef.current;
+    if (!g) return;
+
+    if (g.status === 'waiting') {
+      g.status = 'playing';
+      g.dino.jumping = true;
+      g.dino.vy = JUMP_VEL;
+      return;
+    }
+
+    if (g.status === 'gameover') {
+      const hs = g.highScore;
+      gameRef.current = initGame();
+      gameRef.current.highScore = hs;
+      gameRef.current.status = 'playing';
+      gameRef.current.dino.jumping = true;
+      gameRef.current.dino.vy = JUMP_VEL;
+      return;
+    }
+
+    if (!g.dino.jumping) {
+      g.dino.jumping = true;
+      g.dino.vy = JUMP_VEL;
+    }
+  }, [initGame]);
+
   return (
     <div style={{ margin: '0.5rem 0', textAlign: 'center' }}>
       <canvas
         ref={canvasRef}
-        width={W}
-        height={H}
+        width={W * SCALE}
+        height={H * SCALE}
+        onTouchStart={handleTouch}
         style={{
           width: '100%',
           maxWidth: '800px',
           height: 'auto',
           borderRadius: '6px',
-          imageRendering: 'pixelated',
         }}
       />
     </div>
