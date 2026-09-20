@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SiReact, SiSass, SiBootstrap, SiHtml5, SiJavascript, SiFirebase, SiNextdotjs, SiTypescript, SiTailwindcss, SiVite, SiPostgresql, SiPostman, SiCss, SiPython, SiPrisma, SiFastapi, SiJest, SiDocker, SiTestinglibrary } from 'react-icons/si';
 import { FiStar } from 'react-icons/fi';
@@ -77,7 +77,7 @@ const Projects = ({ t, language }) => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const projects = [
+  const projects = useMemo(() => [
     {
       id: 11,
       title: 'GolTV Libre',
@@ -185,7 +185,7 @@ const Projects = ({ t, language }) => {
       liveUrl: 'https://weather-report-oraora.vercel.app',
       codeUrl: 'https://github.com/ValentinTarantino/Weather'
     },
-  ];
+  ], [t.projects, language]);
 
   const filteredProjects = projects.filter(project =>
     filter === 'all' ? true : project.featured

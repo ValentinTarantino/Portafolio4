@@ -699,6 +699,28 @@
     width: 100%;
     justify-content: center;
   }
+
+  /* PERFORMANCE: Desactivar animaciones costosas en mobile */
+  .footer-glow,
+  .footer-particles,
+  .footer-circuit-lines {
+    display: none;
+  }
+
+  .footer-energy-line::before {
+    animation: none;
+    width: 100%;
+    opacity: 0.8;
+  }
+
+  .footer-cta-energy .energy-orb {
+    animation: none;
+    opacity: 0.6;
+  }
+
+  .back-to-top-btn {
+    animation: none;
+  }
 }
 
 @media (max-width: 480px) {

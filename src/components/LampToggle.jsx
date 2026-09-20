@@ -28,16 +28,6 @@ const LampToggle = () => {
   useEffect(() => {
     const handleThemeChange = (e) => {
       setIsLightMode(e.detail);
-      setTimeout(() => {
-        if (lampRef.current) {
-          const rect = lampRef.current.getBoundingClientRect();
-          if (rect.width === 0 || rect.height === 0) return;
-          setChainPosition({
-            top: rect.bottom,
-            left: rect.left + rect.width / 2
-          });
-        }
-      }, 100);
     };
     window.addEventListener('themeToggle', handleThemeChange);
     return () => window.removeEventListener('themeToggle', handleThemeChange);
@@ -56,57 +46,19 @@ const LampToggle = () => {
       }
     };
 
-    // Usar requestAnimationFrame para esperar al renderizado completo
     let rafId;
     const scheduleUpdate = () => {
       cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => {
-        requestAnimationFrame(updateChainPosition);
-      });
+      rafId = requestAnimationFrame(updateChainPosition);
     };
 
-    // Ejecutar inmediatamente pero después del renderizado actual
     scheduleUpdate();
     
-    // Recálculos adicionales para asegurar posición correcta
-    const timeout1 = setTimeout(scheduleUpdate, 100);
-    const timeout2 = setTimeout(scheduleUpdate, 300);
-    const timeout3 = setTimeout(scheduleUpdate, 600);
-    
-    window.addEventListener('resize', scheduleUpdate);
-    window.addEventListener('scroll', scheduleUpdate);
-
-    // MutationObserver para detectar cambios de clase (modo claro/oscuro)
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.attributeName === 'class') {
-          setTimeout(scheduleUpdate, 50);
-        }
-      });
-    });
-    
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['class']
-    });
-
-    // ResizeObserver para detectar cambios de layout del header
-    let resizeObserver;
-    const header = document.querySelector('.header');
-    if (header && typeof ResizeObserver !== 'undefined') {
-      resizeObserver = new ResizeObserver(() => {
-        scheduleUpdate();
-      });
-      resizeObserver.observe(header);
-    }
+    window.addEventListener('resize', scheduleUpdate, { passive: true });
+    window.addEventListener('scroll', scheduleUpdate, { passive: true });
 
     return () => {
       cancelAnimationFrame(rafId);
-      clearTimeout(timeout1);
-      clearTimeout(timeout2);
-      clearTimeout(timeout3);
-      observer.disconnect();
-      if (resizeObserver) resizeObserver.disconnect();
       window.removeEventListener('resize', scheduleUpdate);
       window.removeEventListener('scroll', scheduleUpdate);
     };

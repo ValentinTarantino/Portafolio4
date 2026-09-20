@@ -1,12 +1,9 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 import './Contact.css';
 
 // ─── EmailJS config ───────────────────────────────────────────────────────────
-// 1. Sign up at https://www.emailjs.com (free tier: 200 emails/month)
-// 2. Create a service, an email template, and grab your Public Key
-// 3. Replace the three placeholders below with your actual IDs
 const EMAILJS_SERVICE_ID  = 'service_4e0pogu';
 const EMAILJS_TEMPLATE_ID = 'template_ae7vj2v';
 const EMAILJS_PUBLIC_KEY  = 'XIO_llVQGZXPMstmk';
@@ -26,6 +23,7 @@ const validate = (fields, tf) => {
 const Contact = ({ t }) => {
   const tf = t.contact.form;
   const formRef = useRef(null);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
 
   const [fields, setFields]   = useState({ name: '', email: '', message: '' });
   const [errors, setErrors]   = useState({});
@@ -161,18 +159,27 @@ const Contact = ({ t }) => {
                 >
                   <div className="feedback-icon success-icon">
                     <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-                      <motion.circle
-                        cx="12" cy="12" r="10"
-                        stroke="#4ade80" strokeWidth="2"
-                        initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
-                        transition={{ duration: 0.6 }}
-                      />
-                      <motion.path
-                        d="M7 13l3 3 7-7"
-                        stroke="#4ade80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-                        initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
-                        transition={{ duration: 0.5, delay: 0.3 }}
-                      />
+                      {isMobile ? (
+                        <>
+                          <circle cx="12" cy="12" r="10" stroke="#4ade80" strokeWidth="2"/>
+                          <path d="M7 13l3 3 7-7" stroke="#4ade80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </>
+                      ) : (
+                        <>
+                          <motion.circle
+                            cx="12" cy="12" r="10"
+                            stroke="#4ade80" strokeWidth="2"
+                            initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
+                            transition={{ duration: 0.6 }}
+                          />
+                          <motion.path
+                            d="M7 13l3 3 7-7"
+                            stroke="#4ade80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                            initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
+                            transition={{ duration: 0.5, delay: 0.3 }}
+                          />
+                        </>
+                      )}
                     </svg>
                   </div>
                   <h3>{tf.successTitle}</h3>
@@ -315,8 +322,8 @@ const Contact = ({ t }) => {
                     type="submit"
                     className={`form-submit-btn ${status === 'sending' ? 'sending' : ''}`}
                     disabled={status === 'sending'}
-                    whileHover={status !== 'sending' ? { scale: 1.02, y: -2 } : {}}
-                    whileTap={status !== 'sending' ? { scale: 0.98 } : {}}
+                    whileHover={status !== 'sending' && !isMobile ? { scale: 1.02, y: -2 } : {}}
+                    whileTap={status !== 'sending' && !isMobile ? { scale: 0.98 } : {}}
                   >
                     {status === 'sending' ? (
                       <>

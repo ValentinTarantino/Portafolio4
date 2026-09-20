@@ -606,11 +606,17 @@ const DinoGame = ({ onExit, isSpanish }) => {
       };
 
       // --- MAIN LOOP ---
+      let frameCount = 0;
       const loop = () => {
         const g = gameRef.current;
         if (!g) return;
         update(g);
-        render(g);
+        frameCount++;
+        if (g.status === 'waiting') {
+          if (frameCount % 6 === 0) render(g);
+        } else {
+          render(g);
+        }
         animRef.current = requestAnimationFrame(loop);
       };
       loop();

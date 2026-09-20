@@ -1,14 +1,15 @@
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import './App.css';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import About from './components/About';
-import Skills from './components/Skills';
-import Projects from './components/Projects';
-import Testimonials from './components/Testimonials';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
+
+const About = lazy(() => import('./components/About'));
+const Skills = lazy(() => import('./components/Skills'));
+const Projects = lazy(() => import('./components/Projects'));
+const Testimonials = lazy(() => import('./components/Testimonials'));
+const Contact = lazy(() => import('./components/Contact'));
+const Footer = lazy(() => import('./components/Footer'));
 
 import es from './locales/es';
 import en from './locales/en';
@@ -32,12 +33,14 @@ function App() {
       </div>
       <Header t={t} language={language} toggleLanguage={toggleLanguage} />
       <Hero t={t} language={language} />
-      <About t={t} />
-      <Skills t={t} />
-      <Projects t={t} language={language} />
-      <Testimonials t={t} language={language} />
-      <Contact t={t} />
-      <Footer t={t} />
+      <Suspense fallback={<div />}>
+        <About t={t} />
+        <Skills t={t} />
+        <Projects t={t} language={language} />
+        <Testimonials t={t} language={language} />
+        <Contact t={t} />
+        <Footer t={t} />
+      </Suspense>
     </div>
   );
 }
