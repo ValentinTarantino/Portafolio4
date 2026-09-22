@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import './Skills.css';
-import { SiNextdotjs, SiTypescript, SiTailwindcss, SiReact, SiHtml5, SiJavascript, SiCss, SiSass, SiFirebase, SiFigma, SiGit, SiGithub, SiNodedotjs, SiExpress, SiPostgresql, SiPython, SiPrisma, SiFastapi, SiBootstrap, SiVite, SiDocker, SiJest, SiTestinglibrary } from 'react-icons/si';
+import { SiNextdotjs, SiTypescript, SiTailwindcss, SiReact, SiHtml5, SiJavascript, SiCss, SiSass, SiFirebase, SiFigma, SiGit, SiGithub, SiNodedotjs, SiExpress, SiPostgresql, SiPython, SiPrisma, SiFastapi, SiBootstrap, SiVite, SiDocker, SiJest, SiTestinglibrary, SiCypress } from 'react-icons/si';
 import postgresImg from '../assets/postgres.webp';
 import exImg from '../assets/ex.webp';
 import claudeIcon from '../assets/icons/claude.png';
@@ -40,6 +40,7 @@ const ICONS = {
     { name: 'Docker', icon: <SiDocker size={32} color="#2496ED" /> },
     { name: 'Jest', icon: <SiJest size={32} color="#C21325" /> },
     { name: 'Testing Library', icon: <SiTestinglibrary size={32} color="#E33332" /> },
+    { name: 'Cypress', icon: <SiCypress size={32} color="#ffffff" /> },
     { name: 'Git', icon: <SiGit size={32} color="#F05032" /> },
     { name: 'GitHub', icon: <SiGithub size={32} color="#ffffff" /> },
     { name: 'Vite', icon: <SiVite size={32} color="#646CFF" /> },

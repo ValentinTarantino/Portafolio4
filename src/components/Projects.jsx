@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SiReact, SiSass, SiBootstrap, SiHtml5, SiJavascript, SiFirebase, SiNextdotjs, SiTypescript, SiTailwindcss, SiVite, SiPostgresql, SiPostman, SiCss, SiPython, SiPrisma, SiFastapi, SiJest, SiDocker, SiTestinglibrary } from 'react-icons/si';
+import { SiReact, SiSass, SiBootstrap, SiHtml5, SiJavascript, SiFirebase, SiNextdotjs, SiTypescript, SiTailwindcss, SiVite, SiPostgresql, SiPostman, SiCss, SiPython, SiPrisma, SiFastapi, SiJest, SiDocker, SiTestinglibrary, SiCypress } from 'react-icons/si';
 import { FiStar } from 'react-icons/fi';
 import './Projects.css';
 import ProjectModal from './ProjectModal';
@@ -35,6 +35,7 @@ const techIcons = {
   'Jest': <SiJest className="tech-icon" color="#C21325" />,
   'Docker': <SiDocker className="tech-icon" color="#2496ED" />,
   'Testing Library': <SiTestinglibrary className="tech-icon" color="#E33332" />,
+  'Cypress': <SiCypress className="tech-icon" color="#ffffff" />,
   'Zustand': <span className="tech-icon-text">🐻</span>
 };
 
@@ -85,7 +86,7 @@ const Projects = ({ t, language }) => {
       caseStudyKey: 'GolTV',
       description: t.projects.descriptions.GolTV,
       image: goltvImg,
-      technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Docker', 'Jest', 'Testing Library'],
+      technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Docker', 'Jest', 'Testing Library', 'Cypress'],
       liveUrl: 'https://goltv.vercel.app/',
       codeUrl: 'https://github.com/ValentinTarantino/GolTV'
     },

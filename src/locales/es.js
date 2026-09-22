@@ -89,12 +89,12 @@ const es = {
       },
       GolTV: {
         challenge: 'Desarrollar una plataforma de streaming deportivo en tiempo real que pueda manejar múltiples transmisiones HLS, estados en vivo, y un chat concurrente, manteniendo una interfaz rápida, bilingüe y optimizada para SEO.',
-        solution: 'Arquitectura frontend robusta con Next.js 16 (App Router) y React 19. Integración de Hls.js para reproducción de video fluida y Tailwind CSS v4 para un diseño Neo-Brutalista. Se implementó auto-refresh inteligente de marcadores, persistencia de scroll y un chat con smart scroll. Entorno dockerizado y testeado con Jest.',
+        solution: 'Arquitectura frontend robusta con Next.js 16 (App Router) y React 19. Integración de Hls.js para reproducción de video fluida y Tailwind CSS v4 para un diseño Neo-Brutalista. Se implementó auto-refresh inteligente de marcadores, persistencia de scroll y un chat con smart scroll. Entorno dockerizado y testeado con Jest, Testing Library y Cypress (E2E).',
         metrics: 'Soporte para más de 25 ligas globales, transmisiones estables y una experiencia de usuario altamente interactiva y bilingüe.',
         architectureNodes: [
           { title: 'Frontend', tech: 'Next.js 16 + React 19', desc: 'App Router, TypeScript, Neo-Brutalism' },
           { title: 'Video & UI', tech: 'Hls.js + Tailwind v4', desc: 'HLS Streams, Tailwind CSS, Lucide' },
-          { title: 'Testing & DevOps', tech: 'Jest + Docker', desc: 'RTL, Docker Compose, CI/CD' }
+          { title: 'Testing & DevOps', tech: 'Jest + Cypress + Docker', desc: 'RTL, E2E, Docker Compose, CI/CD' }
         ]
       },
       LuminaCommerce: {
