@@ -12,12 +12,15 @@ const en = {
     name: 'Valentín Thomas Tarantino',
     title: 'Fullstack Developer',
     description: 'I design and build robust, scalable web applications. Specialized in bridging highly interactive, fluid, and optimized user interfaces with efficient and secure backend architectures.',
-    downloadCV: 'Download CV',
+    downloadCV: 'View CV',
+    cvModalTitle: 'My Resume',
+    cvDownload: 'Download PDF',
+    cvClose: 'Close',
     available: 'Available for new projects'
   },
   about: {
     title: 'About Me',
-    description: 'I am a Full Stack developer specialized in building modern digital products with a rigorous focus on user experience, performance, and best practices. Experienced in both complex full-stack architectures and delivering freelance solutions for production-grade real clients. I am passionate about structuring optimized databases, designing fluid APIs, and creating intuitive interfaces that add tangible business value.',
+    description: 'I am a Full Stack developer specialized in building modern digital products with a rigorous focus on user experience, performance, and best practices. Experienced in both complex full-stack architectures and delivering freelance solutions for production-grade real clients. I am passionate about structuring optimized databases, designing fluid APIs, and creating intuitive interfaces that add tangible business value. I work respecting the level of confidentiality each client requires, ensuring the privacy and security of their information.',
     education: 'Academic Background',
     currentEducation: 'Current Education',
     experienceLabel: 'Years of experience',
@@ -41,7 +44,42 @@ const en = {
       fullStackCareer: 'Full Stack Developer Career',
       aiAutomation: 'AI Automation',
       aiAutomationAdvanced: 'AI Automation (Advanced)'
-    }
+    },
+    experience: 'Professional Experience',
+    present: 'Present',
+    experienceItems: {
+      bindin: {
+        role: 'Full Stack Developer',
+        company: 'Bindin.gg',
+        location: 'Remote, Argentina',
+        bullets: [
+          'Contributed to the backend (Node.js + Express.js) of a platform with 50,000+ active users.',
+          'Diagnosed and fixed a dashboard bottleneck caused by an unindexed foreign key: -82% response time (3.9s → <0.9s).',
+          'Automated the CI/CD pipeline, cutting manual release steps from 6 to 2.',
+          'Built interfaces with Next.js and TypeScript, and took part in the team\'s code reviews.',
+          'Added unit tests with Jest and E2E tests with Cypress to the CI/CD pipeline, covering critical flows (auth, dashboard, alerts) and reducing production failures.'
+        ]
+      },
+      freelance: {
+        role: 'Full Stack Developer',
+        company: 'Freelance / Independent',
+        location: 'Remote',
+        note: '(Paused January–August 2026 while at Bindin.gg)',
+        bullets: [
+          'Delivered end-to-end client projects as a solo developer: requirements, architecture, development, and deployment.',
+          'Optimized performance with code splitting, lazy loading, and image optimization: +31% load speed.',
+          'Designed RESTful APIs with JWT authentication and integrated third-party services.',
+          'Managed full project lifecycles with fluent English communication for international clients.'
+        ]
+      }
+    },
+    softSkillsTitle: 'Soft Skills',
+    softSkills: [
+      'Assertive communication',
+      'Project management',
+      'Autonomy',
+      'Problem solving'
+    ]
   },
   skills: {
     title: 'My Main Stack',
@@ -70,25 +108,25 @@ const en = {
     solutionLabel: 'Solution & Architecture',
     metricsLabel: 'Results & Impact',
     descriptions: {
-      GolTV: 'Free web platform to track and watch live football matches. Features a Neo-Brutalist interface, integrated HLS player, live chat, and coverage of 25+ leagues with real-time updates.',
-      DolarARG: 'Fullstack platform for monitoring dollar, euro, real and cryptocurrency exchange rates in Argentina in real-time. Includes historical data, charts, calculator, email alert system, BCRA exchange rate bands, and works as an installable PWA. Data updated every 5 minutes with serverless backend on Vercel.',
+      GolTV: 'Freelance work for a client in the sports sector. GolTV is a free web platform to track and watch live football matches. Features a Neo-Brutalist interface, integrated HLS player, live chat, and coverage of 25+ leagues with real-time updates.',
+      DolarARG: 'Independent project for a client in the finance sector. DolarARG is a fullstack platform for monitoring dollar, euro, real and cryptocurrency exchange rates in Argentina in real-time. Includes historical data, charts, calculator, email alert system, BCRA exchange rate bands, and works as an installable PWA. Data updated every 5 minutes with serverless backend on Vercel.',
       todoApp: 'Creation of an interactive application to manage tasks with JavaScript and DOM manipulation. Implementation of events and higher-order functions to enhance user experience.',
       WeatherReport: 'Weather report app in React. Using an API to retrieve real-time weather data from https://openweathermap.org/. Global state management with Zustand.',
       googleKeep: 'Replica of the Google Keep notes app, developed in React. Allows you to create, edit, and delete notes. Includes dark mode and translations in Spanish and English. Uses LocalStorage to save the notes.',
-      ClipDrop: 'High-performance video downloader optimized for TikTok. YouTube and Instagram support is currently restricted due to platform updates.',
+      ClipDrop: 'High-performance video downloader optimized for TikTok. Note: YouTube and Instagram support is currently paused due to those platforms’ technical restrictions.',
       LuminaCommerce: 'Ultra-modern tech E-commerce. Full-stack built with Next.js, Python (FastAPI), PostgreSQL, and Prisma. Premium design with fluid animations and Zustand state management.',
       ChromaFlow: 'Freelance project for Juan Ramirez. Site specialized in creating color palettes to customize CSS, contains these color generation modes: Random, Analogous, Monochromatic, Complementary and Triadic',
       LucasCaudanaBlog: 'Freelance personal blog for sports journalism student Lucas Ezequiel Caudana, featuring note creation and editing with images, portfolio mode using LocalStorage, and Firebase-based login.',
       TurnoApp: 'Appointment management app designed for independent professionals, with Client and Professional roles. In client mode, users can create appointments and cancel them once confirmed. In professional mode, users can accept, assign, cancel, and delete appointments, manage profiles (editable in professional mode), receive notifications, and log in with Google.',
       AdministracionConsorcios: 'Freelance landing page developed for a property management company. Designed to enhance digital presence, attract new clients, and provide clear information about their real estate management services.'
     },
-      caseStudies: {
+    caseStudies: {
       tabs: {
         overview: 'Overview ',
         architecture: 'Architecture '
       },
       GolTV: {
-        challenge: 'Develop a real-time sports streaming platform capable of handling multiple HLS streams, live states, and concurrent chat while maintaining a fast, bilingual, and SEO-optimized interface.',
+        challenge: 'Freelance engagement for a client in the sports sector. Develop a real-time sports streaming platform capable of handling multiple HLS streams, live states, and concurrent chat while maintaining a fast, bilingual, and SEO-optimized interface.',
         solution: 'Robust frontend architecture using Next.js 16 (App Router) and React 19. Integrated Hls.js for smooth video playback and Tailwind CSS v4 for a Neo-Brutalist design. Implemented smart scoreboard auto-refresh, scroll restoration, and a chat with smart scroll. Containerized with Docker and tested using Jest, Testing Library and Cypress (E2E).',
         metrics: 'Support for 25+ global leagues, stable streams, and a highly interactive, bilingual user experience.',
         architectureNodes: [
@@ -138,7 +176,7 @@ const en = {
         ]
       },
       DolarARG: {
-        challenge: 'Build a real-time financial platform handling multiple data sources (dollar, euro, real, cryptocurrencies), maintaining historical exchange rates, sending automated email alerts, and working as an installable PWA, all with updates every 5 minutes without a dedicated server.',
+        challenge: 'Commissioned project for a client in the finance sector. Build a real-time financial platform handling multiple data sources (dollar, euro, real, cryptocurrencies), maintaining historical exchange rates, sending automated email alerts, and working as an installable PWA, all with updates every 5 minutes without a dedicated server.',
         solution: 'Fullstack serverless architecture with Next.js 14. Backend: Serverless API routes on Vercel with Prisma ORM over PostgreSQL for chronological data persistence, cron job system for automated scraping from dolarapi.com, and Server-Sent Events (SSE) for real-time frontend updates. Alert system with nodemailer. Frontend: PWA with manifest, service worker and manifest for native installation.',
         metrics: 'Automatic updates every 5 minutes for 8+ exchange rate types, alert system with real-time email delivery, and PWA functionality with installation on Android/iOS without app stores.',
         architectureNodes: [
@@ -159,7 +197,7 @@ const en = {
     subtitle: 'Have a project in mind?',
     info: {
       email: 'valentinthomastarantino@gmail.com',
-      phone: '+54 1149476457',
+      phone: '+54 11 4947-6457',
       location: 'Argentina, Buenos Aires'
     },
     labels: {

@@ -26,13 +26,21 @@
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 3rem;
-  align-items: start;
+  align-items: stretch;
 }
 
 .about-main {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  height: 100%;
+}
+
+.about-main .education-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .developer-card {
@@ -395,6 +403,116 @@
   font-weight: 500;
   font-size: 0.9rem;
 }
+
+.experience-bullets {
+  list-style: none;
+  margin: 0.6rem 0 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.experience-bullets li {
+  position: relative;
+  padding-left: 1rem;
+  color: #cbd5e0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.experience-bullets li::before {
+  content: '▹';
+  position: absolute;
+  left: 0;
+  color: #667eea;
+}
+
+:root.lamp-light-mode .experience-bullets li,
+html.lamp-light-mode .experience-bullets li {
+  color: #334155;
+}
+
+.soft-skill-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.soft-skill-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.6rem 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.soft-skill-item:hover {
+  background: rgba(102, 126, 234, 0.08);
+  border-color: rgba(102, 126, 234, 0.2);
+  transform: translateX(4px);
+}
+
+.soft-skill-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: rgba(102, 126, 234, 0.15);
+  color: #667eea;
+  border-radius: 8px;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.soft-skill-item:hover .soft-skill-icon {
+  background: #667eea;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.soft-skill-item span {
+  color: #cbd5e0;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+:root.lamp-light-mode .soft-skill-item,
+html.lamp-light-mode .soft-skill-item {
+  background: #ffffff;
+  border-color: rgba(59, 130, 246, 0.15);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.05);
+}
+
+:root.lamp-light-mode .soft-skill-item span,
+html.lamp-light-mode .soft-skill-item span {
+  color: #475569;
+}
+
+:root.lamp-light-mode .soft-skill-icon,
+html.lamp-light-mode .soft-skill-icon {
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+}
+
+:root.lamp-light-mode .soft-skill-item:hover,
+html.lamp-light-mode .soft-skill-item:hover {
+  background: rgba(59, 130, 246, 0.04);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+:root.lamp-light-mode .soft-skill-item:hover .soft-skill-icon,
+html.lamp-light-mode .soft-skill-item:hover .soft-skill-icon {
+  background: #3b82f6;
+  color: #ffffff;
+}
+
+
 
 /* Mobile styles */
 @media (max-width: 968px) {

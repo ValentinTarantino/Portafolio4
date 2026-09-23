@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 import './Hero.css';
 import DinoGame from './DinoGame';
@@ -341,6 +341,35 @@ const Hero = ({ t, language }) => {
   const [superActive, setSuperActive] = useState(false);
   const [trivia, setTrivia] = useState(null); // { step: 1|2|3, score: 0 }
   const [dinoActive, setDinoActive] = useState(false);
+  const [cvOpen, setCvOpen] = useState(false);
+  const [isNarrowScreen, setIsNarrowScreen] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 600px)').matches
+  );
+
+  const cvUrl = language === 'es' ? '/CV_Valentin_Tarantino_ES.pdf' : '/CV_Valentin_Tarantino.pdf';
+  // On narrow screens ask the PDF viewer to fit the page width so nothing gets cut off
+  const cvSrc = isNarrowScreen ? `${cvUrl}#view=FitH` : cvUrl;
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 600px)');
+    const onChange = (e) => setIsNarrowScreen(e.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+
+  // CV preview modal: lock body scroll + close on Escape
+  useEffect(() => {
+    if (!cvOpen) return;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e) => {
+      if (e.key === 'Escape') setCvOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = 'unset';
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [cvOpen]);
 
   const terminalBodyRef = useRef(null);
   const inputRef = useRef(null);
@@ -603,16 +632,17 @@ const Hero = ({ t, language }) => {
               </h2>
               <p className="hero-description fade-in-up">{t.hero.description}</p>
               <div className="hero-cta fade-in-up">
-                <a
-                  href={language === 'es' ? '/CV_Valentin_Tarantino_ES.pdf' : '/CV_Valentin_Tarantino.pdf'}
-                  download
+                <button
+                  type="button"
+                  onClick={() => setCvOpen(true)}
                   className="cta-button primary"
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 15V3M12 15L8 11M12 15L16 11M2 17L2.621 19.485C2.72915 19.9177 2.97881 20.3018 3.32754 20.572C3.67627 20.8422 4.10267 20.9823 4.534 20.969H19.466C19.8973 20.9823 20.3237 20.8422 20.6725 20.572C21.0212 20.3018 21.2708 19.9177 21.379 19.485L22 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
                   </svg>
                   <span>{t.hero.downloadCV}</span>
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -714,6 +744,46 @@ const Hero = ({ t, language }) => {
           <div className="scroll-arrow"></div>
         </div>
       </div>
+
+      {/* CV preview modal — shows the PDF instead of downloading it */}
+      <AnimatePresence>
+        {cvOpen && (
+          <div className="cv-modal-overlay" onClick={() => setCvOpen(false)}>
+            <motion.div
+              className="cv-modal-content glass-card"
+              onClick={(e) => e.stopPropagation()}
+              initial={{ opacity: 0, scale: 0.95, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 30 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+              role="dialog"
+              aria-modal="true"
+              aria-label={t.hero.cvModalTitle}
+            >
+              <div className="cv-modal-header">
+                <h3>{t.hero.cvModalTitle}</h3>
+                <div className="cv-modal-actions">
+                  <a href={cvUrl} download className="cv-download-link">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                      <polyline points="7 10 12 15 17 10"></polyline>
+                      <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span>{t.hero.cvDownload}</span>
+                  </a>
+                  <button type="button" className="cv-modal-close" onClick={() => setCvOpen(false)} aria-label={t.hero.cvClose}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="18" y1="6" x2="6" y2="18"></line>
+                      <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <iframe key={cvSrc} src={cvSrc} title={t.hero.cvModalTitle} className="cv-modal-frame" />
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
