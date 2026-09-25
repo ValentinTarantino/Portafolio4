@@ -11,6 +11,7 @@ const Testimonials = lazy(() => import('./components/Testimonials'));
 const Contact = lazy(() => import('./components/Contact'));
 const Footer = lazy(() => import('./components/Footer'));
 
+import { Analytics } from '@vercel/analytics/react';
 import es from './locales/es';
 import en from './locales/en';
 
@@ -41,6 +42,7 @@ function App() {
         <Contact t={t} />
         <Footer t={t} />
       </Suspense>
+      <Analytics />
     </div>
   );
 }
