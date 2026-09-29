@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react';
 import './Skills.css';
-import { SiNextdotjs, SiTypescript, SiTailwindcss, SiReact, SiHtml5, SiJavascript, SiCss, SiSass, SiFirebase, SiFigma, SiGit, SiGithub, SiNodedotjs, SiExpress, SiPostgresql, SiPython, SiPrisma, SiFastapi, SiBootstrap, SiVite, SiDocker, SiJest, SiTestinglibrary, SiCypress } from 'react-icons/si';
+import { SiNextdotjs, SiTypescript, SiTailwindcss, SiReact, SiHtml5, SiJavascript, SiCss, SiSass, SiFirebase, SiFigma, SiGit, SiGithub, SiNodedotjs, SiExpress, SiPostgresql, SiPython, SiPrisma, SiFastapi, SiBootstrap, SiVite, SiDocker, SiJest, SiTestinglibrary, SiCypress, SiMongodb } from 'react-icons/si';
 import postgresImg from '../assets/postgres.webp';
 import exImg from '../assets/ex.webp';
 import claudeIcon from '../assets/icons/claude.png';
@@ -30,6 +30,7 @@ const ICONS = {
     { name: 'Node.js', brand: '#8CC84B', icon: <SiNodedotjs size={40} /> },
     { name: 'Express.js', brand: '#ffffff', icon: <SiExpress size={40} /> },
     { name: 'PostgreSQL', brand: '#5b9bd5', icon: <SiPostgresql size={40} /> },
+    { name: 'MongoDB', brand: '#47A248', icon: <SiMongodb size={40} /> },
     { name: 'Firebase', brand: '#FFCA28', icon: <SiFirebase size={40} /> },
     { name: 'Python', brand: '#4B8BBE', icon: <SiPython size={40} /> },
     { name: 'Prisma', brand: '#ffffff', icon: <SiPrisma size={40} /> },
