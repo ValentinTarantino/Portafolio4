@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import './App.css';
 import Header from './components/Header';
 import Hero from './components/Hero';
+import OnlineCounter from './components/OnlineCounter';
 
 const About = lazy(() => import('./components/About'));
 const Skills = lazy(() => import('./components/Skills'));
@@ -42,6 +43,7 @@ function App() {
         <Contact t={t} />
         <Footer t={t} />
       </Suspense>
+      <OnlineCounter t={t} />
       <Analytics />
     </div>
   );

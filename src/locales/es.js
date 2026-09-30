@@ -18,6 +18,7 @@ const es = {
     cvClose: 'Cerrar',
     available: 'Disponible para nuevos proyectos'
   },
+  onlineNow: 'en línea',
   about: {
     title: 'Acerca de mí',
     description: 'Soy desarrollador Full Stack especializado en crear productos digitales modernos con un enfoque riguroso en la experiencia de usuario, el rendimiento y las buenas prácticas. Con experiencia tanto en proyectos complejos de arquitectura completa como en el desarrollo de soluciones freelance para clientes reales de producción. Me apasiona estructurar bases de datos optimizadas, diseñar APIs fluidas y crear interfaces web intuitivas que añadan valor de negocio tangible. Trabajo respetando la confidencialidad que cada cliente requiere, garantizando la privacidad y seguridad de su información.',

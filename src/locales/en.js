@@ -18,6 +18,7 @@ const en = {
     cvClose: 'Close',
     available: 'Available for new projects'
   },
+  onlineNow: 'online',
   about: {
     title: 'About Me',
     description: 'I am a Full Stack developer specialized in building modern digital products with a rigorous focus on user experience, performance, and best practices. Experienced in both complex full-stack architectures and delivering freelance solutions for production-grade real clients. I am passionate about structuring optimized databases, designing fluid APIs, and creating intuitive interfaces that add tangible business value. I work respecting the level of confidentiality each client requires, ensuring the privacy and security of their information.',
