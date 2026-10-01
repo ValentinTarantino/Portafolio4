@@ -5,6 +5,9 @@ import './LampToggle.css';
 const LampToggle = () => {
   const [isLightMode, setIsLightMode] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [overlayVisible, setOverlayVisible] = useState(false);
+  const [overlayTheme, setOverlayTheme] = useState('dark');
+  const overlayTimeout = useRef(null);
   const [chainPosition, setChainPosition] = useState({ top: -9999, left: -9999 });
   const [chainPullY, setChainPullY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
@@ -85,6 +88,18 @@ const LampToggle = () => {
       localStorage.setItem('lampMode', JSON.stringify(newMode));
       applyLampMode(newMode);
       window.dispatchEvent(new CustomEvent('themeToggle', { detail: newMode }));
+
+      // Full-screen flash overlay with the opposite color of the new theme
+      // (dark overlay when going to light, light overlay when going to dark).
+      // 0.2s fade in + 0.2s fade out = 0.4s total. Skipped for reduced-motion.
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!prefersReducedMotion) {
+        if (overlayTimeout.current) clearTimeout(overlayTimeout.current);
+        setOverlayTheme(newMode ? 'dark' : 'light');
+        setOverlayVisible(true);
+        overlayTimeout.current = setTimeout(() => setOverlayVisible(false), 200);
+      }
+
       setIsAnimating(false);
     }, 600);
   };
@@ -212,6 +227,15 @@ const LampToggle = () => {
   return (
     <>
       {createPortal(chainElement, document.body)}
+
+      {/* Overlay decorativo del cambio de tema - no interactivo */}
+      {createPortal(
+        <div
+          className={`theme-overlay ${overlayVisible ? 'visible' : ''} ${overlayTheme}`}
+          aria-hidden="true"
+        />,
+        document.body
+      )}
 
       <div className={`lamp-wrapper ${isLightMode ? 'light-active' : ''}`}>
         {/* Lámpara fija en el navbar */}

@@ -1626,3 +1626,34 @@ html.lamp-light-mode .nav-link.active::before {
 }
 
 /* ==================== FIN MEJORAS NAVBAR ==================== */
+
+/* ==================== OVERLAY DE TRANSICIÓN DE TEMA ==================== */
+/* Flash a pantalla completa al cambiar de tema - decorativo, no interactivo */
+.theme-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99998;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.theme-overlay.visible {
+  opacity: 1;
+}
+
+/* Overlay oscuro al pasar a modo claro */
+.theme-overlay.dark {
+  background: #0c0c0c;
+}
+
+/* Overlay claro al pasar a modo oscuro */
+.theme-overlay.light {
+  background: #f8fafc;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-overlay {
+    display: none;
+  }
+}

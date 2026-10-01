@@ -195,7 +195,7 @@
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
 }
 
@@ -258,10 +258,13 @@
 }
 
 .stat-number {
-  font-size: 1.8rem;
+  font-size: 2.5rem;
   font-weight: 700;
-  color: #ffffff;
   margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .stat-label {
@@ -512,6 +515,11 @@ html.lamp-light-mode .soft-skill-item:hover .soft-skill-icon {
   color: #ffffff;
 }
 
+:root.lamp-light-mode .stat-label,
+html.lamp-light-mode .stat-label {
+  color: #475569;
+}
+
 
 
 /* Mobile styles */
@@ -519,10 +527,6 @@ html.lamp-light-mode .soft-skill-item:hover .soft-skill-icon {
   .about-content {
     grid-template-columns: 1fr;
     gap: 2rem;
-  }
-  
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
   }
 }
 
