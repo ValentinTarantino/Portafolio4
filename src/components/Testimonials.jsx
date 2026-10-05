@@ -32,7 +32,7 @@ const testimonialsData = [
     },
     projectUrl: 'https://lucas-caudana-blog.vercel.app/',
     text: {
-      es: 'Necesitaba un blog personal para mis notas y Valentín me armó algo mucho mejor de lo que esperaba. Súper fácil para actualizar contenido por mi cuenta. Muy contento con el resultado.',
+      es: 'Valentín desarrolló mi proyecto de punta a punta con excelencia. Entendió mis necesidades, trabajó con gran autonomía, cumplió los plazos y entregó un producto sólido. Lo recomiendo totalmente.',
       en: 'I needed a personal blog to share my notes and Valentín built something much better than I expected. Super easy to update content on my own. Very happy with the result.'
     }
   },
@@ -51,6 +51,23 @@ const testimonialsData = [
     text: {
       es: 'Valentín me ayudó con un proyecto personal y la verdad que fue una experiencia excelente. Muy paciente, explicó todo claramente y el resultado final fue mejor de lo que pedí.',
       en: 'Valentín helped me with a personal project and it was an excellent experience. Very patient, explained everything clearly, and the final result was better than what I asked for.'
+    }
+  },
+  {
+    id: 4,
+    name: 'Maximo Kugler',
+    role: {
+      es: 'Software Engineer',
+      en: 'Software Engineer'
+    },
+    project: {
+      es: 'Compañero',
+      en: 'Teammate'
+    },
+    projectUrl: null,
+    text: {
+      es: 'Desarrollador Full Stack comprometido con la calidad. Domina React/Next.js y se adapta rápidamente a diferentes proyectos. Destaco su constante actualización y excelente predisposición para el trabajo en equipo. Totalmente recomendado.',
+      en: 'Full Stack developer committed to code quality. He masters React/Next.js and adapts quickly to different projects. I highly highlight his constant learning and excellent teamwork skills. Totally recommended.'
     }
   }
 ];
@@ -77,15 +94,21 @@ const Testimonials = ({ t, language }) => {
                 "{item.text[language] || item.text.es}"
               </blockquote>
               <div className="testimonial-footer">
-                <a
-                  href={item.projectUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="testimonial-project-link"
-                >
-                  <span>{item.project[language] || item.project.es}</span>
-                  <span className="arrow">↗</span>
-                </a>
+                {item.projectUrl ? (
+                  <a
+                    href={item.projectUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="testimonial-project-link"
+                  >
+                    <span>{item.project[language] || item.project.es}</span>
+                    <span className="arrow">↗</span>
+                  </a>
+                ) : (
+                  <div className="testimonial-project-link" style={{ cursor: 'default' }}>
+                    <span>{item.project[language] || item.project.es}</span>
+                  </div>
+                )}
               </div>
             </div>
           ))}
