@@ -84,13 +84,17 @@ const en = {
     ]
   },
   skills: {
-    title: 'My Main Stack',
-    subtitle: 'Technologies I master',
+    title: 'Technologies in context',
+    subtitle: 'Tools I have used across real projects, grouped by area.',
     categories: {
-      frontend: 'Frontend Mastery',
+      frontend: 'Frontend & UI',
+      frontendDescription: 'Interfaces, state, and 3D experiences',
       backend: 'Backend & Cloud',
-      tools: 'DevOps, Testing & Tools',
-      ai: 'Artificial Intelligence'
+      backendDescription: 'APIs, data, and infrastructure',
+      tools: 'Quality & Workflow',
+      toolsDescription: 'Testing, CI/CD, and development tools',
+      ai: 'AI & Automation',
+      aiDescription: 'Assistants and automated workflows'
     }
   },
   projects: {

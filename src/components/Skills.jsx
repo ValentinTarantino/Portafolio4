@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 import './Skills.css';
 import { SiNextdotjs, SiTypescript, SiTailwindcss, SiReact, SiHtml5, SiJavascript, SiCss, SiSass, SiFirebase, SiFigma, SiGit, SiGithub, SiNodedotjs, SiExpress, SiPostgresql, SiPython, SiPrisma, SiFastapi, SiBootstrap, SiVite, SiDocker, SiJest, SiTestinglibrary, SiCypress, SiMongodb, SiThreedotjs, SiGithubactions } from 'react-icons/si';
 import claudeIcon from '../assets/icons/claude.png';
@@ -6,8 +6,6 @@ import cursorIcon from '../assets/icons/cursor.png';
 import n8nIcon from '../assets/icons/n8n.svg';
 import awsIcon from '../assets/icons/aws.svg';
 
-// Brand color per skill drives the icon tint + hover glow via --brand.
-// react-icons inherit currentColor, so no per-icon color props needed.
 const ICONS = {
   frontend: [
     { name: 'Next.js', brand: '#ffffff', level: 5, icon: <SiNextdotjs size={40} /> },
@@ -75,27 +73,17 @@ const CATEGORY_ACCENTS = {
 };
 
 const Skills = ({ t }) => {
-  const layoutRef = useRef(null);
-
   const skillCategories = useMemo(() => [
-    { key: 'frontend', title: t.skills.categories.frontend, skills: ICONS.frontend },
-    { key: 'backend', title: t.skills.categories.backend, skills: ICONS.backend },
-    { key: 'tools', title: t.skills.categories.tools, skills: ICONS.tools },
-    { key: 'ai', title: t.skills.categories.ai, skills: ICONS.ai }
-  ], [t.skills.categories.frontend, t.skills.categories.backend, t.skills.categories.tools, t.skills.categories.ai]);
-
-  useEffect(() => {
-    const el = layoutRef.current;
-    if (!el) return;
-    const io = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        el.classList.add('is-visible');
-        io.disconnect();
-      }
-    }, { threshold: 0.1 });
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
+    { key: 'frontend', title: t.skills.categories.frontend, description: t.skills.categories.frontendDescription, skills: ICONS.frontend },
+    { key: 'backend', title: t.skills.categories.backend, description: t.skills.categories.backendDescription, skills: ICONS.backend },
+    { key: 'tools', title: t.skills.categories.tools, description: t.skills.categories.toolsDescription, skills: ICONS.tools },
+    { key: 'ai', title: t.skills.categories.ai, description: t.skills.categories.aiDescription, skills: ICONS.ai }
+  ], [
+    t.skills.categories.frontend, t.skills.categories.frontendDescription,
+    t.skills.categories.backend, t.skills.categories.backendDescription,
+    t.skills.categories.tools, t.skills.categories.toolsDescription,
+    t.skills.categories.ai, t.skills.categories.aiDescription
+  ]);
 
   return (
     <section id="skills" className="section skills">
@@ -103,34 +91,35 @@ const Skills = ({ t }) => {
         <h2 className="section-title">{t.skills.title}</h2>
         <p className="section-subtitle">{t.skills.subtitle}</p>
 
-        <div className="skills-layout" ref={layoutRef}>
-          <div className="skills-grid-container">
-            {skillCategories.map((category) => (
-              <div
+        <div className="skills-layout">
+          <div className="skills-grid-container skills-grid-container--compact">
+            {skillCategories.map((category, index) => (
+              <article
                 key={category.key}
-                className="skill-category-box"
+                className="skill-category-box skill-category-box--compact"
                 style={{ '--accent': CATEGORY_ACCENTS[category.key] }}
               >
                 <div className="category-header">
-                  <span className="category-icon">{CATEGORY_ICONS[category.key]}</span>
-                  <h3 className="category-title">{category.title}</h3>
-                  <span className="category-count">{category.skills.length}</span>
+                  <span className="category-index">{String(index + 1).padStart(2, '0')}</span>
+                  <span className="category-icon" aria-hidden="true">{CATEGORY_ICONS[category.key]}</span>
+                  <div className="category-heading-copy">
+                    <h3 className="category-title">{category.title}</h3>
+                    <p className="category-description">{category.description}</p>
+                  </div>
                 </div>
-                <div className="category-skills">
-                  {category.skills.map((skill, i) => (
-                    <div
+                <ul className="category-skills">
+                  {category.skills.map((skill) => (
+                    <li
                       key={skill.name}
-                      className="skill-item"
-                      style={{ '--brand': skill.brand, '--d': `${i * 55}ms` }}
-                      title={skill.name}
+                      className="skill-chip"
+                      style={{ '--brand': skill.brand }}
                     >
-                      <span className="skill-icon-tile">{skill.icon}</span>
-                      <span className="skill-name">{skill.name}</span>
-
-                    </div>
+                      <span className="skill-chip-icon" aria-hidden="true">{skill.icon}</span>
+                      <span className="skill-chip-name">{skill.name}</span>
+                    </li>
                   ))}
-                </div>
-              </div>
+                </ul>
+              </article>
             ))}
           </div>
         </div>

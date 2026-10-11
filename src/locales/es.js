@@ -84,13 +84,17 @@ const es = {
     ]
   },
   skills: {
-    title: 'Mi Stack Principal',
-    subtitle: 'Tecnologías que domino',
+    title: 'Tecnologías en contexto',
+    subtitle: 'Herramientas que utilicé en proyectos reales, agrupadas por área.',
     categories: {
-      frontend: 'Dominio Frontend',
+      frontend: 'Frontend y UI',
+      frontendDescription: 'Interfaces, estado y experiencias 3D',
       backend: 'Backend y Cloud',
-      tools: 'Herramientas, DevOps y Testing',
-      ai: 'Inteligencia Artificial'
+      backendDescription: 'APIs, datos e infraestructura',
+      tools: 'Calidad y herramientas',
+      toolsDescription: 'Testing, CI/CD y flujo de desarrollo',
+      ai: 'IA y automatización',
+      aiDescription: 'Asistentes y flujos automatizados'
     }
   },
   projects: {
