@@ -1,11 +1,11 @@
 import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SiReact, SiSass, SiBootstrap, SiHtml5, SiJavascript, SiFirebase, SiNextdotjs, SiTypescript, SiTailwindcss, SiVite, SiPostgresql, SiPostman, SiCss, SiPython, SiPrisma, SiFastapi, SiJest, SiDocker, SiTestinglibrary, SiCypress, SiMongodb } from 'react-icons/si';
+import { SiReact, SiSass, SiBootstrap, SiHtml5, SiJavascript, SiFirebase, SiNextdotjs, SiTypescript, SiTailwindcss, SiVite, SiPostgresql, SiPostman, SiCss, SiPython, SiPrisma, SiFastapi, SiJest, SiDocker, SiTestinglibrary, SiCypress, SiMongodb, SiThreedotjs, SiStripe, SiGithubactions } from 'react-icons/si';
 import { FiStar } from 'react-icons/fi';
 import './Projects.css';
 import ProjectModal from './ProjectModal';
-import dolarImg from '../assets/dolar.webp';
-import ecommerceImg from '../assets/ecommerce.webp';
+import dolarImg from '../assets/dolar-cover.png';
+import ecommerceImg from '../assets/ecommerce.png';
 import clima from '../assets/clima.png';
 import googlekeepImg from '../assets/googlekeep.webp';
 import youtubeImg from '../assets/youtube.webp';
@@ -14,6 +14,7 @@ import blogImg from "../assets/blog.webp";
 import turnosImg from "../assets/turnos.webp";
 import consorcioImg from "../assets/consorcio.webp";
 import goltvImg from "../assets/goltv.webp";
+import awsIcon from '../assets/icons/aws.svg';
 
 const techIcons = {
   'React': <SiReact className="tech-icon" color="#61DAFB" />,
@@ -37,6 +38,10 @@ const techIcons = {
   'Testing Library': <SiTestinglibrary className="tech-icon" color="#E33332" />,
   'Cypress': <SiCypress className="tech-icon" color="#ffffff" />,
   'MongoDB': <SiMongodb className="tech-icon" color="#47A248" />,
+  'AWS': <img className="tech-icon" src={awsIcon} alt="AWS" />,
+  'Three.js': <SiThreedotjs className="tech-icon" color="#ffffff" />,
+  'Stripe': <SiStripe className="tech-icon" color="#635BFF" />,
+  'CI/CD': <SiGithubactions className="tech-icon" color="#2088FF" />,
   'Zustand': <span className="tech-icon-text">🐻</span>
 };
 
@@ -87,7 +92,7 @@ const Projects = ({ t, language }) => {
       caseStudyKey: 'GolTV',
       description: t.projects.descriptions.GolTV,
       image: goltvImg,
-      technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'MongoDB', 'Docker', 'Jest', 'Testing Library', 'Cypress'],
+      technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'MongoDB', 'Docker', 'Jest', 'Testing Library', 'Cypress', 'CI/CD'],
       liveUrl: 'https://goltv.vercel.app/',
       codeUrl: 'https://github.com/ValentinTarantino/GolTV'
     },
@@ -98,8 +103,8 @@ const Projects = ({ t, language }) => {
       caseStudyKey: 'DolarARG',
       description: t.projects.descriptions.DolarARG,
       image: dolarImg,
-      technologies: ['Next.js', 'TypeScript', 'SASS', 'Prisma', 'PostgreSQL', 'API'],
-      liveUrl: 'https://dolar-arg-hoy.vercel.app/',
+      technologies: ['Next.js', 'TypeScript', 'SASS', 'Prisma', 'PostgreSQL', 'AWS', 'Three.js', 'CI/CD'],
+      liveUrl: 'https://dolar-arg.duckdns.org/',
       codeUrl: 'https://github.com/ValentinTarantino/DolarArg'
     },
     {
@@ -109,7 +114,7 @@ const Projects = ({ t, language }) => {
       caseStudyKey: 'LuminaCommerce',
       description: t.projects.descriptions.LuminaCommerce,
       image: ecommerceImg,
-      technologies: ['Next.js', 'Python', 'FastAPI', 'PostgreSQL', 'Prisma', 'Zustand', 'Tailwind CSS'],
+      technologies: ['Next.js', 'Python', 'FastAPI', 'PostgreSQL', 'Prisma', 'Zustand', 'Tailwind CSS', 'Three.js', 'Stripe'],
       liveUrl: 'https://lumina-commerce-beta.vercel.app/',
       codeUrl: 'https://github.com/ValentinTarantino/lumina-commerce'
     },

@@ -177,7 +177,7 @@ const Header = ({ t, language, toggleLanguage }) => {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               style={{ color: '#ffffff' }}
             >
-              <span></span>
+              <span></span> 
               <span></span>
               <span></span>
             </button>

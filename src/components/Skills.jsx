@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useRef } from 'react';
 import './Skills.css';
-import { SiNextdotjs, SiTypescript, SiTailwindcss, SiReact, SiHtml5, SiJavascript, SiCss, SiSass, SiFirebase, SiFigma, SiGit, SiGithub, SiNodedotjs, SiExpress, SiPostgresql, SiPython, SiPrisma, SiFastapi, SiBootstrap, SiVite, SiDocker, SiJest, SiTestinglibrary, SiCypress, SiMongodb } from 'react-icons/si';
+import { SiNextdotjs, SiTypescript, SiTailwindcss, SiReact, SiHtml5, SiJavascript, SiCss, SiSass, SiFirebase, SiFigma, SiGit, SiGithub, SiNodedotjs, SiExpress, SiPostgresql, SiPython, SiPrisma, SiFastapi, SiBootstrap, SiVite, SiDocker, SiJest, SiTestinglibrary, SiCypress, SiMongodb, SiThreedotjs, SiGithubactions } from 'react-icons/si';
 import claudeIcon from '../assets/icons/claude.png';
 import cursorIcon from '../assets/icons/cursor.png';
 import n8nIcon from '../assets/icons/n8n.svg';
+import awsIcon from '../assets/icons/aws.svg';
 
 // Brand color per skill drives the icon tint + hover glow via --brand.
 // react-icons inherit currentColor, so no per-icon color props needed.
@@ -11,6 +12,7 @@ const ICONS = {
   frontend: [
     { name: 'Next.js', brand: '#ffffff', level: 5, icon: <SiNextdotjs size={40} /> },
     { name: 'React', brand: '#61DAFB', level: 5, icon: <SiReact size={40} /> },
+    { name: 'Three.js', brand: '#ffffff', level: 3, icon: <SiThreedotjs size={40} /> },
     { name: 'TypeScript', brand: '#3178C6', level: 4, icon: <SiTypescript size={40} /> },
     { name: 'Tailwind', brand: '#38BDF8', level: 5, icon: <SiTailwindcss size={40} /> },
     { name: 'JavaScript', brand: '#F7DF1E', level: 5, icon: <SiJavascript size={40} /> },
@@ -29,9 +31,11 @@ const ICONS = {
     { name: 'Python', brand: '#4B8BBE', level: 4, icon: <SiPython size={40} /> },
     { name: 'Prisma', brand: '#ffffff', level: 4, icon: <SiPrisma size={40} /> },
     { name: 'FastAPI', brand: '#05998B', level: 4, icon: <SiFastapi size={40} /> },
+    { name: 'AWS', brand: '#FF9900', level: 3, icon: <img src={awsIcon} width="36" height="36" alt="AWS" /> },
   ],
   tools: [
     { name: 'Docker', brand: '#2496ED', level: 4, icon: <SiDocker size={40} /> },
+    { name: 'CI/CD', brand: '#2088FF', level: 3, icon: <SiGithubactions size={40} /> },
     { name: 'Jest', brand: '#C21325', level: 4, icon: <SiJest size={40} /> },
     { name: 'Testing Library', brand: '#E33332', level: 4, icon: <SiTestinglibrary size={40} /> },
     { name: 'Cypress', brand: '#ffffff', level: 3, icon: <SiCypress size={40} /> },

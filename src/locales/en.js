@@ -110,8 +110,8 @@ const en = {
     solutionLabel: 'Solution & Architecture',
     metricsLabel: 'Results & Impact',
     descriptions: {
-      GolTV: 'Free web platform to track and watch live football matches. Features a Neo-Brutalist interface, integrated HLS player, live chat, and coverage of 25+ leagues with real-time updates.',
-      DolarARG: 'Fullstack platform for monitoring dollar, euro, real and cryptocurrency exchange rates in Argentina in real-time. Includes historical data, charts, calculator, email alert system, BCRA exchange rate bands, and works as an installable PWA. Data updated every 5 minutes with serverless backend on Vercel.',
+      GolTV: 'Project for a client in the sports sector: a free web platform to track and watch live football matches. Features a Neo-Brutalist interface, integrated HLS player, live chat, and coverage of 25+ leagues with real-time updates.',
+      DolarARG: 'Project for a client in the financial sector: a fullstack platform for monitoring dollar, euro, real and cryptocurrency exchange rates in Argentina in real time. Includes historical data, charts, calculator, email alert system, BCRA exchange rate bands, and works as an installable PWA. Runs on AWS (EC2 + RDS) with a Three.js 3D visual and continuous delivery via GitHub Actions.',
       todoApp: 'Creation of an interactive application to manage tasks with JavaScript and DOM manipulation. Implementation of events and higher-order functions to enhance user experience.',
       WeatherReport: 'Weather report app in React. Using an API to retrieve real-time weather data from https://openweathermap.org/. Global state management with Zustand.',
       googleKeep: 'Replica of the Google Keep notes app, developed in React. Allows you to create, edit, and delete notes. Includes dark mode and translations in Spanish and English. Uses LocalStorage to save the notes.',
@@ -178,14 +178,14 @@ const en = {
         ]
       },
       DolarARG: {
-        challenge: 'Build a real-time financial platform handling multiple data sources (dollar, euro, real, cryptocurrencies), maintaining historical exchange rates, sending automated email alerts, and working as an installable PWA, all with updates every 5 minutes without a dedicated server.',
-        solution: 'Fullstack serverless architecture with Next.js 14. Backend: Serverless API routes on Vercel with Prisma ORM over PostgreSQL for chronological data persistence, cron job system for automated scraping from dolarapi.com, and Server-Sent Events (SSE) for real-time frontend updates. Alert system with nodemailer. Frontend: PWA with manifest, service worker and manifest for native installation.',
-        metrics: 'Automatic updates every 5 minutes for 8+ exchange rate types, alert system with real-time email delivery, and PWA functionality with installation on Android/iOS without app stores.',
+        challenge: 'Build a real-time financial platform handling multiple data sources (dollar, euro, real, cryptocurrencies), maintaining historical exchange rates, sending automated email alerts, and working as an installable PWA, all with updates every 5 minutes and continuous deployments without manual intervention.',
+        solution: 'Fullstack architecture on AWS with Next.js 14. Backend: Amazon EC2 with PM2 keeping the Next.js process running, Amazon RDS (PostgreSQL) with Prisma ORM for chronological data persistence inside a VPC with security groups (the database is not publicly exposed), cron job system for automated scraping from dolarapi.com, and Server-Sent Events (SSE) for real-time frontend updates. Alert system with nodemailer. Frontend: installable PWA with a Three.js 3D dollar symbol visual. Continuous delivery with GitHub Actions (SSH into EC2, build, Prisma migrations and PM2 restart) and DuckDNS domain.',
+        metrics: 'Automatic updates every 5 minutes for 8+ exchange rate types, alert system with real-time email delivery, and PWA functionality with installation on Android/iOS without app stores. AWS infrastructure with automated CI/CD.',
         architectureNodes: [
-          { title: 'Frontend', tech: 'Next.js 14 + PWA', desc: 'SSR, TypeScript, Tailwind, PWA Manifest' },
-          { title: 'Backend', tech: 'Serverless API Routes', desc: 'Cron jobs, SSE, node-cron, Vercel' },
-          { title: 'Database', tech: 'PostgreSQL + Prisma', desc: 'ORM, DolarRate Models, Alerts' },
-          { title: 'Notifications', tech: 'Nodemailer + SSE', desc: 'Email alerts, EventSource real-time' }
+          { title: 'Frontend', tech: 'Next.js 14 + Three.js', desc: 'SSR, TypeScript, PWA, 3D dollar visual' },
+          { title: 'Backend', tech: 'Amazon EC2 + PM2', desc: 'Cron jobs, SSE, alerts with nodemailer' },
+          { title: 'Database', tech: 'Amazon RDS + Prisma', desc: 'Managed PostgreSQL, VPC and security groups' },
+          { title: 'Deploy', tech: 'GitHub Actions + DuckDNS', desc: 'SSH CI/CD, domain and deployments' }
         ]
       }
     }

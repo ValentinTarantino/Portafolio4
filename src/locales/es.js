@@ -110,8 +110,8 @@ const es = {
     solutionLabel: 'Solución y Arquitectura',
     metricsLabel: 'Resultados e Impacto',
     descriptions: {
-      GolTV: 'Plataforma web gratuita para seguir y ver partidos de fútbol en vivo. Interfaz Neo-Brutalista, reproductor HLS integrado, chat en vivo y cobertura de más de 25 ligas con actualizaciones en tiempo real.',
-      DolarARG: 'Plataforma fullstack para monitorear cotizaciones del dólar, euro, real y criptomonedas en Argentina en tiempo real. Incluye historial, gráficos, calculadora, sistema de alertas por email, bandas cambiarias del BCRA y funciona como PWA instalable. Datos actualizados cada 5 minutos con backend serverless en Vercel.',
+      GolTV: 'Proyecto para un cliente del sector deportivo: plataforma web gratuita para seguir y ver partidos de fútbol en vivo. Interfaz Neo-Brutalista, reproductor HLS integrado, chat en vivo y cobertura de más de 25 ligas con actualizaciones en tiempo real.',
+      DolarARG: 'Proyecto para un cliente del sector financiero: plataforma fullstack para monitorear cotizaciones del dólar, euro, real y criptomonedas en Argentina en tiempo real. Incluye historial, gráficos, calculadora, sistema de alertas por email, bandas cambiarias del BCRA y funciona como PWA instalable. Corre en AWS (EC2 + RDS) con visual 3D en Three.js y despliegue continuo vía GitHub Actions.',
       todoApp: 'Creación de una aplicación interactiva para gestionar tareas con JavaScript y manipulación del DOM. Implementación de eventos y funciones de orden superior para mejorar la experiencia del usuario.',
       WeatherReport: 'Aplicación de informe meteorológico en React. Utilización de una API para obtener datos climáticos en tiempo real, la información es traida desde https://openweathermap.org/. Manejo del estado global con Zustand.',
       googleKeep: 'Aplicación réplica de notas de Google Keep, desarrollada en React. Permite crear, editar y eliminar notas. Cuenta con modo oscuro y traducciones al español e inglés. Utiliza LocalStorage para guardar las notas.',
@@ -178,14 +178,14 @@ const es = {
         ]
       },
       DolarARG: {
-        challenge: 'Construir una plataforma financiera en tiempo real que maneje múltiples fuentes de datos (dólar, euro, real, criptomonedas), mantenga histórico de cotizaciones, envíe alertas automáticas por email y funcione como PWA instalable, todo con actualizaciones cada 5 minutos sin servidor dedicado.',
-        solution: 'Arquitectura serverless fullstack con Next.js 14. Backend: API routes serverless en Vercel con Prisma ORM sobre PostgreSQL para persistencia de datos cronológicos, sistema de cron jobs para scraping automatizado desde dolarapi.com, y Server-Sent Events (SSE) para actualización en tiempo real del frontend. Sistema de alertas con nodemailer. Frontend: PWA con manifiesto, service worker y manifest para instalación nativa.',
-        metrics: 'Actualización automática cada 5 minutos de 8+ tipos de cotizaciones, sistema de alertas con envío de emails en tiempo real, y funcionalidad PWA con instalación en Android/iOS sin tiendas de aplicaciones.',
+        challenge: 'Construir una plataforma financiera en tiempo real que maneje múltiples fuentes de datos (dólar, euro, real, criptomonedas), mantenga histórico de cotizaciones, envíe alertas automáticas por email y funcione como PWA instalable, todo con actualizaciones cada 5 minutos y despliegues continuos sin intervención manual.',
+        solution: 'Arquitectura fullstack en AWS con Next.js 14. Backend: Amazon EC2 con PM2 manteniendo el proceso Next.js activo, Amazon RDS (PostgreSQL) con Prisma ORM para persistencia de datos cronológicos dentro de una VPC con security groups (la base de datos no se expone públicamente), cron jobs de scraping automatizado desde dolarapi.com y Server-Sent Events (SSE) para actualización en tiempo real. Sistema de alertas con nodemailer. Frontend: PWA instalable con visual 3D del símbolo del dólar hecho en Three.js. Despliegue continuo con GitHub Actions (SSH a EC2, build, migraciones Prisma y restart de PM2) y dominio vía DuckDNS.',
+        metrics: 'Actualización automática cada 5 minutos de 8+ tipos de cotizaciones, sistema de alertas con envío de emails en tiempo real, y funcionalidad PWA con instalación en Android/iOS sin tiendas de aplicaciones. Infraestructura en AWS con CI/CD automatizado.',
         architectureNodes: [
-          { title: 'Frontend', tech: 'Next.js 14 + PWA', desc: 'SSR, TypeScript, Tailwind, PWA Manifest' },
-          { title: 'Backend', tech: 'API Routes Serverless', desc: 'Cron jobs, SSE, node-cron, Vercel' },
-          { title: 'Base de Datos', tech: 'PostgreSQL + Prisma', desc: 'ORM, Modelos DolarRate, Alertas' },
-          { title: 'Notificaciones', tech: 'Nodemailer + SSE', desc: 'Email alerts, EventSource real-time' }
+          { title: 'Frontend', tech: 'Next.js 14 + Three.js', desc: 'SSR, TypeScript, PWA, visual 3D del dólar' },
+          { title: 'Backend', tech: 'Amazon EC2 + PM2', desc: 'Cron jobs, SSE, alertas con nodemailer' },
+          { title: 'Base de Datos', tech: 'Amazon RDS + Prisma', desc: 'PostgreSQL gestionado, VPC y security groups' },
+          { title: 'Deploy', tech: 'GitHub Actions + DuckDNS', desc: 'CI/CD por SSH, dominio y despliegues' }
         ]
       }
     }
