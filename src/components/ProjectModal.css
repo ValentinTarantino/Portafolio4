@@ -563,6 +563,7 @@
 .App.persona-menu.dark-hour-mode .project-modal .modal-content {
   --modal-cyan: #9bd7b1;
   --modal-cyan-soft: rgba(122, 200, 148, 0.18);
+  --modal-red: #ff4964;
   --modal-surface: #071a15;
   border-color: rgba(123, 188, 147, 0.36);
   background: linear-gradient(145deg, rgba(12, 35, 28, 0.98), rgba(4, 16, 14, 0.99) 62%), var(--modal-surface);
@@ -572,10 +573,56 @@
   background: linear-gradient(90deg, var(--modal-red), var(--modal-cyan), transparent);
 }
 
+.App.persona-menu.dark-hour-mode .project-modal .modal-content::after {
+  background: linear-gradient(90deg, transparent, rgba(133, 203, 153, 0.28));
+}
+
 .App.persona-menu.dark-hour-mode .project-modal .modal-header,
 .App.persona-menu.dark-hour-mode .project-modal .modal-tabs {
-  background-color: rgba(4, 20, 15, 0.88);
+  background-color: rgba(4, 20, 15, 0.96);
   border-color: rgba(128, 184, 146, 0.19);
+}
+
+.App.persona-menu.dark-hour-mode .project-modal .modal-header {
+  background-image: linear-gradient(100deg, rgba(8, 31, 23, 0.99), rgba(5, 22, 17, 0.97));
+}
+
+.App.persona-menu.dark-hour-mode .project-modal .modal-project-title {
+  background-image: linear-gradient(100deg, #f3fff7 0%, #c5f2d1 76%, #91d8a8 100%);
+}
+
+.App.persona-menu.dark-hour-mode .project-modal .modal-close-btn {
+  border-color: rgba(142, 207, 160, 0.3);
+  color: #def5e4;
+  background: rgba(5, 26, 18, 0.9);
+}
+
+.App.persona-menu.dark-hour-mode .project-modal .modal-tab-btn {
+  color: #a4b9ad;
+}
+
+.App.persona-menu.dark-hour-mode .project-modal .modal-scroll-area {
+  scrollbar-color: rgba(132, 195, 148, 0.38) rgba(3, 18, 13, 0.55);
+}
+
+.App.persona-menu.dark-hour-mode .project-modal .modal-scroll-area::-webkit-scrollbar-track {
+  background: rgba(3, 18, 13, 0.55);
+}
+
+.App.persona-menu.dark-hour-mode .project-modal .modal-scroll-area::-webkit-scrollbar-thumb {
+  border-color: rgba(3, 18, 13, 0.7);
+  background: rgba(132, 195, 148, 0.38);
+}
+
+.App.persona-menu.dark-hour-mode .project-modal .modal-tab-btn::before {
+  background: linear-gradient(90deg, var(--modal-cyan), rgba(155, 215, 177, 0.12));
+}
+
+.App.persona-menu.dark-hour-mode .project-modal .modal-tab-btn:hover,
+.App.persona-menu.dark-hour-mode .project-modal .modal-tab-btn:focus-visible {
+  border-color: rgba(143, 205, 160, 0.22);
+  color: #effff3;
+  background: rgba(39, 102, 65, 0.18);
 }
 
 .App.persona-menu.dark-hour-mode .project-modal .modal-tab-btn.active {
@@ -584,10 +631,34 @@
   background: linear-gradient(180deg, rgba(24, 76, 48, 0.48), rgba(6, 30, 19, 0.48));
 }
 
+.App.persona-menu.dark-hour-mode .project-modal .modal-action-btn.primary {
+  border-color: rgba(156, 230, 177, 0.62);
+  background: linear-gradient(110deg, #18794e, #37a875);
+  box-shadow: 2px 2px 0 rgba(255, 73, 100, 0.68);
+}
+
+.App.persona-menu.dark-hour-mode .project-modal .modal-action-btn.primary:hover {
+  border-color: #b9f2ca;
+  background: linear-gradient(110deg, #20895b, #49bd83);
+  box-shadow: 0 8px 22px rgba(53, 155, 98, 0.22);
+}
+
+.App.persona-menu.dark-hour-mode .project-modal :is(.modal-close-btn, .modal-tab-btn, .modal-action-btn):focus-visible {
+  outline-color: #b5efc5;
+}
+
 .App.persona-menu.dark-hour-mode .project-modal .modal-section,
 .App.persona-menu.dark-hour-mode .project-modal .architecture-node {
   border-color: rgba(133, 189, 150, 0.2);
   background: linear-gradient(145deg, rgba(10, 37, 29, 0.86), rgba(4, 19, 15, 0.94));
+}
+
+.App.persona-menu.dark-hour-mode .project-modal .solution-icon {
+  color: #9bd7b1;
+}
+
+.App.persona-menu.dark-hour-mode .project-modal .highlighted-metrics {
+  color: #d8f2df !important;
 }
 
 .App.persona-menu.dark-hour-mode .project-modal .node-icon {

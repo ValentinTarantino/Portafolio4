@@ -762,7 +762,53 @@
 
   .dark-hour-scene__city .dark-hour-scene__building,
   .dark-hour-scene__city .dark-hour-scene__building[data-tone] {
+    border-right: 1px solid rgba(91, 148, 184, 0.08);
+    border-top: 1px solid rgba(91, 148, 184, 0.13);
     background: #091827 !important;
+  }
+
+  /* Keep the low-cost SVG skyline visible against the night sky. The former
+     mobile fill was almost identical to the horizon color, hiding the city. */
+  .dark-hour-scene__city--far .dark-hour-scene__building[data-tone] {
+    background-color: #1a3047 !important;
+    background-image:
+      radial-gradient(ellipse 2px 3px at 24% 30%, rgba(126, 185, 213, 0.72) 0 72%, transparent 100%),
+      radial-gradient(ellipse 2px 3px at 72% 66%, rgba(205, 132, 75, 0.72) 0 72%, transparent 100%),
+      linear-gradient(180deg, #1a3047, #0b1928) !important;
+  }
+
+  .dark-hour-scene__city--mid .dark-hour-scene__building[data-tone] {
+    background-color: #10243a !important;
+    background-image:
+      radial-gradient(ellipse 2.5px 3.5px at 18% 24%, rgba(221, 148, 86, 0.82) 0 72%, transparent 100%),
+      radial-gradient(ellipse 2.5px 3.5px at 70% 46%, rgba(112, 187, 218, 0.78) 0 72%, transparent 100%),
+      radial-gradient(ellipse 2.5px 3.5px at 38% 76%, rgba(198, 126, 72, 0.76) 0 72%, transparent 100%),
+      linear-gradient(180deg, #10243a, #081522) !important;
+  }
+
+  .dark-hour-scene__city--near .dark-hour-scene__building[data-tone] {
+    background-color: #080f1c !important;
+    background-image:
+      radial-gradient(ellipse 3px 4px at 20% 20%, rgba(220, 145, 80, 0.86) 0 72%, transparent 100%),
+      radial-gradient(ellipse 3px 4px at 68% 38%, rgba(115, 190, 220, 0.8) 0 72%, transparent 100%),
+      radial-gradient(ellipse 3px 4px at 36% 61%, rgba(198, 119, 66, 0.84) 0 72%, transparent 100%),
+      radial-gradient(ellipse 3px 4px at 78% 79%, rgba(223, 157, 96, 0.78) 0 72%, transparent 100%),
+      linear-gradient(180deg, #080f1c, #050b13) !important;
+  }
+
+  .dark-hour-scene__city--far .dark-hour-scene__building,
+  .dark-hour-scene__city--far .dark-hour-scene__building[data-tone] {
+    border-color: rgba(111, 164, 196, 0.12);
+  }
+
+  .dark-hour-scene__city--mid .dark-hour-scene__building,
+  .dark-hour-scene__city--mid .dark-hour-scene__building[data-tone] {
+    border-color: rgba(70, 126, 158, 0.1);
+  }
+
+  .dark-hour-scene__city--near .dark-hour-scene__building,
+  .dark-hour-scene__city--near .dark-hour-scene__building[data-tone] {
+    border-color: rgba(58, 104, 134, 0.08);
   }
 
   .dark-hour-scene.is-dark-hour .dark-hour-scene__city .dark-hour-scene__building,
@@ -770,9 +816,23 @@
     background: #07140f !important;
   }
 
+  .dark-hour-scene.is-dark-hour .dark-hour-scene__city--far .dark-hour-scene__building[data-tone] {
+    background: #14291e !important;
+    background-image: none !important;
+  }
+
+  .dark-hour-scene.is-dark-hour .dark-hour-scene__city--mid .dark-hour-scene__building[data-tone] {
+    background: #0c1d14 !important;
+    background-image: none !important;
+  }
+
+  .dark-hour-scene.is-dark-hour .dark-hour-scene__city--near .dark-hour-scene__building[data-tone] {
+    background: #060d09 !important;
+    background-image: none !important;
+  }
+
   .dark-hour-scene__building::before,
-  .dark-hour-scene__building::after,
-  .dark-hour-scene__window {
+  .dark-hour-scene__building::after {
     display: none !important;
   }
 

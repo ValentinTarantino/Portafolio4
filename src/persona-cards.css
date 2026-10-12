@@ -189,6 +189,15 @@
   clip-path: polygon(0 0, 100% 0, 86% 100%, 0 100%);
 }
 
+/* These records have a more specific blue surface rule above. Keep them in
+   the Dark Hour palette as well as the shared profile and project cards. */
+.App.persona-menu.dark-hour-mode .about-main > .education-card,
+.App.persona-menu.dark-hour-mode .about-sidebar > .education-card {
+  border-color: var(--p3-border);
+  background-color: var(--p3-surface);
+  background-image: linear-gradient(145deg, rgba(16, 49, 37, 0.96), rgba(5, 23, 18, 0.97));
+}
+
 .App.persona-menu .card-title {
   color: var(--p3-cyan);
   font-family: 'Outfit', 'Inter', sans-serif;

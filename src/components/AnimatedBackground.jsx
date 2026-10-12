@@ -28,22 +28,18 @@ const CITY_NEAR = [
 
 const MOBILE_SCENE_QUERY = '(max-width: 700px), (hover: none) and (pointer: coarse)';
 
-const compactCity = (buildings) => {
-  const compact = [];
-  for (let index = 0; index < buildings.length; index += 3) {
-    const group = buildings.slice(index, index + 3);
-    compact.push([
-      group.reduce((total, [width]) => total + width, 0),
-      Math.max(...group.map(([, height]) => height)),
-    ]);
-  }
-  return compact;
+const lightweightCity = (buildings) => {
+  // Keep individual rooflines, but render only every other building on mobile.
+  // Normalize widths to fill the existing SVG viewBox without creating gaps.
+  const selected = buildings.filter((_, index) => index % 2 === 0);
+  const widthScale = 1600 / selected.reduce((total, [width]) => total + width, 0);
+  return selected.map(([width, height]) => [Math.round(width * widthScale), height]);
 };
 
 const MOBILE_CITY = {
-  far: compactCity(CITY_FAR),
-  mid: compactCity(CITY_MID),
-  near: compactCity(CITY_NEAR),
+  far: lightweightCity(CITY_FAR),
+  mid: lightweightCity(CITY_MID),
+  near: lightweightCity(CITY_NEAR),
 };
 
 const CityLayer = memo(({ buildings, depth, lightweight }) => {
