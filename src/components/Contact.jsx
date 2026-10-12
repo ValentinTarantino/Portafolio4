@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo, useEffect } from 'react';
+import { memo, useState, useRef, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 import './Contact.css';
@@ -326,4 +326,4 @@ const Contact = ({ t, setTerminalMount }) => {
   );
 };
 
-export default Contact;
+export default memo(Contact);

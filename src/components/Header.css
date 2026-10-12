@@ -170,87 +170,6 @@
   border-image: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%) 1;
 }
 
-/* Toggle de idioma - Switch moderno tipo interruptor */
-.language-toggle {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.4rem 0.6rem;
-  border-radius: 50px;
-  background: linear-gradient(145deg, rgba(30, 30, 40, 0.8) 0%, rgba(20, 20, 30, 0.9) 100%);
-  border: 2px solid rgba(255, 255, 255, 0.15);
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  box-shadow: 
-    inset 0 2px 4px rgba(0, 0, 0, 0.4),
-    0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
-.language-toggle:hover {
-  border-color: rgba(212, 175, 55, 0.4);
-  box-shadow: 
-    inset 0 2px 4px rgba(0, 0, 0, 0.4),
-    0 4px 15px rgba(212, 175, 55, 0.2);
-}
-
-.lang-label {
-  font-weight: 600;
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.5);
-  transition: all 0.3s ease;
-  user-select: none;
-  min-width: 22px;
-  text-align: center;
-}
-
-.lang-label.active {
-  color: #f4d03f;
-  text-shadow: 0 0 10px rgba(244, 208, 63, 0.5);
-}
-
-/* Switch container */
-.lang-switch {
-  position: relative;
-  width: 44px;
-  height: 24px;
-  background: linear-gradient(145deg, rgba(50, 50, 60, 0.9) 0%, rgba(30, 30, 40, 0.95) 100%);
-  border-radius: 50px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
-  transition: all 0.3s ease;
-}
-
-/* Indicador deslizante */
-.lang-indicator {
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 18px;
-  height: 18px;
-  background: linear-gradient(145deg, #d4af37 0%, #f4d03f 50%, #d4af37 100%);
-  border-radius: 50%;
-  box-shadow: 
-    0 2px 6px rgba(212, 175, 55, 0.5),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.2),
-    inset 0 2px 4px rgba(255, 255, 255, 0.4);
-  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-/* Estado EN - indicador movido a la derecha */
-.lang-switch.en-active .lang-indicator {
-  transform: translateX(20px);
-}
-
-.flag {
-  font-size: 1.2rem;
-}
-
-/* Toggle día/noche para mobile - oculto en desktop */
-.mobile-theme-toggle {
-  display: none;
-}
-
 .menu-toggle {
   display: none;
   flex-direction: column;
@@ -332,45 +251,10 @@
   }
 
   /* Modo claro - fondo blanco con borde azul grueso */
-  html.lamp-light-mode .header .nav,
-  body.lamp-light-mode .header .nav {
-    background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 4px solid rgba(59, 130, 246, 0.3);
-    box-shadow: 
-      0 10px 40px rgba(0, 0, 0, 0.15),
-      0 4px 20px rgba(59, 130, 246, 0.15);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
-                background 0.3s ease,
-                border-color 0.3s ease,
-                box-shadow 0.3s ease;
-  }
 
   /* Links en modo claro - texto oscuro */
-  html.lamp-light-mode .header .nav-link,
-  body.lamp-light-mode .header .nav-link {
-    color: #1e293b !important;
-  }
-
-  html.lamp-light-mode .header .nav-link.active,
-  body.lamp-light-mode .header .nav-link.active {
-    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%) !important;
-    color: #ffffff !important;
-  }
 
   /* Sin hover en modo claro */
-  html.lamp-light-mode .header .nav-link:hover,
-  body.lamp-light-mode .header .nav-link:hover,
-  html.lamp-light-mode .header .nav-link:focus,
-  body.lamp-light-mode .header .nav-link:focus,
-  html.lamp-light-mode .header .nav-link:active,
-  body.lamp-light-mode .header .nav-link:active {
-    background: transparent !important;
-    color: #1e293b !important;
-    transform: none !important;
-    box-shadow: none !important;
-  }
 
   .nav::before {
     content: '';
@@ -391,11 +275,6 @@
   }
 
   /* Tooltip modo claro */
-  html.lamp-light-mode .header .nav::before,
-  body.lamp-light-mode .header .nav::before {
-    border-left: 4px solid rgba(59, 130, 246, 0.3) !important;
-    border-top: 4px solid rgba(59, 130, 246, 0.3) !important;
-  }
 
   .nav-open {
     transform: scale(1) translateY(0);
@@ -564,22 +443,16 @@
 
 /* Menú hamburguesa - solo visible en responsive (<=1024px) */
 @media (max-width: 1024px) {
-  .header.nav-light .menu-toggle,
-  body.lamp-light-mode .header .menu-toggle,
-  html.lamp-light-mode .header .menu-toggle {
+  .header.nav-light .menu-toggle {
     display: flex !important;
   }
 
-  .header.nav-light .menu-toggle span,
-  body.lamp-light-mode .header .menu-toggle span,
-  html.lamp-light-mode .header .menu-toggle span {
+  .header.nav-light .menu-toggle span {
     background: #000000 !important;
     height: 2.5px !important;
   }
 
-  .header.nav-light .menu-toggle.open span,
-  body.lamp-light-mode .header .menu-toggle.open span,
-  html.lamp-light-mode .header .menu-toggle.open span {
+  .header.nav-light .menu-toggle.open span {
     background: #3b82f6 !important;
   }
 }
@@ -603,9 +476,7 @@
 
 /* Sin separador en modo claro - solo en pantallas pequeñas */
 @media (max-width: 1024px) {
-  .header.nav-light .header-actions,
-  html.lamp-light-mode .header .header-actions,
-  body.lamp-light-mode .header .header-actions {
+  .header.nav-light .header-actions {
     border-left: none !important;
     border-image: none !important;
     padding-left: 0.5rem;
@@ -614,9 +485,7 @@
 
 /* Separador negro en modo claro - solo en pantallas grandes (estilo igual al modo oscuro) */
 @media (min-width: 1025px) {
-  .header.nav-light .header-actions,
-  html.lamp-light-mode .header .header-actions,
-  body.lamp-light-mode .header .header-actions {
+  .header.nav-light .header-actions {
     border-left: 1px solid transparent !important;
     border-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%) 1 !important;
     padding-left: 1.5rem !important;
@@ -630,63 +499,6 @@
     border-image: none !important;
     padding-left: 0 !important;
   }
-  
-  html.lamp-light-mode .header .header-actions,
-  body.lamp-light-mode .header .header-actions {
-    border-left: none !important;
-    border-image: none !important;
-    padding-left: 0 !important;
-  }
-
-  /* Mobile toggle día/noche visible, lámpara y cadena ocultas */
-  .lamp-wrapper {
-    display: none !important;
-  }
-
-  .hanging-chain {
-    display: none !important;
-  }
-
-  .mobile-theme-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    width: 38px;
-    height: 38px;
-    cursor: pointer;
-    padding: 0;
-    color: rgba(255, 255, 255, 0.8);
-    transition: all 0.3s ease;
-    flex-shrink: 0;
-  }
-
-  .mobile-theme-toggle:hover {
-    background: rgba(255, 255, 255, 0.18);
-    border-color: rgba(255, 255, 255, 0.35);
-  }
-
-  .mobile-theme-icon {
-    width: 20px;
-    height: 20px;
-  }
-
-  /* Modo claro para mobile toggle */
-  html.lamp-light-mode .mobile-theme-toggle,
-  body.lamp-light-mode .mobile-theme-toggle {
-    background: rgba(15, 23, 42, 0.1);
-    border-color: rgba(15, 23, 42, 0.2);
-    color: #475569;
-  }
-
-  html.lamp-light-mode .mobile-theme-toggle:hover,
-  body.lamp-light-mode .mobile-theme-toggle:hover {
-    background: rgba(15, 23, 42, 0.16);
-    border-color: rgba(15, 23, 42, 0.3);
-  }
-
   /* Reducir tamaño del botón de traducciones en mobile */
   .language-toggle {
     padding: 0.3rem 0.4rem !important;
@@ -701,28 +513,10 @@
     min-width: 18px !important;
   }
 
-  .lang-switch {
-    width: 36px !important;
-    height: 20px !important;
-  }
-
-  .lang-indicator {
-    width: 16px !important;
-    height: 16px !important;
-    top: 2px !important;
-    left: 2px !important;
-  }
-
-  .lang-switch.en-active .lang-indicator {
-    transform: translateX(16px) !important;
-  }
-
   /* Deshabilitar backdrop-filter en mobile por rendimiento */
   .header,
   .header.nav-dark,
-  .header.nav-light,
-  html.lamp-light-mode .header,
-  body.lamp-light-mode .header {
+  .header.nav-light {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
   }

@@ -1,12 +1,11 @@
-import { useState, useEffect, useMemo } from 'react';
+import { lazy, memo, Suspense, useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SiReact, SiSass, SiBootstrap, SiHtml5, SiJavascript, SiFirebase, SiNextdotjs, SiTypescript, SiTailwindcss, SiVite, SiPostgresql, SiPostman, SiCss, SiPython, SiPrisma, SiFastapi, SiJest, SiDocker, SiTestinglibrary, SiCypress, SiMongodb, SiThreedotjs, SiStripe, SiGithubactions } from 'react-icons/si';
 import { FiStar } from 'react-icons/fi';
 import './Projects.css';
-import ProjectModal from './ProjectModal';
-import dolarImg from '../assets/dolar-cover.png';
-import ecommerceImg from '../assets/ecommerce.png';
-import clima from '../assets/clima.png';
+import dolarImg from '../assets/dolar-cover.webp';
+import ecommerceImg from '../assets/ecommerce.webp';
+import clima from '../assets/clima.webp';
 import googlekeepImg from '../assets/googlekeep.webp';
 import youtubeImg from '../assets/youtube.webp';
 import flowImg from "../assets/flow.webp";
@@ -15,6 +14,8 @@ import turnosImg from "../assets/turnos.webp";
 import consorcioImg from "../assets/consorcio.webp";
 import goltvImg from "../assets/goltv.webp";
 import awsIcon from '../assets/icons/aws.svg';
+
+const ProjectModal = lazy(() => import('./ProjectModal'));
 
 const techIcons = {
   'React': <SiReact className="tech-icon" color="#61DAFB" />,
@@ -233,7 +234,12 @@ const Projects = ({ t, language }) => {
                 className={`project-card glass-card ${project.featured ? 'project-card--featured' : 'project-card--standard'}`}
               >
                 <div className="project-image">
-                  <img src={project.image} alt={project.title} />
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    loading="lazy"
+                    decoding="async"
+                  />
                   <div className="project-overlay">
                     <div className="project-actions">
                       {project.featured && project.caseStudyKey && (
@@ -282,15 +288,17 @@ const Projects = ({ t, language }) => {
       {/* Case Study Modal */}
       <AnimatePresence>
         {activeProject && (
-          <ProjectModal
-            project={activeProject}
-            t={t}
-            onClose={() => setActiveProject(null)}
-          />
+          <Suspense fallback={null}>
+            <ProjectModal
+              project={activeProject}
+              t={t}
+              onClose={() => setActiveProject(null)}
+            />
+          </Suspense>
         )}
       </AnimatePresence>
     </section>
   );
 };
 
-export default Projects;
+export default memo(Projects);

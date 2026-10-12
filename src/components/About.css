@@ -431,11 +431,6 @@
   color: #667eea;
 }
 
-:root.lamp-light-mode .experience-bullets li,
-html.lamp-light-mode .experience-bullets li {
-  color: #334155;
-}
-
 .soft-skill-list {
   display: flex;
   flex-direction: column;
@@ -483,41 +478,6 @@ html.lamp-light-mode .experience-bullets li {
   color: #cbd5e0;
   font-size: 0.95rem;
   font-weight: 500;
-}
-
-:root.lamp-light-mode .soft-skill-item,
-html.lamp-light-mode .soft-skill-item {
-  background: #ffffff;
-  border-color: rgba(59, 130, 246, 0.15);
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.05);
-}
-
-:root.lamp-light-mode .soft-skill-item span,
-html.lamp-light-mode .soft-skill-item span {
-  color: #475569;
-}
-
-:root.lamp-light-mode .soft-skill-icon,
-html.lamp-light-mode .soft-skill-icon {
-  background: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
-}
-
-:root.lamp-light-mode .soft-skill-item:hover,
-html.lamp-light-mode .soft-skill-item:hover {
-  background: rgba(59, 130, 246, 0.04);
-  border-color: rgba(59, 130, 246, 0.3);
-}
-
-:root.lamp-light-mode .soft-skill-item:hover .soft-skill-icon,
-html.lamp-light-mode .soft-skill-item:hover .soft-skill-icon {
-  background: #3b82f6;
-  color: #ffffff;
-}
-
-:root.lamp-light-mode .stat-label,
-html.lamp-light-mode .stat-label {
-  color: #475569;
 }
 
 

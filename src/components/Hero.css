@@ -510,73 +510,6 @@
 }
 
 /* Responsive - Modo Claro */
-@media (max-width: 768px) {
-  /* Ajustes de texto en modo claro */
-  :root.lamp-light-mode .hero-description,
-  html.lamp-light-mode .hero-description {
-    color: #475569 !important;
-  }
-
-  :root.lamp-light-mode .hero-title,
-  html.lamp-light-mode .hero-title {
-    color: #64748b !important;
-  }
-
-  /* Terminal en modo claro - mantener fondo oscuro pero ajustar borde */
-  :root.lamp-light-mode .terminal-container,
-  html.lamp-light-mode .terminal-container {
-    box-shadow: 
-      0 25px 60px rgba(0, 0, 0, 0.2),
-      0 0 0 1px rgba(59, 130, 246, 0.15);
-    background: #080c14 !important;
-  }
-
-  :root.lamp-light-mode .terminal-container::before,
-  html.lamp-light-mode .terminal-container::before {
-    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
-  }
-
-  /* CTA buttons en modo claro */
-  :root.lamp-light-mode .cta-button.primary,
-  html.lamp-light-mode .cta-button.primary {
-    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.25);
-  }
-}
-
-@media (max-width: 480px) {
-  /* Hero name más pequeño en móvil modo claro */
-  :root.lamp-light-mode .hero-name,
-  html.lamp-light-mode .hero-name {
-    font-size: 2rem;
-  }
-
-  :root.lamp-light-mode .hero-title,
-  html.lamp-light-mode .hero-title {
-    font-size: 1.3rem;
-  }
-
-  /* Badge en modo claro */
-  :root.lamp-light-mode .hero-badge,
-  html.lamp-light-mode .hero-badge {
-    background: rgba(39, 202, 63, 0.08);
-    border: 1px solid rgba(39, 202, 63, 0.15);
-  }
-
-  /* Terminal más compacto en móvil */
-  :root.lamp-light-mode .terminal-container,
-  html.lamp-light-mode .terminal-container {
-    max-width: 95vw;
-    box-shadow: 
-      0 15px 40px rgba(0, 0, 0, 0.2),
-      0 0 0 1px rgba(59, 130, 246, 0.1);
-  }
-
-  :root.lamp-light-mode .terminal-body,
-  html.lamp-light-mode .terminal-body {
-    height: 340px;
-    padding: 1rem;
-  }
-}
 
 /* ===== CV PREVIEW MODAL ===== */
 
@@ -700,22 +633,4 @@
   .cv-download-link {
     padding: 0.4rem 0.6rem;
   }
-}
-
-:root.lamp-light-mode .cv-download-link,
-html.lamp-light-mode .cv-download-link {
-  color: #1d4ed8;
-  border-color: rgba(59, 130, 246, 0.4);
-}
-
-:root.lamp-light-mode .cv-download-link:hover,
-html.lamp-light-mode .cv-download-link:hover {
-  background: rgba(59, 130, 246, 0.1);
-}
-
-:root.lamp-light-mode .cv-modal-close,
-html.lamp-light-mode .cv-modal-close {
-  border-color: rgba(0, 0, 0, 0.15);
-  background: rgba(0, 0, 0, 0.04);
-  color: #0f172a;
 }

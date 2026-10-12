@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { motion } from 'framer-motion';
 import './Testimonials.css';
 
@@ -118,4 +119,4 @@ const Testimonials = ({ t, language }) => {
   );
 };
 
-export default Testimonials;
+export default memo(Testimonials);

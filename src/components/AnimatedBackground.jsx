@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import Tartarus from './Tartarus';
 import './AnimatedBackground.css';
 
@@ -26,7 +26,7 @@ const CITY_NEAR = [
   [64, 130], [89, 202],
 ];
 
-const CityLayer = ({ buildings, depth }) => {
+const CityLayer = memo(({ buildings, depth }) => {
   let x = 0;
   const layerIndex = depth === 'far' ? 0 : depth === 'mid' ? 1 : 2;
 
@@ -116,7 +116,7 @@ const CityLayer = ({ buildings, depth }) => {
       {facades}
     </svg>
   );
-};
+});
 
 const AnimatedBackground = ({ isDarkHour = false }) => {
   const sceneRef = useRef(null);
@@ -172,13 +172,29 @@ const AnimatedBackground = ({ isDarkHour = false }) => {
     let particles = [];
     let frameId = 0;
     let previousTime = 0;
+    let lastFrameTime = 0;
     let elapsed = 0;
     let visible = !document.hidden;
     let modeMix = 0;
+    let pointerFrameId = 0;
+    let resizeFrameId = 0;
+    let frameInterval = 1000 / 30;
+    let pointerX = 0;
+    let pointerY = 0;
+
+    const lowPowerDevice = (navigator.deviceMemory || 8) <= 4
+      || (navigator.hardwareConcurrency || 8) <= 4;
 
     const createParticles = () => {
-      const desktopCount = Math.min(54, Math.max(18, Math.round(width / 27)));
-      const count = finePointer.matches ? desktopCount : Math.max(12, Math.round(desktopCount * 0.6));
+      const desktopCount = Math.min(
+        lowPowerDevice ? 30 : 44,
+        Math.max(lowPowerDevice ? 14 : 18, Math.round(width / (lowPowerDevice ? 42 : 32))),
+      );
+      const mobileCount = Math.min(
+        lowPowerDevice ? 8 : 12,
+        Math.max(lowPowerDevice ? 6 : 8, Math.round(width / (lowPowerDevice ? 52 : 38))),
+      );
+      const count = finePointer.matches ? desktopCount : mobileCount;
       particles = Array.from({ length: count }, () => ({
         x: random(0, width),
         y: random(0, height),
@@ -196,7 +212,13 @@ const AnimatedBackground = ({ isDarkHour = false }) => {
     const resize = () => {
       width = window.innerWidth;
       height = window.innerHeight;
-      pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
+      pixelRatio = Math.min(
+        window.devicePixelRatio || 1,
+        finePointer.matches ? (lowPowerDevice ? 1.25 : 1.5) : (lowPowerDevice ? 1 : 1.25),
+      );
+      frameInterval = finePointer.matches
+        ? (lowPowerDevice ? 1000 / 30 : 1000 / 40)
+        : (lowPowerDevice ? 1000 / 24 : 1000 / 30);
       canvas.width = Math.round(width * pixelRatio);
       canvas.height = Math.round(height * pixelRatio);
       canvas.style.width = `${width}px`;
@@ -218,6 +240,10 @@ const AnimatedBackground = ({ isDarkHour = false }) => {
       }
 
       context.clearRect(0, 0, width, height);
+      const motionTime = time * 0.001;
+      const red = Math.round(132 + (112 - 132) * modeMix);
+      const green = Math.round(221 + (238 - 221) * modeMix);
+      const blue = Math.round(255 + (164 - 255) * modeMix);
       for (const particle of particles) {
         if (delta > 0) {
           particle.y -= particle.speed * delta * (1 - modeMix * 0.62);
@@ -227,29 +253,27 @@ const AnimatedBackground = ({ isDarkHour = false }) => {
           }
         }
 
-        const motionTime = time * 0.001;
         const x = particle.x
           + Math.sin(particle.phase + motionTime * particle.frequency) * particle.drift * (1 - modeMix * 0.48)
           + Math.sin(particle.secondaryPhase + motionTime * particle.frequency * 0.37) * particle.secondaryDrift * (1 - modeMix * 0.48);
         const shimmer = 0.9 + Math.sin(motionTime * 0.32 + particle.phase) * 0.1;
         context.beginPath();
-        const red = Math.round(132 + (112 - 132) * modeMix);
-        const green = Math.round(221 + (238 - 221) * modeMix);
-        const blue = Math.round(255 + (164 - 255) * modeMix);
         context.fillStyle = `rgba(${red}, ${green}, ${blue}, ${particle.alpha * shimmer * (1 - modeMix * 0.55)})`;
-        context.shadowColor = `rgba(${Math.round(56 + 30 * modeMix)}, ${Math.round(207 + 27 * modeMix)}, ${Math.round(255 - 91 * modeMix)}, 0.48)`;
-        context.shadowBlur = particle.radius > 1.2 ? 5 : 3;
         context.arc(x, particle.y, particle.radius, 0, Math.PI * 2);
         context.fill();
       }
-      context.shadowBlur = 0;
     };
     drawRef.current = draw;
 
     const animate = (time) => {
       if (!visible || motionPreference.matches) return;
+      if (lastFrameTime && time - lastFrameTime < frameInterval) {
+        frameId = window.requestAnimationFrame(animate);
+        return;
+      }
       const delta = previousTime ? Math.min((time - previousTime) / 1000, 0.04) : 0;
       previousTime = time;
+      lastFrameTime = time;
       elapsed = time;
       draw(delta, elapsed);
       frameId = window.requestAnimationFrame(animate);
@@ -258,6 +282,7 @@ const AnimatedBackground = ({ isDarkHour = false }) => {
     const start = () => {
       window.cancelAnimationFrame(frameId);
       previousTime = 0;
+      lastFrameTime = 0;
       scene.classList.toggle('is-paused', !visible || motionPreference.matches);
       if (!visible || motionPreference.matches) {
         draw(0, elapsed);
@@ -273,17 +298,28 @@ const AnimatedBackground = ({ isDarkHour = false }) => {
 
     const onPointerMove = (event) => {
       if (motionPreference.matches || !finePointer.matches || event.pointerType === 'touch') return;
-      const x = (event.clientX / Math.max(window.innerWidth, 1) - 0.5) * 2;
-      const y = (event.clientY / Math.max(window.innerHeight, 1) - 0.5) * 2;
-      scene.style.setProperty('--scene-pointer-x', x.toFixed(3));
-      scene.style.setProperty('--scene-pointer-y', y.toFixed(3));
+      pointerX = (event.clientX / Math.max(window.innerWidth, 1) - 0.5) * 2;
+      pointerY = (event.clientY / Math.max(window.innerHeight, 1) - 0.5) * 2;
+      if (pointerFrameId) return;
+      pointerFrameId = window.requestAnimationFrame(() => {
+        pointerFrameId = 0;
+        scene.style.setProperty('--scene-pointer-x', pointerX.toFixed(3));
+        scene.style.setProperty('--scene-pointer-y', pointerY.toFixed(3));
+      });
     };
 
     const onMotionPreferenceChange = () => start();
+    const onResize = () => {
+      if (resizeFrameId) return;
+      resizeFrameId = window.requestAnimationFrame(() => {
+        resizeFrameId = 0;
+        resize();
+      });
+    };
 
     resize();
     start();
-    window.addEventListener('resize', resize, { passive: true });
+    window.addEventListener('resize', onResize, { passive: true });
     window.addEventListener('pointermove', onPointerMove, { passive: true });
     document.addEventListener('visibilitychange', onVisibilityChange);
     motionPreference.addEventListener?.('change', onMotionPreferenceChange);
@@ -291,7 +327,9 @@ const AnimatedBackground = ({ isDarkHour = false }) => {
     return () => {
       drawRef.current = null;
       window.cancelAnimationFrame(frameId);
-      window.removeEventListener('resize', resize);
+      window.cancelAnimationFrame(pointerFrameId);
+      window.cancelAnimationFrame(resizeFrameId);
+      window.removeEventListener('resize', onResize);
       window.removeEventListener('pointermove', onPointerMove);
       document.removeEventListener('visibilitychange', onVisibilityChange);
       motionPreference.removeEventListener?.('change', onMotionPreferenceChange);

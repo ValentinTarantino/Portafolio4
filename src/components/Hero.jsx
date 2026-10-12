@@ -1,9 +1,9 @@
-import { useState, useRef, useEffect } from 'react';
+import { lazy, memo, Suspense, useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import './Hero.css';
 import './HeroEditorial.css';
-import DinoGame from './DinoGame';
+const DinoGame = lazy(() => import('./DinoGame'));
 
 // Dynamic terminal outputs renderer for seamless real-time bilingual updates
 const renderHistoryItem = (item, index, isSpanish) => {
@@ -727,17 +727,19 @@ const Hero = ({ t, language, terminalMount }) => {
 
                 {/* Dino Game Canvas */}
                 {dinoActive && (
-                  <DinoGame
-                    isSpanish={isSpanish}
-                    onExit={() => {
-                      setDinoActive(false);
-                      const exitText = isSpanish
-                        ? 'Juego del dinosaurio finalizado. Escribe "dino" para jugar de nuevo.'
-                        : 'Dinosaur game ended. Type "dino" to play again.';
-                      setTerminalHistory(prev => [...prev, { type: 'output', cmdType: 'raw', text: exitText }]);
-                      setTimeout(() => focusInput(), 100);
-                    }}
-                  />
+                  <Suspense fallback={<div className="terminal-line output-line">Loading game…</div>}>
+                    <DinoGame
+                      isSpanish={isSpanish}
+                      onExit={() => {
+                        setDinoActive(false);
+                        const exitText = isSpanish
+                          ? 'Juego del dinosaurio finalizado. Escribe "dino" para jugar de nuevo.'
+                          : 'Dinosaur game ended. Type "dino" to play again.';
+                        setTerminalHistory(prev => [...prev, { type: 'output', cmdType: 'raw', text: exitText }]);
+                        setTimeout(() => focusInput(), 100);
+                      }}
+                    />
+                  </Suspense>
                 )}
 
                 {/* Active interactive prompt input */}
@@ -820,4 +822,4 @@ const Hero = ({ t, language, terminalMount }) => {
   );
 };
 
-export default Hero;
+export default memo(Hero);

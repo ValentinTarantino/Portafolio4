@@ -547,16 +547,6 @@
    BOTTOM BAR
    ═══════════════════════════════════════════════════════════════════════ */
 
-.footer-bottom-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.02);
-  flex-wrap: wrap;
-  gap: 1.5rem;
-}
-
 .footer-copyright-wrapper {
   flex: 1;
 }
@@ -581,42 +571,6 @@
   28% { transform: scale(1); }
   42% { transform: scale(1.3); }
   70% { transform: scale(1); }
-}
-
-.back-to-top-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.7rem 1.2rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.btn-text {
-  font-size: 0.85rem;
-}
-
-.back-to-top-btn:hover {
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.2);
-  transform: translateY(-3px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-}
-
-.back-to-top-btn:hover svg {
-  animation: bounceUp 0.6s ease infinite;
-}
-
-@keyframes bounceUp {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -670,10 +624,6 @@
     justify-content: flex-start;
   }
 
-  .footer-bottom-bar {
-    justify-content: center;
-    padding-top: 1.8rem;
-  }
 }
 
 @media (max-width: 768px) {
@@ -714,18 +664,6 @@
     margin: 0 auto;
   }
 
-  .footer-bottom-bar {
-    flex-direction: column;
-    text-align: center;
-    gap: 1rem;
-    padding-top: 1.5rem;
-  }
-
-  .back-to-top-btn {
-    width: 100%;
-    justify-content: center;
-  }
-
   /* PERFORMANCE: Desactivar animaciones costosas en mobile */
   .footer-glow,
   .footer-particles,
@@ -744,9 +682,6 @@
     opacity: 0.6;
   }
 
-  .back-to-top-btn {
-    animation: none;
-  }
 }
 
 @media (min-width: 361px) and (max-width: 480px) {
@@ -781,14 +716,6 @@
     font-size: 0.85rem;
   }
 
-  .btn-text {
-    display: none;
-  }
-
-  .back-to-top-btn {
-    padding: 0.9rem;
-  }
-
   .footer-main-grid {
     gap: 2rem;
   }
@@ -797,41 +724,6 @@
     grid-template-columns: 1fr;
     max-width: 220px;
   }
-}
-
-.App.persona-menu .back-to-top-btn {
-  --p3-band-pad-x: 1.4rem;
-  padding: 0.35rem 0.2rem !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  font-family: Impact, 'Arial Narrow', 'Roboto Condensed', sans-serif !important;
-  font-size: 1.15rem !important;
-  font-stretch: condensed;
-  font-weight: 900 !important;
-  letter-spacing: 0.055em;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.App.persona-menu .back-to-top-btn .btn-text {
-  font-size: inherit !important;
-}
-
-html:not(.lamp-light-mode) .App.persona-menu .back-to-top-btn {
-  color: #75eaff !important;
-}
-
-html.lamp-light-mode .App.persona-menu .back-to-top-btn {
-  color: #147ce5 !important;
-}
-
-.App.persona-menu .back-to-top-btn:hover {
-  border: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  color: #fff !important;
 }
 
 /* Keep the closing section in the same blue/cyan system as the rest of the portfolio. */

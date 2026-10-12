@@ -353,131 +353,9 @@
 /* ===== LIGHT MODE (single source of truth) ===== */
 /* background-color only: keeps the --accent top line from the base rule */
 
-:root.lamp-light-mode .skill-category-box,
-html.lamp-light-mode .skill-category-box {
-  background-color: #ffffff;
-  border: 2px solid rgba(59, 130, 246, 0.35);
-  border-top-color: color-mix(in srgb, var(--accent) 35%, transparent);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-  max-width: 100%;
-}
-
-:root.lamp-light-mode .skill-category-box:hover,
-html.lamp-light-mode .skill-category-box:hover {
-  background-color: #f8faff;
-  border-color: rgba(59, 130, 246, 0.3);
-  border-top-color: color-mix(in srgb, var(--accent) 40%, transparent);
-  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.12);
-}
-
-:root.lamp-light-mode .category-header,
-html.lamp-light-mode .category-header {
-  border-bottom-color: color-mix(in srgb, var(--accent) 25%, transparent);
-}
-
-:root.lamp-light-mode .category-icon,
-html.lamp-light-mode .category-icon {
-  background: linear-gradient(135deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 68%, #1e293b) 100%);
-  border: none;
-  color: #ffffff;
-  box-shadow: 0 4px 12px color-mix(in srgb, var(--accent) 35%, transparent);
-}
-
-:root.lamp-light-mode .category-title,
-html.lamp-light-mode .category-title {
-  color: #1e293b;
-  opacity: 1;
-}
-
-:root.lamp-light-mode .category-count,
-html.lamp-light-mode .category-count {
-  color: #1e293b;
-  background: color-mix(in srgb, var(--accent) 14%, transparent);
-  border-color: color-mix(in srgb, var(--accent) 30%, transparent);
-}
-
-:root.lamp-light-mode .skill-item,
-html.lamp-light-mode .skill-item {
-  background: rgba(59, 130, 246, 0.07);
-  border: 1.5px solid rgba(59, 130, 246, 0.45);
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.08);
-}
-
-:root.lamp-light-mode .skill-item:hover,
-html.lamp-light-mode .skill-item:hover {
-  background: #ffffff;
-  border-color: rgba(59, 130, 246, 0.45);
-  box-shadow: 0 12px 26px -10px rgba(59, 130, 246, 0.4);
-}
-
 /* Light mode keeps the blue badge with white glyph */
-:root.lamp-light-mode .skill-icon-tile,
-html.lamp-light-mode .skill-icon-tile {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-  border: none;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
-}
-
-:root.lamp-light-mode .skill-icon-tile svg,
-html.lamp-light-mode .skill-icon-tile svg {
-  width: 28px;
-  height: 28px;
-  filter: brightness(0) invert(1);
-}
-
-:root.lamp-light-mode .skill-icon-tile img,
-html.lamp-light-mode .skill-icon-tile img {
-  width: 28px;
-  height: 28px;
-  filter: brightness(0) invert(1);
-}
-
-:root.lamp-light-mode .skill-icon-tile span,
-html.lamp-light-mode .skill-icon-tile span {
-  font-size: 28px !important;
-  filter: grayscale(100%) brightness(0) invert(1);
-}
-
-:root.lamp-light-mode .skill-name,
-html.lamp-light-mode .skill-name {
-  color: #1e293b;
-}
 
 /* Light mode mobile */
-@media (max-width: 480px) {
-  :root.lamp-light-mode .skill-icon-tile,
-  html.lamp-light-mode .skill-icon-tile {
-    width: 48px;
-    height: 48px;
-  }
-
-  :root.lamp-light-mode .skill-icon-tile svg,
-  html.lamp-light-mode .skill-icon-tile svg,
-  :root.lamp-light-mode .skill-icon-tile img,
-  html.lamp-light-mode .skill-icon-tile img {
-    width: 24px;
-    height: 24px;
-  }
-}
-
-@media (max-width: 360px) {
-  :root.lamp-light-mode .skill-icon-tile,
-  html.lamp-light-mode .skill-icon-tile {
-    width: 44px;
-    height: 44px;
-  }
-
-  :root.lamp-light-mode .skill-icon-tile svg,
-  html.lamp-light-mode .skill-icon-tile svg,
-  :root.lamp-light-mode .skill-icon-tile img,
-  html.lamp-light-mode .skill-icon-tile img {
-    width: 22px;
-    height: 22px;
-  }
-}
 
 /* Reduced motion: show items immediately, no lift */
 @media (prefers-reduced-motion: reduce) {
@@ -613,18 +491,6 @@ html.lamp-light-mode .skill-name {
   font-weight: 550;
   line-height: 1;
   white-space: nowrap;
-}
-
-html.lamp-light-mode .skill-category-box--compact .category-title { color: #202820; }
-html.lamp-light-mode .category-description { color: #687264; }
-html.lamp-light-mode .skill-chip { color: #374235; border-color: rgba(35, 48, 31, 0.13); background: rgba(35, 48, 31, 0.025); }
-html.lamp-light-mode .skill-chip-icon,
-html.lamp-light-mode .skill-chip-icon svg { color: #2563eb !important; }
-html.lamp-light-mode .skill-chip-icon img {
-  filter: brightness(0) saturate(100%) invert(31%) sepia(96%) saturate(2148%) hue-rotate(211deg) brightness(98%) contrast(95%);
-}
-html.lamp-light-mode .skill-chip-icon span {
-  filter: grayscale(1) brightness(0) saturate(100%) invert(31%) sepia(96%) saturate(2148%) hue-rotate(211deg) brightness(98%) contrast(95%);
 }
 
 @media (max-width: 700px) {

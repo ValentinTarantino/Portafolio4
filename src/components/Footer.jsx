@@ -1,4 +1,5 @@
-import { FiCode, FiArrowUp, FiDownload } from 'react-icons/fi';
+import { memo } from 'react';
+import { FiCode, FiDownload } from 'react-icons/fi';
 import { SiReact, SiVite, SiJavascript } from 'react-icons/si';
 import { FaCss3Alt } from 'react-icons/fa';
 import './Footer.css';
@@ -100,16 +101,10 @@ const Footer = ({ t }) => {
             </div>
           </div>
 
-          <div className="footer-bottom-bar">
-            <button onClick={scrollToTop} className="back-to-top-btn" aria-label={t.footer.backToTop}>
-              <span className="btn-text">{t.footer.backToTop}</span>
-              <FiArrowUp />
-            </button>
-          </div>
         </div>
       </div>
     </footer>
   );
 };
 
-export default Footer;
+export default memo(Footer);

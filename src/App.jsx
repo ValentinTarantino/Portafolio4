@@ -1,5 +1,4 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
-import { motion } from 'framer-motion';
 import './App.css';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -20,7 +19,14 @@ import en from './locales/en';
 const translations = { es, en };
 
 function App() {
-  const [language, setLanguage] = useState('es');
+  const [language, setLanguage] = useState(() => {
+    try {
+      const savedLanguage = window.localStorage.getItem('persona-language');
+      return savedLanguage === 'en' || savedLanguage === 'es' ? savedLanguage : 'es';
+    } catch {
+      return 'es';
+    }
+  });
   const [isDarkHour, setIsDarkHour] = useState(() => {
     try {
       return window.localStorage.getItem('persona-dark-hour') === 'true';
@@ -33,6 +39,11 @@ function App() {
 
   useEffect(() => {
     document.documentElement.lang = language;
+    try {
+      window.localStorage.setItem('persona-language', language);
+    } catch {
+      // The selected language remains available for the current session.
+    }
   }, [language]);
 
   useEffect(() => {
@@ -44,7 +55,7 @@ function App() {
   }, [isDarkHour]);
 
   const toggleLanguage = () => {
-    setLanguage(language === 'es' ? 'en' : 'es');
+    setLanguage((current) => current === 'es' ? 'en' : 'es');
   };
 
   return (

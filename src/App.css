@@ -386,51 +386,6 @@ html {
 }
 
 /* Responsive - Modo Claro */
-@media (max-width: 768px) {
-  /* Títulos de sección en modo claro */
-  :root.lamp-light-mode .section-title,
-  html.lamp-light-mode .section-title {
-    color: #0f172a !important;
-  }
-
-  :root.lamp-light-mode .section-subtitle,
-  html.lamp-light-mode .section-subtitle {
-    color: #475569 !important;
-  }
-
-  /* Glass card en modo claro */
-  :root.lamp-light-mode .glass-card,
-  html.lamp-light-mode .glass-card {
-    background: rgba(255, 255, 255, 0.7);
-    border: 1px solid rgba(59, 130, 246, 0.15);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  }
-
-  /* Botones en modo claro */
-  :root.lamp-light-mode .btn,
-  html.lamp-light-mode .btn {
-    box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2);
-  }
-
-  :root.lamp-light-mode .btn-outline,
-  html.lamp-light-mode .btn-outline {
-    border: 2px solid #3b82f6;
-    color: #3b82f6;
-  }
-}
-
-@media (max-width: 480px) {
-  /* Títulos más pequeños en móvil modo claro */
-  :root.lamp-light-mode .section-title,
-  html.lamp-light-mode .section-title {
-    font-size: 1.6rem;
-  }
-
-  :root.lamp-light-mode .section-subtitle,
-  html.lamp-light-mode .section-subtitle {
-    font-size: 0.9rem;
-  }
-}
 
 /* === PERFORMANCE: Desactivar backdrop-filter en mobile === */
 @media (max-width: 768px) {

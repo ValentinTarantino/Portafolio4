@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import './Skills.css';
 import { SiNextdotjs, SiTypescript, SiTailwindcss, SiReact, SiHtml5, SiJavascript, SiCss, SiSass, SiFirebase, SiFigma, SiGit, SiGithub, SiNodedotjs, SiExpress, SiPostgresql, SiPython, SiPrisma, SiFastapi, SiBootstrap, SiVite, SiDocker, SiJest, SiTestinglibrary, SiCypress, SiMongodb, SiThreedotjs, SiGithubactions } from 'react-icons/si';
 import claudeIcon from '../assets/icons/claude.png';
@@ -120,4 +120,4 @@ const Skills = ({ t }) => {
   );
 };
 
-export default Skills;
+export default memo(Skills);

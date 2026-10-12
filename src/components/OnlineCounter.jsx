@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { collection, deleteDoc, doc, limit, onSnapshot, orderBy, query, serverTimestamp, setDoc } from 'firebase/firestore';
-import { db } from '../lib/firebase';
 import './OnlineCounter.css';
 
 const HEARTBEAT_MS = 20000;
@@ -15,37 +13,93 @@ const OnlineCounter = ({ t }) => {
   );
 
   useEffect(() => {
-    const ref = doc(db, 'presence', sessionId.current);
+    let cancelled = false;
+    let idleId;
+    let timeoutId;
+    let cleanupPresence = () => {};
 
-    const beat = () => {
-      setDoc(ref, { lastSeen: serverTimestamp() }, { merge: true }).catch(() => {});
+    const initializePresence = async () => {
+      try {
+        const [firestore, firebase] = await Promise.all([
+          import('firebase/firestore'),
+          import('../lib/firebase'),
+        ]);
+        if (cancelled) return;
+
+        const { db } = firebase;
+        const {
+          collection, deleteDoc, doc, limit, onSnapshot, orderBy, query, serverTimestamp, setDoc,
+        } = firestore;
+        const ref = doc(db, 'presence', sessionId.current);
+        const presenceQuery = query(collection(db, 'presence'), orderBy('lastSeen', 'desc'), limit(100));
+        let heartbeatId;
+        let unsubscribe = () => {};
+
+        const beat = () => {
+          if (!document.hidden) {
+            setDoc(ref, { lastSeen: serverTimestamp() }, { merge: true }).catch(() => {});
+          }
+        };
+
+        const subscribe = () => {
+          unsubscribe();
+          if (document.hidden) return;
+          unsubscribe = onSnapshot(presenceQuery, (snap) => {
+            const now = Date.now();
+            let fresh = 0;
+            snap.forEach((presenceDoc) => {
+              const timestamp = presenceDoc.data()?.lastSeen;
+              if (!timestamp || now - timestamp.toMillis() < FRESH_MS) fresh += 1;
+            });
+            setCount(Math.max(fresh, 1));
+          }, () => {});
+        };
+
+        const onVisibilityChange = () => {
+          clearInterval(heartbeatId);
+          unsubscribe();
+          if (!document.hidden) {
+            beat();
+            heartbeatId = window.setInterval(beat, HEARTBEAT_MS);
+            subscribe();
+          }
+        };
+
+        const remove = () => {
+          deleteDoc(ref).catch(() => {});
+        };
+
+        if (!document.hidden) {
+          beat();
+          heartbeatId = window.setInterval(beat, HEARTBEAT_MS);
+          subscribe();
+        }
+        window.addEventListener('beforeunload', remove);
+        document.addEventListener('visibilitychange', onVisibilityChange);
+
+        cleanupPresence = () => {
+          clearInterval(heartbeatId);
+          unsubscribe();
+          window.removeEventListener('beforeunload', remove);
+          document.removeEventListener('visibilitychange', onVisibilityChange);
+          remove();
+        };
+      } catch {
+        // Presence is optional; the rest of the portfolio remains available offline.
+      }
     };
-    beat();
-    const interval = setInterval(beat, HEARTBEAT_MS);
 
-    const remove = () => {
-      deleteDoc(ref).catch(() => {});
-    };
-    window.addEventListener('beforeunload', remove);
-
-    // Realtime listener: recounts instantly on every join/leave
-    const q = query(collection(db, 'presence'), orderBy('lastSeen', 'desc'), limit(100));
-    const unsub = onSnapshot(q, (snap) => {
-      const now = Date.now();
-      let fresh = 0;
-      snap.forEach((d) => {
-        const ts = d.data()?.lastSeen;
-        // Docs without a resolved timestamp yet count as fresh (just joined)
-        if (!ts || now - ts.toMillis() < FRESH_MS) fresh += 1;
-      });
-      setCount(Math.max(fresh, 1));
-    }, () => {});
+    if ('requestIdleCallback' in window) {
+      idleId = window.requestIdleCallback(initializePresence, { timeout: 2500 });
+    } else {
+      timeoutId = window.setTimeout(initializePresence, 1200);
+    }
 
     return () => {
-      clearInterval(interval);
-      window.removeEventListener('beforeunload', remove);
-      unsub();
-      remove();
+      cancelled = true;
+      if (idleId !== undefined) window.cancelIdleCallback?.(idleId);
+      window.clearTimeout(timeoutId);
+      cleanupPresence();
     };
   }, []);
 
