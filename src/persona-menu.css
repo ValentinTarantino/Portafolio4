@@ -732,6 +732,14 @@ html .App.persona-menu .header .language-toggle:focus-visible {
   }
 }
 
+@media (max-width: 700px), (hover: none) and (pointer: coarse) {
+  html .App.persona-menu::before {
+    background: linear-gradient(145deg, #040b18 0%, #071a35 54%, #06152c 100%);
+    background-blend-mode: normal;
+    opacity: 0.34;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html .App.persona-menu .header .nav,
   html .App.persona-menu .header .nav-list > li,

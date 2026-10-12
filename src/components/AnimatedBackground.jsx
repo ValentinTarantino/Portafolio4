@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import Tartarus from './Tartarus';
 import './AnimatedBackground.css';
 
@@ -26,11 +26,32 @@ const CITY_NEAR = [
   [64, 130], [89, 202],
 ];
 
-const CityLayer = memo(({ buildings, depth }) => {
+const MOBILE_SCENE_QUERY = '(max-width: 700px), (hover: none) and (pointer: coarse)';
+
+const compactCity = (buildings) => {
+  const compact = [];
+  for (let index = 0; index < buildings.length; index += 3) {
+    const group = buildings.slice(index, index + 3);
+    compact.push([
+      group.reduce((total, [width]) => total + width, 0),
+      Math.max(...group.map(([, height]) => height)),
+    ]);
+  }
+  return compact;
+};
+
+const MOBILE_CITY = {
+  far: compactCity(CITY_FAR),
+  mid: compactCity(CITY_MID),
+  near: compactCity(CITY_NEAR),
+};
+
+const CityLayer = memo(({ buildings, depth, lightweight }) => {
+  const visibleBuildings = lightweight ? MOBILE_CITY[depth] : buildings;
   let x = 0;
   const layerIndex = depth === 'far' ? 0 : depth === 'mid' ? 1 : 2;
 
-  const facades = buildings.map(([width, height], buildingIndex) => {
+  const facades = visibleBuildings.map(([width, height], buildingIndex) => {
     const left = x;
     x += width;
 
@@ -48,7 +69,7 @@ const CityLayer = memo(({ buildings, depth }) => {
     const verticalRange = rows === 1 ? 0 : 90 - windowHeight - verticalStart;
     const windows = [];
 
-    for (let row = 0; row < rows; row += 1) {
+    if (!lightweight) for (let row = 0; row < rows; row += 1) {
       for (let column = 0; column < columns; column += 1) {
         const hash = buildingIndex * 17 + row * 7 + column * 11 + layerIndex * 13;
         const randomValue = Math.abs(Math.sin(
@@ -123,8 +144,20 @@ const AnimatedBackground = ({ isDarkHour = false }) => {
   const canvasRef = useRef(null);
   const drawRef = useRef(null);
   const heroActiveRef = useRef(false);
+  const [lightweightScene, setLightweightScene] = useState(() => window.matchMedia(MOBILE_SCENE_QUERY).matches);
   const modeRef = useRef(isDarkHour);
   modeRef.current = isDarkHour;
+
+  useEffect(() => {
+    const query = window.matchMedia(MOBILE_SCENE_QUERY);
+    const updateSceneMode = () => setLightweightScene(query.matches);
+    if (query.addEventListener) query.addEventListener('change', updateSceneMode);
+    else query.addListener?.(updateSceneMode);
+    return () => {
+      if (query.removeEventListener) query.removeEventListener('change', updateSceneMode);
+      else query.removeListener?.(updateSceneMode);
+    };
+  }, []);
 
   useEffect(() => {
     const scene = sceneRef.current;
@@ -158,6 +191,11 @@ const AnimatedBackground = ({ isDarkHour = false }) => {
   }, [isDarkHour]);
 
   useEffect(() => {
+    if (lightweightScene) {
+      drawRef.current = null;
+      return undefined;
+    }
+
     const scene = sceneRef.current;
     const canvas = canvasRef.current;
     const context = canvas?.getContext('2d', { alpha: true });
@@ -334,7 +372,7 @@ const AnimatedBackground = ({ isDarkHour = false }) => {
       document.removeEventListener('visibilitychange', onVisibilityChange);
       motionPreference.removeEventListener?.('change', onMotionPreferenceChange);
     };
-  }, []);
+  }, [lightweightScene]);
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -353,10 +391,10 @@ const AnimatedBackground = ({ isDarkHour = false }) => {
       <div className="dark-hour-scene__mist dark-hour-scene__mist--near" />
       <div className="dark-hour-scene__distant-lights" />
       <Tartarus />
-      <CityLayer buildings={CITY_FAR} depth="far" />
-      <CityLayer buildings={CITY_MID} depth="mid" />
+      <CityLayer buildings={CITY_FAR} depth="far" lightweight={lightweightScene} />
+      <CityLayer buildings={CITY_MID} depth="mid" lightweight={lightweightScene} />
       <div className="dark-hour-scene__city-haze" />
-      <CityLayer buildings={CITY_NEAR} depth="near" />
+      <CityLayer buildings={CITY_NEAR} depth="near" lightweight={lightweightScene} />
       <canvas className="dark-hour-scene__particles" ref={canvasRef} />
       <div className="dark-hour-scene__vignette" />
     </div>

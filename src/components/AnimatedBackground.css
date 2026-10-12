@@ -705,3 +705,90 @@
 .dark-hour-scene.is-paused :is(.dark-hour-scene__moon, .dark-hour-scene__mist, .dark-hour-scene__window.is-lit) {
   animation-play-state: paused !important;
 }
+
+/* Mobile keeps the recognizable scene but renders it as a still, low-cost backdrop. */
+@media (max-width: 700px), (hover: none) and (pointer: coarse) {
+  .dark-hour-scene__sky {
+    background: linear-gradient(180deg, #050b18 0%, #08162b 58%, #091727 100%);
+  }
+
+  .dark-hour-scene.is-dark-hour .dark-hour-scene__sky::after {
+    background: linear-gradient(180deg, #030b09 0%, #07160f 58%, #020806 100%);
+  }
+
+  .dark-hour-scene__halo--horizon,
+  .dark-hour-scene__mist,
+  .dark-hour-scene__distant-lights,
+  .dark-hour-scene__city-haze,
+  .dark-hour-scene__particles {
+    display: none !important;
+  }
+
+  .dark-hour-scene__moon {
+    animation: none !important;
+    box-shadow: 0 0 24px rgba(70, 161, 212, 0.09), inset -10px -9px 22px rgba(5, 22, 37, 0.32);
+    transition: filter 700ms ease, box-shadow 700ms ease;
+  }
+
+  .dark-hour-scene.is-dark-hour .dark-hour-scene__moon {
+    box-shadow: 0 0 26px rgba(96, 181, 126, 0.08), inset -10px -9px 22px rgba(5, 22, 37, 0.32);
+  }
+
+  .dark-hour-scene__moon::before {
+    display: none;
+  }
+
+  .dark-hour-scene__moon::after {
+    box-shadow: inset -8px -7px 18px rgba(7, 28, 42, 0.18);
+  }
+
+  .dark-hour-scene__city,
+  .dark-hour-scene__city--far,
+  .dark-hour-scene__city--mid,
+  .dark-hour-scene__city--near,
+  .dark-hour-scene.is-dark-hour .dark-hour-scene__city--far,
+  .dark-hour-scene.is-dark-hour .dark-hour-scene__city--mid,
+  .dark-hour-scene.is-dark-hour .dark-hour-scene__city--near {
+    filter: none !important;
+    -webkit-mask-image: none;
+    mask-image: none;
+    transform: none;
+    transition: opacity 650ms ease;
+  }
+
+  .dark-hour-scene__city--far { opacity: 0.38; }
+  .dark-hour-scene__city--mid { opacity: 0.64; }
+  .dark-hour-scene__city--near { opacity: 0.96; }
+
+  .dark-hour-scene__city .dark-hour-scene__building,
+  .dark-hour-scene__city .dark-hour-scene__building[data-tone] {
+    background: #091827 !important;
+  }
+
+  .dark-hour-scene.is-dark-hour .dark-hour-scene__city .dark-hour-scene__building,
+  .dark-hour-scene.is-dark-hour .dark-hour-scene__city .dark-hour-scene__building[data-tone] {
+    background: #07140f !important;
+  }
+
+  .dark-hour-scene__building::before,
+  .dark-hour-scene__building::after,
+  .dark-hour-scene__window {
+    display: none !important;
+  }
+
+  .dark-hour-scene__tartarus,
+  .dark-hour-scene.is-dark-hour.is-hero-active .dark-hour-scene__tartarus,
+  .dark-hour-scene.is-dark-hour.has-revealed-tartarus .dark-hour-scene__tartarus,
+  .dark-hour-scene.is-dark-hour:not(.is-hero-active) .dark-hour-scene__tartarus {
+    filter: none !important;
+    transition: transform 1.15s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 500ms ease;
+  }
+
+  .dark-hour-scene__vignette {
+    background: linear-gradient(180deg, transparent 30%, rgba(2, 7, 15, 0.16) 100%);
+  }
+
+  .dark-hour-scene.is-dark-hour .dark-hour-scene__vignette {
+    background: linear-gradient(180deg, transparent 30%, rgba(1, 10, 7, 0.22) 100%);
+  }
+}

@@ -365,32 +365,47 @@ const Hero = ({ t, language, terminalMount }) => {
 
   useEffect(() => {
     let timeoutId;
+    let roleTimer;
     let currentRole = 0;
+    let characterIndex = 0;
+    let isDeleting = false;
+    let heroIsVisible = false;
+    let isRunning = false;
+    const hero = document.getElementById('home');
+
+    const canRun = () => heroIsVisible && !document.hidden;
+
+    const scheduleTyping = (callback, delay) => {
+      timeoutId = window.setTimeout(() => {
+        timeoutId = undefined;
+        if (canRun() && isRunning) callback();
+      }, delay);
+    };
 
     if (prefersReducedMotion) {
       setVisibleHeroRole(HERO_ROLES[0]);
-      const roleTimer = window.setInterval(() => {
+    }
+
+    const typeNextCharacter = () => {
+      const role = HERO_ROLES[currentRole];
+
+      if (prefersReducedMotion) {
         currentRole = (currentRole + 1) % HERO_ROLES.length;
         setHeroRoleIndex(currentRole);
         setVisibleHeroRole(HERO_ROLES[currentRole]);
-      }, 3200);
-      return () => window.clearInterval(roleTimer);
-    }
-
-    let characterIndex = 0;
-    let isDeleting = false;
-    const typeNextCharacter = () => {
-      const role = HERO_ROLES[currentRole];
+        roleTimer = window.setTimeout(typeNextCharacter, 3200);
+        return;
+      }
 
       if (!isDeleting) {
         characterIndex += 1;
         setVisibleHeroRole(role.slice(0, characterIndex));
         if (characterIndex === role.length) {
           isDeleting = true;
-          timeoutId = window.setTimeout(typeNextCharacter, 1600);
+          scheduleTyping(typeNextCharacter, 1600);
           return;
         }
-        timeoutId = window.setTimeout(typeNextCharacter, 84);
+        scheduleTyping(typeNextCharacter, 84);
         return;
       }
 
@@ -400,14 +415,53 @@ const Hero = ({ t, language, terminalMount }) => {
         isDeleting = false;
         currentRole = (currentRole + 1) % HERO_ROLES.length;
         setHeroRoleIndex(currentRole);
-        timeoutId = window.setTimeout(typeNextCharacter, 340);
+        scheduleTyping(typeNextCharacter, 340);
         return;
       }
-      timeoutId = window.setTimeout(typeNextCharacter, 44);
+      scheduleTyping(typeNextCharacter, 44);
     };
 
-    timeoutId = window.setTimeout(typeNextCharacter, 250);
-    return () => window.clearTimeout(timeoutId);
+    const startTyping = () => {
+      if (isRunning || !canRun()) return;
+      isRunning = true;
+      scheduleTyping(typeNextCharacter, 250);
+    };
+
+    const stopTyping = () => {
+      isRunning = false;
+      window.clearTimeout(timeoutId);
+      window.clearTimeout(roleTimer);
+    };
+
+    const observer = hero && 'IntersectionObserver' in window
+      ? new IntersectionObserver(([entry]) => {
+        heroIsVisible = entry.isIntersecting;
+        if (heroIsVisible) startTyping();
+        else stopTyping();
+      }, { threshold: 0 })
+      : null;
+
+    if (hero) {
+      const bounds = hero.getBoundingClientRect();
+      heroIsVisible = bounds.bottom > 0 && bounds.top < window.innerHeight;
+      observer?.observe(hero);
+    } else {
+      heroIsVisible = true;
+    }
+
+    const onVisibilityChange = () => {
+      if (canRun()) startTyping();
+      else stopTyping();
+    };
+
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    startTyping();
+
+    return () => {
+      stopTyping();
+      observer?.disconnect();
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+    };
   }, [prefersReducedMotion]);
 
   // CV preview modal: lock body scroll + close on Escape
