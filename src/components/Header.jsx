@@ -1,10 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 
 import './Header.css';
-import LampToggle from './LampToggle';
-import MobileThemeToggle from './MobileThemeToggle';
 
-const Header = ({ t, language, toggleLanguage }) => {
+const Header = ({ t, language, toggleLanguage, isDarkHour, toggleDarkHour }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
@@ -13,11 +11,11 @@ const Header = ({ t, language, toggleLanguage }) => {
   const lastSectionRef = useRef('home');
 
   const gradientStops = [
-    { percent: 0, r: 12, g: 12, b: 12 },
-    { percent: 25, r: 20, g: 20, b: 30 },
-    { percent: 50, r: 26, g: 26, b: 46 },
-    { percent: 75, r: 24, g: 30, b: 54 },
-    { percent: 100, r: 22, g: 33, b: 62 }
+    { percent: 0, r: 4, g: 15, b: 35 },
+    { percent: 25, r: 6, g: 30, b: 67 },
+    { percent: 50, r: 8, g: 43, b: 87 },
+    { percent: 75, r: 6, g: 32, b: 70 },
+    { percent: 100, r: 4, g: 20, b: 48 }
   ];
 
   const interpolateColor = (c1, c2, f) => ({
@@ -73,15 +71,19 @@ const Header = ({ t, language, toggleLanguage }) => {
 
         const sections = ['home', 'about', 'skills', 'projects', 'testimonials', 'contact'];
         const scrollPos = scrollY + 150;
-        const isAtBottom = scrollY + window.innerHeight >= document.documentElement.scrollHeight - 100;
+        const isAtTop = scrollY <= 80;
+        const isAtBottom = !isAtTop && scrollY + window.innerHeight >= document.documentElement.scrollHeight - 100;
         let currentSection = 'home';
 
-        if (isAtBottom) {
+        if (isAtTop) {
+          currentSection = 'home';
+        } else if (isAtBottom) {
           currentSection = 'contact';
         } else {
           for (let i = sections.length - 1; i >= 0; i--) {
             const element = document.getElementById(sections[i]);
-            if (element && scrollPos >= element.offsetTop) {
+            const sectionTop = element ? element.getBoundingClientRect().top + scrollY : Infinity;
+            if (element && scrollPos >= sectionTop) {
               currentSection = sections[i];
               break;
             }
@@ -94,9 +96,7 @@ const Header = ({ t, language, toggleLanguage }) => {
         }
 
         if (header) {
-          const navLinks = header.querySelectorAll('.nav-link');
           const textColor = isLight ? '#1a1a2e' : '#ffffff';
-          navLinks.forEach(link => { link.style.color = textColor; });
           const menuBtn = header.querySelector('.menu-toggle');
           if (menuBtn) menuBtn.style.color = textColor;
         }
@@ -117,7 +117,8 @@ const Header = ({ t, language, toggleLanguage }) => {
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      element.scrollIntoView({ behavior: reduceMotion ? 'instant' : 'smooth' });
     }
     setIsMenuOpen(false);
   };
@@ -125,17 +126,29 @@ const Header = ({ t, language, toggleLanguage }) => {
   return (
     <header
       ref={headerRef}
-      className={`header ${scrolled ? 'scrolled' : ''} nav-dark`}
+      className={`header ${scrolled ? 'scrolled' : ''} nav-dark${isDarkHour ? ' dark-hour-active' : ''}`}
     >
       <div className="container">
         <div className="header-content">
-          <div className="logo" onClick={() => scrollToSection('home')}>
+          <div
+            className="logo"
+            role="button"
+            tabIndex={0}
+            aria-label={t.nav.home}
+            onClick={() => scrollToSection('home')}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                scrollToSection('home');
+              }
+            }}
+          >
             <span ref={logoRef} className="logo-text logo-white">
               VT
             </span>
           </div>
 
-          <nav className={`nav ${isMenuOpen ? 'nav-open' : ''}`}>
+          <nav id="primary-navigation" className={`nav ${isMenuOpen ? 'nav-open' : ''}`} aria-label={t.nav.menu || 'Navegación principal'}>
             <ul className="nav-list">
               {[
                 { id: 'home', label: t.nav.home },
@@ -147,23 +160,43 @@ const Header = ({ t, language, toggleLanguage }) => {
               ].map(({ id, label }) => (
                 <li key={id}>
                   <a
-                    onClick={() => scrollToSection(id)}
+                    href={`#${id}`}
+                    onClick={(event) => { event.preventDefault(); scrollToSection(id); }}
                     className={`nav-link ${activeSection === id ? 'active' : ''}`}
-                    style={{ color: '#ffffff' }}
+                    aria-current={activeSection === id ? 'location' : undefined}
                   >
                     {label}
                   </a>
                 </li>
               ))}
+              <li className="dark-hour-menu-item">
+                <button
+                  type="button"
+                  className={`dark-hour-toggle${isDarkHour ? ' is-active' : ''}`}
+                  onClick={toggleDarkHour}
+                  aria-label="DARK HOUR"
+                  aria-pressed={isDarkHour}
+                >
+                  <span className="dark-hour-toggle__label">DARK HOUR</span>
+                  <span className="dark-hour-toggle__indicator" aria-hidden="true" />
+                </button>
+              </li>
             </ul>
           </nav>
 
           <div className="header-actions">
-            <LampToggle />
-            <MobileThemeToggle />
             <div
               className="language-toggle"
+              role="button"
+              tabIndex={0}
+              aria-label={language === 'es' ? 'Cambiar idioma a inglés' : 'Switch language to Spanish'}
               onClick={toggleLanguage}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  toggleLanguage();
+                }
+              }}
             >
               <span className={`lang-label ${language === 'es' ? 'active' : ''}`}>ES</span>
               <div className={`lang-switch ${language === 'en' ? 'en-active' : ''}`}>
@@ -175,6 +208,9 @@ const Header = ({ t, language, toggleLanguage }) => {
             <button
               className={`menu-toggle ${isMenuOpen ? 'open' : ''}`}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-expanded={isMenuOpen}
+              aria-controls="primary-navigation"
+              aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
               style={{ color: '#ffffff' }}
             >
               <span></span> 

@@ -20,7 +20,7 @@ const validate = (fields, tf) => {
   return errors;
 };
 
-const Contact = ({ t }) => {
+const Contact = ({ t, setTerminalMount }) => {
   const tf = t.contact.form;
   const formRef = useRef(null);
   const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
@@ -83,48 +83,9 @@ const Contact = ({ t }) => {
         <p className="section-subtitle">{t.contact.subtitle}</p>
 
         <div className="contact-content">
-          {/* ── Left: info cards ── */}
+          {/* ── Left: interactive developer terminal ── */}
           <div className="contact-info">
-            {/* Email */}
-            <div className="contact-item">
-              <div className="contact-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                  <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <polyline points="22,6 12,13 2,6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-              <div className="contact-details">
-                <h3>Email</h3>
-                <p>{t.contact.info.email}</p>
-              </div>
-            </div>
-
-            {/* Phone */}
-            <div className="contact-item">
-              <div className="contact-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                  <path d="M22 16.92V19.92C22 20.4728 21.5523 20.9167 21 20.92C18.4 20.97 15.94 20.06 13.71 18.35C11.61 16.78 9.78 14.95 8.21 12.85C6.5 10.62 5.59 8.16 5.64 5.56C5.64277 5.00732 6.08668 4.56341 6.64 4.56H9.64C10.1928 4.56 10.64 5.00732 10.64 5.56C10.64 6.6 10.89 7.61 11.36 8.52C11.4706 8.77754 11.4516 9.07071 11.31 9.31L9.83 11.31C10.8 13.33 12.67 15.2 14.69 16.17L16.69 14.69C16.9294 14.5484 17.2226 14.5294 17.48 14.64C18.39 15.11 19.4 15.36 20.44 15.36C20.9928 15.36 21.44 15.8073 21.44 16.36V19.36C21.44 19.9128 20.9928 20.36 20.44 20.36Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-              <div className="contact-details">
-                <h3>{t.contact.labels.phone}</h3>
-                <p>{t.contact.info.phone}</p>
-              </div>
-            </div>
-
-            {/* Location */}
-            <div className="contact-item">
-              <div className="contact-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                  <path d="M21 10C21 17 12 23 12 23S3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.3639 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <circle cx="12" cy="10" r="3" stroke="currentColor" strokeWidth="2"/>
-                </svg>
-              </div>
-              <div className="contact-details">
-                <h3>{t.contact.labels.location}</h3>
-                <p>{t.contact.info.location}</p>
-              </div>
-            </div>
+            <div className="contact-terminal-slot" ref={setTerminalMount} />
 
             {/* Socials */}
             <div className="social-links">
@@ -152,6 +113,8 @@ const Contact = ({ t }) => {
                 <motion.div
                   key="success"
                   className="form-feedback success-feedback"
+                  role="status"
+                  aria-live="polite"
                   initial={{ opacity: 0, scale: 0.85 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.85 }}
@@ -195,6 +158,8 @@ const Contact = ({ t }) => {
                 <motion.div
                   key="error"
                   className="form-feedback error-feedback"
+                  role="alert"
+                  aria-live="assertive"
                   initial={{ opacity: 0, scale: 0.85 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.85 }}
@@ -222,6 +187,7 @@ const Contact = ({ t }) => {
                   ref={formRef}
                   className="contact-form glass-card"
                   onSubmit={handleSubmit}
+                  aria-busy={status === 'sending'}
                   noValidate
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -241,11 +207,15 @@ const Contact = ({ t }) => {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       autoComplete="name"
+                      aria-invalid={Boolean(errors.name && touched.name)}
+                      aria-describedby={errors.name && touched.name ? 'contact-name-error' : undefined}
                     />
                     <AnimatePresence>
                       {errors.name && touched.name && (
                         <motion.span
+                          id="contact-name-error"
                           className="form-error"
+                          role="alert"
                           initial={{ opacity: 0, y: -6 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -6 }}
@@ -270,11 +240,15 @@ const Contact = ({ t }) => {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       autoComplete="email"
+                      aria-invalid={Boolean(errors.email && touched.email)}
+                      aria-describedby={errors.email && touched.email ? 'contact-email-error' : undefined}
                     />
                     <AnimatePresence>
                       {errors.email && touched.email && (
                         <motion.span
+                          id="contact-email-error"
                           className="form-error"
+                          role="alert"
                           initial={{ opacity: 0, y: -6 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -6 }}
@@ -298,14 +272,18 @@ const Contact = ({ t }) => {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       rows={5}
+                      aria-invalid={Boolean(errors.message && touched.message)}
+                      aria-describedby={`contact-message-count${errors.message && touched.message ? ' contact-message-error' : ''}`}
                     />
-                    <div className="char-count">
+                    <div id="contact-message-count" className="char-count">
                       {fields.message.length} / 1000
                     </div>
                     <AnimatePresence>
                       {errors.message && touched.message && (
                         <motion.span
+                          id="contact-message-error"
                           className="form-error"
+                          role="alert"
                           initial={{ opacity: 0, y: -6 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -6 }}
@@ -322,8 +300,6 @@ const Contact = ({ t }) => {
                     type="submit"
                     className={`form-submit-btn ${status === 'sending' ? 'sending' : ''}`}
                     disabled={status === 'sending'}
-                    whileHover={status !== 'sending' && !isMobile ? { scale: 1.02, y: -2 } : {}}
-                    whileTap={status !== 'sending' && !isMobile ? { scale: 0.98 } : {}}
                   >
                     {status === 'sending' ? (
                       <>

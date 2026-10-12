@@ -1,0 +1,699 @@
+/* A blue, kinetic interface inspired by Persona 3 Reload's underwater menu mood. */
+:root {
+  --p3-ink: #061225;
+  --p3-deep: #081a36;
+  --p3-panel: rgba(8, 28, 59, 0.78);
+  --p3-blue: #168dff;
+  --p3-cyan: #54e5ff;
+  --p3-white: #f4fbff;
+  --p3-muted: #a8bfd8;
+}
+
+html:not(.lamp-light-mode) body {
+  background: linear-gradient(135deg, #040b18 0%, #071a35 48%, #06152c 100%);
+}
+
+html .App.persona-menu {
+  background: transparent;
+}
+
+html:not(.lamp-light-mode) .App.persona-menu {
+  --bg-dark: #040b18;
+  --bg-mid: #071a35;
+  --bg-rich: #0a2850;
+  --bg-glow-blue: rgba(22, 141, 255, 0.2);
+  --bg-glow-pink: rgba(84, 229, 255, 0.08);
+  --bg-glow-cyan: rgba(84, 229, 255, 0.12);
+  background: transparent;
+  color: var(--p3-white);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu::before {
+  background:
+    linear-gradient(122deg, transparent 0 47%, rgba(58, 166, 255, 0.045) 47.1% 47.35%, transparent 47.45% 100%),
+    radial-gradient(ellipse at 16% 18%, rgba(33, 105, 207, 0.24), transparent 38%),
+    radial-gradient(ellipse at 82% 72%, rgba(32, 165, 204, 0.12), transparent 40%),
+    linear-gradient(135deg, #040b18 0%, #071a35 48%, #0a2850 100%);
+  background-blend-mode: screen;
+  opacity: 0.76;
+}
+
+html:not(.lamp-light-mode) .App.persona-menu > .aurora-background .aurora-shape {
+  filter: blur(94px);
+  opacity: 0.54;
+}
+
+html:not(.lamp-light-mode) .App.persona-menu > .aurora-background .aurora-shape--indigo {
+  background: radial-gradient(ellipse at center, rgba(28, 126, 255, 0.52), rgba(29, 84, 190, 0.25) 43%, transparent 73%);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu > .aurora-background .aurora-shape--teal {
+  background: radial-gradient(ellipse at center, rgba(37, 186, 218, 0.35), rgba(32, 103, 180, 0.2) 46%, transparent 73%);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .header {
+  border-bottom-color: rgba(99, 204, 255, 0.18);
+  box-shadow: 0 8px 30px rgba(0, 8, 25, 0.34), inset 0 1px rgba(147, 224, 255, 0.12);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .header.scrolled {
+  box-shadow: 0 10px 34px rgba(0, 8, 25, 0.4), inset 0 1px rgba(147, 224, 255, 0.16);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .logo-text:not(.logo-white) {
+  background: linear-gradient(120deg, #fff 8%, #8aeaff 48%, #328dff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .logo::before {
+  background: linear-gradient(120deg, #128bff, #4be5ff);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .nav-link {
+  color: rgba(223, 241, 255, 0.78);
+  border-radius: 3px;
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .nav-link:hover {
+  background: rgba(39, 142, 255, 0.1);
+  box-shadow: none;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .nav-link.active {
+  border: 0;
+  border-radius: 2px;
+  background: linear-gradient(105deg, rgba(21, 119, 239, 0.84), rgba(47, 197, 246, 0.68));
+  box-shadow: 0 6px 18px rgba(13, 126, 255, 0.24);
+  color: #fff;
+  clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+  animation: none;
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .language-toggle {
+  border: 1px solid rgba(89, 193, 255, 0.24);
+  background: rgba(5, 23, 48, 0.78);
+  box-shadow: inset 0 1px rgba(190, 233, 255, 0.06);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .language-toggle:hover {
+  border-color: rgba(84, 229, 255, 0.52);
+  box-shadow: 0 0 18px rgba(23, 144, 255, 0.16);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .lang-label.active {
+  color: var(--p3-cyan);
+  text-shadow: 0 0 12px rgba(84, 229, 255, 0.35);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .lang-switch {
+  background: rgba(5, 17, 37, 0.94);
+  border-color: rgba(121, 204, 255, 0.16);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .lang-indicator {
+  background: linear-gradient(145deg, #138cff, #52e4ff);
+  box-shadow: 0 2px 10px rgba(27, 159, 255, 0.42), inset 0 1px rgba(255, 255, 255, 0.42);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .section-title {
+  background: linear-gradient(110deg, #f7fcff 5%, #a8eaff 55%, #47a9ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .section-title::after {
+  content: '';
+  display: block;
+  width: 46px;
+  height: 4px;
+  margin: 14px auto 0;
+  background: linear-gradient(90deg, #168dff, #54e5ff);
+  box-shadow: 0 0 14px rgba(41, 171, 255, 0.4);
+  clip-path: polygon(8% 0, 100% 0, 92% 100%, 0 100%);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .section-subtitle {
+  color: #a8bfd8;
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .hero-name {
+  color: var(--p3-white);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .name-highlight {
+  background: linear-gradient(112deg, #fff 10%, #9deaff 47%, #378fff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .hero-title {
+  color: #b8cce2;
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+}
+
+.App.persona-menu .hero-title {
+  font-size: clamp(1.2rem, 2.8vw, 1.65rem);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .title-bracket,
+html:not(.lamp-light-mode) .App.persona-menu .hero-greeting {
+  color: var(--p3-cyan);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .hero-badge {
+  border-color: rgba(84, 229, 255, 0.22);
+  background: rgba(12, 128, 201, 0.12);
+  color: #83eaff;
+  box-shadow: 0 0 22px rgba(29, 173, 255, 0.08);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .badge-dot {
+  background-color: #54e5ff;
+  box-shadow: 0 0 10px rgba(84, 229, 255, 0.82);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .cta-button.primary,
+html:not(.lamp-light-mode) .App.persona-menu .btn:not(.btn-outline) {
+  border: 1px solid rgba(127, 223, 255, 0.48);
+  background: linear-gradient(110deg, #0875e6, #12b9ec);
+  box-shadow: 0 10px 28px rgba(0, 125, 255, 0.26);
+  color: #fff;
+  clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .cta-button.primary:hover,
+html:not(.lamp-light-mode) .App.persona-menu .btn:not(.btn-outline):hover {
+  background: linear-gradient(110deg, #1689ff, #30d5f5);
+  box-shadow: 0 14px 32px rgba(0, 145, 255, 0.36);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .cta-button.secondary,
+html:not(.lamp-light-mode) .App.persona-menu .btn-outline {
+  border-color: rgba(106, 199, 255, 0.45);
+  background: rgba(6, 31, 64, 0.5);
+  color: #d7f4ff;
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .terminal-container {
+  border: 1px solid rgba(68, 172, 255, 0.32);
+  border-radius: 8px;
+  background: rgba(3, 14, 32, 0.92);
+  box-shadow: 0 28px 70px rgba(0, 6, 20, 0.52), 0 0 36px rgba(16, 117, 230, 0.12);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .terminal-header {
+  background: rgba(13, 43, 82, 0.74);
+  border-bottom-color: rgba(94, 195, 255, 0.13);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .terminal-container::before {
+  background: linear-gradient(90deg, transparent, rgba(84, 229, 255, 0.75), transparent);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .glass-card,
+html:not(.lamp-light-mode) .App.persona-menu .skill-category-box,
+html:not(.lamp-light-mode) .App.persona-menu .skill-item,
+html:not(.lamp-light-mode) .App.persona-menu .testimonial-card,
+html:not(.lamp-light-mode) .App.persona-menu .contact-item,
+html:not(.lamp-light-mode) .App.persona-menu .contact-form {
+  border-color: rgba(86, 171, 238, 0.2);
+  background-color: rgba(7, 27, 56, 0.66);
+  box-shadow: 0 14px 36px rgba(0, 7, 21, 0.2), inset 0 1px rgba(167, 225, 255, 0.035);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .developer-card,
+html:not(.lamp-light-mode) .App.persona-menu .education-card {
+  background-color: rgba(7, 27, 56, 0.66);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .project-card,
+html:not(.lamp-light-mode) .App.persona-menu .project-card--standard,
+html:not(.lamp-light-mode) .App.persona-menu .project-card--featured {
+  border-color: rgba(78, 164, 242, 0.24);
+  border-radius: 10px;
+  background: linear-gradient(145deg, rgba(8, 31, 65, 0.94), rgba(6, 22, 47, 0.96));
+  box-shadow: 0 16px 40px rgba(0, 8, 25, 0.28), inset 0 1px rgba(148, 220, 255, 0.06);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .project-card:hover {
+  border-color: rgba(84, 229, 255, 0.44);
+  box-shadow: 0 20px 46px rgba(0, 8, 25, 0.35), 0 0 22px rgba(22, 141, 255, 0.12);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .project-btn,
+html:not(.lamp-light-mode) .App.persona-menu .filter-btn {
+  border-color: rgba(85, 182, 255, 0.35);
+  color: #a9deff;
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .project-btn.case-study-btn,
+html:not(.lamp-light-mode) .App.persona-menu .filter-btn.active {
+  background: linear-gradient(110deg, #0875e6, #12b9ec);
+  color: white;
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .project-image::after {
+  background: linear-gradient(180deg, transparent 42%, rgba(3, 13, 30, 0.62) 100%);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .form-input,
+html:not(.lamp-light-mode) .App.persona-menu .form-textarea {
+  border-color: rgba(88, 177, 242, 0.24);
+  background: rgba(3, 17, 37, 0.62);
+  color: #f4fbff;
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .form-input:focus,
+html:not(.lamp-light-mode) .App.persona-menu .form-textarea:focus {
+  border-color: #42cbff;
+  box-shadow: 0 0 0 3px rgba(32, 158, 255, 0.16);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu :focus-visible {
+  outline: 2px solid #54e5ff;
+  outline-offset: 3px;
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .footer {
+  background: linear-gradient(to bottom, transparent, rgba(4, 15, 32, 0.82) 42%, #040d1c 100%);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .footer-glow {
+  background: radial-gradient(ellipse, rgba(22, 123, 227, 0.22), rgba(27, 105, 179, 0.08) 44%, transparent 72%);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .footer-particles span {
+  background: rgba(83, 211, 255, 0.56);
+  box-shadow: 0 0 10px rgba(48, 171, 255, 0.24);
+}
+
+html.lamp-light-mode .App.persona-menu .section-title::after {
+  background: linear-gradient(90deg, #147ce5, #20b9df);
+}
+
+html.lamp-light-mode .App.persona-menu .cta-button.primary,
+html.lamp-light-mode .App.persona-menu .btn:not(.btn-outline) {
+  background: linear-gradient(110deg, #147ce5, #20b9df);
+  color: #fff;
+}
+
+html.lamp-light-mode .App.persona-menu :focus-visible {
+  outline-color: #147ce5;
+}
+
+/* Kinetic lettering and button feedback inspired by Persona's menu typography. */
+html:not(.lamp-light-mode) .App.persona-menu .hero-name,
+html:not(.lamp-light-mode) .App.persona-menu .section-title,
+html:not(.lamp-light-mode) .App.persona-menu .project-title,
+html:not(.lamp-light-mode) .App.persona-menu .category-title,
+html:not(.lamp-light-mode) .App.persona-menu .testimonial-name {
+  font-style: italic;
+  text-shadow: 2px 2px 0 rgba(18, 141, 255, 0.3), -1px -1px 0 rgba(69, 225, 255, 0.15);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .hero-title {
+  color: #62e6ff;
+  text-shadow: 3px 3px 0 rgba(18, 104, 255, 0.7), -2px -1px 0 rgba(248, 91, 196, 0.28);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .nav-link,
+html:not(.lamp-light-mode) .App.persona-menu .cta-button,
+html:not(.lamp-light-mode) .App.persona-menu .project-btn,
+html:not(.lamp-light-mode) .App.persona-menu .filter-btn,
+html:not(.lamp-light-mode) .App.persona-menu .form-submit-btn,
+html:not(.lamp-light-mode) .App.persona-menu .back-to-top-btn {
+  transition: transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    color 180ms ease, background-color 180ms ease, border-color 180ms ease,
+    box-shadow 180ms ease, text-shadow 180ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html:not(.lamp-light-mode) .App.persona-menu .nav-link:hover,
+  html:not(.lamp-light-mode) .App.persona-menu .cta-button:hover,
+  html:not(.lamp-light-mode) .App.persona-menu .project-btn:hover,
+  html:not(.lamp-light-mode) .App.persona-menu .filter-btn:hover,
+  html:not(.lamp-light-mode) .App.persona-menu .form-submit-btn:hover,
+  html:not(.lamp-light-mode) .App.persona-menu .back-to-top-btn:hover {
+    color: #fff;
+    text-shadow: 2px 1px 0 rgba(255, 89, 202, 0.62), -2px -1px 0 rgba(72, 229, 255, 0.82);
+    transform: translateY(-2px) skewX(-4deg);
+    box-shadow: 0 8px 24px rgba(11, 139, 255, 0.28), 2px 0 rgba(255, 89, 202, 0.28);
+  }
+
+  html:not(.lamp-light-mode) .App.persona-menu .cta-button.primary:hover,
+  html:not(.lamp-light-mode) .App.persona-menu .project-btn.case-study-btn:hover,
+  html:not(.lamp-light-mode) .App.persona-menu .filter-btn.active:hover,
+  html:not(.lamp-light-mode) .App.persona-menu .form-submit-btn:hover {
+    background: linear-gradient(105deg, #0875e6 0%, #13bde9 58%, #63eeff 100%);
+    border-color: #9cf4ff;
+  }
+}
+
+html.lamp-light-mode .App.persona-menu .hero-title {
+  color: #147ce5;
+}
+
+/* Persona-style navigation: cyan lettering with an animated red selection slash. */
+html:not(.lamp-light-mode) .App.persona-menu .header .nav-list {
+  gap: clamp(0.8rem, 1.5vw, 1.5rem);
+  transform: translateX(2rem);
+}
+
+html.lamp-light-mode .App.persona-menu .header .nav-list {
+  gap: clamp(0.8rem, 1.5vw, 1.5rem);
+  transform: translateX(2rem);
+}
+
+html .App.persona-menu .header .nav-link {
+  letter-spacing: 0.085em;
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .header .nav-link {
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.62rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #baf7ff;
+  font-family: Impact, 'Arial Narrow', 'Roboto Condensed', sans-serif;
+  font-size: clamp(0.78rem, 0.9vw, 0.98rem);
+  font-stretch: condensed;
+  font-weight: 900;
+  letter-spacing: 0.055em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 0 rgba(5, 20, 42, 0.95), 2px 2px 0 rgba(20, 101, 255, 0.58);
+  transform-origin: center;
+  transition: color 150ms ease, transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
+    text-shadow 150ms ease;
+}
+
+.App.persona-menu .header .nav-link::after {
+  content: none !important;
+  display: none !important;
+}
+
+.App.persona-menu .header .nav-link {
+  border-bottom: 0 !important;
+  text-decoration: none !important;
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .header .nav-list > li:nth-child(odd) .nav-link {
+  transform: rotate(-1.5deg) skewX(-3deg);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .header .nav-list > li:nth-child(even) .nav-link {
+  transform: rotate(1deg) skewX(-3deg);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .header .nav-link::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  width: calc(100% + 0.35em);
+  height: 72%;
+  border-radius: 0;
+  background: linear-gradient(105deg, #ff3154 0%, #f5123d 72%, #ff4e62 100%);
+  box-shadow: 3px 3px 0 rgba(24, 125, 255, 0.75), 0 4px 14px rgba(255, 22, 63, 0.24);
+  clip-path: polygon(5% 0, 100% 8%, 94% 100%, 0 82%);
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(-9deg) scaleX(0.08);
+  transform-origin: center;
+  transition: opacity 100ms ease, transform 190ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .header .nav-link:hover,
+html:not(.lamp-light-mode) .App.persona-menu .header .nav-link:focus-visible {
+  z-index: 1;
+  color: #fff;
+  background: transparent;
+  box-shadow: none;
+  text-shadow: 2px 2px 0 rgba(255, 48, 83, 0.82), -2px -1px 0 rgba(57, 220, 255, 0.9);
+  transform: translateX(7px) rotate(-7deg) skewX(-5deg) scale(1.14);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .header .nav-link:hover::before,
+html:not(.lamp-light-mode) .App.persona-menu .header .nav-link:focus-visible::before,
+html:not(.lamp-light-mode) .App.persona-menu .header .nav-link.active::before {
+  opacity: 1;
+  transform: translate(-50%, -50%) rotate(-9deg) scaleX(1);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .header .nav-link.active {
+  z-index: 1;
+  color: #fff;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  text-shadow: 2px 2px 0 rgba(255, 48, 83, 0.8), -2px -1px 0 rgba(57, 220, 255, 0.86);
+  transform: translateX(3px) rotate(-6deg) skewX(-4deg) scale(1.1);
+  clip-path: none;
+  animation: p3-menu-select 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes p3-menu-select {
+  0% { transform: translateX(-7px) rotate(3deg) skewX(-2deg) scale(0.92); }
+  65% { transform: translateX(7px) rotate(-9deg) skewX(-6deg) scale(1.15); }
+  100% { transform: translateX(3px) rotate(-6deg) skewX(-4deg) scale(1.1); }
+}
+
+@keyframes p3-menu-enter {
+  from { opacity: 0; transform: translateY(8px) rotate(-5deg) scale(0.94); }
+  to { opacity: 1; transform: translateY(0) rotate(var(--menu-tilt, 0deg)) scale(1); }
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .header .nav-list > li {
+  animation: p3-menu-enter 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .header .nav-list > li:nth-child(1) { --menu-tilt: -1deg; animation-delay: 40ms; }
+html:not(.lamp-light-mode) .App.persona-menu .header .nav-list > li:nth-child(2) { --menu-tilt: 1deg; animation-delay: 75ms; }
+html:not(.lamp-light-mode) .App.persona-menu .header .nav-list > li:nth-child(3) { --menu-tilt: -1.5deg; animation-delay: 110ms; }
+html:not(.lamp-light-mode) .App.persona-menu .header .nav-list > li:nth-child(4) { --menu-tilt: 1deg; animation-delay: 145ms; }
+html:not(.lamp-light-mode) .App.persona-menu .header .nav-list > li:nth-child(5) { --menu-tilt: -1deg; animation-delay: 180ms; }
+html:not(.lamp-light-mode) .App.persona-menu .header .nav-list > li:nth-child(6) { --menu-tilt: 1.5deg; animation-delay: 215ms; }
+
+@media (max-width: 1024px) {
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav-list > li {
+    animation: none;
+  }
+
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav.nav-open .nav-list > li {
+    animation: p3-menu-enter 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav-list > li:nth-child(n) {
+    animation-delay: 0ms;
+  }
+
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav.nav-open .nav-list > li:nth-child(1) { animation-delay: 25ms; }
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav.nav-open .nav-list > li:nth-child(2) { animation-delay: 55ms; }
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav.nav-open .nav-list > li:nth-child(3) { animation-delay: 85ms; }
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav.nav-open .nav-list > li:nth-child(4) { animation-delay: 115ms; }
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav.nav-open .nav-list > li:nth-child(5) { animation-delay: 145ms; }
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav.nav-open .nav-list > li:nth-child(6) { animation-delay: 175ms; }
+
+  /* Responsive dropdown restores the vertical Persona navigation treatment. */
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav.nav-open {
+    border: 2px solid rgba(84, 229, 255, 0.28);
+    border-radius: 24px;
+    background: linear-gradient(155deg, rgba(7, 22, 46, 0.98), rgba(12, 12, 28, 0.98));
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.52), 0 0 20px rgba(22, 141, 255, 0.14);
+  }
+
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav.nav-open::before {
+    background: #0b1730;
+    border-left: 2px solid rgba(84, 229, 255, 0.28);
+    border-top: 2px solid rgba(84, 229, 255, 0.28);
+  }
+
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav.nav-open .nav-list {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.65rem 1.1rem;
+    transform: none !important;
+  }
+
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav.nav-open .nav-list > li {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav.nav-open .nav-link {
+    display: inline-flex;
+    width: max-content !important;
+    min-width: 0 !important;
+    margin: 0 auto !important;
+    padding: 0.45rem 0.55rem !important;
+    transform: none !important;
+    text-align: center;
+  }
+
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav.nav-open .nav-link.active {
+    transform: rotate(-6deg) skewX(-4deg) scale(1.04) !important;
+    animation: none !important;
+  }
+
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav.nav-open .nav-list > li:nth-child(n) .nav-link {
+    transform: none !important;
+  }
+
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav.nav-open .nav-link.active::before {
+    left: 50% !important;
+    width: calc(100% + 0.35em) !important;
+  }
+
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav.nav-open .nav-list > li {
+    animation: p3-menu-enter 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav.nav-open .nav-list > li:nth-child(1) { animation-delay: 25ms; }
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav.nav-open .nav-list > li:nth-child(2) { animation-delay: 55ms; }
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav.nav-open .nav-list > li:nth-child(3) { animation-delay: 85ms; }
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav.nav-open .nav-list > li:nth-child(4) { animation-delay: 115ms; }
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav.nav-open .nav-list > li:nth-child(5) { animation-delay: 145ms; }
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav.nav-open .nav-list > li:nth-child(6) { animation-delay: 175ms; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html .App.persona-menu .nav-link,
+  html .App.persona-menu .cta-button,
+  html .App.persona-menu .project-btn,
+  html .App.persona-menu .filter-btn,
+  html .App.persona-menu .form-submit-btn,
+  html .App.persona-menu .back-to-top-btn,
+  html .App.persona-menu .header .nav-list > li {
+    transition: none;
+    animation: none !important;
+  }
+}
+
+/* The Dark Hour recolors a few interface accents while preserving content and syntax colors. */
+html .App.dark-hour-mode.persona-menu .header .nav-link.active::before {
+  background: linear-gradient(105deg, #ff3154 0%, #f5123d 72%, #ff4e62 100%);
+  box-shadow: 3px 3px 0 rgba(24, 125, 255, 0.75), 0 4px 14px rgba(255, 22, 63, 0.24);
+  transition: background 1.7s ease, box-shadow 1.7s ease, opacity 100ms ease,
+    transform 190ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html .App.dark-hour-mode.persona-menu .header .nav-link.active {
+  text-shadow: 1px 1px 0 rgba(4, 22, 14, 0.95), 2px 2px 0 rgba(42, 147, 89, 0.4);
+}
+
+html .App.dark-hour-mode.persona-menu .terminal-container {
+  border-color: var(--mode-accent-border);
+  box-shadow: 0 28px 70px rgba(0, 8, 8, 0.56), 0 0 34px rgba(47, 174, 102, 0.11);
+  transition: border-color 1.7s ease, box-shadow 1.7s ease;
+}
+
+html .App.dark-hour-mode.persona-menu .terminal-header {
+  border-bottom-color: rgba(94, 218, 143, 0.2);
+  transition: border-color 1.7s ease;
+}
+
+html .App.dark-hour-mode.persona-menu .terminal-container::before {
+  background: linear-gradient(90deg, transparent, rgba(102, 235, 153, 0.68), transparent);
+  transition: background 1.7s ease;
+}
+
+html .App.dark-hour-mode.persona-menu .terminal-reset-btn:hover {
+  color: #8cf0ad;
+  border-color: rgba(102, 235, 153, 0.65);
+  background: rgba(53, 164, 94, 0.1);
+}
+
+html .App.dark-hour-mode.persona-menu .cursor-blink {
+  background: #68e69a;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html .App.dark-hour-mode.persona-menu .terminal-container,
+  html .App.dark-hour-mode.persona-menu .terminal-header,
+  html .App.dark-hour-mode.persona-menu .terminal-container::before,
+  html .App.dark-hour-mode.persona-menu .header .nav-link.active::before {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.App.persona-menu .header .language-toggle {
+  gap: 0.6rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid rgba(89, 193, 255, 0.38);
+  border-radius: 999px;
+  background: linear-gradient(145deg, rgba(7, 27, 53, 0.96), rgba(5, 18, 38, 0.96));
+  box-shadow: inset 0 1px rgba(190, 233, 255, 0.08), 0 0 16px rgba(23, 144, 255, 0.08);
+}
+
+.App.persona-menu .header .lang-label {
+  min-width: 22px;
+  color: rgba(202, 224, 241, 0.62);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.035em;
+}
+
+.App.persona-menu .header .lang-label.active {
+  color: #58e7ff;
+  text-shadow: 0 0 12px rgba(84, 229, 255, 0.3);
+}
+
+.App.persona-menu .header .lang-switch {
+  width: 44px;
+  height: 24px;
+  border: 1px solid rgba(90, 194, 255, 0.25);
+  background: rgba(2, 13, 29, 0.95);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.48);
+}
+
+.App.persona-menu .header .lang-indicator {
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(145deg, #168dff, #48e6ff);
+  box-shadow: 0 0 11px rgba(27, 159, 255, 0.56), inset 0 1px rgba(255, 255, 255, 0.55);
+}
+
+html.lamp-light-mode .App.persona-menu .header .language-toggle {
+  background: linear-gradient(145deg, rgba(15, 62, 113, 0.96), rgba(10, 42, 82, 0.96));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav,
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav-list > li,
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav-link,
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav-link::before {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav-list > li,
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav-link,
+  html:not(.lamp-light-mode) .App.persona-menu .header .nav-link::before {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+}

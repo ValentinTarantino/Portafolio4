@@ -402,7 +402,7 @@ html:not(.lamp-dark-mode) .hanging-chain {
   display: none !important;
 }
 
-:root.lamp-light-mode .App .hero-shapes {
+:root.lamp-light-mode .App .aurora-background {
   display: none !important;
 }
 

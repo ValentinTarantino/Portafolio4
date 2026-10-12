@@ -1,4 +1,4 @@
-import { FiCode, FiZap, FiArrowUp, FiDownload } from 'react-icons/fi';
+import { FiCode, FiArrowUp, FiDownload } from 'react-icons/fi';
 import { SiReact, SiVite, SiJavascript } from 'react-icons/si';
 import { FaCss3Alt } from 'react-icons/fa';
 import './Footer.css';
@@ -47,7 +47,6 @@ const Footer = ({ t }) => {
           {/* CTA Section */}
           <div className="footer-cta-section">
             <div className="cta-badge">
-              <FiZap className="cta-icon" />
               <span className="cta-text">{t.footer.cta}</span>
             </div>
             <p className="cta-subtitle">{t.footer.subtitle}</p>

@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" fill="none">
+  <defs>
+    <clipPath id="lunar-disc">
+      <circle cx="150" cy="150" r="149" />
+    </clipPath>
+    <radialGradient id="mare-dark" cx="38%" cy="28%" r="82%">
+      <stop stop-color="#152c30" stop-opacity=".4" />
+      <stop offset=".58" stop-color="#253c3d" stop-opacity=".24" />
+      <stop offset="1" stop-color="#182e31" stop-opacity=".02" />
+    </radialGradient>
+    <radialGradient id="mare-light" cx="35%" cy="30%" r="78%">
+      <stop stop-color="#d8e5d9" stop-opacity=".28" />
+      <stop offset=".6" stop-color="#b5c9bb" stop-opacity=".15" />
+      <stop offset="1" stop-color="#b5c9bb" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="bowl-a" cx="38%" cy="28%" r="68%">
+      <stop stop-color="#263d3d" stop-opacity=".08" />
+      <stop offset=".36" stop-color="#304847" stop-opacity=".17" />
+      <stop offset=".68" stop-color="#1b3032" stop-opacity=".27" />
+      <stop offset=".88" stop-color="#1b3032" stop-opacity=".13" />
+      <stop offset="1" stop-color="#12262a" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="bowl-b" cx="26%" cy="25%" r="84%">
+      <stop stop-color="#52645b" stop-opacity=".04" />
+      <stop offset=".4" stop-color="#304442" stop-opacity=".09" />
+      <stop offset=".75" stop-color="#1a2d30" stop-opacity=".16" />
+      <stop offset="1" stop-color="#102326" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="basin-depth" cx="58%" cy="64%" r="68%">
+      <stop stop-color="#14292d" stop-opacity=".22" />
+      <stop offset=".58" stop-color="#1b3032" stop-opacity=".13" />
+      <stop offset="1" stop-color="#1b3032" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="bowl-small" cx="28%" cy="18%" r="92%">
+      <stop stop-color="#475c53" stop-opacity=".05" />
+      <stop offset=".56" stop-color="#22383a" stop-opacity=".12" />
+      <stop offset="1" stop-color="#14292d" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="lit-slope-a" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#e1eee2" stop-opacity=".18" />
+      <stop offset=".55" stop-color="#bfcec2" stop-opacity=".08" />
+      <stop offset="1" stop-color="#b7c7bb" stop-opacity="0" />
+    </linearGradient>
+    <filter id="soft-terrain" x="-18%" y="-18%" width="136%" height="136%">
+      <feGaussianBlur stdDeviation="5" />
+    </filter>
+    <filter id="fine-grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency=".72" numOctaves="2" seed="18" />
+      <feColorMatrix type="saturate" values="0" />
+    </filter>
+  </defs>
+
+  <g clip-path="url(#lunar-disc)">
+    <!-- Asymmetric maria create broad terrain changes without regular spots. -->
+    <path d="M164 20c18-5 42 1 57 13 14 11 20 25 13 36-7 10-20 13-31 20-13 8-21 21-38 23-17 2-36-8-42-22-6-13 1-26 13-38 10-11 14-28 28-32Z" fill="url(#mare-dark)" filter="url(#soft-terrain)" />
+    <path d="M28 128c15-9 33-8 45-1 13 8 18 20 14 33-4 14-19 22-30 32-10 9-17 23-31 24-13 1-24-11-26-25-2-13 5-25 12-36 6-11 7-21 16-27Z" fill="url(#mare-light)" filter="url(#soft-terrain)" />
+    <path d="M153 181c16-12 37-15 51-7 12 7 18 20 14 32-4 13-18 20-30 29-13 10-20 23-36 23-15 0-28-11-29-25-2-14 8-25 15-36 5-7 8-12 15-16Z" fill="url(#mare-dark)" filter="url(#soft-terrain)" />
+    <path d="M73 244c13-9 29-12 41-7 11 5 17 15 13 24-4 10-17 14-28 20-12 7-22 17-35 14-12-3-19-16-15-27 3-10 14-18 24-24Z" fill="url(#mare-light)" filter="url(#soft-terrain)" />
+
+    <!-- Medium impact: a filled, uneven rim fades into a shaded basin. -->
+    <path d="M49 101c-2-7 4-12 6-19 3-8 12-13 18-14 7-1 12 3 19 3 8 0 16 3 21 9 4 5 3 10 7 15 4 6 1 14-4 19-4 4-10 5-15 10-7 7-15 12-23 11-8-1-12-7-19-10-7-3-13-8-14-15-1-4 4-6 4-9ZM58 108c-4-5-4-10-1-15 3-5 5-11 8-15 4-6 10-9 17-9 6 0 11 3 18 3 6 0 12 2 17 5-6-1-11-1-16-2-7-1-12-3-18-1-6 2-9 7-12 12-2 5-6 10-6 15 0 3 1 5 2 7-3 0-6 0-9 0Z" fill="url(#lit-slope-a)" fill-rule="evenodd" opacity=".82" />
+    <path d="M55 101c0-6 5-11 7-17 3-6 9-10 15-11 6-1 11 3 17 3 6 0 13 3 16 8 3 4 2 9 5 13 3 5 0 11-4 15-4 3-9 4-13 8-6 5-12 9-19 8-6-1-10-6-15-8-6-3-10-7-10-13 0-3 2-4 1-6Z" fill="url(#bowl-a)" />
+    <path d="M69 91c4-4 10-7 16-7 5 0 9 3 14 4 5 1 8 4 9 8 1 4-2 7-5 10-3 3-7 5-11 8-4 3-9 5-14 4-5-1-8-5-11-9-3-3-4-7-2-11 1-3 2-5 4-7Z" fill="url(#basin-depth)" />
+
+    <!-- Broad shallow impact on the opposite side, with a heavier lower wall. -->
+    <path d="M174 87c-2-7 3-14 10-19 7-6 16-10 25-10 8 0 13 4 20 6 9 2 17 8 19 15 2 7-3 11-3 17 0 8-7 13-14 17-8 4-16 7-23 12-8 5-18 7-25 2-6-4-5-11-10-17-4-6-3-15 1-23Z M180 94c-1-5 2-10 6-14 4-6 11-11 18-13 6-2 12 0 18 2 5 1 9 3 13 6-5-2-10-3-15-4-6-1-11-1-16 2-6 3-9 8-12 13-3 4-6 9-6 14 0 3 1 5 2 7-5-3-8-7-8-13Z" fill="url(#lit-slope-a)" fill-rule="evenodd" opacity=".68" />
+    <path d="M181 88c0-6 5-11 11-16 6-4 13-7 20-7 6 0 11 4 17 5 7 2 13 6 14 12 1 5-3 9-3 14-1 6-6 10-12 13-7 3-13 5-19 10-6 4-13 5-18 2-5-3-4-9-8-14-3-5-4-12-2-19Z" fill="url(#bowl-b)" />
+
+    <!-- Small, softer depressions are deliberately sparse and varied. -->
+    <path d="M108 155c3-7 11-12 19-12 9 0 17 5 19 12 2 7-2 14-9 18-7 4-17 4-24 0-7-4-9-11-5-18Z" fill="url(#lit-slope-a)" opacity=".3" />
+    <path d="M113 157c2-5 8-9 14-9 7 0 12 4 14 9 1 5-2 10-8 13-5 3-12 3-17 0-5-3-6-8-3-13Z" fill="url(#bowl-small)" />
+    <path d="M211 171c4-6 11-9 18-8 7 1 12 5 13 11 1 6-3 11-9 14-6 3-14 2-19-2-5-4-6-10-3-15Z" fill="url(#bowl-small)" opacity=".78" />
+    <path d="M76 207c3-5 9-8 15-8 6 1 11 4 12 9 1 5-2 9-7 12-5 2-11 2-16-1-5-3-6-8-4-12Z" fill="url(#bowl-small)" opacity=".65" />
+    <path d="M145 263c3-4 8-6 12-5 5 1 8 4 8 8 0 4-3 7-7 9-5 1-9 0-12-3-3-2-3-6-1-9Z" fill="url(#bowl-small)" opacity=".52" />
+
+    <!-- Low-contrast surface grain, clipped to the lunar disc. -->
+    <rect width="300" height="300" filter="url(#fine-grain)" opacity=".025" style="mix-blend-mode: soft-light" />
+  </g>
+</svg>

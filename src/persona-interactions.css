@@ -1,0 +1,665 @@
+/* Shared interaction language for the existing portfolio controls. */
+:root {
+  --p3-action-cyan: #72edff;
+  --p3-action-blue: #168dff;
+  --p3-action-red: #f51f45;
+  --p3-action-white: #fff;
+  --p3-action-duration: 180ms;
+  --p3-action-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --p3-action-angle: -9deg;
+}
+
+.App.persona-menu :is(
+  a[href]:not(.nav-link):not(.footer-nav-link),
+  .footer-nav-link,
+  button:not(.menu-toggle):not(.modal-close-btn):not(.cv-modal-close):not(.terminal-reset-btn),
+  [role='button'],
+  [role='tab'],
+  .logo,
+  .language-toggle
+) {
+  isolation: isolate;
+  position: relative;
+  transition-property: color, border-color, background-color, box-shadow, text-shadow, transform;
+  transition-duration: var(--p3-action-duration);
+  transition-timing-function: var(--p3-action-ease);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Reusable centered slash. Its width follows the control's content box. */
+.App.persona-menu :is(
+  a[href]:not(.nav-link):not(.footer-nav-link),
+  button:not(.menu-toggle):not(.modal-close-btn):not(.cv-modal-close):not(.terminal-reset-btn),
+  [role='button'],
+  [role='tab'],
+  .logo
+)::after,
+.App.persona-menu .footer-nav-link::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  width: calc(100% - var(--p3-band-pad-x, 0rem) + 0.38em);
+  height: var(--p3-band-height, 0.72em);
+  border: 0;
+  border-radius: 0;
+  background: linear-gradient(105deg, #ff3154 0%, var(--p3-action-red) 72%, #ff5364 100%);
+  box-shadow: 2px 2px 0 rgba(24, 125, 255, 0.68);
+  clip-path: polygon(4% 0, 100% 8%, 95% 100%, 0 82%);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) rotate(var(--p3-action-angle)) scaleX(0.06);
+  transform-origin: center;
+  transition: opacity 90ms ease, transform var(--p3-action-duration) var(--p3-action-ease);
+}
+
+/* Keep the strip close to the label instead of spanning the button padding. */
+.App.persona-menu .cta-button { --p3-band-pad-x: 5rem; }
+.App.persona-menu .filter-btn { --p3-band-pad-x: 3.6rem; }
+.App.persona-menu .project-btn { --p3-band-pad-x: 4rem; }
+.App.persona-menu .modal-action-btn { --p3-band-pad-x: 2rem; }
+.App.persona-menu .modal-tab-btn { --p3-band-pad-x: 2rem; }
+.App.persona-menu .form-submit-btn { --p3-band-pad-x: 4rem; }
+.App.persona-menu .feedback-btn { --p3-band-pad-x: 3.6rem; }
+.App.persona-menu .read-more-btn { --p3-band-pad-x: 0rem; }
+.App.persona-menu .back-to-top-btn { --p3-band-pad-x: 2.4rem; }
+.App.persona-menu .cv-download-link { --p3-band-pad-x: 1.7rem; }
+.App.persona-menu .footer-nav-link { --p3-band-pad-x: 0rem; }
+
+.App.persona-menu :is(
+  a[href]:not(.nav-link):not(.footer-nav-link),
+  button:not(.menu-toggle):not(.modal-close-btn):not(.cv-modal-close):not(.terminal-reset-btn),
+  [role='button'],
+  [role='tab'],
+  .logo,
+  .scroll-indicator
+):is(:hover, :focus-visible, :active)::after,
+.App.persona-menu .footer-nav-link:is(:hover, :focus-visible, :active)::before {
+  opacity: 1 !important;
+  transform: translate(-50%, -50%) rotate(var(--p3-action-angle)) scaleX(1) !important;
+}
+
+/* Tabs and filters keep a visible selected treatment after pointer exit. */
+.App.persona-menu :is(.filter-btn.active, .modal-tab-btn.active, [aria-selected='true'], [aria-pressed='true'], [data-state='active']):not(:disabled):not([aria-disabled='true'])::after {
+  opacity: 1 !important;
+  transform: translate(-50%, -50%) rotate(var(--p3-action-angle)) scaleX(1) !important;
+}
+
+/* Text controls use the same compact, high-impact hover response. */
+.App.persona-menu :is(
+  a[href]:not(.social-link):not(.footer-logo),
+  .footer-nav-link,
+  .cta-button,
+  .btn,
+  .project-btn,
+  .filter-btn,
+  .read-more-btn,
+  .modal-action-btn,
+  .modal-tab-btn,
+  .feedback-btn,
+  .form-submit-btn,
+  .back-to-top-btn
+) {
+  font-weight: 750;
+  text-transform: uppercase;
+}
+
+html:not(.lamp-light-mode) .App.persona-menu :is(
+  a[href]:not(.nav-link):not(.footer-nav-link):not(.footer-logo),
+  .footer-nav-link,
+  .project-btn,
+  .filter-btn,
+  .modal-action-btn,
+  .modal-tab-btn
+) {
+  color: #b9f3ff;
+  text-decoration-color: rgba(114, 237, 255, 0.7);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu :is(.cta-button, .btn:not(.btn-outline), .form-submit-btn, .modal-action-btn.primary, .project-btn.case-study-btn) {
+  border-color: rgba(125, 230, 255, 0.52);
+  background: linear-gradient(110deg, #0875e6, #12b9ec);
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(0, 125, 255, 0.24);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .filter-btn.active {
+  border-color: rgba(114, 237, 255, 0.72);
+  background: rgba(4, 23, 50, 0.92);
+  color: #fff;
+  box-shadow: 0 6px 22px rgba(0, 125, 255, 0.22);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu :is(.cta-button, .btn:not(.btn-outline), .form-submit-btn, .modal-action-btn.primary, .project-btn.case-study-btn):is(:hover, :focus-visible, :active) {
+  background: linear-gradient(110deg, #0875e6 0%, #12b9ec 58%, #53e5ff 100%);
+  border-color: #9cf4ff;
+  color: #fff;
+}
+
+html:not(.lamp-light-mode) .App.persona-menu .social-link:is(:hover, :focus-visible, :active) {
+  background: linear-gradient(110deg, #0875e6, #12b9ec);
+}
+
+html:not(.lamp-light-mode) .App.persona-menu :is(
+  a[href]:not(.nav-link):not(.footer-nav-link),
+  .footer-nav-link,
+  button:not(.menu-toggle):not(.modal-close-btn):not(.cv-modal-close):not(.terminal-reset-btn),
+  [role='button'],
+  [role='tab'],
+  .logo,
+  .language-toggle,
+  .scroll-indicator
+):is(:hover, :focus-visible, :active) {
+  color: var(--p3-action-white);
+  text-shadow: 1px 1px 0 rgba(17, 112, 255, 0.75), -1px -1px 0 rgba(255, 82, 105, 0.62);
+}
+
+.App.persona-menu :is(
+  a[href]:not(.social-link):not(.footer-logo),
+  .footer-nav-link,
+  .cta-button,
+  .btn,
+  .project-btn,
+  .filter-btn,
+  .read-more-btn,
+  .modal-action-btn,
+  .modal-tab-btn,
+  .feedback-btn,
+  .form-submit-btn,
+  .back-to-top-btn
+):is(:hover, :focus-visible) {
+  transform: translateX(3px) rotate(-1.5deg) scale(1.025);
+}
+
+/* Preserve icon proportions; give compact actions a smaller slash. */
+.App.persona-menu :is(.social-link, .modal-close-btn, .cv-modal-close, .terminal-reset-btn, .mobile-theme-toggle, .menu-toggle) {
+  isolation: isolate;
+}
+
+.App.persona-menu :is(.menu-toggle, .cv-modal-close, .terminal-reset-btn, .mobile-theme-toggle) {
+  position: relative;
+}
+
+.App.persona-menu :is(.social-link, .modal-close-btn, .cv-modal-close, .terminal-reset-btn, .mobile-theme-toggle, .menu-toggle)::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  width: 66%;
+  height: 56%;
+  border: 0;
+  border-radius: 0;
+  background: var(--p3-action-red);
+  clip-path: polygon(8% 0, 100% 9%, 90% 100%, 0 84%);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) rotate(var(--p3-action-angle)) scaleX(0.08);
+  transform-origin: center;
+  transition: opacity 90ms ease, transform var(--p3-action-duration) var(--p3-action-ease);
+}
+
+.App.persona-menu :is(.social-link, .modal-close-btn, .cv-modal-close, .terminal-reset-btn, .mobile-theme-toggle, .menu-toggle):is(:hover, :focus-visible, :active)::after {
+  opacity: 1;
+  transform: translate(-50%, -50%) rotate(var(--p3-action-angle)) scaleX(1);
+}
+
+.App.persona-menu :is(.social-link, .modal-close-btn, .cv-modal-close, .terminal-reset-btn, .mobile-theme-toggle, .menu-toggle):is(:hover, :focus-visible, :active) {
+  color: #fff;
+  border-color: rgba(114, 237, 255, 0.85);
+  box-shadow: 0 0 18px rgba(22, 141, 255, 0.3);
+}
+
+/* The responsive hamburger keeps its original bars without Persona 3 hover accents. */
+.App.persona-menu .menu-toggle:is(:hover, :focus-visible, :active) {
+  background: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  filter: none !important;
+  transform: none !important;
+}
+
+.App.persona-menu .menu-toggle:is(:hover, :focus-visible, :active)::after {
+  content: none !important;
+  display: none !important;
+  opacity: 0 !important;
+  transform: none !important;
+}
+
+/* The language switch is a compound control; accent it without covering its labels. */
+.App.persona-menu .language-toggle:is(:hover, :focus-visible, :active) .lang-indicator {
+  background: linear-gradient(135deg, #ff3154, #ff6676);
+  box-shadow: 0 0 12px rgba(255, 49, 84, 0.55);
+}
+
+.App.persona-menu .scroll-indicator:is(:hover, :focus-visible, :active) .scroll-arrow {
+  border-color: #ff4962;
+  filter: drop-shadow(0 0 5px rgba(84, 229, 255, 0.8));
+}
+
+/* Distinct focus, selected, disabled, and touch feedback. */
+.App.persona-menu :is(a[href], button, [role='button'], [role='tab'], .logo, .language-toggle, .scroll-indicator):focus-visible {
+  outline: 2px solid var(--p3-action-cyan);
+  outline-offset: 4px;
+}
+
+.App.persona-menu :is(button:disabled, [aria-disabled='true'], .is-disabled):is(:hover, :focus-visible, :active) {
+  cursor: not-allowed;
+  transform: none !important;
+  opacity: 0.56;
+  filter: grayscale(0.5);
+  box-shadow: none;
+  text-shadow: none;
+}
+
+.App.persona-menu :is(button:disabled, [aria-disabled='true'], .is-disabled)::after {
+  opacity: 0 !important;
+  transform: translate(-50%, -50%) rotate(var(--p3-action-angle)) scaleX(0.06) !important;
+}
+
+.App.persona-menu :is(a[href][aria-disabled='true'], button:disabled, [aria-disabled='true'], .is-disabled) {
+  cursor: not-allowed;
+  filter: saturate(0.45);
+}
+
+.App.persona-menu .form-submit-btn:disabled,
+.App.persona-menu .form-submit-btn.sending {
+  cursor: wait;
+}
+
+/* Actionable cards gain a thin red edge while a nested action is engaged. */
+@supports selector(.project-card:has(a:hover)) {
+  .App.persona-menu .project-card:has(.project-btn:is(:hover, :focus-visible)) {
+    border-color: rgba(255, 49, 84, 0.72);
+    box-shadow: 0 16px 40px rgba(0, 8, 25, 0.34), 3px 0 0 rgba(22, 141, 255, 0.62);
+  }
+}
+
+/* Testimonials keep their layout but do not use the animated Persona hover. */
+.App.persona-menu .testimonial-card:hover {
+  background: rgba(255, 255, 255, 0.02) !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.App.persona-menu .testimonial-card:hover::before {
+  opacity: 0 !important;
+}
+
+.App.persona-menu .testimonial-card:has(.testimonial-project-link:hover) {
+  border-color: rgba(255, 255, 255, 0.06) !important;
+  box-shadow: none !important;
+}
+
+.App.persona-menu .testimonial-project-link:hover {
+  background: rgba(102, 126, 234, 0.08) !important;
+  border-color: rgba(102, 126, 234, 0.15) !important;
+  color: #a3b3ed !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  transform: none !important;
+}
+
+.App.persona-menu .testimonial-project-link:hover::after {
+  content: none !important;
+  display: none !important;
+}
+
+.App.persona-menu .testimonial-project-link:hover .arrow {
+  transform: none !important;
+}
+
+/* Project action buttons keep their normal appearance on pointer hover. */
+.App.persona-menu .project-actions .project-btn:is(:hover, :focus-visible, :active) {
+  background: inherit !important;
+  border-color: inherit !important;
+  box-shadow: none !important;
+  color: inherit !important;
+  filter: none !important;
+  text-shadow: none !important;
+  transform: none !important;
+}
+
+.App.persona-menu .project-actions .project-btn:is(:hover, :focus-visible, :active)::after {
+  content: none !important;
+  display: none !important;
+  opacity: 0 !important;
+  transform: none !important;
+}
+
+.App.persona-menu .project-modal .modal-action-btn:is(:hover, :focus-visible, :active) {
+  background: inherit !important;
+  border-color: inherit !important;
+  box-shadow: none !important;
+  color: inherit !important;
+  filter: none !important;
+  text-shadow: none !important;
+  transform: none !important;
+}
+
+.App.persona-menu .project-modal .modal-action-btn:is(:hover, :focus-visible, :active)::after {
+  content: none !important;
+  display: none !important;
+  opacity: 0 !important;
+  transform: none !important;
+}
+
+.App.persona-menu .project-card:has(.project-actions .project-btn:is(:hover, :focus-visible, :active)) {
+  border-color: inherit !important;
+  box-shadow: inherit !important;
+}
+
+/* Keep the close icon clean while allowing tabs and actions to use the shared Persona accents. */
+.App.persona-menu .project-modal .modal-close-btn::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* The lamp chain is portaled outside .App, so give its handle a matching response. */
+.hanging-chain .chain-ball {
+  transition: filter var(--p3-action-duration) ease, box-shadow var(--p3-action-duration) ease;
+}
+
+.hanging-chain:is(:hover, :focus-visible, :active) .chain-ball {
+  filter: drop-shadow(0 0 7px rgba(84, 229, 255, 0.8));
+  box-shadow: 0 0 0 3px rgba(255, 49, 84, 0.7), 0 0 18px rgba(22, 141, 255, 0.55);
+}
+
+.hanging-chain:focus-visible {
+  outline: 2px solid var(--p3-action-cyan);
+  outline-offset: 5px;
+}
+
+@media (hover: none) {
+  .App.persona-menu :is(
+    a[href]:not(.nav-link):not(.footer-nav-link),
+    button:not(.menu-toggle):not(.modal-close-btn):not(.cv-modal-close):not(.terminal-reset-btn),
+    [role='button'],
+    [role='tab'],
+    .logo,
+    .scroll-indicator
+  ):active::after,
+  .App.persona-menu .footer-nav-link:active::before {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--p3-action-angle)) scaleX(1);
+  }
+}
+
+html.lamp-light-mode .App.persona-menu :is(
+  a[href]:not(.nav-link):not(.footer-nav-link),
+  .footer-nav-link,
+  button:not(.menu-toggle):not(.modal-close-btn):not(.cv-modal-close):not(.terminal-reset-btn),
+  [role='button'],
+  [role='tab'],
+  .logo,
+  .scroll-indicator
+):is(:hover, :focus-visible, :active) {
+  color: #fff;
+  text-shadow: 1px 1px 0 rgba(20, 124, 229, 0.85), -1px -1px 0 rgba(255, 49, 84, 0.65);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .App.persona-menu :is(a[href], button, [role='button'], [role='tab'], .logo, .language-toggle, .scroll-indicator, .hanging-chain, .chain-ball),
+  .App.persona-menu :is(a[href], button, [role='button'], [role='tab'])::before,
+  .App.persona-menu :is(a[href], button, [role='button'], [role='tab'])::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  .hanging-chain,
+  .hanging-chain .chain-ball {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* The CV action stays clickable but is rendered as a text-only control. */
+html .App.persona-menu .hero-cta .cta-button.cta-button--text {
+  gap: 0;
+  --p3-band-pad-x: 0rem;
+  --p3-band-height: 1.05em;
+  padding: 0.8rem 2rem 1.1rem 0 !important;
+  border: 0 !important;
+  border-radius: 0;
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+  clip-path: none !important;
+  color: var(--p3-action-cyan) !important;
+  font-family: Impact, 'Arial Narrow', 'Roboto Condensed', sans-serif;
+  font-size: 1.5rem;
+  font-stretch: condensed;
+  font-weight: 900;
+  letter-spacing: 0.055em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 0 rgba(20, 101, 255, 0.72), -1px -1px 0 rgba(84, 229, 255, 0.38);
+}
+
+html .App.persona-menu .hero-cta .cta-button.cta-button--text::before {
+  content: none !important;
+  display: none !important;
+}
+
+html .App.persona-menu .hero-cta .cta-button.cta-button--text::after {
+  content: '' !important;
+  left: calc(50% - 1rem) !important;
+  width: calc(100% + 1.1em);
+  background: linear-gradient(105deg, #ff3154 0%, var(--p3-action-red) 72%, #ff5364 100%) !important;
+  clip-path: polygon(0 0, 100% 0, 97% 100%, 0 100%);
+  pointer-events: none;
+}
+
+html .App.persona-menu .hero-cta .cta-button.cta-button--text:is(:hover, :focus-visible, :active) {
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+  color: #fff !important;
+  text-shadow: 2px 2px 0 rgba(255, 48, 83, 0.82), -2px -1px 0 rgba(57, 220, 255, 0.9);
+  transform: translateX(3px) rotate(-6deg) skewX(-4deg) scale(1.1);
+}
+
+html .App.persona-menu .hero-cta .cta-button.cta-button--text:is(:hover, :focus-visible, :active)::after {
+  opacity: 1 !important;
+  transform: translate(-50%, -50%) rotate(var(--p3-action-angle)) scaleX(1) !important;
+}
+
+html .App.persona-menu .hero-cta .cta-button.cta-button--text:focus-visible {
+  outline: 2px solid var(--p3-action-cyan);
+  outline-offset: 4px;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html.lamp-light-mode .App.persona-menu .hero-cta .cta-button.cta-button--text {
+  color: #075078 !important;
+}
+
+html.lamp-light-mode .App.persona-menu .hero-cta .cta-button.cta-button--text:is(:hover, :focus-visible, :active) {
+  color: #0875e6 !important;
+  text-shadow: none;
+}
+
+@media (max-width: 968px) {
+  html .App.persona-menu .hero-cta .cta-button.cta-button--text {
+    padding-right: 2rem !important;
+    padding-left: 2rem !important;
+  }
+
+  html .App.persona-menu .hero-cta .cta-button.cta-button--text::after {
+    left: 50% !important;
+  }
+}
+
+/* Project filters use the same text and slash treatment as the CV action. */
+html .App.persona-menu .filter-container .filter-btn {
+  --p3-band-pad-x: 0rem;
+  --p3-band-height: 1.05em;
+  padding: 0.8rem 2rem 1.1rem !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  color: var(--p3-action-cyan) !important;
+  font-family: Impact, 'Arial Narrow', 'Roboto Condensed', sans-serif !important;
+  font-size: 1.5rem !important;
+  font-stretch: condensed;
+  font-weight: 900 !important;
+  letter-spacing: 0.055em;
+  line-height: 1;
+  transform-origin: center;
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1), color 180ms ease,
+    text-shadow 180ms ease;
+  text-shadow: 2px 2px 0 rgba(20, 101, 255, 0.72), -1px -1px 0 rgba(84, 229, 255, 0.38);
+  text-transform: uppercase;
+}
+
+html .App.persona-menu .filter-container .filter-btn::after {
+  width: calc(100% - 2rem + 1.1em);
+  clip-path: polygon(0 0, 100% 0, 97% 100%, 0 100%);
+}
+
+html .App.persona-menu .filter-container .filter-btn.active {
+  color: #fff !important;
+  text-shadow: 2px 2px 0 rgba(255, 48, 83, 0.82), -2px -1px 0 rgba(57, 220, 255, 0.9);
+  transform: translateX(3px) rotate(-6deg) skewX(-4deg) scale(1.1);
+  animation: p3-menu-select 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+html .App.persona-menu .filter-container .filter-btn:first-child:not(.active) {
+  transform: rotate(-1.5deg) skewX(-3deg);
+}
+
+html .App.persona-menu .filter-container .filter-btn:last-child:not(.active) {
+  transform: rotate(1deg) skewX(-3deg);
+}
+
+html .App.persona-menu .filter-container .filter-btn:is(:hover, :focus-visible, :active) {
+  color: #fff !important;
+  text-shadow: 2px 2px 0 rgba(255, 48, 83, 0.82), -2px -1px 0 rgba(57, 220, 255, 0.9);
+  transform: translateX(7px) rotate(-7deg) skewX(-5deg) scale(1.14);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html .App.persona-menu .filter-container .filter-btn {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (max-width: 968px) {
+  html .App.persona-menu .filter-container .filter-btn {
+    padding: 0.65rem 1.25rem !important;
+    font-size: clamp(1.1rem, 4vw, 1.35rem) !important;
+  }
+
+  html .App.persona-menu .filter-container .filter-btn::after {
+    width: calc(100% - 1.25rem + 0.9em);
+  }
+}
+
+/* Keep the CV viewer actions visually steady on pointer hover. */
+.App.persona-menu .cv-modal-actions :is(.cv-download-link, .cv-modal-close):hover {
+  background: transparent;
+  border-color: rgba(147, 197, 253, 0.35);
+  box-shadow: none;
+  color: #93c5fd;
+  filter: none;
+  text-shadow: none;
+  transform: none;
+}
+
+.App.persona-menu .cv-modal-actions .cv-download-link:hover::after,
+.App.persona-menu .cv-modal-actions .cv-modal-close:hover::after {
+  content: none !important;
+  display: none !important;
+  opacity: 0 !important;
+  transform: none !important;
+}
+
+.App.persona-menu .cv-modal-actions .cv-download-link:hover {
+  background: transparent !important;
+  background-image: none !important;
+  border-color: rgba(147, 197, 253, 0.35) !important;
+  box-shadow: none !important;
+  color: #93c5fd !important;
+  text-shadow: none !important;
+  transform: none !important;
+}
+
+.App.persona-menu .cv-modal-actions .cv-modal-close:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: inherit;
+}
+
+/* The terminal reset action has no hover animation or color shift. */
+.App.persona-menu .terminal-reset-btn:hover {
+  background: transparent !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: none !important;
+  color: #4a5568 !important;
+  filter: none !important;
+  text-shadow: none !important;
+  transform: none !important;
+}
+
+.App.persona-menu .terminal-reset-btn:hover::after {
+  content: none !important;
+  display: none !important;
+  opacity: 0 !important;
+  transform: none !important;
+}
+
+/* Keep the language switch in its normal visual state on hover. */
+.App.persona-menu .language-toggle:hover {
+  border-color: rgba(89, 193, 255, 0.38) !important;
+  background: linear-gradient(145deg, rgba(7, 27, 53, 0.96), rgba(5, 18, 38, 0.96)) !important;
+  box-shadow: inset 0 1px rgba(190, 233, 255, 0.08), 0 0 16px rgba(23, 144, 255, 0.08) !important;
+  filter: none !important;
+  text-shadow: none !important;
+  transform: none !important;
+}
+
+.App.persona-menu .language-toggle:hover::after {
+  content: none !important;
+  display: none !important;
+  opacity: 0 !important;
+  transform: none !important;
+}
+
+.App.persona-menu .language-toggle:hover .lang-indicator {
+  background: linear-gradient(145deg, #138cff, #52e4ff) !important;
+  box-shadow: 0 0 11px rgba(27, 159, 255, 0.56), inset 0 1px rgba(255, 255, 255, 0.55) !important;
+}
+
+/* Keep the VT wordmark unchanged on hover. */
+.App.persona-menu .logo:hover {
+  box-shadow: none !important;
+  text-shadow: none !important;
+  transform: none !important;
+}
+
+.App.persona-menu .logo:hover::before,
+.App.persona-menu .logo:hover::after {
+  content: none !important;
+  display: none !important;
+  opacity: 0 !important;
+}
+
+.App.persona-menu .logo:hover .logo-text {
+  filter: none !important;
+  text-shadow: none !important;
+  transform: none !important;
+}
+
+/* DARK HOUR's pressed state uses its own spectral green slash. */
+.App.persona-menu button.dark-hour-toggle::after {
+  background: linear-gradient(105deg, #245f40 0%, #38985c 72%, #61bd7c 100%) !important;
+  box-shadow: 2px 2px 0 rgba(20, 74, 47, 0.72) !important;
+}

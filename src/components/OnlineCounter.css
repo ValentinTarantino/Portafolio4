@@ -73,8 +73,10 @@
 /* Mobile: icon + count only, label hidden */
 @media (max-width: 600px) {
   .online-counter {
-    right: 0.75rem;
-    bottom: max(0.75rem, env(safe-area-inset-bottom));
+    position: relative;
+    inset: auto;
+    width: fit-content;
+    margin: 1rem max(0.75rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) auto;
     gap: 0.45rem;
     padding: 0.35rem 0.7rem 0.35rem 0.35rem;
     font-size: 0.75rem;

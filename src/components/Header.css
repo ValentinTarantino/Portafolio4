@@ -761,3 +761,98 @@
     padding-left: 1rem;
   }
 }
+
+/* DARK HOUR toggle: a compact Persona-style control that also fits the mobile menu. */
+.dark-hour-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.48rem;
+  min-height: 2rem;
+  padding: 0.42rem 0.58rem;
+  border: 1px solid rgba(56, 207, 255, 0.36);
+  border-radius: 2px;
+  color: #a8e8ff;
+  background: linear-gradient(110deg, rgba(6, 25, 48, 0.82), rgba(8, 34, 56, 0.58));
+  font-family: Impact, 'Arial Narrow', 'Roboto Condensed', sans-serif;
+  font-size: 0.72rem;
+  font-stretch: condensed;
+  font-weight: 900;
+  letter-spacing: 0.075em;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+  transition: color 1.7s ease, border-color 1.7s ease, background-color 1.7s ease,
+    box-shadow 1.7s ease, transform 180ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dark-hour-toggle:hover {
+  color: #ffffff;
+  border-color: rgba(97, 224, 255, 0.8);
+  box-shadow: 0 0 16px rgba(56, 207, 255, 0.2);
+  transform: translateY(-1px) skewX(-2deg);
+}
+
+.dark-hour-toggle:focus-visible {
+  outline: 2px solid #a8e8ff;
+  outline-offset: 4px;
+}
+
+.dark-hour-toggle:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.dark-hour-toggle__indicator {
+  width: 0.42rem;
+  height: 0.42rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #38cfff;
+  box-shadow: 0 0 8px rgba(56, 207, 255, 0.72);
+  transition: background-color 1.7s ease, box-shadow 1.7s ease;
+}
+
+.dark-hour-toggle.is-active {
+  color: #d7ffe8;
+  border-color: rgba(96, 238, 157, 0.62);
+  background: linear-gradient(110deg, rgba(10, 42, 37, 0.94), rgba(13, 54, 43, 0.8));
+  box-shadow: 0 0 16px rgba(74, 218, 137, 0.16), inset 0 0 12px rgba(74, 218, 137, 0.06);
+}
+
+.dark-hour-toggle.is-active .dark-hour-toggle__indicator {
+  background: #70eea8;
+  box-shadow: 0 0 9px rgba(91, 242, 155, 0.78);
+}
+
+.dark-hour-toggle.is-active:hover {
+  border-color: rgba(135, 255, 183, 0.88);
+  box-shadow: 0 0 18px rgba(74, 218, 137, 0.28);
+}
+
+.header.dark-hour-active {
+  border-bottom-color: rgba(92, 218, 142, 0.28);
+  box-shadow: 0 4px 30px rgba(4, 22, 15, 0.34), 0 1px rgba(78, 210, 132, 0.08);
+}
+
+@media (max-width: 1024px) {
+  .dark-hour-menu-item {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .dark-hour-toggle {
+    min-height: 2.15rem;
+    padding: 0.48rem 0.72rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dark-hour-toggle,
+  .dark-hour-toggle__indicator {
+    transition-duration: 0.01ms !important;
+  }
+}

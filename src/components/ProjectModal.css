@@ -1,365 +1,812 @@
-.modal-overlay {
+.project-modal {
   position: fixed;
+  z-index: 1100;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 1000;
-  padding: 1rem;
+  justify-content: center;
+  padding: clamp(0.45rem, 2.2vw, 1.5rem);
+  overflow: hidden;
+  background: rgba(1, 7, 18, 0.82);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
 }
 
-.modal-content {
-  background: rgba(15, 15, 20, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 24px;
-  width: 100%;
-  max-width: 800px;
-  max-height: 90vh;
-  overflow-y: auto;
+.App.persona-menu .project-modal .modal-content {
+  --modal-cyan: #52ddff;
+  --modal-cyan-soft: rgba(82, 221, 255, 0.2);
+  --modal-red: #ff3d61;
+  --modal-surface: #06172b;
   position: relative;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-}
-
-.modal-content::-webkit-scrollbar {
-  width: 8px;
-}
-
-.modal-content::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.modal-content::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-}
-
-.modal-close-btn {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: white;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
   display: flex;
+  flex-direction: column;
+  width: min(1080px, 100%);
+  height: min(88vh, 880px);
+  height: min(88dvh, 880px);
+  max-height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid rgba(82, 221, 255, 0.3);
+  border-radius: 5px 24px 5px 18px;
+  color: #f4f8ff;
+  background:
+    linear-gradient(145deg, rgba(10, 34, 61, 0.98), rgba(3, 13, 28, 0.99) 62%),
+    var(--modal-surface);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.62), inset 0 1px rgba(198, 239, 255, 0.07);
+  isolation: isolate;
+}
+
+.App.persona-menu .project-modal .modal-content::before,
+.App.persona-menu .project-modal .modal-content::after {
+  position: absolute;
+  z-index: 2;
+  content: '';
+  pointer-events: none;
+}
+
+.App.persona-menu .project-modal .modal-content::before {
+  top: 0;
+  left: 1.3rem;
+  width: min(34%, 270px);
+  height: 3px;
+  background: linear-gradient(90deg, var(--modal-red), var(--modal-cyan), transparent);
+}
+
+.App.persona-menu .project-modal .modal-content::after {
+  top: 0;
+  right: 0;
+  width: 78px;
+  height: 16px;
+  background: linear-gradient(90deg, transparent, rgba(82, 221, 255, 0.36));
+  clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.App.persona-menu .project-modal .modal-header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: 0 0 auto;
   align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  z-index: 10;
+  justify-content: space-between;
+  gap: 1.25rem;
+  min-width: 0;
+  padding: clamp(1.1rem, 2.3vw, 1.8rem) clamp(1rem, 3vw, 2rem) 1.1rem;
+  border-bottom: 1px solid rgba(127, 193, 226, 0.17);
+  background: linear-gradient(100deg, rgba(7, 25, 47, 0.98), rgba(6, 19, 38, 0.94));
 }
 
-.modal-close-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-  transform: scale(1.05);
-}
-
-.modal-body {
-  padding: 2.5rem;
-}
-
-.modal-project-header {
-  margin-bottom: 2rem;
-}
-
-.modal-badge {
-  display: inline-block;
-  padding: 0.4rem 1rem;
-  background: rgba(102, 126, 234, 0.1);
-  color: #a78bfa;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  border: 1px solid rgba(102, 126, 234, 0.2);
-}
-
-.modal-project-title {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: white;
+.App.persona-menu .project-modal .modal-project-header {
+  flex: 1 1 auto;
+  min-width: 0;
   margin: 0;
-  background: linear-gradient(135deg, #fff 0%, #a0aec0 100%);
+  padding-right: 0.25rem;
+}
+
+.App.persona-menu .project-modal .modal-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.65rem;
+  margin: 0 0 0.55rem;
+  padding: 0.34rem 0.85rem;
+  border: 1px solid rgba(255, 61, 97, 0.42);
+  border-radius: 2px 9px 2px 7px;
+  color: #fff2f5;
+  background: linear-gradient(105deg, rgba(194, 25, 60, 0.92), rgba(105, 26, 55, 0.82));
+  clip-path: polygon(3% 0, 100% 0, 96% 100%, 0 100%);
+  font-size: 0.67rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.App.persona-menu .project-modal .modal-project-title {
+  max-width: 28ch;
+  margin: 0;
+  color: #f3f9ff;
+  background: linear-gradient(100deg, #f7fbff 0%, #a5eaff 76%, #69cfff 100%);
+  background-clip: text;
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: clamp(1.45rem, 3.4vw, 2.45rem);
+  font-weight: 850;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* ── Tabs Navigation ── */
-.modal-tabs {
-  display: flex;
-  gap: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  margin-bottom: 2rem;
-  padding-bottom: 0.5rem;
-}
-
-.modal-tab-btn {
-  background: none;
-  border: none;
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 1rem;
-  font-weight: 600;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
+.App.persona-menu .project-modal .modal-close-btn {
   position: relative;
-  transition: color 0.3s;
+  top: auto;
+  right: auto;
+  z-index: 3;
+  display: inline-flex;
+  flex: 0 0 44px;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(131, 201, 226, 0.3);
+  border-radius: 3px 12px 3px 9px;
+  color: #d8f6ff;
+  background: rgba(4, 20, 39, 0.86);
+  cursor: pointer;
+  transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
 }
 
-.modal-tab-btn:hover {
-  color: rgba(255, 255, 255, 0.8);
+.App.persona-menu .project-modal .modal-close-btn svg {
+  width: 21px;
+  height: 21px;
 }
 
-.modal-tab-btn.active {
+.App.persona-menu .project-modal .modal-close-btn:hover {
+  border-color: rgba(255, 92, 117, 0.75);
   color: #fff;
+  background: rgba(107, 25, 49, 0.72);
+  box-shadow: 0 0 18px rgba(255, 61, 97, 0.14);
 }
 
-.modal-tab-btn.active::after {
-  content: '';
+.App.persona-menu .project-modal .modal-tabs {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: 0 0 auto;
+  gap: 0.45rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0.45rem clamp(0.75rem, 2.7vw, 1.8rem) 0;
+  overflow-x: auto;
+  border: 0;
+  border-bottom: 1px solid rgba(127, 193, 226, 0.17);
+  background: rgba(4, 17, 34, 0.72);
+  scrollbar-width: none;
+}
+
+.App.persona-menu .project-modal .modal-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.App.persona-menu .project-modal .modal-tab-btn {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  min-width: 8rem;
+  min-height: 48px;
+  padding: 0.7rem 1rem;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  border-radius: 3px 10px 0 0;
+  color: #9fb4cb;
+  background: transparent;
+  font-family: Impact, 'Arial Narrow', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  line-height: 1.15;
+  text-transform: uppercase;
+  white-space: normal;
+  cursor: pointer;
+  isolation: isolate;
+  transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
+.App.persona-menu .project-modal .modal-tab-btn > span {
+  position: relative;
+  z-index: 1;
+}
+
+/* The shared navigation slash crosses the tab label; the tab uses its underline instead. */
+.App.persona-menu .project-modal .modal-tab-btn::after {
+  content: none !important;
+  display: none !important;
+}
+
+.App.persona-menu .project-modal .modal-tab-btn::before {
   position: absolute;
-  bottom: -0.6rem;
-  left: 0;
-  width: 100%;
+  right: 0.65rem;
+  bottom: 0;
+  left: 0.65rem;
   height: 3px;
-  background: linear-gradient(90deg, #667eea, #764ba2);
-  border-radius: 3px 3px 0 0;
+  content: '';
+  background: linear-gradient(90deg, var(--modal-cyan), rgba(82, 221, 255, 0.12));
+  opacity: 0;
+  transform: scaleX(0.28);
+  transform-origin: left;
+  transition: opacity 180ms ease, transform 180ms ease;
 }
 
-.modal-tab-content-wrapper {
-  min-height: 250px;
+.App.persona-menu .project-modal .modal-tab-btn:hover,
+.App.persona-menu .project-modal .modal-tab-btn:focus-visible {
+  border-color: rgba(82, 221, 255, 0.25);
+  color: #e9fbff;
+  background: rgba(28, 91, 124, 0.17);
 }
 
-.modal-grid {
+.App.persona-menu .project-modal .modal-tab-btn.active {
+  border-color: rgba(82, 221, 255, 0.24);
+  color: #f5fcff;
+  background: linear-gradient(180deg, rgba(16, 65, 98, 0.58), rgba(7, 28, 50, 0.45));
+}
+
+.App.persona-menu .project-modal .modal-tab-btn.active::before {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.App.persona-menu .project-modal .modal-scroll-area {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: clamp(1rem, 2.6vw, 1.8rem) clamp(1rem, 3vw, 2rem) clamp(1rem, 2.6vw, 1.75rem);
+  overscroll-behavior: contain;
+  scrollbar-color: rgba(82, 221, 255, 0.38) rgba(3, 15, 30, 0.45);
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
+}
+
+.App.persona-menu .project-modal .modal-scroll-area::-webkit-scrollbar {
+  width: 9px;
+}
+
+.App.persona-menu .project-modal .modal-scroll-area::-webkit-scrollbar-track {
+  background: rgba(3, 15, 30, 0.45);
+}
+
+.App.persona-menu .project-modal .modal-scroll-area::-webkit-scrollbar-thumb {
+  border: 2px solid rgba(3, 15, 30, 0.65);
+  border-radius: 0;
+  background: rgba(82, 221, 255, 0.38);
+}
+
+.App.persona-menu .project-modal .modal-tab-content-wrapper {
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  outline: none;
+}
+
+.App.persona-menu .project-modal .modal-tab-content-wrapper:focus-visible {
+  outline: 2px solid var(--modal-cyan);
+  outline-offset: 5px;
+}
+
+.App.persona-menu .project-modal .modal-grid {
   display: grid;
-  gap: 1.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
 }
 
-.modal-section {
-  background: rgba(255, 255, 255, 0.03);
-  padding: 1.5rem;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+.App.persona-menu .project-modal .modal-section {
+  position: relative;
+  min-width: 0;
+  padding: clamp(1rem, 2.1vw, 1.45rem);
+  overflow: hidden;
+  border: 1px solid rgba(104, 177, 215, 0.19);
+  border-radius: 3px 15px 3px 11px;
+  background: linear-gradient(145deg, rgba(10, 37, 66, 0.82), rgba(4, 18, 36, 0.9));
 }
 
-.modal-section-title {
+.App.persona-menu .project-modal .modal-section::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 48px;
+  height: 3px;
+  content: '';
+  background: linear-gradient(90deg, transparent, var(--modal-cyan));
+  opacity: 0.7;
+}
+
+.App.persona-menu .project-modal .modal-section.challenge::before {
+  background: linear-gradient(90deg, transparent, var(--modal-red));
+}
+
+.App.persona-menu .project-modal .modal-section.metrics {
+  grid-column: 1 / -1;
+  background: linear-gradient(110deg, rgba(9, 39, 62, 0.77), rgba(7, 24, 44, 0.88));
+}
+
+.App.persona-menu .project-modal .modal-section-title {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
+  gap: 0.7rem;
+  min-width: 0;
+  margin: 0 0 0.85rem;
 }
 
-.section-title-icon {
+.App.persona-menu .project-modal .section-title-icon {
+  flex: 0 0 auto;
+  width: 1.2rem;
+  height: 1.2rem;
+  font-size: 1.2rem;
+}
+
+.App.persona-menu .project-modal .challenge-icon { color: #ff5875; }
+.App.persona-menu .project-modal .solution-icon { color: #52ddff; }
+.App.persona-menu .project-modal .metrics-icon { color: #89d7c4; }
+
+.App.persona-menu .project-modal .modal-section h3 {
+  min-width: 0;
+  margin: 0;
+  color: #eaf8ff;
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: clamp(0.95rem, 1.5vw, 1.12rem);
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.App.persona-menu .project-modal .modal-section p {
+  margin: 0;
+  color: #bdcad9;
+  font-size: 0.94rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.App.persona-menu .project-modal .highlighted-metrics {
+  color: #d8f5ff !important;
+  font-size: 1rem !important;
+  font-weight: 650;
+}
+
+.App.persona-menu .project-modal .modal-architecture {
+  min-width: 0;
+  padding: 0.2rem 0 0.5rem;
+}
+
+.App.persona-menu .project-modal .architecture-diagram {
+  display: grid;
+  grid-template-columns: repeat(var(--architecture-columns, 3), minmax(0, 1fr));
+  align-items: stretch;
+  gap: 2.1rem;
+  min-width: 0;
+}
+
+.App.persona-menu .project-modal .architecture-step {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  width: auto;
+  align-items: stretch;
+}
+
+.App.persona-menu .project-modal .architecture-node {
+  display: grid;
+  grid-template-columns: 1.8rem 2.75rem minmax(0, 1fr);
+  align-content: start;
+  align-items: start;
+  gap: 0.65rem;
+  width: 100%;
+  min-width: 0;
+  min-height: 100%;
+  padding: 1rem 0.85rem;
+  border: 1px solid rgba(82, 221, 255, 0.22);
+  border-radius: 3px 15px 3px 11px;
+  background: linear-gradient(145deg, rgba(9, 36, 63, 0.94), rgba(4, 17, 34, 0.97));
+  box-shadow: inset 0 1px rgba(198, 239, 255, 0.045);
+}
+
+.App.persona-menu .project-modal .node-index {
+  padding-top: 0.15rem;
+  color: #ff6680;
+  font-family: Impact, 'Arial Narrow', sans-serif;
+  font-size: 0.83rem;
+  letter-spacing: 0.06em;
+}
+
+.App.persona-menu .project-modal .node-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid rgba(82, 221, 255, 0.25);
+  border-radius: 3px 10px 3px 8px;
+  color: var(--modal-cyan);
+  background: rgba(32, 118, 157, 0.16);
   font-size: 1.25rem;
 }
 
-.challenge-icon { color: #f87171; }
-.solution-icon { color: #60a5fa; }
-.metrics-icon { color: #34d399; }
-
-.modal-section h3 {
-  color: white;
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin: 0;
-}
-
-.modal-section p {
-  color: #a0aec0;
-  line-height: 1.6;
-  margin: 0;
-  font-size: 0.95rem;
-}
-
-.highlighted-metrics {
-  color: #e2e8f0 !important;
-  font-weight: 500;
-  font-size: 1.05rem !important;
-}
-
-/* ── Architecture Diagram ── */
-.modal-architecture {
-  padding: 1rem 0;
-}
-
-.architecture-diagram {
+.App.persona-menu .project-modal .node-content {
   display: flex;
+  min-width: 0;
   flex-direction: column;
-  align-items: center;
+  grid-column: 1 / -1;
+  overflow-wrap: anywhere;
 }
 
-.architecture-step {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-.architecture-node {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  width: 100%;
-  max-width: 500px;
-  padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-.node-icon {
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 1.8rem;
-  flex-shrink: 0;
-}
-
-.node-content {
-  display: flex;
-  flex-direction: column;
-}
-
-.node-title {
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 0.8rem;
-  font-weight: 700;
+.App.persona-menu .project-modal .node-title {
+  color: #9cb6cb;
+  font-size: 0.67rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  line-height: 1.35;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  overflow-wrap: anywhere;
 }
 
-.node-tech {
-  color: white;
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin: 0.2rem 0;
+.App.persona-menu .project-modal .node-tech {
+  margin: 0.35rem 0 0.45rem;
+  color: #effaff;
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: clamp(0.97rem, 1.4vw, 1.12rem);
+  font-weight: 800;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
 }
 
-.node-desc {
-  color: #a0aec0;
-  font-size: 0.9rem;
+.App.persona-menu .project-modal .node-desc {
+  color: #aabbd0;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
 }
 
-.architecture-arrow {
-  color: rgba(255, 255, 255, 0.2);
-  margin: 1rem 0;
-  height: 30px;
+.App.persona-menu .project-modal .architecture-arrow {
+  position: absolute;
+  top: 50%;
+  right: -1.35rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 24px;
+  height: 30px;
+  margin: 0;
+  color: #63dbff;
+  transform: translate(50%, -50%);
 }
 
-/* Animations for architecture diagram */
-.fade-in-up {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.App.persona-menu .project-modal .architecture-arrow svg {
+  transform: rotate(-90deg);
+  filter: drop-shadow(0 0 5px rgba(82, 221, 255, 0.2));
 }
 
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.App.persona-menu .project-modal .modal-footer {
+  margin: 1.35rem 0 0;
+  padding: 1.2rem 0 0;
+  border-top: 1px solid rgba(127, 193, 226, 0.2);
 }
 
-/* ── Footer ── */
-.modal-footer {
-  margin-top: 3rem;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+.App.persona-menu .project-modal .tech-title {
+  margin: 0 0 0.75rem;
+  color: #dff7ff;
+  font-family: Impact, 'Arial Narrow', sans-serif;
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
 }
 
-.tech-title {
-  color: white;
-  font-size: 1.1rem;
-  margin-bottom: 1rem;
-}
-
-.modal-technologies {
+.App.persona-menu .project-modal .modal-technologies {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.8rem;
-  margin-bottom: 2rem;
+  gap: 0.45rem;
+  min-width: 0;
+  margin: 0 0 1.1rem;
 }
 
-.modal-tech-tag {
-  background: rgba(255, 255, 255, 0.1);
-  color: #e2e8f0;
-  padding: 0.4rem 1rem;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 500;
+.App.persona-menu .project-modal .modal-tech-tag {
+  max-width: 100%;
+  padding: 0.38rem 0.68rem;
+  border: 1px solid rgba(82, 221, 255, 0.2);
+  border-radius: 2px 8px 2px 7px;
+  color: #c9e8f3;
+  background: rgba(9, 34, 58, 0.88);
+  font-size: 0.76rem;
+  font-weight: 650;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
 }
 
-.modal-actions-row {
+.App.persona-menu .project-modal .modal-actions-row {
   display: flex;
-  gap: 1rem;
+  flex-wrap: wrap;
+  gap: 0.7rem;
 }
 
-.modal-action-btn {
-  flex: 1;
-  display: flex;
+.App.persona-menu .project-modal .modal-action-btn {
+  position: relative;
+  display: inline-flex;
+  flex: 1 1 12rem;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
-  border-radius: 12px;
+  min-height: 48px;
+  min-width: 0;
+  padding: 0.78rem 1rem;
+  border: 1px solid rgba(82, 221, 255, 0.4);
+  border-radius: 2px 11px 2px 9px;
+  color: #e8faff;
+  font-family: Impact, 'Arial Narrow', sans-serif;
+  font-size: 0.83rem;
+  font-weight: 700;
+  letter-spacing: 0.075em;
+  line-height: 1.2;
+  text-align: center;
   text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+  transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
 }
 
-.modal-action-btn.primary {
-  background: white;
-  color: black;
+.App.persona-menu .project-modal .modal-action-btn.primary {
+  border-color: rgba(102, 225, 255, 0.62);
+  color: #fff;
+  background: linear-gradient(110deg, #0875e6, #12b9ec);
+  box-shadow: 2px 2px 0 rgba(255, 49, 84, 0.72);
 }
 
-.modal-action-btn.primary:hover {
-  background: #e2e8f0;
+.App.persona-menu .project-modal .modal-action-btn.secondary {
+  color: #c7f1ff;
+  background: rgba(4, 22, 42, 0.88);
+}
+
+.App.persona-menu .project-modal .modal-action-btn:hover {
   transform: translateY(-2px);
+  border-color: #9cf4ff;
+  box-shadow: 0 8px 22px rgba(22, 141, 255, 0.2);
 }
 
-.modal-action-btn.secondary {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+.App.persona-menu .project-modal .modal-action-btn.primary:hover {
+  background: linear-gradient(110deg, #0c83f2, #37c9ed);
 }
 
-.modal-action-btn.secondary:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
+.App.persona-menu .project-modal :is(.modal-close-btn, .modal-tab-btn, .modal-action-btn):focus-visible {
+  outline: 2px solid #a8e8ff;
+  outline-offset: 3px;
 }
 
-@media (max-width: 640px) {
-  .modal-body {
-    padding: 1.5rem;
+.App.persona-menu.dark-hour-mode .project-modal .modal-content {
+  --modal-cyan: #9bd7b1;
+  --modal-cyan-soft: rgba(122, 200, 148, 0.18);
+  --modal-surface: #071a15;
+  border-color: rgba(123, 188, 147, 0.36);
+  background: linear-gradient(145deg, rgba(12, 35, 28, 0.98), rgba(4, 16, 14, 0.99) 62%), var(--modal-surface);
+}
+
+.App.persona-menu.dark-hour-mode .project-modal .modal-content::before {
+  background: linear-gradient(90deg, var(--modal-red), var(--modal-cyan), transparent);
+}
+
+.App.persona-menu.dark-hour-mode .project-modal .modal-header,
+.App.persona-menu.dark-hour-mode .project-modal .modal-tabs {
+  background-color: rgba(4, 20, 15, 0.88);
+  border-color: rgba(128, 184, 146, 0.19);
+}
+
+.App.persona-menu.dark-hour-mode .project-modal .modal-tab-btn.active {
+  border-color: rgba(143, 205, 160, 0.25);
+  color: #f1fff4;
+  background: linear-gradient(180deg, rgba(24, 76, 48, 0.48), rgba(6, 30, 19, 0.48));
+}
+
+.App.persona-menu.dark-hour-mode .project-modal .modal-section,
+.App.persona-menu.dark-hour-mode .project-modal .architecture-node {
+  border-color: rgba(133, 189, 150, 0.2);
+  background: linear-gradient(145deg, rgba(10, 37, 29, 0.86), rgba(4, 19, 15, 0.94));
+}
+
+.App.persona-menu.dark-hour-mode .project-modal .node-icon {
+  border-color: rgba(142, 207, 160, 0.24);
+  color: var(--modal-cyan);
+  background: rgba(34, 102, 63, 0.16);
+}
+
+.App.persona-menu.dark-hour-mode .project-modal .architecture-arrow {
+  color: #9bd7b1;
+}
+
+.App.persona-menu.dark-hour-mode .project-modal .modal-tech-tag {
+  border-color: rgba(137, 192, 153, 0.2);
+  color: #d3e9d8;
+  background: rgba(6, 29, 21, 0.88);
+}
+
+.App.persona-menu.dark-hour-mode .project-modal .modal-action-btn.secondary {
+  border-color: rgba(142, 207, 160, 0.35);
+  color: #d4f0dc;
+  background: rgba(4, 25, 17, 0.9);
+}
+
+@media (max-width: 900px) {
+  .App.persona-menu .project-modal .architecture-diagram {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
   }
-  
-  .modal-project-title {
-    font-size: 2rem;
-  }
 
-  .modal-actions-row {
+  .App.persona-menu .project-modal .architecture-step {
     flex-direction: column;
   }
 
-  .architecture-node {
-    padding: 1rem;
-    gap: 1rem;
+  .App.persona-menu .project-modal .architecture-node {
+    min-height: 0;
   }
 
-  .node-icon {
-    width: 45px;
-    height: 45px;
-    font-size: 1.2rem;
+  .App.persona-menu .project-modal .architecture-arrow {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 28px;
+    height: 28px;
+    margin: 0.3rem auto;
+    transform: none;
+  }
+
+  .App.persona-menu .project-modal .architecture-arrow svg {
+    transform: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .project-modal {
+    align-items: stretch;
+    padding: max(0.35rem, env(safe-area-inset-top)) max(0.35rem, env(safe-area-inset-right)) max(0.35rem, env(safe-area-inset-bottom)) max(0.35rem, env(safe-area-inset-left));
+  }
+
+  .App.persona-menu .project-modal .modal-content {
+    width: 100%;
+    height: 92vh;
+    height: 92dvh;
+    max-height: 100%;
+    border-radius: 4px 16px 4px 12px;
+  }
+
+  .App.persona-menu .project-modal .modal-header {
+    gap: 0.7rem;
+    padding: 1.05rem 0.85rem 0.85rem;
+  }
+
+  .App.persona-menu .project-modal .modal-project-title {
+    max-width: none;
+    font-size: clamp(1.25rem, 6vw, 1.75rem);
+    line-height: 1.12;
+  }
+
+  .App.persona-menu .project-modal .modal-badge {
+    min-height: 1.5rem;
+    margin-bottom: 0.4rem;
+    padding: 0.28rem 0.68rem;
+    font-size: 0.6rem;
+  }
+
+  .App.persona-menu .project-modal .modal-close-btn {
+    flex-basis: 42px;
+    width: 42px;
+    height: 42px;
+  }
+
+  .App.persona-menu .project-modal .modal-tabs {
+    gap: 0.25rem;
+    padding: 0.35rem 0.65rem 0;
+  }
+
+  .App.persona-menu .project-modal .modal-tab-btn {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 48px;
+    padding: 0.65rem 0.5rem;
+    font-size: 0.78rem;
+  }
+
+  .App.persona-menu .project-modal .modal-scroll-area {
+    padding: 0.85rem 0.8rem 1rem;
+    scrollbar-gutter: auto;
+  }
+
+  .App.persona-menu .project-modal .modal-grid {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+  }
+
+  .App.persona-menu .project-modal .modal-section.metrics {
+    grid-column: auto;
+  }
+
+  .App.persona-menu .project-modal .modal-section {
+    padding: 1rem;
+  }
+
+  .App.persona-menu .project-modal .modal-section p {
+    font-size: 0.9rem;
+  }
+
+  .App.persona-menu .project-modal .architecture-node {
+    grid-template-columns: 1.55rem 2.45rem minmax(0, 1fr);
+    gap: 0.55rem;
+    padding: 0.85rem 0.7rem;
+  }
+
+  .App.persona-menu .project-modal .node-icon {
+    width: 2.45rem;
+    height: 2.45rem;
+  }
+
+  .App.persona-menu .project-modal .node-content {
+    grid-column: 1 / -1;
+  }
+
+  .App.persona-menu .project-modal .modal-footer {
+    margin-top: 1rem;
+    padding-top: 1rem;
+  }
+
+  .App.persona-menu .project-modal .modal-actions-row {
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .App.persona-menu .project-modal .modal-action-btn {
+    flex-basis: auto;
+    width: 100%;
+    min-height: 48px;
+  }
+}
+
+@media (max-width: 360px) {
+  .App.persona-menu .project-modal .modal-header {
+    padding-right: 0.65rem;
+    padding-left: 0.7rem;
+  }
+
+  .App.persona-menu .project-modal .modal-close-btn {
+    flex-basis: 38px;
+    width: 38px;
+    height: 38px;
+  }
+
+  .App.persona-menu .project-modal .modal-tab-btn {
+    font-size: 0.72rem;
+  }
+
+  .App.persona-menu .project-modal .architecture-node {
+    grid-template-columns: 1.4rem minmax(0, 1fr);
+  }
+
+  .App.persona-menu .project-modal .node-icon {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .App.persona-menu .project-modal .node-content {
+    grid-row: 2;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 520px) {
+  .App.persona-menu .project-modal .modal-content {
+    height: 96vh;
+    height: 96dvh;
+  }
+
+  .App.persona-menu .project-modal .modal-header {
+    padding-top: 0.6rem;
+    padding-bottom: 0.55rem;
+  }
+
+  .App.persona-menu .project-modal .modal-badge {
+    margin-bottom: 0.25rem;
+  }
+
+  .App.persona-menu .project-modal .modal-tabs {
+    padding-top: 0.2rem;
+  }
+
+  .App.persona-menu .project-modal .modal-tab-btn {
+    min-height: 42px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .App.persona-menu .project-modal *,
+  .App.persona-menu .project-modal *::before,
+  .App.persona-menu .project-modal *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

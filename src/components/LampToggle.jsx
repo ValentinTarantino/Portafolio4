@@ -171,6 +171,9 @@ const LampToggle = () => {
     <div 
       ref={chainRef}
       className={`hanging-chain ${isAnimating ? 'pulling' : ''} ${isLightMode ? 'active' : ''} ${isDragging ? 'dragging' : ''}`}
+      role="button"
+      tabIndex={0}
+      aria-label="Cambiar tema"
       style={{
         position: 'fixed',
         top: `${chainPosition.top}px`,
@@ -182,6 +185,12 @@ const LampToggle = () => {
       onMouseDown={handleChainMouseDown}
       onTouchStart={handleChainTouchStart}
       onClick={handleToggle}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          handleToggle();
+        }
+      }}
     >
       {/* Cadena que se estira */}
       <div 

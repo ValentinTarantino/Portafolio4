@@ -33,22 +33,27 @@ body {
   transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
 }
 
+.App.dark-hour-mode {
+  --mode-accent: #68e69a;
+  --mode-accent-soft: rgba(73, 213, 131, 0.2);
+  --mode-accent-border: rgba(95, 220, 143, 0.42);
+}
+
 .App::before {
   content: '';
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(circle at 10% 15%, rgba(102, 126, 234, 0.26), transparent 18%),
-    radial-gradient(circle at 85% 18%, rgba(240, 147, 251, 0.22), transparent 20%),
-    radial-gradient(circle at 28% 78%, rgba(0, 243, 254, 0.16), transparent 18%),
+    radial-gradient(ellipse at 15% 16%, rgba(104, 111, 188, 0.2), transparent 34%),
+    radial-gradient(ellipse at 82% 72%, rgba(72, 112, 135, 0.14), transparent 36%),
     linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-mid) 45%, var(--bg-rich) 100%);
   background-blend-mode: screen;
-  opacity: 0.5;
+  opacity: 0.58;
   z-index: -2;
   pointer-events: none;
 }
 
-.App .hero-shapes {
+.App > .aurora-background {
   position: fixed;
   inset: 0;
   z-index: -1;
@@ -56,31 +61,41 @@ body {
   overflow: hidden;
 }
 
-.App .hero-shapes .shape {
-  filter: blur(24px);
-  opacity: 0.24;
+.App > .aurora-background .aurora-shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(82px);
+  opacity: 0.42;
   mix-blend-mode: screen;
+  will-change: transform;
 }
 
-.App .hero-shapes .shape-1 {
-  width: 340px;
-  height: 340px;
-  top: 4%;
-  right: 8%;
+.App > .aurora-background .aurora-shape--indigo {
+  top: -22%;
+  right: -18%;
+  width: min(68vw, 900px);
+  height: min(66vw, 780px);
+  background: radial-gradient(ellipse at center, rgba(106, 111, 190, 0.48) 0%, rgba(100, 84, 157, 0.24) 42%, transparent 72%);
+  animation: aurora-drift-indigo 38s ease-in-out infinite alternate;
 }
 
-.App .hero-shapes .shape-2 {
-  width: 300px;
-  height: 300px;
-  bottom: 18%;
-  left: 8%;
+.App > .aurora-background .aurora-shape--teal {
+  bottom: -30%;
+  left: -23%;
+  width: min(72vw, 960px);
+  height: min(65vw, 760px);
+  background: radial-gradient(ellipse at center, rgba(67, 119, 139, 0.34) 0%, rgba(83, 93, 145, 0.2) 44%, transparent 72%);
+  animation: aurora-drift-teal 46s ease-in-out infinite alternate;
 }
 
-.App .hero-shapes .shape-3 {
-  width: 260px;
-  height: 260px;
-  top: 48%;
-  left: 45%;
+@keyframes aurora-drift-indigo {
+  from { transform: translate3d(0, 0, 0) scale(0.94); }
+  to { transform: translate3d(-7vw, 7vh, 0) scale(1.08); }
+}
+
+@keyframes aurora-drift-teal {
+  from { transform: translate3d(0, 0, 0) scale(1.04); }
+  to { transform: translate3d(8vw, -6vh, 0) scale(0.94); }
 }
 
 /* Smooth scrolling */
@@ -135,6 +150,7 @@ html {
   right: 0;
   height: 100px;
   z-index: 1;
+  pointer-events: none;
 }
 
 .section:not(.about)::after {
@@ -145,6 +161,7 @@ html {
   right: 0;
   height: 50px;
   z-index: 1;
+  pointer-events: none;
 }
 
 .section-title {
@@ -248,6 +265,11 @@ html {
   .project-card,
   .testimonial-card {
     transition: none;
+  }
+
+  .App::before,
+  .App > .aurora-background .aurora-shape {
+    animation: none;
   }
 }
 

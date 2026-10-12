@@ -232,7 +232,7 @@ const es = {
   },
   footer: {
     cta: '¿Trabajamos juntos?',
-    subtitle: 'Construyamos algo increíble juntos',
+    subtitle: 'Construyamos algo increíble',
     tagline: 'Desarrollador Full Stack especializado en crear experiencias digitales excepcionales.',
     navigation: 'Navegación',
     madeWith: 'Hecho con',

@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { TypeAnimation } from 'react-type-animation';
+import { createPortal } from 'react-dom';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import './Hero.css';
+import './HeroEditorial.css';
 import DinoGame from './DinoGame';
 
 // Dynamic terminal outputs renderer for seamless real-time bilingual updates
@@ -331,8 +332,11 @@ const renderHistoryItem = (item, index, isSpanish) => {
   }
 };
 
-const Hero = ({ t, language }) => {
+const HERO_ROLES = ['Fullstack Dev', 'Frontend Dev', 'Next.js & React Specialist'];
+
+const Hero = ({ t, language, terminalMount }) => {
   const isSpanish = language === 'es';
+  const prefersReducedMotion = useReducedMotion();
 
   // Interactive Terminal States
   const [terminalHistory, setTerminalHistory] = useState([]);
@@ -342,6 +346,8 @@ const Hero = ({ t, language }) => {
   const [trivia, setTrivia] = useState(null); // { step: 1|2|3, score: 0 }
   const [dinoActive, setDinoActive] = useState(false);
   const [cvOpen, setCvOpen] = useState(false);
+  const [heroRoleIndex, setHeroRoleIndex] = useState(0);
+  const [visibleHeroRole, setVisibleHeroRole] = useState('');
   const [isNarrowScreen, setIsNarrowScreen] = useState(
     () => typeof window !== 'undefined' && window.matchMedia('(max-width: 600px)').matches
   );
@@ -356,6 +362,53 @@ const Hero = ({ t, language }) => {
     mq.addEventListener('change', onChange);
     return () => mq.removeEventListener('change', onChange);
   }, []);
+
+  useEffect(() => {
+    let timeoutId;
+    let currentRole = 0;
+
+    if (prefersReducedMotion) {
+      setVisibleHeroRole(HERO_ROLES[0]);
+      const roleTimer = window.setInterval(() => {
+        currentRole = (currentRole + 1) % HERO_ROLES.length;
+        setHeroRoleIndex(currentRole);
+        setVisibleHeroRole(HERO_ROLES[currentRole]);
+      }, 3200);
+      return () => window.clearInterval(roleTimer);
+    }
+
+    let characterIndex = 0;
+    let isDeleting = false;
+    const typeNextCharacter = () => {
+      const role = HERO_ROLES[currentRole];
+
+      if (!isDeleting) {
+        characterIndex += 1;
+        setVisibleHeroRole(role.slice(0, characterIndex));
+        if (characterIndex === role.length) {
+          isDeleting = true;
+          timeoutId = window.setTimeout(typeNextCharacter, 1600);
+          return;
+        }
+        timeoutId = window.setTimeout(typeNextCharacter, 84);
+        return;
+      }
+
+      characterIndex -= 1;
+      setVisibleHeroRole(role.slice(0, characterIndex));
+      if (characterIndex === 0) {
+        isDeleting = false;
+        currentRole = (currentRole + 1) % HERO_ROLES.length;
+        setHeroRoleIndex(currentRole);
+        timeoutId = window.setTimeout(typeNextCharacter, 340);
+        return;
+      }
+      timeoutId = window.setTimeout(typeNextCharacter, 44);
+    };
+
+    timeoutId = window.setTimeout(typeNextCharacter, 250);
+    return () => window.clearTimeout(timeoutId);
+  }, [prefersReducedMotion]);
 
   // CV preview modal: lock body scroll + close on Escape
   useEffect(() => {
@@ -582,52 +635,36 @@ const Hero = ({ t, language }) => {
     }
   };
 
-  const scrollToAbout = () => {
-    const aboutSection = document.getElementById('about');
-    if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <section id="home" className="hero">
-      <div className="hero-background">
-        <div className="hero-shapes">
-          <div className="shape shape-1"></div>
-          <div className="shape shape-2"></div>
-          <div className="shape shape-3"></div>
-          <div className="floating-elements">
-            <div className="code-block code-1">{'<div>'}</div>
-            <div className="code-block code-2">{'</>'}</div>
-            <div className="code-block code-3">{'{ }'}</div>
-          </div>
-        </div>
-      </div>
-      
       <div className="container">
         <div className="hero-content">
           <div className="hero-text">
             <div className="typing-container">
-              <h1 className="hero-name fade-in-up">
-                <span className="name-highlight">{t.hero.name}</span>
+              <h1 className="hero-name fade-in-up" aria-label={t.hero.name}>
+                <span className="hero-name-line name-highlight">{t.hero.name.split(' ')[0]}</span>
+                <span className="hero-name-line">{t.hero.name.split(' ')[1]}</span>
+                <span className="hero-name-line hero-name-line--surname">{t.hero.name.split(' ').slice(2).join(' ')}</span>
               </h1>
               <h2 className="hero-title fade-in-up">
                 <span className="title-bracket">{'<'}</span>
-                <TypeAnimation
-                  key={t.hero.title}
-                  sequence={[
-                    t.hero.title,
-                    2000,
-                    'Frontend Developer',
-                    2000,
-                    'React Specialist',
-                    2000,
-                  ]}
-                  wrapper="span"
-                  speed={50}
-                  repeat={Infinity}
-                  style={{ display: 'inline-block' }}
-                />
+                <span className="hero-role" aria-label={HERO_ROLES[heroRoleIndex]}>
+                  <AnimatePresence initial={false}>
+                    {Array.from(visibleHeroRole, (character, index) => (
+                    <motion.span
+                      className="hero-role-char"
+                      key={`${heroRoleIndex}-${index}`}
+                      aria-hidden="true"
+                      initial={prefersReducedMotion ? false : { opacity: 0, width: 0, y: 2 }}
+                      animate={{ opacity: 1, width: 'auto', y: 0 }}
+                      exit={{ opacity: 0, width: 0, y: -1 }}
+                      transition={{ duration: prefersReducedMotion ? 0 : 0.14, ease: 'easeOut' }}
+                    >
+                      {character === ' ' ? '\u00a0' : character}
+                    </motion.span>
+                    ))}
+                  </AnimatePresence>
+                </span>
                 <span className="title-bracket">{'/>'}</span>
               </h2>
               <p className="hero-description fade-in-up">{t.hero.description}</p>
@@ -635,19 +672,16 @@ const Hero = ({ t, language }) => {
                 <button
                   type="button"
                   onClick={() => setCvOpen(true)}
-                  className="cta-button primary"
+                  className="hero-action hero-action--primary"
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                    <circle cx="12" cy="12" r="3"></circle>
-                  </svg>
                   <span>{t.hero.downloadCV}</span>
                 </button>
               </div>
             </div>
           </div>
-          
-          <div className="hero-visual">
+
+
+          {terminalMount && createPortal(
             <div className={`terminal-container ${superActive ? 'super-active' : ''}`}>
               <div className="terminal-header" onClick={focusInput}>
                 <div className="terminal-buttons">
@@ -736,13 +770,11 @@ const Hero = ({ t, language }) => {
                   </div>
                 )}
               </div>
-            </div>
-          </div>
+            </div>,
+            terminalMount
+          )}
         </div>
         
-        <div className="scroll-indicator" onClick={scrollToAbout}>
-          <div className="scroll-arrow"></div>
-        </div>
       </div>
 
       {/* CV preview modal — shows the PDF instead of downloading it */}

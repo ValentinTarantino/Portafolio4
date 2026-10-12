@@ -64,14 +64,6 @@ const CATEGORY_ICONS = {
   ),
 };
 
-// Per-category accent: drives the header icon tint + card top accent line via --accent.
-const CATEGORY_ACCENTS = {
-  frontend: '#3b82f6',
-  backend: '#8b5cf6',
-  tools: '#10b981',
-  ai: '#f59e0b',
-};
-
 const Skills = ({ t }) => {
   const skillCategories = useMemo(() => [
     { key: 'frontend', title: t.skills.categories.frontend, description: t.skills.categories.frontendDescription, skills: ICONS.frontend },
@@ -97,7 +89,7 @@ const Skills = ({ t }) => {
               <article
                 key={category.key}
                 className="skill-category-box skill-category-box--compact"
-                style={{ '--accent': CATEGORY_ACCENTS[category.key] }}
+                data-category={category.key}
               >
                 <div className="category-header">
                   <span className="category-index">{String(index + 1).padStart(2, '0')}</span>

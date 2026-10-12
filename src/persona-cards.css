@@ -1,0 +1,804 @@
+/* Shared Persona 3 inspired card language. Kept scoped to this portfolio theme. */
+.App.persona-menu {
+  --p3-surface: rgba(7, 25, 49, 0.96);
+  --p3-border: rgba(79, 177, 239, 0.28);
+  --p3-border-strong: rgba(78, 218, 255, 0.62);
+  --p3-cyan: #52ddff;
+  --p3-blue: #2588ed;
+  --p3-accent: #ff3d61;
+  --p3-text: #f4f8ff;
+  --p3-muted: #a7b7cd;
+  --p3-card-shadow: 0 16px 38px rgba(0, 7, 20, 0.28), inset 0 1px rgba(205, 239, 255, 0.055);
+}
+
+.App.persona-menu.dark-hour-mode {
+  --p3-surface: rgba(7, 25, 23, 0.97);
+  --p3-border: rgba(103, 176, 137, 0.25);
+  --p3-border-strong: rgba(132, 221, 164, 0.52);
+  --p3-cyan: #94d9ba;
+  --p3-blue: #2a9d74;
+  --p3-accent: #ff4964;
+  --p3-text: #f0f8f2;
+  --p3-muted: #a4b9ad;
+  --p3-card-shadow: 0 16px 38px rgba(0, 8, 5, 0.36), inset 0 1px rgba(194, 239, 211, 0.04);
+}
+
+/* Fixed navigation should not cover section headings after anchor navigation. */
+.App.persona-menu .section[id]:not(#home) {
+  scroll-margin-top: 6.25rem;
+}
+
+/* Shared surfaces */
+.App.persona-menu .developer-card,
+.App.persona-menu .education-card,
+.App.persona-menu .skill-category-box,
+.App.persona-menu .project-card,
+.App.persona-menu .testimonial-card,
+.App.persona-menu .contact-form {
+  color: var(--p3-text);
+  border: 1px solid var(--p3-border);
+  border-radius: 8px 20px 5px 14px;
+  background-color: var(--p3-surface);
+  background-image: linear-gradient(132deg, rgba(72, 199, 255, 0.075), transparent 42%);
+  box-shadow: var(--p3-card-shadow);
+  transition: border-color 240ms ease, background-color 240ms ease, box-shadow 240ms ease, transform 240ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.App.persona-menu.dark-hour-mode .developer-card,
+.App.persona-menu.dark-hour-mode .education-card,
+.App.persona-menu.dark-hour-mode .skill-category-box,
+.App.persona-menu.dark-hour-mode .project-card,
+.App.persona-menu.dark-hour-mode .testimonial-card,
+.App.persona-menu.dark-hour-mode .contact-form {
+  background-color: var(--p3-surface);
+  background-image: linear-gradient(132deg, rgba(69, 154, 105, 0.07), transparent 42%);
+}
+
+/* Profile: editorial lead panel */
+.App.persona-menu .developer-card {
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border-radius: 5px 24px 5px 18px;
+  background-image: linear-gradient(115deg, rgba(28, 114, 181, 0.16), transparent 54%);
+}
+
+.App.persona-menu .developer-card::before {
+  left: 0;
+  right: auto;
+  width: min(42%, 220px);
+  height: 3px;
+  background: linear-gradient(90deg, var(--p3-accent), var(--p3-cyan), transparent);
+}
+
+.App.persona-menu .developer-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 74px;
+  height: 18px;
+  background: linear-gradient(90deg, transparent, rgba(82, 221, 255, 0.2));
+  clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%);
+  pointer-events: none;
+}
+
+.App.persona-menu .card-header,
+.App.persona-menu .developer-info {
+  position: relative;
+  z-index: 1;
+}
+
+.App.persona-menu .status-indicator {
+  color: #8fe6c1;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.App.persona-menu .status-dot {
+  width: 7px;
+  height: 7px;
+  box-shadow: 0 0 10px rgba(79, 226, 164, 0.42);
+}
+
+.App.persona-menu .code-badge {
+  border-radius: 2px 9px 2px 9px;
+  background: linear-gradient(110deg, var(--p3-blue), #164a90);
+  box-shadow: 3px 3px 0 rgba(255, 61, 97, 0.72);
+}
+
+.App.persona-menu .name-section {
+  text-align: left;
+}
+
+.App.persona-menu .dev-name {
+  max-width: 18ch;
+  color: var(--p3-text);
+  font-family: 'Outfit', Impact, 'Arial Narrow', sans-serif;
+  font-size: clamp(1.8rem, 3.4vw, 2.55rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+  background: linear-gradient(100deg, #f3fbff 2%, #68dfff 56%, #7da8ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.App.persona-menu .role-tags {
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+.App.persona-menu .role-tags .tag {
+  border-radius: 2px 9px 2px 8px;
+  padding: 0.32rem 0.72rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+}
+
+.App.persona-menu .role-tags .tag.primary {
+  background: linear-gradient(110deg, var(--p3-blue), #1677c9);
+  box-shadow: 2px 2px 0 rgba(255, 61, 97, 0.72);
+}
+
+.App.persona-menu .role-tags .tag.secondary,
+.App.persona-menu .role-tags .tag.tertiary {
+  color: #b8edff;
+  border-color: rgba(82, 221, 255, 0.24);
+  background: rgba(31, 111, 157, 0.16);
+}
+
+.App.persona-menu.dark-hour-mode .role-tags .tag.secondary,
+.App.persona-menu.dark-hour-mode .role-tags .tag.tertiary {
+  color: #c0e8d1;
+  border-color: rgba(132, 221, 164, 0.2);
+  background: rgba(41, 111, 76, 0.16);
+}
+
+.App.persona-menu .description-box {
+  border: 0;
+  border-left: 2px solid var(--p3-cyan);
+  border-radius: 0 10px 3px 0;
+  background: linear-gradient(90deg, rgba(45, 142, 197, 0.12), rgba(8, 28, 52, 0.2));
+}
+
+.App.persona-menu .description-box p,
+.App.persona-menu .experience-bullets li {
+  color: #c4d2e4;
+}
+
+/* Experience and education: linked record entries */
+.App.persona-menu .about-main > .education-card,
+.App.persona-menu .about-sidebar > .education-card {
+  position: relative;
+  border-radius: 4px 18px 4px 12px;
+  background-image: linear-gradient(145deg, rgba(9, 34, 62, 0.94), rgba(4, 17, 35, 0.94));
+}
+
+.App.persona-menu .about-main > .education-card::before,
+.App.persona-menu .about-sidebar > .education-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 1.5rem;
+  width: 54px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--p3-accent), var(--p3-cyan));
+  clip-path: polygon(0 0, 100% 0, 86% 100%, 0 100%);
+}
+
+.App.persona-menu .card-title {
+  color: var(--p3-cyan);
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.App.persona-menu .education-item {
+  position: relative;
+  padding-left: 0.9rem;
+  border-left: 1px solid rgba(82, 221, 255, 0.22);
+}
+
+.App.persona-menu .education-header h4 {
+  color: var(--p3-text);
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 750;
+  line-height: 1.4;
+}
+
+.App.persona-menu .completion-badge {
+  border-radius: 2px 7px 2px 7px;
+  padding: 0.22rem 0.55rem;
+  background: rgba(47, 150, 199, 0.16);
+  border: 1px solid rgba(82, 221, 255, 0.25);
+  color: #bceeff;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.App.persona-menu .course-name {
+  color: var(--p3-muted);
+}
+
+.App.persona-menu .date-start,
+.App.persona-menu .date-end {
+  color: #91dcfa;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.App.persona-menu .timeline-line {
+  height: 1px;
+  background: linear-gradient(90deg, var(--p3-cyan), rgba(82, 221, 255, 0.14));
+}
+
+.App.persona-menu .education-divider {
+  opacity: 0.5;
+}
+
+.App.persona-menu .experience-bullets li::before {
+  color: var(--p3-accent);
+}
+
+.App.persona-menu .stat-card {
+  border-radius: 3px 12px 3px 10px;
+  border-color: rgba(82, 221, 255, 0.2);
+  background: linear-gradient(140deg, rgba(13, 47, 77, 0.84), rgba(4, 19, 38, 0.82));
+}
+
+.App.persona-menu .stat-card:hover {
+  border-color: var(--p3-border-strong);
+}
+
+/* Soft skills: compact selectable-looking modules, still informational. */
+.App.persona-menu .soft-skill-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.App.persona-menu .soft-skill-item {
+  min-width: 0;
+  padding: 0.58rem 0.65rem;
+  border: 1px solid rgba(82, 221, 255, 0.13);
+  border-radius: 3px 10px 3px 8px;
+  background: rgba(5, 19, 38, 0.66);
+  transition: border-color 200ms ease, background-color 200ms ease, transform 200ms ease;
+}
+
+.App.persona-menu .soft-skill-item:hover {
+  border-color: var(--p3-border-strong);
+  background: rgba(18, 58, 87, 0.58);
+  transform: translateX(2px);
+}
+
+.App.persona-menu .soft-skill-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 3px 8px 3px 8px;
+  color: var(--p3-cyan);
+  background: rgba(52, 163, 213, 0.14);
+}
+
+.App.persona-menu .soft-skill-item span {
+  color: #d4e2f0;
+  font-size: 0.82rem;
+  line-height: 1.25;
+}
+
+/* Technology panels and compact chips */
+.App.persona-menu .skill-category-box--compact {
+  padding: 1.35rem 1.4rem;
+  border-radius: 4px 18px 4px 12px;
+  background-color: var(--p3-surface);
+  background-image: linear-gradient(120deg, rgba(50, 137, 199, 0.14), transparent 42%);
+}
+
+.App.persona-menu .skill-category-box--compact[data-category="frontend"] { --accent: #38cfff; }
+.App.persona-menu .skill-category-box--compact[data-category="backend"] { --accent: #388be0; }
+.App.persona-menu .skill-category-box--compact[data-category="tools"] { --accent: #ff4964; }
+.App.persona-menu .skill-category-box--compact[data-category="ai"] { --accent: #9eb9ff; }
+
+.App.persona-menu.dark-hour-mode .skill-category-box--compact {
+  background-image: linear-gradient(120deg, rgba(59, 139, 92, 0.12), transparent 42%);
+}
+
+.App.persona-menu.dark-hour-mode .skill-category-box--compact[data-category] { --accent: #83c99c; }
+
+.App.persona-menu .skill-category-box--compact::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 46px;
+  height: 12px;
+  background: var(--p3-cyan);
+  opacity: 0.42;
+  clip-path: polygon(18% 0, 100% 0, 100% 100%, 0 100%);
+  pointer-events: none;
+}
+
+.App.persona-menu .skill-category-box--compact .category-header {
+  border-bottom-color: rgba(108, 187, 226, 0.19);
+}
+
+.App.persona-menu .category-index {
+  color: var(--p3-accent);
+  font-family: Impact, 'Arial Narrow', sans-serif;
+  font-size: 0.86rem;
+  letter-spacing: 0.04em;
+}
+
+.App.persona-menu .skill-category-box--compact .category-title {
+  color: var(--p3-text);
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: 0.94rem;
+  font-weight: 800;
+  letter-spacing: 0.065em;
+}
+
+.App.persona-menu .category-description {
+  color: var(--p3-muted);
+}
+
+.App.persona-menu .skill-chip {
+  border-radius: 2px 8px 2px 7px;
+  border-color: rgba(106, 181, 221, 0.19);
+  background: rgba(4, 19, 38, 0.72);
+  color: #d2e4f0;
+  transition: border-color 190ms ease, background-color 190ms ease, transform 190ms ease;
+}
+
+.App.persona-menu .skill-chip:hover {
+  border-color: var(--p3-border-strong);
+  background: rgba(20, 68, 101, 0.58);
+  transform: translateY(-1px);
+}
+
+.App.persona-menu.dark-hour-mode .skill-chip {
+  border-color: rgba(123, 185, 147, 0.18);
+  background: rgba(4, 21, 17, 0.78);
+  color: #d0e4d7;
+}
+
+.App.persona-menu.dark-hour-mode .skill-chip:hover {
+  border-color: var(--p3-border-strong);
+  background: rgba(16, 58, 39, 0.58);
+}
+
+/* Project selection: image-first editorial cards and angled labels. */
+.App.persona-menu .projects-grid {
+  align-items: stretch;
+}
+
+.App.persona-menu .project-card {
+  border-radius: 5px 20px 5px 14px;
+  background: linear-gradient(155deg, rgba(8, 31, 59, 0.98), rgba(4, 16, 33, 0.98));
+}
+
+.App.persona-menu .project-card--featured {
+  border-color: rgba(91, 196, 244, 0.4);
+}
+
+.App.persona-menu .project-card--standard {
+  border-color: rgba(79, 150, 205, 0.24);
+  background: linear-gradient(155deg, rgba(7, 25, 48, 0.97), rgba(4, 15, 31, 0.97));
+}
+
+.App.persona-menu .project-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 66px;
+  height: 16px;
+  z-index: 2;
+  background: linear-gradient(90deg, transparent, rgba(82, 221, 255, 0.75));
+  clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%);
+  pointer-events: none;
+}
+
+.App.persona-menu .project-card--featured::after {
+  background: linear-gradient(90deg, transparent, rgba(255, 61, 97, 0.88));
+}
+
+.App.persona-menu .project-image {
+  height: clamp(190px, 23vw, 250px);
+  border-bottom-color: rgba(82, 221, 255, 0.22);
+}
+
+.App.persona-menu .project-image img {
+  transition: transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1), filter 320ms ease;
+}
+
+.App.persona-menu .project-card:hover .project-image img,
+.App.persona-menu .project-card:focus-within .project-image img {
+  transform: scale(1.035);
+  filter: saturate(1.08);
+}
+
+.App.persona-menu .project-overlay {
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  background: linear-gradient(135deg, rgba(3, 15, 32, 0.82), rgba(4, 22, 43, 0.7));
+  pointer-events: none;
+}
+
+.App.persona-menu .project-card:hover .project-overlay,
+.App.persona-menu .project-card:focus-within .project-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.App.persona-menu .project-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 1.35rem 1.5rem 1.5rem;
+  background: linear-gradient(180deg, rgba(8, 30, 54, 0.2), transparent);
+}
+
+.App.persona-menu .project-header-row {
+  text-align: left;
+}
+
+.App.persona-menu .project-title {
+  color: var(--p3-text);
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: clamp(1.18rem, 1.8vw, 1.45rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+.App.persona-menu .featured-badge-row {
+  justify-content: flex-start;
+  margin: 0.3rem 0 0.65rem;
+}
+
+.App.persona-menu .featured-badge {
+  position: relative;
+  border: 0;
+  border-radius: 1px 8px 1px 7px;
+  padding: 0.3rem 0.75rem;
+  color: #fff;
+  background: linear-gradient(105deg, #ed3156, #bd183e);
+  box-shadow: 2px 2px 0 rgba(45, 161, 239, 0.72);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+}
+
+.App.persona-menu .featured-badge-icon {
+  color: #fff;
+}
+
+.App.persona-menu .project-description {
+  color: #b3c2d5;
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.App.persona-menu .read-more-btn {
+  color: var(--p3-cyan);
+  text-decoration-color: rgba(82, 221, 255, 0.38);
+}
+
+.App.persona-menu .project-technologies {
+  gap: 0.48rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top-color: rgba(99, 170, 213, 0.2);
+}
+
+.App.persona-menu .tech-tag,
+.App.persona-menu .project-card--standard .tech-tag {
+  width: 34px;
+  height: 34px;
+  border-radius: 2px 8px 2px 7px;
+  border-color: rgba(87, 180, 228, 0.2);
+  background: rgba(6, 24, 45, 0.85);
+  box-shadow: none;
+}
+
+.App.persona-menu .tech-tag:hover,
+.App.persona-menu .project-card--standard .tech-tag:hover {
+  transform: translateY(-2px);
+  border-color: var(--p3-border-strong);
+  background: rgba(26, 83, 120, 0.5);
+  box-shadow: 0 5px 14px rgba(15, 113, 174, 0.16);
+}
+
+.App.persona-menu .tech-tag::after {
+  border-radius: 2px 7px 2px 7px;
+  color: #e6f8ff;
+  background: #071a30;
+  border-color: rgba(82, 221, 255, 0.32);
+}
+
+.App.persona-menu .project-btn,
+.App.persona-menu .filter-btn {
+  border-radius: 2px 10px 2px 9px;
+  font-family: Impact, 'Arial Narrow', sans-serif;
+  letter-spacing: 0.075em;
+}
+
+.App.persona-menu .project-btn {
+  border-color: rgba(82, 221, 255, 0.42);
+  color: #d7f5ff;
+  background: rgba(5, 24, 47, 0.82);
+}
+
+.App.persona-menu .project-btn.case-study-btn,
+.App.persona-menu .project-card--standard .project-btn.case-study-btn {
+  border: 0;
+  color: #fff;
+  background: linear-gradient(110deg, #0875e6, #10b9e9);
+  box-shadow: 2px 2px 0 rgba(255, 49, 84, 0.78);
+}
+
+.App.persona-menu .filter-btn {
+  padding: 0.72rem 1.35rem;
+  border-color: rgba(82, 221, 255, 0.28);
+  color: #c1eafa;
+  background: rgba(4, 20, 40, 0.86);
+}
+
+.App.persona-menu .filter-btn--featured,
+.App.persona-menu .filter-btn--featured.active {
+  color: #ffd5de;
+  border-color: rgba(255, 61, 97, 0.45);
+}
+
+.App.persona-menu .filter-btn.active,
+.App.persona-menu .filter-btn--featured.active {
+  color: #fff;
+  background: linear-gradient(105deg, #0875e6, #10b9e9);
+  box-shadow: 2px 2px 0 rgba(255, 49, 84, 0.78);
+}
+
+/* Testimonials: editorial quote panel, quieter typography. */
+.App.persona-menu .testimonial-card {
+  padding: 1.8rem 1.8rem 1.5rem;
+  border-radius: 4px 20px 4px 14px;
+  background-image: linear-gradient(145deg, rgba(8, 36, 66, 0.86), rgba(4, 18, 37, 0.92));
+}
+
+.App.persona-menu .testimonial-card::before {
+  width: 58%;
+  height: 3px;
+  opacity: 1;
+  background: linear-gradient(90deg, var(--p3-accent), var(--p3-cyan), transparent);
+  clip-path: polygon(0 0, 100% 0, 96% 100%, 0 100%);
+}
+
+.App.persona-menu .testimonial-name {
+  color: var(--p3-text);
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-weight: 800;
+}
+
+.App.persona-menu .testimonial-role {
+  color: var(--p3-muted);
+}
+
+.App.persona-menu .testimonial-text {
+  color: #c5d3e2;
+  font-style: normal;
+  line-height: 1.72;
+}
+
+.App.persona-menu .quote-icon {
+  color: rgba(82, 221, 255, 0.22);
+}
+
+.App.persona-menu .testimonial-footer {
+  border-top-color: rgba(105, 174, 212, 0.2);
+}
+
+.App.persona-menu .testimonial-project-link {
+  border-radius: 2px 8px 2px 7px;
+  border-color: rgba(82, 221, 255, 0.24);
+  color: #bcecff;
+  background: rgba(19, 83, 121, 0.2);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.App.persona-menu .testimonial-project-link:hover {
+  border-color: var(--p3-border-strong);
+  background: rgba(21, 102, 147, 0.34);
+}
+
+/* Contact form: same system with clear, usable focus states. */
+.App.persona-menu .contact-form {
+  border-radius: 5px 20px 5px 14px;
+  background-image: linear-gradient(135deg, rgba(11, 54, 87, 0.32), transparent 46%);
+}
+
+.App.persona-menu .form-label {
+  color: #b5c9dc;
+  letter-spacing: 0.11em;
+}
+
+.App.persona-menu .form-group:focus-within .form-label,
+.App.persona-menu .form-group.has-value .form-label {
+  color: var(--p3-cyan);
+}
+
+.App.persona-menu .form-input,
+.App.persona-menu .form-textarea {
+  border-radius: 3px 10px 3px 8px;
+  border-color: rgba(93, 176, 222, 0.28);
+  background: rgba(3, 16, 34, 0.74);
+  color: var(--p3-text);
+  transition: border-color 220ms ease, background-color 220ms ease, box-shadow 220ms ease;
+}
+
+.App.persona-menu .form-input::placeholder,
+.App.persona-menu .form-textarea::placeholder {
+  color: rgba(185, 207, 225, 0.62);
+  opacity: 1;
+}
+
+.App.persona-menu .form-input:focus,
+.App.persona-menu .form-textarea:focus {
+  border-color: var(--p3-cyan);
+  background: rgba(5, 23, 44, 0.94);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--p3-cyan) 16%, transparent);
+}
+
+.App.persona-menu .form-submit-btn {
+  border-radius: 2px 12px 2px 10px;
+  background: linear-gradient(110deg, #0875e6, #12b9ec);
+  box-shadow: 2px 2px 0 rgba(255, 49, 84, 0.75);
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+}
+
+.App.persona-menu.dark-hour-mode .contact-form {
+  background-image: linear-gradient(135deg, rgba(23, 73, 47, 0.24), transparent 46%);
+}
+
+.App.persona-menu.dark-hour-mode .form-input:focus,
+.App.persona-menu.dark-hour-mode .form-textarea:focus {
+  box-shadow: 0 0 0 3px rgba(111, 216, 151, 0.14);
+}
+
+/* Keyboard access for overlays and card actions. */
+.App.persona-menu :is(.project-btn, .filter-btn, .read-more-btn, .testimonial-project-link, .social-link, .form-submit-btn):focus-visible {
+  outline: 2px solid var(--p3-cyan);
+  outline-offset: 3px;
+}
+
+.App.persona-menu .project-card:focus-within .project-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .App.persona-menu .developer-card:hover,
+  .App.persona-menu .education-card:hover,
+  .App.persona-menu .skill-category-box--compact:hover,
+  .App.persona-menu .testimonial-card:hover,
+  .App.persona-menu .contact-form:hover {
+    border-color: var(--p3-border-strong);
+    box-shadow: var(--p3-card-shadow), 0 8px 22px rgba(15, 124, 190, 0.1);
+  }
+
+  .App.persona-menu.dark-hour-mode .developer-card:hover,
+  .App.persona-menu.dark-hour-mode .education-card:hover,
+  .App.persona-menu.dark-hour-mode .skill-category-box--compact:hover,
+  .App.persona-menu.dark-hour-mode .testimonial-card:hover,
+  .App.persona-menu.dark-hour-mode .contact-form:hover {
+    box-shadow: var(--p3-card-shadow), 0 8px 22px rgba(44, 133, 80, 0.1);
+  }
+}
+
+@media (max-width: 700px) {
+  .App.persona-menu .soft-skill-list {
+    grid-template-columns: 1fr;
+  }
+
+  .App.persona-menu .project-image {
+    height: clamp(185px, 56vw, 230px);
+  }
+
+  .App.persona-menu .project-content {
+    padding: 1.2rem 1.15rem 1.3rem;
+  }
+
+  .App.persona-menu .testimonial-card {
+    padding: 1.45rem 1.25rem 1.2rem;
+  }
+}
+
+/* Keep the contact form first on compact layouts; the terminal remains available below it. */
+@media (max-width: 900px) {
+  .App.persona-menu .contact-form-wrapper {
+    grid-row: 1;
+  }
+
+  .App.persona-menu .contact-info {
+    grid-row: 2;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* Touch users should have a direct path to project actions without a hover gesture. */
+@media (hover: none), (pointer: coarse) {
+  .App.persona-menu .project-overlay {
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0.65rem;
+    opacity: 1;
+    pointer-events: auto;
+    background: linear-gradient(180deg, transparent 28%, rgba(3, 15, 32, 0.88) 100%);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .App.persona-menu .project-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem;
+    width: 100%;
+  }
+
+  .App.persona-menu .project-btn {
+    flex: 0 1 auto;
+    min-height: 44px;
+    padding: 0.55rem 0.68rem;
+    font-size: 0.64rem;
+    letter-spacing: 0.035em;
+  }
+
+  .App.persona-menu .project-card:hover {
+    transform: none;
+  }
+
+  .App.persona-menu .project-card:hover .project-image img {
+    transform: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .App.persona-menu .section[id]:not(#home) {
+    scroll-margin-top: 5.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .App.persona-menu .developer-card,
+  .App.persona-menu .education-card,
+  .App.persona-menu .skill-category-box,
+  .App.persona-menu .project-card,
+  .App.persona-menu .project-image img,
+  .App.persona-menu .testimonial-card,
+  .App.persona-menu .soft-skill-item,
+  .App.persona-menu .skill-chip,
+  .App.persona-menu .form-input,
+  .App.persona-menu .form-textarea {
+    transition-duration: 0.01ms;
+  }
+
+  .App.persona-menu .soft-skill-item:hover,
+  .App.persona-menu .skill-chip:hover,
+  .App.persona-menu .testimonial-card:hover {
+    transform: none;
+  }
+
+  .App.persona-menu .project-card:hover .project-image img {
+    transform: none;
+  }
+}

@@ -1,9 +1,10 @@
-import { useState, lazy, Suspense } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import './App.css';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import OnlineCounter from './components/OnlineCounter';
+import AnimatedBackground from './components/AnimatedBackground';
 
 const About = lazy(() => import('./components/About'));
 const Skills = lazy(() => import('./components/Skills'));
@@ -20,27 +21,49 @@ const translations = { es, en };
 
 function App() {
   const [language, setLanguage] = useState('es');
+  const [isDarkHour, setIsDarkHour] = useState(() => {
+    try {
+      return window.localStorage.getItem('persona-dark-hour') === 'true';
+    } catch {
+      return false;
+    }
+  });
+  const [terminalMount, setTerminalMount] = useState(null);
   const t = translations[language];
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem('persona-dark-hour', String(isDarkHour));
+    } catch {
+      // The current session still works when browser storage is unavailable.
+    }
+  }, [isDarkHour]);
 
   const toggleLanguage = () => {
     setLanguage(language === 'es' ? 'en' : 'es');
   };
 
   return (
-    <div className="App">
-      <div className="hero-shapes">
-        <div className="shape shape-1"></div>
-        <div className="shape shape-2"></div>
-        <div className="shape shape-3"></div>
-      </div>
-      <Header t={t} language={language} toggleLanguage={toggleLanguage} />
-      <Hero t={t} language={language} />
+    <div className={`App persona-menu${isDarkHour ? ' dark-hour-mode' : ''}`}>
+      <AnimatedBackground isDarkHour={isDarkHour} />
+      <Header
+        t={t}
+        language={language}
+        toggleLanguage={toggleLanguage}
+        isDarkHour={isDarkHour}
+        toggleDarkHour={() => setIsDarkHour((current) => !current)}
+      />
+      <Hero t={t} language={language} terminalMount={terminalMount} />
       <Suspense fallback={<div />}>
         <About t={t} />
         <Skills t={t} />
         <Projects t={t} language={language} />
         <Testimonials t={t} language={language} />
-        <Contact t={t} />
+        <Contact t={t} setTerminalMount={setTerminalMount} />
         <Footer t={t} />
       </Suspense>
       <OnlineCounter t={t} />

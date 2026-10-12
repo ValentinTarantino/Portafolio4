@@ -8,92 +8,6 @@
   padding-top: 80px;
 }
 
-.hero-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: -1;
-}
-
-.hero-shapes {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-
-.shape {
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0.1;
-  animation: float 6s ease-in-out infinite;
-}
-
-.shape-1 {
-  width: 200px;
-  height: 200px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  top: 10%;
-  right: 10%;
-  animation-delay: 0s;
-}
-
-.shape-2 {
-  width: 150px;
-  height: 150px;
-  background: linear-gradient(135deg, #f093fb, #f5576c);
-  bottom: 20%;
-  left: 10%;
-  animation-delay: 2s;
-}
-
-.shape-3 {
-  width: 100px;
-  height: 100px;
-  background: linear-gradient(135deg, #4facfe, #00f2fe);
-  top: 50%;
-  left: 50%;
-  animation-delay: 4s;
-}
-
-.floating-elements {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-
-.code-block {
-  position: absolute;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  padding: 0.5rem 1rem;
-  font-family: 'Courier New', monospace;
-  color: #667eea;
-  font-weight: 600;
-  animation: float 8s ease-in-out infinite;
-}
-
-.code-1 {
-  top: 20%;
-  left: 20%;
-  animation-delay: 1s;
-}
-
-.code-2 {
-  top: 60%;
-  right: 25%;
-  animation-delay: 3s;
-}
-
-.code-3 {
-  bottom: 30%;
-  left: 15%;
-  animation-delay: 5s;
-}
-
 .hero-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -564,22 +478,6 @@
     font-size: 0.9rem;
   }
 
-  /* Hide shapes and floating elements on mobile to improve performance and eliminate visual lag */
-  .hero-shapes {
-    display: none !important;
-  }
-
-  .shape {
-    display: none !important;
-  }
-
-  .floating-elements {
-    display: none !important;
-  }
-
-  .code-block {
-    display: none !important;
-  }
 }
 
 @media (max-width: 480px) {
@@ -600,10 +498,6 @@
     font-size: 1.5rem;
   }
   
-  .code-block {
-    font-size: 0.8rem;
-    padding: 0.3rem 0.6rem;
-  }
 }
 
 @keyframes gradientShift {
