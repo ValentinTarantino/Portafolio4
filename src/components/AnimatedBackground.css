@@ -559,7 +559,7 @@
     --tartarus-active-scale: 0.68;
     left: var(--scene-mobile-focus-x);
     right: auto;
-    bottom: calc(100vh - 12vh - var(--scene-mobile-moon-size) - 0.5rem - var(--scene-mobile-tartarus-visible-height));
+    bottom: calc(100vh - 12vh - var(--scene-mobile-moon-size) - 2.5rem - var(--scene-mobile-tartarus-visible-height));
     width: var(--scene-mobile-tartarus-width);
     height: var(--scene-mobile-tartarus-height);
     transform: translate3d(-50%, var(--tartarus-rise-distance), 0) scale(0.68);
@@ -850,5 +850,17 @@
 
   .dark-hour-scene.is-dark-hour .dark-hour-scene__vignette {
     background: linear-gradient(180deg, transparent 30%, rgba(1, 10, 7, 0.22) 100%);
+  }
+
+  /* On mobile Tartarus is part of the persistent backdrop, not a scroll reveal.
+     Fade it in with Dark Hour but keep its geometry fixed to avoid a large rise
+     across the moon or any perceived jump in the hero composition. */
+  .dark-hour-scene.is-mobile-scene.is-dark-hour.is-hero-active .dark-hour-scene__tartarus,
+  .dark-hour-scene.is-mobile-scene.is-dark-hour.has-revealed-tartarus .dark-hour-scene__tartarus,
+  .dark-hour-scene.is-mobile-scene.is-dark-hour:not(.is-hero-active) .dark-hour-scene__tartarus {
+    opacity: 0.48;
+    transform: translate3d(-50%, 0, 0) scale(0.68);
+    filter: none !important;
+    transition: opacity 500ms ease;
   }
 }

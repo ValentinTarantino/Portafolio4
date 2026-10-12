@@ -158,7 +158,19 @@ const AnimatedBackground = ({ isDarkHour = false }) => {
   useEffect(() => {
     const scene = sceneRef.current;
     const hero = document.getElementById('home');
-    if (!scene || !hero || !('IntersectionObserver' in window)) return undefined;
+    if (!scene || !hero) return undefined;
+
+    if (lightweightScene) {
+      // Mobile uses a fixed backdrop; don't defer/reveal Tartarus based on scroll.
+      heroActiveRef.current = true;
+      scene.classList.add('is-hero-active');
+      if (scene.classList.contains('is-dark-hour')) {
+        scene.classList.add('has-revealed-tartarus');
+      }
+      return undefined;
+    }
+
+    if (!('IntersectionObserver' in window)) return undefined;
 
     const heroObserver = new IntersectionObserver(([entry]) => {
       heroActiveRef.current = entry.isIntersecting;
@@ -170,7 +182,7 @@ const AnimatedBackground = ({ isDarkHour = false }) => {
 
     heroObserver.observe(hero);
     return () => heroObserver.disconnect();
-  }, []);
+  }, [lightweightScene]);
 
   useEffect(() => {
     const scene = sceneRef.current;
@@ -377,7 +389,7 @@ const AnimatedBackground = ({ isDarkHour = false }) => {
   }, [isDarkHour]);
 
   return (
-    <div className={`dark-hour-scene is-hero-active${isDarkHour ? ' is-dark-hour' : ''}`} ref={sceneRef} aria-hidden="true">
+    <div className={`dark-hour-scene is-hero-active${isDarkHour ? ' is-dark-hour' : ''}${lightweightScene ? ' is-mobile-scene' : ''}`} ref={sceneRef} aria-hidden="true">
       <div className="dark-hour-scene__sky" />
       <div className="dark-hour-scene__halo dark-hour-scene__halo--horizon" />
       <div className="dark-hour-scene__moon-field">
