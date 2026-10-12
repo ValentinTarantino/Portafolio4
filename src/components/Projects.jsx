@@ -115,8 +115,8 @@ const Projects = ({ t, language }) => {
       description: t.projects.descriptions.LuminaCommerce,
       image: ecommerceImg,
       technologies: ['Next.js', 'Python', 'FastAPI', 'PostgreSQL', 'Prisma', 'Zustand', 'Tailwind CSS', 'Three.js', 'Stripe'],
-      liveUrl: 'https://lumina-commerce-beta.vercel.app/',
-      codeUrl: 'https://github.com/ValentinTarantino/lumina-commerce'
+      liveUrl: 'https://lumina-commerce2-1.onrender.com/',
+      codeUrl: 'https://github.com/ValentinTarantino/lumina-commerce2'
     },
 
     {
