@@ -1,13 +1,88 @@
 import { useState, useEffect, useRef } from 'react';
+import { formatArgentinaClock, getArgentinaTimeParts } from '../utils/argentinaTime';
 
 import './Header.css';
 
-const Header = ({ t, language, toggleLanguage, isDarkHour, toggleDarkHour }) => {
+const ROMAN_HOURS = ['XII', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI'];
+
+const ArgentinaClock = ({ isDarkHour }) => {
+  const [time, setTime] = useState(() => getArgentinaTimeParts());
+  const accessibleTime = `${formatArgentinaClock(time)}:${String(time.second).padStart(2, '0')}`;
+  const hourAngle = ((time.hour % 12) + time.minute / 60 + time.second / 3600) * 30;
+  const minuteAngle = (time.minute + time.second / 60) * 6;
+  const secondAngle = time.second * 6;
+  const romanHours = ROMAN_HOURS.map((label, index) => {
+    const angle = (index / 12) * Math.PI * 2 - Math.PI / 2;
+    const x = 50 + Math.cos(angle) * 40;
+    const y = 50 + Math.sin(angle) * 40;
+    return { label, index, x, y };
+  });
+  const compassMarkers = Array.from({ length: 12 }, (_, index) => {
+    const angle = (index / 12) * Math.PI * 2 - Math.PI / 2;
+    const radialX = Math.cos(angle);
+    const radialY = Math.sin(angle);
+    const tangentX = -radialY;
+    const tangentY = radialX;
+    const tip = { x: 50 + radialX * 51, y: 50 + radialY * 51 };
+    const base = { x: 50 + radialX * 45, y: 50 + radialY * 45 };
+    return [
+      `${tip.x.toFixed(2)},${tip.y.toFixed(2)}`,
+      `${(base.x + tangentX * 1.8).toFixed(2)},${(base.y + tangentY * 1.8).toFixed(2)}`,
+      `${(base.x - tangentX * 1.8).toFixed(2)},${(base.y - tangentY * 1.8).toFixed(2)}`,
+    ].join(' ');
+  });
+
+  useEffect(() => {
+    const updateTime = () => setTime(getArgentinaTimeParts());
+    const intervalId = window.setInterval(updateTime, 1000);
+    window.addEventListener('focus', updateTime);
+    document.addEventListener('visibilitychange', updateTime);
+    return () => {
+      window.clearInterval(intervalId);
+      window.removeEventListener('focus', updateTime);
+      document.removeEventListener('visibilitychange', updateTime);
+    };
+  }, []);
+
+  return (
+    <div
+      className={`argentina-clock${isDarkHour ? ' is-dark-hour' : ''}`}
+      role="timer"
+      aria-label={`Hora de Argentina: ${accessibleTime}`}
+      title="Hora de Argentina (America/Argentina/Buenos_Aires)"
+    >
+      <svg className="argentina-clock__face" viewBox="-4 -4 108 108" aria-hidden="true">
+        <circle className="argentina-clock__dial" cx="50" cy="50" r="46.5" />
+        <circle className="argentina-clock__rim" cx="50" cy="50" r="46.5" />
+        <circle className="argentina-clock__inner-rim" cx="50" cy="50" r="34" />
+        {compassMarkers.map((points, index) => (
+          <polygon className="argentina-clock__marker" key={index} points={points} />
+        ))}
+        {romanHours.map(({ label, index, x, y }) => (
+          <text
+            className="argentina-clock__roman"
+            key={label}
+            x={x}
+            y={y}
+            transform={`rotate(${index * 30} ${x} ${y})`}
+          >
+            {label}
+          </text>
+        ))}
+        <path className="argentina-clock__hand argentina-clock__hand--hour" d="M50 50 47.7 46.5 46 22 50 14 54 22 52.3 46.5Z" transform={`rotate(${hourAngle} 50 50)`} />
+        <path className="argentina-clock__hand argentina-clock__hand--minute" d="M50 50 48.7 48.5 48.2 12.2 50 5.8 51.8 12.2 51.3 48.5Z" transform={`rotate(${minuteAngle} 50 50)`} />
+        <line className="argentina-clock__hand argentina-clock__hand--second" x1="50" y1="55" x2="50" y2="7" transform={`rotate(${secondAngle} 50 50)`} />
+        <circle className="argentina-clock__pin" cx="50" cy="50" r="2.5" />
+      </svg>
+    </div>
+  );
+};
+
+const Header = ({ t, language, toggleLanguage, isDarkHour }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const headerRef = useRef(null);
-  const logoRef = useRef(null);
   const lastSectionRef = useRef('home');
 
   const gradientStops = [
@@ -33,7 +108,6 @@ const Header = ({ t, language, toggleLanguage, isDarkHour, toggleDarkHour }) => 
       rafId = requestAnimationFrame(() => {
         const scrollY = window.scrollY;
         const header = headerRef.current;
-        const logo = logoRef.current;
 
         setScrolled(scrollY > 50);
 
@@ -61,12 +135,6 @@ const Header = ({ t, language, toggleLanguage, isDarkHour, toggleDarkHour }) => 
           header.style.color = isLight ? '#1a1a2e' : '#ffffff';
           header.classList.toggle('nav-light', isLight);
           header.classList.toggle('nav-dark', !isLight);
-        }
-
-        const heroSection = document.getElementById('home');
-        const inHero = heroSection ? heroSection.getBoundingClientRect().bottom > 100 : false;
-        if (logo) {
-          logo.classList.toggle('logo-white', inHero);
         }
 
         const sections = ['home', 'about', 'skills', 'projects', 'testimonials', 'contact'];
@@ -130,22 +198,8 @@ const Header = ({ t, language, toggleLanguage, isDarkHour, toggleDarkHour }) => 
     >
       <div className="container">
         <div className="header-content">
-          <div
-            className="logo"
-            role="button"
-            tabIndex={0}
-            aria-label={t.nav.home}
-            onClick={() => scrollToSection('home')}
-            onKeyDown={(event) => {
-              if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                scrollToSection('home');
-              }
-            }}
-          >
-            <span ref={logoRef} className="logo-text logo-white">
-              VT
-            </span>
+          <div className="header-clock">
+            <ArgentinaClock isDarkHour={isDarkHour} />
           </div>
 
           <nav id="primary-navigation" className={`nav ${isMenuOpen ? 'nav-open' : ''}`} aria-label={t.nav.menu || 'Navegación principal'}>
@@ -169,17 +223,26 @@ const Header = ({ t, language, toggleLanguage, isDarkHour, toggleDarkHour }) => 
                   </a>
                 </li>
               ))}
-              <li className="dark-hour-menu-item">
-                <button
-                  type="button"
-                  className={`dark-hour-toggle${isDarkHour ? ' is-active' : ''}`}
-                  onClick={toggleDarkHour}
-                  aria-label="DARK HOUR"
-                  aria-pressed={isDarkHour}
+              <li className="language-menu-item">
+                <div
+                  className="language-toggle"
+                  role="button"
+                  tabIndex={0}
+                  aria-label={language === 'es' ? 'Cambiar idioma a inglés' : 'Switch language to Spanish'}
+                  onClick={toggleLanguage}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      event.preventDefault();
+                      toggleLanguage();
+                    }
+                  }}
                 >
-                  <span className="dark-hour-toggle__label">DARK HOUR</span>
-                  <span className="dark-hour-toggle__indicator" aria-hidden="true" />
-                </button>
+                  <span className={`lang-label ${language === 'es' ? 'active' : ''}`}>ES</span>
+                  <div className={`lang-switch ${language === 'en' ? 'en-active' : ''}`}>
+                    <div className="lang-indicator"></div>
+                  </div>
+                  <span className={`lang-label ${language === 'en' ? 'active' : ''}`}>EN</span>
+                </div>
               </li>
             </ul>
           </nav>

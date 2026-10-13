@@ -724,6 +724,12 @@ html .App.persona-menu .header .language-toggle:focus-visible {
   }
 }
 
+@media (max-width: 1024px) {
+  .App.persona-menu .header .header-actions > .language-toggle {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html .App.persona-menu .header .language-toggle,
   html .App.persona-menu .header .lang-label,

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import './App.css';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import OnlineCounter from './components/OnlineCounter';
 import AnimatedBackground from './components/AnimatedBackground';
 import About from './components/About';
 import Skills from './components/Skills';
@@ -14,6 +13,7 @@ import Footer from './components/Footer';
 import { Analytics } from '@vercel/analytics/react';
 import es from './locales/es';
 import en from './locales/en';
+import { isArgentinaDarkHour } from './utils/argentinaTime';
 
 const translations = { es, en };
 
@@ -26,13 +26,7 @@ function App() {
       return 'es';
     }
   });
-  const [isDarkHour, setIsDarkHour] = useState(() => {
-    try {
-      return window.localStorage.getItem('persona-dark-hour') === 'true';
-    } catch {
-      return false;
-    }
-  });
+  const [isDarkHour, setIsDarkHour] = useState(() => isArgentinaDarkHour());
   const [terminalMount, setTerminalMount] = useState(null);
   const t = translations[language];
 
@@ -46,12 +40,22 @@ function App() {
   }, [language]);
 
   useEffect(() => {
-    try {
-      window.localStorage.setItem('persona-dark-hour', String(isDarkHour));
-    } catch {
-      // The current session still works when browser storage is unavailable.
-    }
-  }, [isDarkHour]);
+    const syncDarkHour = () => {
+      const shouldBeDarkHour = isArgentinaDarkHour();
+      setIsDarkHour((current) => current === shouldBeDarkHour ? current : shouldBeDarkHour);
+    };
+
+    syncDarkHour();
+    const intervalId = window.setInterval(syncDarkHour, 1000);
+    window.addEventListener('focus', syncDarkHour);
+    document.addEventListener('visibilitychange', syncDarkHour);
+
+    return () => {
+      window.clearInterval(intervalId);
+      window.removeEventListener('focus', syncDarkHour);
+      document.removeEventListener('visibilitychange', syncDarkHour);
+    };
+  }, []);
 
   const toggleLanguage = () => {
     setLanguage((current) => current === 'es' ? 'en' : 'es');
@@ -65,7 +69,6 @@ function App() {
         language={language}
         toggleLanguage={toggleLanguage}
         isDarkHour={isDarkHour}
-        toggleDarkHour={() => setIsDarkHour((current) => !current)}
       />
       <Hero t={t} language={language} terminalMount={terminalMount} />
       <About t={t} />
@@ -74,7 +77,6 @@ function App() {
       <Testimonials t={t} language={language} />
       <Contact t={t} setTerminalMount={setTerminalMount} />
       <Footer t={t} />
-      <OnlineCounter t={t} />
       <Analytics />
     </div>
   );

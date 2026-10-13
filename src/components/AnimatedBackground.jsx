@@ -392,7 +392,6 @@ const AnimatedBackground = ({ isDarkHour = false }) => {
   return (
     <div className={`dark-hour-scene is-hero-active${isDarkHour ? ' is-dark-hour' : ''}${lightweightScene ? ' is-mobile-scene' : ''}`} ref={sceneRef} aria-hidden="true">
       <div className="dark-hour-scene__sky" />
-      <div className="dark-hour-scene__shooting-stars" />
       <div className="dark-hour-scene__halo dark-hour-scene__halo--horizon" />
       <div className="dark-hour-scene__moon-field">
         <div className="dark-hour-scene__moon" />

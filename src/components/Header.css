@@ -38,59 +38,11 @@
   padding: 1rem 0;
 }
 
-.logo {
+.header-clock {
   position: relative;
-}
-
-.logo {
-  position: relative;
-  cursor: pointer;
-}
-
-.logo::before {
-  content: '';
-  position: absolute;
-  inset: -8px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-  border-radius: 12px;
-  opacity: 0;
-  filter: blur(15px);
-  transition: opacity 0.4s ease;
-  z-index: -1;
-}
-
-.logo:hover::before {
-  opacity: 0.4;
-}
-
-.logo-text {
-  font-size: 1.8rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: -0.5px;
-  position: relative;
-  transition: transform 0.3s ease;
-}
-
-.logo:hover .logo-text {
-  transform: scale(1.05);
-}
-
-/* Logo blanco en el hero */
-.logo-text.logo-white {
-  background: none !important;
-  -webkit-background-clip: initial !important;
-  background-clip: initial !important;
-  -webkit-text-fill-color: #ffffff !important;
-  color: #ffffff !important;
-}
-
-/* Transición suave para el cambio de color del logo */
-.logo-text {
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
 }
 
 .nav-list {
@@ -101,6 +53,10 @@
   padding: 0;
   align-items: center;
   position: relative;
+}
+
+.language-menu-item {
+  display: none;
 }
 
 .nav-link {
@@ -214,6 +170,22 @@
 
 /* Mobile/Tablet styles */
 @media (max-width: 1024px) {
+  .header-actions > .language-toggle {
+    display: none;
+  }
+
+  .language-menu-item {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .language-menu-item .language-toggle {
+    justify-content: center;
+  }
+
   .menu-toggle {
     display: flex;
   }
@@ -337,8 +309,9 @@
     padding: 0.8rem 1rem;
   }
 
-  .logo-text {
-    font-size: 1.5rem;
+  .argentina-clock {
+    width: 3.6rem;
+    height: 3.6rem;
   }
 }
 
@@ -362,13 +335,6 @@
 .header.nav-dark .nav-link:hover,
 .header.nav-dark .nav-link.active {
   color: #ffffff;
-}
-
-.header.nav-dark .logo-text {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 .header.nav-dark .lang-text {
@@ -407,13 +373,6 @@
 
 .header.nav-light .nav-link::before {
   background: linear-gradient(90deg, transparent, #667eea, #764ba2, transparent);
-}
-
-.header.nav-light .logo-text {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #1e1e32 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 .header.nav-light .lang-label {
@@ -460,7 +419,6 @@
 /* Transiciones suaves */
 .header,
 .header .nav-link,
-.header .logo-text,
 .header .lang-text,
 .header .language-toggle,
 .header .menu-toggle span {
@@ -556,97 +514,94 @@
   }
 }
 
-/* DARK HOUR toggle: a compact Persona-style control that also fits the mobile menu. */
-.dark-hour-toggle {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.48rem;
-  min-height: 2rem;
-  padding: 0.42rem 0.58rem;
-  border: 1px solid rgba(56, 207, 255, 0.36);
-  border-radius: 2px;
-  color: #a8e8ff;
-  background: linear-gradient(110deg, rgba(6, 25, 48, 0.82), rgba(8, 34, 56, 0.58));
-  font-family: Impact, 'Arial Narrow', 'Roboto Condensed', sans-serif;
-  font-size: 0.72rem;
-  font-stretch: condensed;
-  font-weight: 900;
-  letter-spacing: 0.075em;
-  line-height: 1;
-  white-space: nowrap;
-  cursor: pointer;
-  clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
-  transition: color 1.7s ease, border-color 1.7s ease, background-color 1.7s ease,
-    box-shadow 1.7s ease, transform 180ms ease;
-  -webkit-tap-highlight-color: transparent;
+/* Argentina clock replaces the manual mode switch. */
+.argentina-clock {
+  display: inline-grid;
+  width: 4.25rem;
+  height: 4.25rem;
+  place-items: center;
+  color: #5595d2;
+  background: transparent;
 }
 
-.dark-hour-toggle:hover {
-  color: #ffffff;
-  border-color: rgba(97, 224, 255, 0.8);
-  box-shadow: 0 0 16px rgba(56, 207, 255, 0.2);
-  transform: translateY(-1px) skewX(-2deg);
-}
-
-.dark-hour-toggle:focus-visible {
-  outline: 2px solid #a8e8ff;
-  outline-offset: 4px;
-}
-
-.dark-hour-toggle:active {
-  transform: translateY(1px) scale(0.98);
-}
-
-.dark-hour-toggle__indicator {
-  width: 0.42rem;
-  height: 0.42rem;
+.argentina-clock__face {
+  display: block;
+  width: 100%;
+  height: 100%;
   flex: 0 0 auto;
-  border-radius: 50%;
-  background: #38cfff;
-  box-shadow: 0 0 8px rgba(56, 207, 255, 0.72);
-  transition: background-color 1.7s ease, box-shadow 1.7s ease;
 }
 
-.dark-hour-toggle.is-active {
-  color: #d7ffe8;
-  border-color: rgba(96, 238, 157, 0.62);
-  background: linear-gradient(110deg, rgba(10, 42, 37, 0.94), rgba(13, 54, 43, 0.8));
-  box-shadow: 0 0 16px rgba(74, 218, 137, 0.16), inset 0 0 12px rgba(74, 218, 137, 0.06);
+.argentina-clock__dial {
+  fill: rgba(5, 20, 38, 0.5);
 }
 
-.dark-hour-toggle.is-active .dark-hour-toggle__indicator {
-  background: #70eea8;
-  box-shadow: 0 0 9px rgba(91, 242, 155, 0.78);
+.argentina-clock__rim {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.25;
 }
 
-.dark-hour-toggle.is-active:hover {
-  border-color: rgba(135, 255, 183, 0.88);
-  box-shadow: 0 0 18px rgba(74, 218, 137, 0.28);
+.argentina-clock__inner-rim {
+  fill: none;
+  stroke: currentColor;
+  stroke-opacity: 0.9;
+  stroke-width: 0.8;
+}
+
+.argentina-clock__marker {
+  fill: currentColor;
+}
+
+.argentina-clock__roman {
+  fill: currentColor;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 9.5px;
+  font-weight: 400;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.argentina-clock__hand--hour,
+.argentina-clock__hand--minute {
+  fill: currentColor;
+}
+
+.argentina-clock__hand--hour {
+  stroke: currentColor;
+  stroke-width: 0.25;
+}
+
+.argentina-clock__hand--minute {
+  stroke: currentColor;
+  stroke-width: 0.2;
+}
+
+.argentina-clock__hand--second {
+  stroke: currentColor;
+  stroke-width: 0.38;
+  stroke-linecap: round;
+  opacity: 0.88;
+}
+
+.argentina-clock__pin {
+  fill: currentColor;
+  stroke: rgba(2, 12, 24, 0.85);
+  stroke-width: 0.7;
+}
+
+.argentina-clock.is-dark-hour {
+  color: #58cc83;
+}
+
+.argentina-clock.is-dark-hour .argentina-clock__rim {
+  stroke-opacity: 1;
+}
+
+.argentina-clock.is-dark-hour .argentina-clock__dial {
+  fill: rgba(5, 25, 18, 0.62);
 }
 
 .header.dark-hour-active {
   border-bottom-color: rgba(92, 218, 142, 0.28);
   box-shadow: 0 4px 30px rgba(4, 22, 15, 0.34), 0 1px rgba(78, 210, 132, 0.08);
-}
-
-@media (max-width: 1024px) {
-  .dark-hour-menu-item {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-  }
-
-  .dark-hour-toggle {
-    min-height: 2.15rem;
-    padding: 0.48rem 0.72rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .dark-hour-toggle,
-  .dark-hour-toggle__indicator {
-    transition-duration: 0.01ms !important;
-  }
 }

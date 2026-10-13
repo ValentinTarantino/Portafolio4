@@ -47,46 +47,6 @@
   transition: opacity 1.8s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-.dark-hour-scene__shooting-stars {
-  position: absolute;
-  inset: 0 0 42%;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.dark-hour-scene__shooting-stars::before,
-.dark-hour-scene__shooting-stars::after {
-  content: "";
-  position: absolute;
-  top: 12%;
-  left: -12%;
-  width: clamp(4rem, 7vw, 7rem);
-  height: 1px;
-  opacity: 0;
-  transform: translate3d(0, 0, 0) rotate(-32deg);
-  transform-origin: right center;
-  background: linear-gradient(90deg, transparent, rgba(170, 224, 255, 0.18) 38%, rgba(224, 246, 255, 0.82));
-  animation: dark-hour-shooting-star 31s ease-out infinite;
-}
-
-.dark-hour-scene__shooting-stars::after {
-  top: 31%;
-  width: clamp(3.5rem, 5.5vw, 5rem);
-  animation-delay: 13s;
-  animation-duration: 41s;
-  animation-timing-function: ease-in;
-}
-
-.dark-hour-scene.is-dark-hour .dark-hour-scene__shooting-stars {
-  visibility: hidden;
-}
-
-.dark-hour-scene.is-dark-hour .dark-hour-scene__shooting-stars::before,
-.dark-hour-scene.is-dark-hour .dark-hour-scene__shooting-stars::after {
-  animation: none;
-}
-
 .dark-hour-scene.is-dark-hour .dark-hour-scene__sky::after {
   opacity: 1;
 }
@@ -540,13 +500,6 @@
   32%, 69% { opacity: var(--window-peak-alpha); }
 }
 
-@keyframes dark-hour-shooting-star {
-  0%, 76% { opacity: 0; transform: translate3d(0, 0, 0) rotate(-32deg); }
-  77% { opacity: 0.85; }
-  80% { opacity: 0; transform: translate3d(112vw, 22vh, 0) rotate(-32deg); }
-  100% { opacity: 0; transform: translate3d(112vw, 22vh, 0) rotate(-32deg); }
-}
-
 @media (max-width: 700px) {
   .dark-hour-scene {
     /* Keep one stable stage while mobile browser chrome expands/collapses. */
@@ -790,8 +743,6 @@
 @media (prefers-reduced-motion: reduce) {
   .dark-hour-scene__moon,
   .dark-hour-scene__mist,
-  .dark-hour-scene__shooting-stars::before,
-  .dark-hour-scene__shooting-stars::after,
   .dark-hour-scene__window.is-lit,
   .dark-hour-scene__sky::after,
   .dark-hour-scene__mist::after,
@@ -811,7 +762,7 @@
   }
 }
 
-.dark-hour-scene.is-paused :is(.dark-hour-scene__moon, .dark-hour-scene__mist, .dark-hour-scene__shooting-stars::before, .dark-hour-scene__shooting-stars::after, .dark-hour-scene__window.is-lit) {
+.dark-hour-scene.is-paused :is(.dark-hour-scene__moon, .dark-hour-scene__mist, .dark-hour-scene__window.is-lit) {
   animation-play-state: paused !important;
 }
 

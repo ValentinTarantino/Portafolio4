@@ -610,28 +610,9 @@ html .App.persona-menu .filter-container .filter-btn:is(:hover, :focus-visible, 
   box-shadow: 0 0 11px rgba(27, 159, 255, 0.56), inset 0 1px rgba(255, 255, 255, 0.55) !important;
 }
 
-/* Keep the VT wordmark unchanged on hover. */
+/* Keep the home clock stable on hover. */
 .App.persona-menu .logo:hover {
   box-shadow: none !important;
   text-shadow: none !important;
   transform: none !important;
-}
-
-.App.persona-menu .logo:hover::before,
-.App.persona-menu .logo:hover::after {
-  content: none !important;
-  display: none !important;
-  opacity: 0 !important;
-}
-
-.App.persona-menu .logo:hover .logo-text {
-  filter: none !important;
-  text-shadow: none !important;
-  transform: none !important;
-}
-
-/* DARK HOUR's pressed state uses its own spectral green slash. */
-.App.persona-menu button.dark-hour-toggle::after {
-  background: linear-gradient(105deg, #245f40 0%, #38985c 72%, #61bd7c 100%) !important;
-  box-shadow: 2px 2px 0 rgba(20, 74, 47, 0.72) !important;
 }
