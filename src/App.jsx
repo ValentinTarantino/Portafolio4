@@ -26,7 +26,7 @@ function App() {
       return 'es';
     }
   });
-  const [isDarkHour, setIsDarkHour] = useState(() => isArgentinaDarkHour());
+  const [isDarkHour, setIsDarkHour] = useState(false);
   const [sceneQuality, setSceneQuality] = useState(() => {
     try {
       return window.localStorage.getItem('persona-scene-quality') === 'full' ? 'full' : 'optimized';
@@ -34,7 +34,7 @@ function App() {
       return 'optimized';
     }
   });
-  const [terminalMount, setTerminalMount] = useState(null);
+  const [projectTerminalMount, setProjectTerminalMount] = useState(null);
   const t = translations[language];
 
   useEffect(() => {
@@ -56,12 +56,19 @@ function App() {
 
   useEffect(() => {
     const syncDarkHour = () => {
-      const shouldBeDarkHour = isArgentinaDarkHour();
+      const forcedHour = import.meta.env.DEV
+        ? new URLSearchParams(window.location.search).get('hora')
+        : null;
+      const shouldBeDarkHour = forcedHour === 'oscura'
+        ? true
+        : forcedHour === 'normal'
+          ? false
+          : isArgentinaDarkHour();
       setIsDarkHour((current) => current === shouldBeDarkHour ? current : shouldBeDarkHour);
     };
 
     syncDarkHour();
-    const intervalId = window.setInterval(syncDarkHour, 1000);
+    const intervalId = window.setInterval(syncDarkHour, 30_000);
     window.addEventListener('focus', syncDarkHour);
     document.addEventListener('visibilitychange', syncDarkHour);
 
@@ -87,12 +94,12 @@ function App() {
         sceneQuality={sceneQuality}
         onSceneQualityChange={setSceneQuality}
       />
-      <Hero t={t} language={language} terminalMount={terminalMount} />
+      <Hero t={t} language={language} projectTerminalMount={projectTerminalMount} />
       <About t={t} />
       <Skills t={t} />
-      <Projects t={t} language={language} />
+      <Projects t={t} language={language} isDarkHour={isDarkHour} sceneQuality={sceneQuality} setProjectTerminalMount={setProjectTerminalMount} />
       <Testimonials t={t} language={language} />
-      <Contact t={t} setTerminalMount={setTerminalMount} />
+      <Contact t={t} />
       <Footer t={t} />
       <Analytics />
     </div>

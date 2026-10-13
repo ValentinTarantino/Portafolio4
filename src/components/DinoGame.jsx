@@ -727,12 +727,17 @@ const DinoGame = ({ onExit, isSpanish }) => {
         ref={canvasRef}
         width={W * SCALE}
         height={H * SCALE}
-        onTouchStart={handleTouch}
+        role="button"
+        tabIndex={0}
+        aria-label={isSpanish ? 'Juego del dinosaurio: toca para saltar o reiniciar' : 'Dinosaur game: tap to jump or restart'}
+        onPointerDown={handleTouch}
         style={{
           width: '100%',
           maxWidth: '800px',
           height: 'auto',
           borderRadius: '6px',
+          touchAction: 'manipulation',
+          cursor: 'pointer',
         }}
       />
     </div>

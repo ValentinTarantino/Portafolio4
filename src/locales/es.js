@@ -100,6 +100,21 @@ const es = {
   projects: {
     title: 'Mis Proyectos',
     subtitle: 'Algunos trabajos destacados',
+    transmission: {
+      station: 'ESTACIÓN DE MONITOREO', channel: 'CANAL', file: 'ARCHIVO N.º',
+      signalStatus: 'ESTADO DE SEÑAL', strong: 'FUERTE', stable: 'ESTABLE', unstable: 'INESTABLE',
+      noSignal: 'SIN SEÑAL', night: 'NOCHE', darkHour: 'HORA OSCURA',
+      noAnomalies: 'SIN ANOMALÍAS', tartarusDetected: 'SEÑAL DE TÁRTARO DETECTADA', interference: 'INTERFERENCIA',
+      rec: 'REC', demo: 'Ver demo', code: 'Código', bars: 'barras', channelList: 'Lista de canales de proyectos',
+      stack: 'Tecnologías utilizadas', terminalAccess: 'TERMINAL DEL DESARROLLADOR',
+      terminalDescription: 'Probá comandos, explorá el portfolio y conocé más sobre mi trabajo.',
+      terminalOpen: 'ABRIR TERMINAL', terminalClose: 'CERRAR TERMINAL',
+      stationOffline: 'ESTACIÓN APAGADA', powerStandby: 'SISTEMA EN ESPERA',
+      stationPowerOn: 'ENCENDER ESTACIÓN', stationPowerOff: 'APAGAR ESTACIÓN',
+      powerHint: 'Pulsa el botón de energía para iniciar el monitoreo.',
+      preview: 'Captura de {name}', featured: 'Destacado',
+      channelUnavailable: 'Este canal todavía no tiene señal disponible.'
+    },
     viewProject: 'Ver Proyecto',
     viewCode: 'Ver Código',
     filterFeatured: 'Destacados',
@@ -199,35 +214,21 @@ const es = {
     subtitle: 'Lo que dicen quienes trabajaron conmigo'
   },
   contact: {
-    title: 'Contáctame',
-    subtitle: '¿Tienes un proyecto en mente?',
+    title: 'Cont\u00e1ctame',
+    subtitle: '\u00bfTienes un proyecto en mente?',
+    stationLabel: 'ENLACE DIRECTO \u00b7 ARGENTINA',
     info: {
       email: 'valentinthomastarantino@gmail.com',
       phone: '+54 1149476457',
-      location: 'Argentina, Buenos Aires'
+      location: 'Buenos Aires, Argentina',
     },
-    labels: {
-      phone: 'Teléfono',
-      location: 'Ubicación'
-    },
-    form: {
-      namePlaceholder: 'Tu nombre completo',
-      emailPlaceholder: 'tu@email.com',
-      messagePlaceholder: 'Contame sobre tu proyecto...',
-      nameLabel: 'Nombre',
-      emailLabel: 'Email',
-      messageLabel: 'Mensaje',
-      send: 'Enviar Mensaje',
-      sending: 'Enviando...',
-      successTitle: '¡Mensaje enviado!',
-      successText: 'Te responderé a la brevedad. ¡Gracias!',
-      errorTitle: 'Error al enviar',
-      errorText: 'Algo salió mal. Intentalo de nuevo o escribime directo al email.',
-      nameRequired: 'El nombre es requerido',
-      emailRequired: 'El email es requerido',
-      emailInvalid: 'El email no es válido',
-      messageRequired: 'El mensaje es requerido',
-      messageMinLength: 'El mensaje debe tener al menos 10 caracteres'
+    cardLabels: {
+      listLabel: 'Canales de contacto',
+      cardTypes: { email: 'L\u00cdNEA DIRECTA', linkedin: 'RED SOCIAL', github: 'C\u00d3DIGO', whatsapp: 'MENSAJER\u00cdA' },
+      names: { email: 'EMAIL', linkedin: 'LINKEDIN', github: 'GITHUB', whatsapp: 'WHATSAPP' },
+      details: { linkedin: 'Perfil profesional', github: 'Repositorios y proyectos' },
+      copy: 'COPIAR EMAIL', copied: 'EMAIL COPIADO', open: 'ABRIR PERFIL', message: 'INICIAR CHAT',
+      location: 'UBICACI\u00d3N'
     }
   },
   footer: {

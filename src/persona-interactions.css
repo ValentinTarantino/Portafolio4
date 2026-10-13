@@ -616,3 +616,109 @@ html .App.persona-menu .filter-container .filter-btn:is(:hover, :focus-visible, 
   text-shadow: none !important;
   transform: none !important;
 }
+
+/* The transmission station uses a steady instrument-panel UI, without the
+   site's decorative hover slash or pointer-driven transforms. */
+html .App.persona-menu .transmission-console :is(button, a)::after,
+html .App.persona-menu .transmission-filters .filter-btn::after {
+  content: none !important;
+  display: none !important;
+  opacity: 0 !important;
+  transform: none !important;
+}
+
+html .App.persona-menu .transmission-console :is(button, a):is(:hover, :active),
+html .App.persona-menu .transmission-filters .filter-btn:is(:hover, :active) {
+  filter: none !important;
+  text-shadow: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+html .App.persona-menu .transmission-console .transmission-channel:hover {
+  border-left-color: var(--tx-line) !important;
+  background: var(--tx-panel) !important;
+  color: var(--tx-text) !important;
+}
+
+html .App.persona-menu .transmission-console .transmission-channel.is-active:hover {
+  border-left-color: var(--tx-rec) !important;
+  background: var(--tx-accent) !important;
+  color: #04111b !important;
+}
+
+html .App.persona-menu .transmission-console .transmission-project-actions .project-btn:hover {
+  border-color: var(--tx-accent) !important;
+  color: var(--tx-accent) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html .App.persona-menu .transmission-console .transmission-project-actions .case-study-btn:hover {
+  border-color: var(--tx-accent) !important;
+  color: var(--tx-bg) !important;
+  background: var(--tx-accent) !important;
+}
+
+html .App.persona-menu .transmission-filters.filter-container .filter-btn:is(:hover, :active) {
+  box-shadow: none !important;
+  text-shadow: none !important;
+  transform: none !important;
+}
+
+html .App.persona-menu .transmission-filters.filter-container .filter-btn {
+  font-family: Inter, Arial, sans-serif !important;
+  font-size: 0.95rem !important;
+  font-stretch: normal !important;
+  font-style: normal !important;
+  letter-spacing: 0.025em !important;
+  text-shadow: none !important;
+}
+
+html .App.persona-menu .transmission-filters.filter-container .filter-btn.active {
+  animation: none !important;
+  transform: none !important;
+  text-shadow: none !important;
+}
+
+html .App.persona-menu .transmission-terminal-access__intro button:is(:hover, :active)::after {
+  content: none !important;
+  display: none !important;
+  opacity: 0 !important;
+  transform: none !important;
+}
+
+html .App.persona-menu .transmission-terminal-access__intro button:is(:hover, :active) {
+  border-color: var(--tx-accent) !important;
+  background: var(--tx-accent) !important;
+  box-shadow: none !important;
+  color: var(--tx-bg) !important;
+  filter: none !important;
+  text-shadow: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+html .App.persona-menu .transmission-console .transmission-project-actions .case-study-btn,
+html .App.persona-menu .transmission-console .transmission-project-actions .case-study-btn:is(:hover, :active) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid var(--tx-accent) !important;
+  border-left: 4px solid var(--tx-rec) !important;
+  background: color-mix(in srgb, var(--tx-accent) 11%, var(--tx-panel)) !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tx-accent) 12%, transparent) !important;
+  color: var(--tx-text) !important;
+  font-family: 'Share Tech Mono', 'Lucida Console', 'Courier New', monospace !important;
+  font-style: normal !important;
+  letter-spacing: 0.035em;
+  text-shadow: none !important;
+  transform: none !important;
+}
+
+html .App.persona-menu .transmission-console .transmission-project-actions .case-study-btn::before {
+  content: '↗';
+  color: var(--tx-accent);
+  font-size: 1rem;
+}

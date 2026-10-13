@@ -100,6 +100,21 @@ const en = {
   projects: {
     title: 'My Projects',
     subtitle: 'Some featured work',
+    transmission: {
+      station: 'MONITORING STATION', channel: 'CHANNEL', file: 'FILE NO.',
+      signalStatus: 'SIGNAL STATUS', strong: 'STRONG', stable: 'STABLE', unstable: 'UNSTABLE',
+      noSignal: 'NO SIGNAL', night: 'NIGHT', darkHour: 'DARK HOUR',
+      noAnomalies: 'NO ANOMALIES', tartarusDetected: 'TARTARUS SIGNAL DETECTED', interference: 'INTERFERENCE',
+      rec: 'REC', demo: 'View demo', code: 'Code', bars: 'bars', channelList: 'Project channel list',
+      stack: 'Technology stack', terminalAccess: 'DEVELOPER TERMINAL',
+      terminalDescription: 'Run commands, explore the portfolio, and learn more about my work.',
+      terminalOpen: 'OPEN TERMINAL', terminalClose: 'CLOSE TERMINAL',
+      stationOffline: 'STATION OFFLINE', powerStandby: 'SYSTEM STANDBY',
+      stationPowerOn: 'POWER ON STATION', stationPowerOff: 'POWER OFF STATION',
+      powerHint: 'Press the power button to start monitoring.',
+      preview: 'Screenshot of {name}', featured: 'Featured',
+      channelUnavailable: 'This channel has no available signal yet.'
+    },
     viewProject: 'View Project',
     viewCode: 'View Code',
     filterFeatured: 'Featured ',
@@ -201,33 +216,19 @@ const en = {
   contact: {
     title: 'Contact Me',
     subtitle: 'Have a project in mind?',
+    stationLabel: 'DIRECT LINK \u00b7 ARGENTINA',
     info: {
       email: 'valentinthomastarantino@gmail.com',
       phone: '+54 1149476457',
-      location: 'Argentina, Buenos Aires'
+      location: 'Buenos Aires, Argentina',
     },
-    labels: {
-      phone: 'Phone',
-      location: 'Location'
-    },
-    form: {
-      namePlaceholder: 'Your full name',
-      emailPlaceholder: 'you@email.com',
-      messagePlaceholder: 'Tell me about your project...',
-      nameLabel: 'Name',
-      emailLabel: 'Email',
-      messageLabel: 'Message',
-      send: 'Send Message',
-      sending: 'Sending...',
-      successTitle: 'Message sent!',
-      successText: "I'll get back to you shortly. Thank you!",
-      errorTitle: 'Failed to send',
-      errorText: 'Something went wrong. Try again or email me directly.',
-      nameRequired: 'Name is required',
-      emailRequired: 'Email is required',
-      emailInvalid: 'Email is not valid',
-      messageRequired: 'Message is required',
-      messageMinLength: 'Message must be at least 10 characters'
+    cardLabels: {
+      listLabel: 'Contact channels',
+      cardTypes: { email: 'DIRECT LINE', linkedin: 'SOCIAL NETWORK', github: 'CODE', whatsapp: 'MESSAGING' },
+      names: { email: 'EMAIL', linkedin: 'LINKEDIN', github: 'GITHUB', whatsapp: 'WHATSAPP' },
+      details: { linkedin: 'Professional profile', github: 'Repositories and projects' },
+      copy: 'COPY EMAIL', copied: 'EMAIL COPIED', open: 'OPEN PROFILE', message: 'START CHAT',
+      location: 'LOCATION'
     }
   },
   footer: {

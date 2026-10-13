@@ -366,7 +366,7 @@ html .App.persona-menu .header .nav-link {
   background: transparent;
   color: #baf7ff;
   font-family: Impact, 'Arial Narrow', 'Roboto Condensed', sans-serif;
-  font-size: clamp(0.78rem, 0.9vw, 0.98rem);
+  font-size: clamp(0.82rem, 1vw, 1.05rem);
   font-stretch: condensed;
   font-weight: 900;
   letter-spacing: 0.055em;

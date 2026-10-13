@@ -1,325 +1,92 @@
-import { memo, useState, useRef, useMemo, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import emailjs from '@emailjs/browser';
+import { memo, useState } from 'react';
 import './Contact.css';
 
-// ─── EmailJS config ───────────────────────────────────────────────────────────
-const EMAILJS_SERVICE_ID  = 'service_4e0pogu';
-const EMAILJS_TEMPLATE_ID = 'template_ae7vj2v';
-const EMAILJS_PUBLIC_KEY  = 'XIO_llVQGZXPMstmk';
-// ─────────────────────────────────────────────────────────────────────────────
+const ContactIcon = ({ type }) => {
+  if (type === 'email') {
+    return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5h18v11H3z" /><path d="m3.5 7 8.5 6.5L20.5 7" /></svg>;
+  }
 
-const validate = (fields, tf) => {
-  const errors = {};
-  if (!fields.name.trim())                         errors.name    = tf.nameRequired;
-  if (!fields.email.trim())                        errors.email   = tf.emailRequired;
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email))
-                                                   errors.email   = tf.emailInvalid;
-  if (!fields.message.trim())                      errors.message = tf.messageRequired;
-  else if (fields.message.trim().length < 10)      errors.message = tf.messageMinLength;
-  return errors;
+  if (type === 'linkedin') {
+    return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9v10M5 5v.01M10 19v-6a4 4 0 0 1 8 0v6M10 9v10" /><circle cx="5" cy="5" r="1.4" /></svg>;
+  }
+
+  if (type === 'whatsapp') {
+    return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.7a8.5 8.5 0 0 1-12.6 7.5L3 20l.9-4.7a8.5 8.5 0 1 1 16.6-3.6Z" /><path d="M8.3 8.1c.2-.5.5-.5.8-.5h.5c.2 0 .4.1.5.4l.7 1.7c.1.2.1.4-.1.6l-.5.6c-.2.2-.2.4-.1.6.7 1.2 1.6 2 2.8 2.6.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.6.8c.3.1.4.3.4.5 0 .3-.2 1.1-.7 1.5-.5.5-1.2.7-2 .5-1-.2-2.3-.8-3.8-2.1-1.2-1.1-2.1-2.5-2.4-3.5-.3-1.1 0-2 .4-2.7Z" /></svg>;
+  }
+
+  return <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.5 21.6c.6.1.8-.2.8-.6v-2.2c-3.4.7-4.1-1.4-4.1-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.4-5.5-6.1 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.7.3 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.7-2.8 5.7-5.5 6.1.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6A11.1 11.1 0 0 0 12 .9Z" /></svg>;
 };
 
-const Contact = ({ t, setTerminalMount }) => {
-  const tf = t.contact.form;
-  const formRef = useRef(null);
-  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+const ContactCard = ({ type, number, labels, detail, action, href, onCopy, copied }) => {
+  const Tag = href ? 'a' : 'button';
+  const props = href
+    ? { href, target: '_blank', rel: 'noopener noreferrer' }
+    : { type: 'button', onClick: onCopy };
 
-  const [fields, setFields]   = useState({ name: '', email: '', message: '' });
-  const [errors, setErrors]   = useState({});
-  const [touched, setTouched] = useState({});
-  const [status, setStatus]   = useState('idle'); // idle | sending | success | error
+  return (
+    <Tag className={`persona-link-card persona-link-card--${type}`} {...props}>
+      <span className="persona-link-card__arcana">{labels.cardTypes[type]}</span>
+      <span className="persona-link-card__rank" aria-hidden="true">{number}</span>
+      <span className="persona-link-card__identity">
+        <span className="persona-link-card__icon"><ContactIcon type={type} /></span>
+        <span className="persona-link-card__identity-text">
+          <span className="persona-link-card__detail">{detail}</span>
+          <strong>{labels.names[type]}</strong>
+        </span>
+      </span>
+      <span className="persona-link-card__action" aria-live={type === 'email' ? 'polite' : undefined}>
+        {type === 'email' && copied ? labels.copied : action}
+        {type !== 'email' && <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 15 15 5M6 5h9v9" /></svg>}
+      </span>
+    </Tag>
+  );
+};
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFields(prev => ({ ...prev, [name]: value }));
-    if (touched[name]) {
-      const next = { ...fields, [name]: value };
-      const errs = validate(next, tf);
-      setErrors(prev => ({ ...prev, [name]: errs[name] }));
-    }
-  };
+const Contact = ({ t }) => {
+  const [copied, setCopied] = useState(false);
+  const labels = t.contact.cardLabels;
 
-  const handleBlur = (e) => {
-    const { name } = e.target;
-    setTouched(prev => ({ ...prev, [name]: true }));
-    const errs = validate(fields, tf);
-    setErrors(prev => ({ ...prev, [name]: errs[name] }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setTouched({ name: true, email: true, message: true });
-    const errs = validate(fields, tf);
-    setErrors(errs);
-    if (Object.keys(errs).length > 0) return;
-
-    setStatus('sending');
+  const copyEmail = async () => {
     try {
-      await emailjs.sendForm(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        formRef.current,
-        EMAILJS_PUBLIC_KEY
-      );
-      setStatus('success');
-      setFields({ name: '', email: '', message: '' });
-      setTouched({});
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(t.contact.info.email);
+      } else {
+        const input = document.createElement('textarea');
+        input.value = t.contact.info.email;
+        input.setAttribute('readonly', '');
+        input.style.position = 'fixed';
+        input.style.opacity = '0';
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        input.remove();
+      }
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1800);
     } catch {
-      setStatus('error');
+      setCopied(false);
     }
-  };
-
-  const resetForm = () => {
-    setStatus('idle');
-    setErrors({});
-    setTouched({});
   };
 
   return (
-    <section id="contact" className="section contact">
+    <section id="contact" className="section contact persona-comms" aria-labelledby="contact-title">
       <div className="container">
-        <h2 className="section-title">{t.contact.title}</h2>
-        <p className="section-subtitle">{t.contact.subtitle}</p>
+        <header className="persona-comms__heading">
+          <span className="persona-comms__eyebrow">{t.contact.stationLabel}</span>
+          <h2 className="section-title" id="contact-title">{t.contact.title}</h2>
+          <p className="section-subtitle">{t.contact.subtitle}</p>
+        </header>
 
-        <div className="contact-content">
-          {/* ── Left: interactive developer terminal ── */}
-          <div className="contact-info">
-            <div className="contact-terminal-slot" ref={setTerminalMount} />
+        <div className="persona-link-grid" role="group" aria-label={labels.listLabel}>
+          <ContactCard type="email" number="01" labels={labels} detail={t.contact.info.email} action={labels.copy} onCopy={copyEmail} copied={copied} />
+          <ContactCard type="linkedin" number="02" labels={labels} detail={labels.details.linkedin} action={labels.open} href="https://www.linkedin.com/in/valentin-tarantino" />
+          <ContactCard type="github" number="03" labels={labels} detail={labels.details.github} action={labels.open} href="https://github.com/ValentinTarantino" />
+          <ContactCard type="whatsapp" number="04" labels={labels} detail={t.contact.info.phone} action={labels.message} href="https://wa.me/541149476457" />
+        </div>
 
-            {/* Socials */}
-            <div className="social-links">
-              <a href="https://www.linkedin.com/in/valent%C3%ADn-tarantino/" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="LinkedIn">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" fill="currentColor"/>
-                  <rect x="2" y="9" width="4" height="12" fill="currentColor"/>
-                  <circle cx="4" cy="4" r="2" fill="currentColor"/>
-                </svg>
-              </a>
-              <a href="https://github.com/ValentinTarantino" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="GitHub">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" fill="currentColor"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-
-          {/* ── Right: form ── */}
-          <div className="contact-form-wrapper">
-            <AnimatePresence mode="wait">
-
-              {/* SUCCESS */}
-              {status === 'success' && (
-                <motion.div
-                  key="success"
-                  className="form-feedback success-feedback"
-                  role="status"
-                  aria-live="polite"
-                  initial={{ opacity: 0, scale: 0.85 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.85 }}
-                  transition={{ type: 'spring', stiffness: 260, damping: 22 }}
-                >
-                  <div className="feedback-icon success-icon">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-                      {isMobile ? (
-                        <>
-                          <circle cx="12" cy="12" r="10" stroke="#4ade80" strokeWidth="2"/>
-                          <path d="M7 13l3 3 7-7" stroke="#4ade80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        </>
-                      ) : (
-                        <>
-                          <motion.circle
-                            cx="12" cy="12" r="10"
-                            stroke="#4ade80" strokeWidth="2"
-                            initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
-                            transition={{ duration: 0.6 }}
-                          />
-                          <motion.path
-                            d="M7 13l3 3 7-7"
-                            stroke="#4ade80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-                            initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
-                            transition={{ duration: 0.5, delay: 0.3 }}
-                          />
-                        </>
-                      )}
-                    </svg>
-                  </div>
-                  <h3>{tf.successTitle}</h3>
-                  <p>{tf.successText}</p>
-                  <button className="feedback-btn" onClick={resetForm}>
-                    {tf.send} →
-                  </button>
-                </motion.div>
-              )}
-
-              {/* ERROR */}
-              {status === 'error' && (
-                <motion.div
-                  key="error"
-                  className="form-feedback error-feedback"
-                  role="alert"
-                  aria-live="assertive"
-                  initial={{ opacity: 0, scale: 0.85 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.85 }}
-                  transition={{ type: 'spring', stiffness: 260, damping: 22 }}
-                >
-                  <div className="feedback-icon error-icon">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-                      <circle cx="12" cy="12" r="10" stroke="#f87171" strokeWidth="2"/>
-                      <line x1="12" y1="8" x2="12" y2="12" stroke="#f87171" strokeWidth="2.5" strokeLinecap="round"/>
-                      <circle cx="12" cy="16" r="1.2" fill="#f87171"/>
-                    </svg>
-                  </div>
-                  <h3>{tf.errorTitle}</h3>
-                  <p>{tf.errorText}</p>
-                  <button className="feedback-btn" onClick={resetForm}>
-                    ← {tf.send}
-                  </button>
-                </motion.div>
-              )}
-
-              {/* FORM */}
-              {(status === 'idle' || status === 'sending') && (
-                <motion.form
-                  key="form"
-                  ref={formRef}
-                  className="contact-form glass-card"
-                  onSubmit={handleSubmit}
-                  aria-busy={status === 'sending'}
-                  noValidate
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.4 }}
-                >
-                  {/* Name */}
-                  <div className={`form-group ${errors.name && touched.name ? 'has-error' : ''} ${fields.name && !errors.name ? 'has-value' : ''}`}>
-                    <label htmlFor="contact-name" className="form-label">{tf.nameLabel}</label>
-                    <input
-                      id="contact-name"
-                      type="text"
-                      name="name"
-                      className="form-input"
-                      placeholder={tf.namePlaceholder}
-                      value={fields.name}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      autoComplete="name"
-                      aria-invalid={Boolean(errors.name && touched.name)}
-                      aria-describedby={errors.name && touched.name ? 'contact-name-error' : undefined}
-                    />
-                    <AnimatePresence>
-                      {errors.name && touched.name && (
-                        <motion.span
-                          id="contact-name-error"
-                          className="form-error"
-                          role="alert"
-                          initial={{ opacity: 0, y: -6 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -6 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          ⚠ {errors.name}
-                        </motion.span>
-                      )}
-                    </AnimatePresence>
-                  </div>
-
-                  {/* Email */}
-                  <div className={`form-group ${errors.email && touched.email ? 'has-error' : ''} ${fields.email && !errors.email ? 'has-value' : ''}`}>
-                    <label htmlFor="contact-email" className="form-label">{tf.emailLabel}</label>
-                    <input
-                      id="contact-email"
-                      type="email"
-                      name="email"
-                      className="form-input"
-                      placeholder={tf.emailPlaceholder}
-                      value={fields.email}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      autoComplete="email"
-                      aria-invalid={Boolean(errors.email && touched.email)}
-                      aria-describedby={errors.email && touched.email ? 'contact-email-error' : undefined}
-                    />
-                    <AnimatePresence>
-                      {errors.email && touched.email && (
-                        <motion.span
-                          id="contact-email-error"
-                          className="form-error"
-                          role="alert"
-                          initial={{ opacity: 0, y: -6 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -6 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          ⚠ {errors.email}
-                        </motion.span>
-                      )}
-                    </AnimatePresence>
-                  </div>
-
-                  {/* Message */}
-                  <div className={`form-group ${errors.message && touched.message ? 'has-error' : ''} ${fields.message && !errors.message ? 'has-value' : ''}`}>
-                    <label htmlFor="contact-message" className="form-label">{tf.messageLabel}</label>
-                    <textarea
-                      id="contact-message"
-                      name="message"
-                      className="form-textarea"
-                      placeholder={tf.messagePlaceholder}
-                      value={fields.message}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      rows={5}
-                      aria-invalid={Boolean(errors.message && touched.message)}
-                      aria-describedby={`contact-message-count${errors.message && touched.message ? ' contact-message-error' : ''}`}
-                    />
-                    <div id="contact-message-count" className="char-count">
-                      {fields.message.length} / 1000
-                    </div>
-                    <AnimatePresence>
-                      {errors.message && touched.message && (
-                        <motion.span
-                          id="contact-message-error"
-                          className="form-error"
-                          role="alert"
-                          initial={{ opacity: 0, y: -6 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -6 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          ⚠ {errors.message}
-                        </motion.span>
-                      )}
-                    </AnimatePresence>
-                  </div>
-
-                  {/* Submit */}
-                  <motion.button
-                    type="submit"
-                    className={`form-submit-btn ${status === 'sending' ? 'sending' : ''}`}
-                    disabled={status === 'sending'}
-                  >
-                    {status === 'sending' ? (
-                      <>
-                        <span className="spinner" />
-                        {tf.sending}
-                      </>
-                    ) : (
-                      <>
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="send-icon">
-                          <path d="M22 2L11 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                          <path d="M22 2L15 22 11 13 2 9l20-7z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                        {tf.send}
-                      </>
-                    )}
-                  </motion.button>
-                </motion.form>
-              )}
-            </AnimatePresence>
-          </div>
+        <div className="persona-comms__location">
+          <span>{labels.location}</span>
+          <strong>{t.contact.info.location}</strong>
         </div>
       </div>
     </section>

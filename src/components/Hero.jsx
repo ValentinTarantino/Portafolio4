@@ -334,7 +334,7 @@ const renderHistoryItem = (item, index, isSpanish) => {
 
 const HERO_ROLES = ['Fullstack Dev', 'Frontend Dev', 'Next.js & React Specialist'];
 
-const Hero = ({ t, language, terminalMount }) => {
+const Hero = ({ t, language, projectTerminalMount }) => {
   const isSpanish = language === 'es';
   const prefersReducedMotion = useReducedMotion();
 
@@ -481,14 +481,14 @@ const Hero = ({ t, language, terminalMount }) => {
   const terminalBodyRef = useRef(null);
   const inputRef = useRef(null);
 
-  const handleReset = () => {
+  const handleReset = (terminalElement = null) => {
     setTerminalHistory([]);
     setInputValue('');
     setIsCompiling(false);
     setSuperActive(false);
     setTrivia(null);
     setDinoActive(false);
-    setTimeout(() => inputRef.current?.focus(), 50);
+    setTimeout(() => focusInput(terminalElement), 50);
   };
 
   // Auto scroll to bottom
@@ -496,13 +496,15 @@ const Hero = ({ t, language, terminalMount }) => {
     if (terminalBodyRef.current) {
       terminalBodyRef.current.scrollTop = terminalBodyRef.current.scrollHeight;
     }
+    document.querySelectorAll('.terminal-container .terminal-body').forEach((body) => {
+      body.scrollTop = body.scrollHeight;
+    });
   }, [terminalHistory, inputValue]);
 
   // Focus hidden input on terminal click
-  const focusInput = () => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
+  const focusInput = (terminalElement = null) => {
+    const targetInput = terminalElement?.querySelector('.terminal-hidden-input') || inputRef.current;
+    targetInput?.focus();
   };
 
   // Initial prompt focus
@@ -735,20 +737,20 @@ const Hero = ({ t, language, terminalMount }) => {
           </div>
 
 
-          {terminalMount && createPortal(
+          {[projectTerminalMount].map((mount, terminalIndex) => mount && createPortal(
             <div className={`terminal-container ${superActive ? 'super-active' : ''}`}>
-              <div className="terminal-header" onClick={focusInput}>
+              <div className="terminal-header" onClick={(event) => focusInput(event.currentTarget.closest('.terminal-container'))}>
                 <div className="terminal-buttons">
                   <span className="btn-close"></span>
                   <span className="btn-minimize"></span>
                   <span className="btn-maximize"></span>
                 </div>
                 <div className="terminal-title">developer.js</div>
-                <button className="terminal-reset-btn" onClick={handleReset} title="Reset terminal" type="button" tabIndex={-1} onMouseDown={(e) => e.preventDefault()}>
+                <button className="terminal-reset-btn" onClick={(event) => handleReset(event.currentTarget.closest('.terminal-container'))} title="Reset terminal" type="button" tabIndex={-1} onMouseDown={(e) => e.preventDefault()}>
                   ↻
                 </button>
               </div>
-              <div className="terminal-body" onClick={focusInput} ref={terminalBodyRef}>
+              <div className="terminal-body" onClick={(event) => focusInput(event.currentTarget.closest('.terminal-container'))} ref={terminalIndex === 0 ? terminalBodyRef : undefined}>
                 {/* Initial object structure */}
                 <div className="terminal-line">
                   <span className="command">const developer = {`{`}</span>
@@ -805,7 +807,7 @@ const Hero = ({ t, language, terminalMount }) => {
                         : 'visitor@valentin:~$'}
                     </span>
                     <input
-                      ref={inputRef}
+                      ref={terminalIndex === 0 ? inputRef : undefined}
                       type="text"
                       className="terminal-hidden-input"
                       value={inputValue}
@@ -827,8 +829,9 @@ const Hero = ({ t, language, terminalMount }) => {
                 )}
               </div>
             </div>,
-            terminalMount
-          )}
+            mount,
+            `developer-terminal-${terminalIndex}`
+          ))}
         </div>
         
       </div>

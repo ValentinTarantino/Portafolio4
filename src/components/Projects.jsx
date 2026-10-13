@@ -1,302 +1,302 @@
-import { lazy, memo, Suspense, useState, useEffect, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { SiReact, SiSass, SiBootstrap, SiHtml5, SiJavascript, SiFirebase, SiNextdotjs, SiTypescript, SiTailwindcss, SiVite, SiPostgresql, SiPostman, SiCss, SiPython, SiPrisma, SiFastapi, SiJest, SiDocker, SiTestinglibrary, SiCypress, SiMongodb, SiThreedotjs, SiStripe, SiGithubactions } from 'react-icons/si';
-import { FiStar } from 'react-icons/fi';
+import { lazy, memo, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import './Projects.css';
-import dolarImg from '../assets/dolar-cover.webp';
-import ecommerceImg from '../assets/ecommerce.webp';
-import clima from '../assets/clima.webp';
-import googlekeepImg from '../assets/googlekeep.webp';
-import youtubeImg from '../assets/youtube.webp';
-import flowImg from "../assets/flow.webp";
-import blogImg from "../assets/blog.webp";
-import turnosImg from "../assets/turnos.webp";
-import consorcioImg from "../assets/consorcio.webp";
-import goltvImg from "../assets/goltv.webp";
-import awsIcon from '../assets/icons/aws.svg';
+import projectsData from '../data/projects';
+import ProjectTechnology from './ProjectTechnology';
 
 const ProjectModal = lazy(() => import('./ProjectModal'));
 
-const techIcons = {
-  'React': <SiReact className="tech-icon" color="#61DAFB" />,
-  'SASS': <SiSass className="tech-icon" color="#CF649A" />,
-  'Bootstrap': <SiBootstrap className="tech-icon" color="#7952B3" />,
-  'API': <SiPostman className="tech-icon" color="#FF6C37" />,
-  'HTML5': <SiHtml5 className="tech-icon" color="#E34F26" />,
-  'JavaScript': <SiJavascript className="tech-icon" color="#F7DF1E" />,
-  'CSS3': <SiCss className="tech-icon" color="#1572B6" />,
-  'Firebase': <SiFirebase className="tech-icon" color="#FFCA28" />,
-  'Next.js': <SiNextdotjs className="tech-icon" color="#ffffff" />,
-  'TypeScript': <SiTypescript className="tech-icon" color="#3178C6" />,
-  'Tailwind CSS': <SiTailwindcss className="tech-icon" color="#38BDF8" />,
-  'Vite': <SiVite className="tech-icon" color="#646CFF" />,
-  'PostgreSQL': <SiPostgresql className="tech-icon" color="#336791" />,
-  'Python': <SiPython className="tech-icon" color="#3776AB" />,
-  'Prisma': <SiPrisma className="tech-icon" color="#ffffff" />,
-  'FastAPI': <SiFastapi className="tech-icon" color="#05998B" />,
-  'Jest': <SiJest className="tech-icon" color="#C21325" />,
-  'Docker': <SiDocker className="tech-icon" color="#2496ED" />,
-  'Testing Library': <SiTestinglibrary className="tech-icon" color="#E33332" />,
-  'Cypress': <SiCypress className="tech-icon" color="#ffffff" />,
-  'MongoDB': <SiMongodb className="tech-icon" color="#47A248" />,
-  'AWS': <img className="tech-icon" src={awsIcon} alt="AWS" />,
-  'Three.js': <SiThreedotjs className="tech-icon" color="#ffffff" />,
-  'Stripe': <SiStripe className="tech-icon" color="#635BFF" />,
-  'CI/CD': <SiGithubactions className="tech-icon" color="#2088FF" />,
-  'Zustand': <span className="tech-icon-text">🐻</span>
+const pad = (value) => String(value).padStart(2, '0');
+
+const TartarusMark = () => (
+  <svg className="transmission-status__tower" viewBox="0 0 28 32" aria-hidden="true">
+    <path d="M13 2h3v5h3v5h3v5h3v4H3v-4h3v-4h3v-5h3V7h1V2ZM5 23h18v7H5z" fill="currentColor" />
+    <path d="M13 8h2m-5 7h2m5 2h2M9 25v3m5-3v3m5-3v3" stroke="#03100d" strokeWidth="1.2" />
+  </svg>
+);
+
+const getProjectContent = (project, language) => {
+  const name = typeof project.name === 'string' ? project.name : project.name[language];
+  const description = project.description[language];
+  const projectForModal = {
+    ...project,
+    title: name,
+    description,
+    technologies: project.stack,
+    liveUrl: project.demoUrl,
+    codeUrl: project.repoUrl
+  };
+
+  return { name, description, projectForModal };
 };
 
-const ProjectDescription = ({ text, t }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const threshold = 120;
+const Projects = ({ t, language, isDarkHour = false, sceneQuality = 'optimized', setProjectTerminalMount }) => {
+  const [activeId, setActiveId] = useState('goltv');
+  const [activeProjectModal, setActiveProjectModal] = useState(null);
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
+  const [isSectionVisible, setIsSectionVisible] = useState(false);
+  const [isPageVisible, setIsPageVisible] = useState(true);
+  const [showDeveloperTerminal, setShowDeveloperTerminal] = useState(false);
+  const [isStationPowered, setIsStationPowered] = useState(false);
+  const [isStationContentMounted, setIsStationContentMounted] = useState(false);
+  const sectionRef = useRef(null);
+  const terminalMountRef = useRef(null);
+  const stationUnmountTimerRef = useRef(null);
+  const channelRefs = useRef({});
+  const labels = t.projects.transmission;
+  const setMonitorTerminalMount = useCallback((node) => {
+    terminalMountRef.current = node;
+    setProjectTerminalMount?.(node);
+  }, [setProjectTerminalMount]);
 
-  if (text.length <= threshold) {
-    return <p className="project-description">{text}</p>;
-  }
+  const toggleDeveloperTerminal = () => setShowDeveloperTerminal((isOpen) => !isOpen);
 
-  const displayText = isExpanded ? text : `${text.slice(0, threshold)}`;
+  const toggleStationPower = () => {
+    window.clearTimeout(stationUnmountTimerRef.current);
+    if (isStationPowered) {
+      setIsStationPowered(false);
+      stationUnmountTimerRef.current = window.setTimeout(() => setIsStationContentMounted(false), 300);
+      return;
+    }
 
-  return (
-    <p className="project-description">
-      {displayText}
-      {!isExpanded && '...'}
-      <button
-        type="button"
-        className="read-more-btn"
-        onClick={() => setIsExpanded(!isExpanded)}
-      >
-        {isExpanded ? t.projects.showLess : t.projects.showMore}
-      </button>
-    </p>
-  );
-};
+    setIsStationContentMounted(true);
+    window.requestAnimationFrame(() => setIsStationPowered(true));
+  };
 
-const Projects = ({ t, language }) => {
-  const [filter, setFilter] = useState('featured'); // 'featured' | 'all'
-  const [activeProject, setActiveProject] = useState(null);
-  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => () => window.clearTimeout(stationUnmountTimerRef.current), []);
+
+  const visibleProjects = projectsData;
+  const activeProject = visibleProjects.find((project) => project.id === activeId && project.available)
+    || visibleProjects.find((project) => project.available);
+  const activeNumber = activeProject?.number || 1;
+  const content = activeProject && getProjectContent(activeProject, language);
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    const section = sectionRef.current;
+    if (!section || !('IntersectionObserver' in window)) {
+      setIsSectionVisible(true);
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsSectionVisible(entry.isIntersecting);
+    }, { threshold: 0.12 });
+    observer.observe(section);
+    return () => observer.disconnect();
   }, []);
 
-  const projects = useMemo(() => [
-    {
-      id: 11,
-      title: 'GolTV Libre',
-      featured: true,
-      caseStudyKey: 'GolTV',
-      description: t.projects.descriptions.GolTV,
-      image: goltvImg,
-      technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'MongoDB', 'Docker', 'Jest', 'Testing Library', 'Cypress', 'CI/CD'],
-      liveUrl: 'https://goltv.vercel.app/',
-      codeUrl: 'https://github.com/ValentinTarantino/GolTV'
-    },
-    {
-      id: 1,
-      title: 'DolarARG',
-      featured: true,
-      caseStudyKey: 'DolarARG',
-      description: t.projects.descriptions.DolarARG,
-      image: dolarImg,
-      technologies: ['Next.js', 'TypeScript', 'SASS', 'Prisma', 'PostgreSQL', 'AWS', 'Three.js', 'CI/CD'],
-      liveUrl: 'https://dolar-arg.duckdns.org/',
-      codeUrl: 'https://github.com/ValentinTarantino/DolarArg'
-    },
-    {
-      id: 3,
-      title: 'Lumina Commerce',
-      featured: true,
-      caseStudyKey: 'LuminaCommerce',
-      description: t.projects.descriptions.LuminaCommerce,
-      image: ecommerceImg,
-      technologies: ['Next.js', 'Python', 'FastAPI', 'PostgreSQL', 'Prisma', 'Zustand', 'Tailwind CSS', 'Three.js', 'Stripe'],
-      liveUrl: 'https://lumina-commerce2-1.onrender.com/',
-      codeUrl: 'https://github.com/ValentinTarantino/lumina-commerce2'
-    },
+  useEffect(() => {
+    const syncPageVisibility = () => setIsPageVisible(document.visibilityState === 'visible');
+    syncPageVisibility();
+    document.addEventListener('visibilitychange', syncPageVisibility);
+    return () => document.removeEventListener('visibilitychange', syncPageVisibility);
+  }, []);
 
-    {
-      id: 8,
-      title: 'Lucas Caudana Blog',
-      featured: true,
-      caseStudyKey: 'LucasCaudanaBlog',
-      description: t.projects.descriptions.LucasCaudanaBlog,
-      image: blogImg,
-      technologies: ['React', 'JavaScript', 'CSS3', 'Bootstrap', 'Firebase'],
-      liveUrl: 'https://lucas-caudana-blog.vercel.app/',
-      codeUrl: 'https://github.com/ValentinTarantino/LucasCaudanaBlog'
-    },
-    {
-      id: 10,
-      title: language === 'en' ? 'Property Management' : 'Administración de consorcios',
-      featured: true,
-      caseStudyKey: 'AdministracionConsorcios',
-      description: t.projects.descriptions.AdministracionConsorcios,
-      image: consorcioImg,
-      technologies: ['React', 'JavaScript', 'CSS3', 'Vite', 'Firebase'],
-      liveUrl: 'https://administracionclaudia.com/',
-      codeUrl: 'https://github.com/ValentinTarantino/claudiaconsorcio'
-    },
-    {
-      id: 9,
-      title: 'TurnoApp',
-      featured: true,
-      caseStudyKey: 'TurnoApp',
-      description: t.projects.descriptions.TurnoApp,
-      image: turnosImg,
-      technologies: ['React', 'JavaScript', 'CSS3', 'Bootstrap', 'PostgreSQL'],
-      liveUrl: 'https://turno-app.vercel.app/',
-      codeUrl: 'https://github.com/ValentinTarantino/TurnoApp'
-    },
-    {
-      id: 6,
-      title: 'ClipDrop',
-      featured: false,
-      description: t.projects.descriptions.ClipDrop,
-      image: youtubeImg,
-      technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'API'],
-      liveUrl: 'https://youtube-downloader2-1-ibdv.vercel.app/',
-      codeUrl: 'https://github.com/ValentinTarantino/Youtube-Downloader2.1'
-    },
-    {
-      id: 7,
-      title: 'ChromaFlow',
-      featured: false,
-      description: t.projects.descriptions.ChromaFlow,
-      image: flowImg,
-      technologies: ['React', 'JavaScript', 'CSS3', 'Bootstrap'],
-      liveUrl: 'https://chorma-flow.vercel.app',
-      codeUrl: 'https://github.com/ValentinTarantino/ChormaFlow'
-    },
-    {
-      id: 5,
-      title: 'Google Keep',
-      featured: false,
-      description: t.projects.descriptions.googleKeep,
-      image: googlekeepImg,
-      technologies: ['React', 'JavaScript', 'CSS3'],
-      liveUrl: 'https://google-keep-replica.vercel.app/',
-      codeUrl: 'https://github.com/ValentinTarantino/Google-Keep-Replica-'
-    },
-    {
-      id: 4,
-      title: language === 'en' ? 'Weather Report' : 'Informe meteorológico',
-      featured: false,
-      description: t.projects.descriptions.WeatherReport,
-      image: clima,
-      technologies: ['React', 'JavaScript', 'CSS3', 'API', 'Zustand'],
-      liveUrl: 'https://weather-report-oraora.vercel.app',
-      codeUrl: 'https://github.com/ValentinTarantino/Weather'
-    },
-  ], [t.projects, language]);
+  useEffect(() => {
+    setElapsedSeconds(0);
+  }, [activeProject?.id]);
 
-  const filteredProjects = projects.filter(project =>
-    filter === 'all' ? true : project.featured
-  );
+  useEffect(() => {
+    if (!isSectionVisible || !isPageVisible || !isStationPowered || !activeProject) return undefined;
+    const timer = window.setInterval(() => setElapsedSeconds((seconds) => seconds + 1), 1000);
+    return () => window.clearInterval(timer);
+  }, [isSectionVisible, isPageVisible, isStationPowered, activeProject?.id]);
+
+  const handleChannelKeyDown = (event, index) => {
+    if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        const project = visibleProjects[index];
+        if (project.available) setActiveId(project.id);
+      }
+      return;
+    }
+
+    event.preventDefault();
+    const step = event.key === 'ArrowDown' ? 1 : -1;
+    let target = index;
+    for (let count = 0; count < visibleProjects.length; count += 1) {
+      target = (target + step + visibleProjects.length) % visibleProjects.length;
+      if (visibleProjects[target].available) {
+        channelRefs.current[visibleProjects[target].id]?.focus();
+        break;
+      }
+    }
+  };
+
+  const monitorTime = `${pad(Math.floor(elapsedSeconds / 3600))}:${pad(Math.floor((elapsedSeconds % 3600) / 60))}:${pad(elapsedSeconds % 60)}`;
+  const signalCount = isDarkHour ? 2 : activeProject?.signal || 0;
+  const signalLabel = isDarkHour ? labels.unstable : activeProject?.signal === 4 ? labels.strong : labels.stable;
 
   return (
-    <section id="projects" className="section projects">
+    <section
+      id="projects"
+      className="section projects transmission-section"
+      ref={sectionRef}
+      data-theme={isDarkHour ? 'dark-hour' : 'normal'}
+      data-quality={sceneQuality}
+      aria-labelledby="projects-title"
+    >
       <div className="container">
-        <h2 className="section-title">{t.projects.title}</h2>
+        <h2 className="section-title" id="projects-title">{t.projects.title}</h2>
         <p className="section-subtitle">{t.projects.subtitle}</p>
 
-        {/* Category Filter Tabs */}
-        <div className="filter-container">
-          <button
-            className={`filter-btn filter-btn--featured ${filter === 'featured' ? 'active' : ''}`}
-            onClick={() => setFilter('featured')}
-          >
-            {t.projects.filterFeatured}
-          </button>
-          <button
-            className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
-            onClick={() => setFilter('all')}
-          >
-            {t.projects.filterAll}
-          </button>
-        </div>
+        <div className={`transmission-console${isDarkHour ? ' is-dark-hour' : ''}${isStationPowered ? ' is-powered' : ''}`}>
+          <header className="transmission-console__header">
+            <div className="transmission-console__station">
+              <span className={`transmission-rec-dot${isStationPowered ? '' : ' is-off'}`} aria-hidden="true" />
+              <span>{isStationPowered ? `${labels.station} · ${labels.channel} ${pad(activeNumber)}/${pad(visibleProjects.length)}` : labels.stationOffline}</span>
+            </div>
+            <div className="transmission-status" role="status">
+              {isStationPowered && (isDarkHour ? <TartarusMark /> : <span className="transmission-status__normal-mark" aria-hidden="true">●</span>)}
+              <span>{isStationPowered ? (isDarkHour ? labels.tartarusDetected : labels.noAnomalies) : labels.powerStandby}</span>
+            </div>
+            <button
+              className={`transmission-power-button${isStationPowered ? ' is-on' : ''}`}
+              type="button"
+              aria-pressed={isStationPowered}
+              onClick={toggleStationPower}
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v10m5.66-6.66a8 8 0 1 1-11.32 0" /></svg>
+              {isStationPowered ? labels.stationPowerOff : labels.stationPowerOn}
+            </button>
+          </header>
 
-        <div className="projects-grid">
-          <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project, index) => (
-              <motion.div
-                layout={!isMobile ? "position" : false}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3 }}
-                key={project.id}
-                className={`project-card glass-card ${project.featured ? 'project-card--featured' : 'project-card--standard'}`}
+          {!isStationContentMounted && (
+            <div className="transmission-standby" aria-live="polite">
+              <span className="transmission-standby__indicator" aria-hidden="true" />
+              <p>{labels.powerHint}</p>
+            </div>
+          )}
+
+          {isStationContentMounted && <div className={`transmission-console__body${isStationPowered ? ' is-on' : ''}`}>
+            <div className="transmission-channels" role="tablist" aria-orientation="vertical" aria-label={labels.channelList}>
+              {visibleProjects.map((project, index) => {
+                const selected = project.id === activeProject?.id;
+                const name = project.available
+                  ? (typeof project.name === 'string' ? project.name : project.name[language])
+                  : labels.noSignal;
+                return (
+                  <button
+                    key={project.id}
+                    ref={(node) => { channelRefs.current[project.id] = node; }}
+                    id={`project-channel-${project.number}`}
+                    type="button"
+                    role="tab"
+                    aria-selected={selected}
+                    aria-controls="project-transmission-panel"
+                    aria-disabled={!project.available}
+                    disabled={!project.available}
+                    tabIndex={selected ? 0 : -1}
+                    className={`transmission-channel${selected ? ' is-active' : ''}${!project.available ? ' is-unavailable' : ''}`}
+                    onClick={() => project.available && setActiveId(project.id)}
+                    onKeyDown={(event) => handleChannelKeyDown(event, index)}
+                  >
+                    <span className="transmission-channel__number">{pad(project.number)}</span>
+                    <span className="transmission-channel__name">{name}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {activeProject && content && (
+              <div
+                className="transmission-detail"
+                id="project-transmission-panel"
+                role="tabpanel"
+                aria-labelledby={`project-channel-${activeProject.number}`}
+                aria-live="polite"
+                tabIndex={0}
               >
-                <div className="project-image">
+                <div className="transmission-monitor" key={activeProject.id}>
                   <img
-                    src={project.image}
-                    alt={project.title}
+                    className="transmission-monitor__image"
+                    src={activeProject.image}
+                    alt={labels.preview.replace('{name}', content.name)}
+                    width="960"
+                    height="600"
                     loading="lazy"
                     decoding="async"
                   />
-                  <div className="project-overlay">
-                    <div className="project-actions">
-                      {project.featured && project.caseStudyKey && (
-                        <button
-                          onClick={() => setActiveProject(project)}
-                          className="project-btn case-study-btn"
-                        >
-                          {t.projects.viewCaseStudy}
-                        </button>
-                      )}
-                      <a href={project.liveUrl} className="project-btn" target="_blank" rel="noopener noreferrer">
-                        {t.projects.viewProject}
-                      </a>
-                      <a href={project.codeUrl} className="project-btn" target="_blank" rel="noopener noreferrer">
-                        {t.projects.viewCode}
-                      </a>
-                    </div>
-                  </div>
+                  <div className="transmission-monitor__scanlines" aria-hidden="true" />
+                  <span className="transmission-monitor__corner transmission-monitor__corner--tl" aria-hidden="true" />
+                  <span className="transmission-monitor__corner transmission-monitor__corner--tr" aria-hidden="true" />
+                  <span className="transmission-monitor__corner transmission-monitor__corner--bl" aria-hidden="true" />
+                  <span className="transmission-monitor__corner transmission-monitor__corner--br" aria-hidden="true" />
+                  <span className="transmission-monitor__tag transmission-monitor__tag--tl">{labels.file} {pad(activeNumber)}</span>
+                  <span className="transmission-monitor__tag transmission-monitor__tag--tr">{isDarkHour ? labels.interference : `${labels.signalStatus}: ${signalLabel}`}</span>
+                  <span className="transmission-monitor__tag transmission-monitor__tag--bl"><i className="transmission-rec-dot" aria-hidden="true" /> {labels.rec} <span aria-live="off">{monitorTime}</span></span>
+                  <span className="transmission-monitor__tag transmission-monitor__tag--br">{isDarkHour ? labels.darkHour : labels.night}</span>
                 </div>
 
-                <div className="project-content">
-                  <div className="project-header-row">
-                    <h3 className="project-title">{project.title}</h3>
+                <div className="transmission-readouts">
+                  <div className="transmission-readout">
+                    <span className="transmission-readout__label">{labels.file}</span>
+                    <strong>{pad(activeNumber)} / {pad(projectsData.length)}</strong>
                   </div>
-                  {project.featured && (
-                    <div className="featured-badge-row">
-                      <span className="featured-badge"><FiStar className="featured-badge-icon" /> {language === 'en' ? 'Featured' : 'Destacado'}</span>
-                    </div>
-                  )}
-                  <ProjectDescription text={project.description} t={t} />
-
-                  <div className="project-technologies">
-                    {project.technologies.map((tech, techIndex) => (
-                      <span key={techIndex} className="tech-tag" data-name={tech}>
-                        {techIcons[tech] || tech}
+                  <div className="transmission-readout transmission-readout--signal">
+                    <span className="transmission-readout__label">{labels.signalStatus}</span>
+                    <div className="transmission-readout__signal-line">
+                      <span className="transmission-signal-bars" aria-label={`${signalCount} ${labels.bars}`}>
+                        {[1, 2, 3, 4].map((bar) => <i key={bar} className={bar <= signalCount ? 'is-lit' : ''} />)}
                       </span>
-                    ))}
+                      <strong>{signalLabel}</strong>
+                    </div>
                   </div>
                 </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+
+                <div className="transmission-project-copy">
+                  <span className="transmission-project-copy__type">{activeProject.type[language]}</span>
+                  <div className="transmission-project-copy__title-line">
+                    <h3>{content.name}</h3>
+                    {activeProject.featured && <span className="transmission-featured">{labels.featured}</span>}
+                  </div>
+                  <p>{content.description}</p>
+                  <div className="transmission-stack" aria-label={labels.stack}>
+                    {activeProject.stack.map((technology) => <ProjectTechnology key={technology} name={technology} />)}
+                  </div>
+                  <div className="transmission-project-actions">
+                    {activeProject.caseStudyKey && (
+                      <button type="button" className="project-btn case-study-btn" onClick={() => setActiveProjectModal(content.projectForModal)}>{t.projects.viewCaseStudy}</button>
+                    )}
+                    {activeProject.demoUrl && <a className="project-btn" href={activeProject.demoUrl} target="_blank" rel="noopener noreferrer">{labels.demo}</a>}
+                    {activeProject.repoUrl && <a className="project-btn" href={activeProject.repoUrl} target="_blank" rel="noopener noreferrer">{labels.code}</a>}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>}
+        </div>
+
+        <div className="transmission-terminal-access">
+          <div className="transmission-terminal-access__intro">
+            <div>
+              <h3>{labels.terminalAccess}</h3>
+              <p>{labels.terminalDescription}</p>
+            </div>
+            <button
+              type="button"
+              aria-expanded={showDeveloperTerminal}
+              aria-controls="projects-developer-terminal"
+              onClick={toggleDeveloperTerminal}
+            >
+              {showDeveloperTerminal ? labels.terminalClose : labels.terminalOpen}
+            </button>
+          </div>
+          {showDeveloperTerminal && (
+            <div
+              id="projects-developer-terminal"
+              className="transmission-terminal-access__mount is-open"
+              ref={setMonitorTerminalMount}
+            />
+          )}
         </div>
       </div>
 
-      {/* Case Study Modal */}
-      <AnimatePresence>
-        {activeProject && (
-          <Suspense fallback={null}>
-            <ProjectModal
-              project={activeProject}
-              t={t}
-              onClose={() => setActiveProject(null)}
-            />
-          </Suspense>
-        )}
-      </AnimatePresence>
+      {activeProjectModal && (
+        <Suspense fallback={null}>
+          <ProjectModal project={activeProjectModal} t={t} onClose={() => setActiveProjectModal(null)} />
+        </Suspense>
+      )}
     </section>
   );
 };
