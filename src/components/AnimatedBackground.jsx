@@ -78,7 +78,7 @@ const CityLayer = memo(({ buildings, depth, lightweight }) => {
           90 - windowHeight,
           Math.max(8, verticalStart + (verticalRange * row) / Math.max(rows - 1, 1) + jitter),
         );
-        const illuminated = randomValue < 0.31;
+        const illuminated = randomValue < 0.45;
         const toneIndex = hash % 10;
         const lightTone = toneIndex < 2 ? 'cool' : toneIndex < 5 ? 'copper' : 'amber';
 
@@ -91,8 +91,8 @@ const CityLayer = memo(({ buildings, depth, lightweight }) => {
               top: `${topInFacade}%`,
               width: `${windowWidth}%`,
               height: `${windowHeight}%`,
-              '--window-alpha': illuminated ? 0.25 + (hash % 3) * 0.045 : 0.025,
-              '--window-peak-alpha': illuminated ? 0.29 + (hash % 3) * 0.045 : 0.025,
+              '--window-alpha': illuminated ? 0.2 + (hash % 3) * 0.035 : 0.025,
+              '--window-peak-alpha': illuminated ? 0.26 + (hash % 3) * 0.03 : 0.025,
               '--window-delay': `${(hash % 17) * -0.8}s`,
               '--window-shutdown-delay': `${((buildingIndex * 3 + row * 5 + column * 2 + layerIndex * 7) % 9) * 0.075}s`,
             }}
@@ -114,6 +114,7 @@ const CityLayer = memo(({ buildings, depth, lightweight }) => {
           xmlns="http://www.w3.org/1999/xhtml"
           className="dark-hour-scene__building"
           data-tone={buildingIndex % 4}
+          data-roof={(buildingIndex + layerIndex * 2) % 5}
           style={{ '--facade-reflection': buildingIndex % 5 === 2 ? 0.1 : 0.025 }}
         >
           {windows}
@@ -391,6 +392,7 @@ const AnimatedBackground = ({ isDarkHour = false }) => {
   return (
     <div className={`dark-hour-scene is-hero-active${isDarkHour ? ' is-dark-hour' : ''}${lightweightScene ? ' is-mobile-scene' : ''}`} ref={sceneRef} aria-hidden="true">
       <div className="dark-hour-scene__sky" />
+      <div className="dark-hour-scene__shooting-stars" />
       <div className="dark-hour-scene__halo dark-hour-scene__halo--horizon" />
       <div className="dark-hour-scene__moon-field">
         <div className="dark-hour-scene__moon" />

@@ -1,9 +1,9 @@
 .dark-hour-scene {
   --scene-pointer-x: 0;
   --scene-pointer-y: 0;
-  --scene-window-amber: rgba(225, 138, 66, 0.34);
-  --scene-window-copper: rgba(169, 78, 34, 0.3);
-  --scene-window-cool: rgba(57, 189, 244, 0.24);
+  --scene-window-amber: rgba(218, 162, 105, 0.42);
+  --scene-window-copper: rgba(196, 126, 110, 0.38);
+  --scene-window-cool: rgba(101, 175, 193, 0.46);
   position: fixed;
   z-index: -1;
   inset: 0;
@@ -47,6 +47,46 @@
   transition: opacity 1.8s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
+.dark-hour-scene__shooting-stars {
+  position: absolute;
+  inset: 0 0 42%;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.dark-hour-scene__shooting-stars::before,
+.dark-hour-scene__shooting-stars::after {
+  content: "";
+  position: absolute;
+  top: 12%;
+  left: -12%;
+  width: clamp(4rem, 7vw, 7rem);
+  height: 1px;
+  opacity: 0;
+  transform: translate3d(0, 0, 0) rotate(-32deg);
+  transform-origin: right center;
+  background: linear-gradient(90deg, transparent, rgba(170, 224, 255, 0.18) 38%, rgba(224, 246, 255, 0.82));
+  animation: dark-hour-shooting-star 31s ease-out infinite;
+}
+
+.dark-hour-scene__shooting-stars::after {
+  top: 31%;
+  width: clamp(3.5rem, 5.5vw, 5rem);
+  animation-delay: 13s;
+  animation-duration: 41s;
+  animation-timing-function: ease-in;
+}
+
+.dark-hour-scene.is-dark-hour .dark-hour-scene__shooting-stars {
+  visibility: hidden;
+}
+
+.dark-hour-scene.is-dark-hour .dark-hour-scene__shooting-stars::before,
+.dark-hour-scene.is-dark-hour .dark-hour-scene__shooting-stars::after {
+  animation: none;
+}
+
 .dark-hour-scene.is-dark-hour .dark-hour-scene__sky::after {
   opacity: 1;
 }
@@ -77,19 +117,19 @@
   width: clamp(9rem, 21vw, 19rem);
   aspect-ratio: 1;
   border-radius: 50%;
-  opacity: 0.54;
+  opacity: 0.92;
   background:
     radial-gradient(ellipse 24% 16% at 70% 43%, rgba(18, 45, 55, 0.2), transparent 74%),
     radial-gradient(ellipse 19% 13% at 27% 63%, rgba(221, 240, 231, 0.11), transparent 76%),
     radial-gradient(ellipse 24% 17% at 28% 38%, rgba(40, 91, 74, 0), transparent 78%),
     radial-gradient(ellipse 34% 25% at 72% 67%, rgba(111, 175, 131, 0), transparent 78%),
-    radial-gradient(ellipse 52% 48% at 35% 30%, rgba(226, 247, 248, 0.78), rgba(179, 220, 228, 0.65) 28%, rgba(111, 163, 179, 0.38) 61%, rgba(49, 91, 111, 0.19) 83%, rgba(27, 58, 76, 0.08) 100%);
+    radial-gradient(ellipse 52% 48% at 35% 30%, rgba(255, 255, 255, 1), rgba(240, 248, 252, 0.94) 28%, rgba(177, 210, 226, 0.64) 61%, rgba(79, 119, 140, 0.34) 83%, rgba(19, 41, 59, 0.14) 100%);
   box-shadow:
-    0 0 48px rgba(70, 161, 212, 0.12),
-    0 0 130px rgba(45, 127, 186, 0.09),
-    inset 8px 7px 22px rgba(238, 250, 249, 0.1),
+    0 0 48px rgba(205, 232, 249, 0.24),
+    0 0 110px rgba(167, 211, 239, 0.15),
+    inset 8px 7px 22px rgba(255, 255, 255, 0.22),
     inset -15px -12px 30px rgba(5, 22, 37, 0.35);
-  border: 1px solid rgba(179, 226, 246, 0.12);
+  border: 1px solid rgba(225, 243, 252, 0.26);
   animation: dark-hour-moon-breathe 17s ease-in-out infinite alternate;
   transition: background 1.8s ease, filter 1.8s ease, opacity 1.8s ease, box-shadow 1.8s ease;
 }
@@ -131,8 +171,8 @@
   inset: -38%;
   border-radius: inherit;
   background:
-    radial-gradient(ellipse at 49% 51%, rgba(133, 198, 215, 0.13) 0 28%, rgba(77, 145, 171, 0.09) 44%, rgba(35, 93, 124, 0.045) 59%, transparent 75%),
-    radial-gradient(ellipse at 43% 46%, rgba(200, 233, 231, 0.055), transparent 57%);
+    radial-gradient(ellipse at 49% 51%, rgba(175, 218, 233, 0.17) 0 28%, rgba(105, 164, 185, 0.11) 44%, rgba(45, 104, 132, 0.055) 59%, transparent 75%),
+    radial-gradient(ellipse at 43% 46%, rgba(224, 243, 246, 0.075), transparent 57%);
   filter: blur(18px);
   pointer-events: none;
 }
@@ -143,7 +183,7 @@
   inset: 1%;
   border-radius: inherit;
   background:
-    radial-gradient(ellipse at 27% 25%, rgba(235, 249, 242, 0.12), transparent 39%),
+    radial-gradient(ellipse at 27% 25%, rgba(245, 251, 255, 0.18), transparent 39%),
     radial-gradient(ellipse at 72% 69%, rgba(11, 35, 42, 0.14), transparent 47%),
     url('../assets/moon-terrain.svg');
   background-size: 100% 100%;
@@ -151,7 +191,7 @@
   box-shadow:
     inset -11px -9px 26px rgba(7, 28, 42, 0.23),
     inset 4px 3px 16px rgba(222, 245, 242, 0.12);
-  opacity: 0.68;
+  opacity: 0.74;
   mix-blend-mode: normal;
   pointer-events: none;
 }
@@ -431,26 +471,28 @@
 }
 
 .dark-hour-scene__window.is-lit {
-  box-shadow: 0 0 4px rgba(67, 160, 197, 0.17);
+  border: 0;
+  border-radius: 1px;
+  box-shadow: 0 0 3px rgba(103, 177, 195, 0.13), inset 0 0 1px rgba(255, 255, 255, 0.16);
   animation: dark-hour-window-flicker 24s var(--window-delay, 0s) ease-in-out infinite;
 }
 
 .dark-hour-scene__window.is-lit.is-amber {
   background-color: var(--scene-window-amber);
-  background-image: linear-gradient(180deg, rgba(255, 198, 125, 0.44), rgba(225, 138, 66, 0.18));
-  box-shadow: 0 0 4px rgba(225, 138, 66, 0.13);
+  background-image: linear-gradient(180deg, rgba(255, 235, 194, 0.56), rgba(218, 152, 88, 0.38));
+  box-shadow: 0 0 3px rgba(218, 152, 88, 0.12), inset 0 0 1px rgba(255, 249, 226, 0.16);
 }
 
 .dark-hour-scene__window.is-lit.is-copper {
   background-color: var(--scene-window-copper);
-  background-image: linear-gradient(180deg, rgba(222, 133, 78, 0.36), rgba(169, 78, 34, 0.18));
-  box-shadow: 0 0 3px rgba(169, 78, 34, 0.12);
+  background-image: linear-gradient(180deg, rgba(255, 220, 202, 0.52), rgba(196, 112, 92, 0.36));
+  box-shadow: 0 0 3px rgba(196, 112, 92, 0.1), inset 0 0 1px rgba(255, 238, 225, 0.15);
 }
 
 .dark-hour-scene__window.is-lit.is-cool {
   background-color: var(--scene-window-cool);
-  background-image: linear-gradient(180deg, rgba(150, 226, 246, 0.28), rgba(46, 116, 158, 0.12));
-  box-shadow: 0 0 4px rgba(67, 160, 197, 0.15);
+  background-image: linear-gradient(180deg, rgba(224, 247, 250, 0.58), rgba(76, 164, 191, 0.4));
+  box-shadow: 0 0 3px rgba(67, 175, 198, 0.13), inset 0 0 1px rgba(255, 255, 255, 0.17);
 }
 
 .dark-hour-scene.is-dark-hour .dark-hour-scene__window.is-lit {
@@ -498,17 +540,24 @@
   32%, 69% { opacity: var(--window-peak-alpha); }
 }
 
+@keyframes dark-hour-shooting-star {
+  0%, 76% { opacity: 0; transform: translate3d(0, 0, 0) rotate(-32deg); }
+  77% { opacity: 0.85; }
+  80% { opacity: 0; transform: translate3d(112vw, 22vh, 0) rotate(-32deg); }
+  100% { opacity: 0; transform: translate3d(112vw, 22vh, 0) rotate(-32deg); }
+}
+
 @media (max-width: 700px) {
   .dark-hour-scene {
     /* Keep one stable stage while mobile browser chrome expands/collapses. */
     inset: 0 0 auto;
     height: 100lvh;
     /* Shift the moon and tower into the open right column beside the hero copy. */
-    --scene-mobile-focus-x: 78%;
+    --scene-mobile-focus-x: 75%;
     --scene-mobile-moon-focus-x: calc(var(--scene-mobile-focus-x) + 2.7vw);
     --scene-mobile-moon-top: clamp(10rem, 25lvh, 14rem);
     --scene-mobile-moon-size: clamp(8rem, 39vw, 13rem);
-    --scene-mobile-city-height: clamp(15rem, 41lvh, 25rem);
+    --scene-mobile-city-height: clamp(16rem, 45lvh, 27rem);
     --scene-mobile-city-roofline: clamp(9.5rem, 26.1lvh, 15.9rem);
     --scene-mobile-tartarus-width: clamp(13rem, min(66vw, 34.3lvh), 23rem);
     --scene-mobile-tartarus-height: clamp(28rem, min(158.5vw, 73.4lvh), 53.5rem);
@@ -519,7 +568,7 @@
     left: var(--scene-mobile-moon-focus-x);
     right: auto;
     width: var(--scene-mobile-moon-size);
-    opacity: 0.48;
+    opacity: 0.92;
     transform: translateX(-50%);
   }
 
@@ -528,7 +577,7 @@
   }
 
   .dark-hour-scene__city--far {
-    height: clamp(12rem, 29lvh, 19rem);
+    height: clamp(13rem, 31lvh, 20rem);
     opacity: 0.34;
     filter: blur(0.8px) drop-shadow(0 -3px 12px rgba(53, 111, 145, 0.08));
     -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 34%, #000 100%);
@@ -536,7 +585,7 @@
   }
 
   .dark-hour-scene__city--mid {
-    height: clamp(13rem, 33lvh, 21rem);
+    height: clamp(14rem, 35lvh, 22rem);
     opacity: 0.68;
     filter: blur(0.25px) drop-shadow(0 -3px 10px rgba(26, 74, 104, 0.08));
     -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 24%, #000 100%);
@@ -547,6 +596,27 @@
     height: var(--scene-mobile-city-height);
     opacity: 0.96;
     filter: drop-shadow(0 -2px 8px rgba(6, 16, 26, 0.22));
+  }
+
+  /* Five reusable roof profiles add skyline variety without adding DOM nodes. */
+  .dark-hour-scene.is-mobile-scene .dark-hour-scene__building[data-roof="0"] {
+    clip-path: polygon(0 8%, 18% 8%, 18% 1%, 45% 1%, 45% 8%, 76% 8%, 76% 3%, 100% 3%, 100% 100%, 0 100%);
+  }
+
+  .dark-hour-scene.is-mobile-scene .dark-hour-scene__building[data-roof="1"] {
+    clip-path: polygon(0 12%, 28% 12%, 28% 5%, 48% 5%, 48% 0, 72% 0, 72% 10%, 100% 10%, 100% 100%, 0 100%);
+  }
+
+  .dark-hour-scene.is-mobile-scene .dark-hour-scene__building[data-roof="2"] {
+    clip-path: polygon(0 3%, 58% 3%, 58% 11%, 78% 11%, 78% 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .dark-hour-scene.is-mobile-scene .dark-hour-scene__building[data-roof="3"] {
+    clip-path: polygon(0 0, 26% 0, 26% 8%, 64% 8%, 64% 14%, 100% 14%, 100% 100%, 0 100%);
+  }
+
+  .dark-hour-scene.is-mobile-scene .dark-hour-scene__building[data-roof="4"] {
+    clip-path: polygon(0 10%, 24% 10%, 24% 4%, 41% 4%, 41% 10%, 69% 10%, 69% 0, 89% 0, 89% 7%, 100% 7%, 100% 100%, 0 100%);
   }
 
   .dark-hour-scene__city-haze {
@@ -694,6 +764,13 @@
   }
 }
 
+@media (min-width: 1025px) {
+  .dark-hour-scene__tartarus {
+    /* The tower's visual mass sits right of the SVG center; optically align it to the moon. */
+    left: calc(100% - clamp(4vw, 13vw, 15rem) - clamp(9rem, 21vw, 19rem) / 2 - clamp(0.5rem, 0.9vw, 1rem));
+  }
+}
+
 @media (max-height: 800px) and (min-width: 701px) {
   .dark-hour-scene__tartarus {
     --tartarus-rest-lift: calc(clamp(4rem, 12vh, 7rem) + var(--tartarus-scale-compensation));
@@ -713,6 +790,8 @@
 @media (prefers-reduced-motion: reduce) {
   .dark-hour-scene__moon,
   .dark-hour-scene__mist,
+  .dark-hour-scene__shooting-stars::before,
+  .dark-hour-scene__shooting-stars::after,
   .dark-hour-scene__window.is-lit,
   .dark-hour-scene__sky::after,
   .dark-hour-scene__mist::after,
@@ -732,7 +811,7 @@
   }
 }
 
-.dark-hour-scene.is-paused :is(.dark-hour-scene__moon, .dark-hour-scene__mist, .dark-hour-scene__window.is-lit) {
+.dark-hour-scene.is-paused :is(.dark-hour-scene__moon, .dark-hour-scene__mist, .dark-hour-scene__shooting-stars::before, .dark-hour-scene__shooting-stars::after, .dark-hour-scene__window.is-lit) {
   animation-play-state: paused !important;
 }
 
@@ -758,7 +837,10 @@
 
   .dark-hour-scene__moon {
     animation: none !important;
-    box-shadow: 0 0 24px rgba(70, 161, 212, 0.09), inset -10px -9px 22px rgba(5, 22, 37, 0.32);
+    box-shadow:
+      0 0 36px rgba(205, 232, 249, 0.22),
+      0 0 82px rgba(167, 211, 239, 0.14),
+      inset -10px -9px 22px rgba(5, 22, 37, 0.32);
     transition: filter 700ms ease, box-shadow 700ms ease;
   }
 
@@ -813,28 +895,37 @@
   .dark-hour-scene__city--far .dark-hour-scene__building[data-tone] {
     background-color: #1a3047 !important;
     background-image:
-      radial-gradient(ellipse 2px 3px at 24% 30%, rgba(126, 185, 213, 0.72) 0 72%, transparent 100%),
-      radial-gradient(ellipse 2px 3px at 72% 66%, rgba(205, 132, 75, 0.72) 0 72%, transparent 100%),
+      radial-gradient(ellipse 4px 5px at 24% 30%, rgba(154, 211, 229, 0.4) 0 24%, rgba(102, 171, 194, 0.2) 58%, transparent 100%),
+      radial-gradient(ellipse 4px 5px at 72% 66%, rgba(244, 190, 132, 0.38) 0 24%, rgba(201, 135, 84, 0.18) 58%, transparent 100%),
+      radial-gradient(ellipse 4px 5px at 48% 18%, rgba(244, 190, 132, 0.32) 0 24%, rgba(201, 135, 84, 0.15) 58%, transparent 100%),
+      radial-gradient(ellipse 4px 5px at 52% 86%, rgba(154, 211, 229, 0.34) 0 24%, rgba(102, 171, 194, 0.16) 58%, transparent 100%),
       linear-gradient(180deg, #1a3047, #0b1928) !important;
+    background-repeat: no-repeat;
   }
 
   .dark-hour-scene__city--mid .dark-hour-scene__building[data-tone] {
     background-color: #10243a !important;
     background-image:
-      radial-gradient(ellipse 2.5px 3.5px at 18% 24%, rgba(221, 148, 86, 0.82) 0 72%, transparent 100%),
-      radial-gradient(ellipse 2.5px 3.5px at 70% 46%, rgba(112, 187, 218, 0.78) 0 72%, transparent 100%),
-      radial-gradient(ellipse 2.5px 3.5px at 38% 76%, rgba(198, 126, 72, 0.76) 0 72%, transparent 100%),
+      radial-gradient(ellipse 4px 5px at 18% 24%, rgba(244, 190, 132, 0.38) 0 24%, rgba(201, 135, 84, 0.18) 58%, transparent 100%),
+      radial-gradient(ellipse 4px 5px at 70% 46%, rgba(154, 211, 229, 0.4) 0 24%, rgba(102, 171, 194, 0.2) 58%, transparent 100%),
+      radial-gradient(ellipse 4px 5px at 38% 76%, rgba(244, 190, 132, 0.34) 0 24%, rgba(201, 135, 84, 0.16) 58%, transparent 100%),
+      radial-gradient(ellipse 4px 5px at 86% 18%, rgba(154, 211, 229, 0.34) 0 24%, rgba(102, 171, 194, 0.16) 58%, transparent 100%),
+      radial-gradient(ellipse 4px 5px at 12% 58%, rgba(244, 190, 132, 0.32) 0 24%, rgba(201, 135, 84, 0.15) 58%, transparent 100%),
       linear-gradient(180deg, #10243a, #081522) !important;
+    background-repeat: no-repeat;
   }
 
   .dark-hour-scene__city--near .dark-hour-scene__building[data-tone] {
     background-color: #080f1c !important;
     background-image:
-      radial-gradient(ellipse 3px 4px at 20% 20%, rgba(220, 145, 80, 0.86) 0 72%, transparent 100%),
-      radial-gradient(ellipse 3px 4px at 68% 38%, rgba(115, 190, 220, 0.8) 0 72%, transparent 100%),
-      radial-gradient(ellipse 3px 4px at 36% 61%, rgba(198, 119, 66, 0.84) 0 72%, transparent 100%),
-      radial-gradient(ellipse 3px 4px at 78% 79%, rgba(223, 157, 96, 0.78) 0 72%, transparent 100%),
+      radial-gradient(ellipse 4px 5px at 20% 20%, rgba(244, 190, 132, 0.38) 0 24%, rgba(201, 135, 84, 0.18) 58%, transparent 100%),
+      radial-gradient(ellipse 4px 5px at 68% 38%, rgba(154, 211, 229, 0.4) 0 24%, rgba(102, 171, 194, 0.2) 58%, transparent 100%),
+      radial-gradient(ellipse 4px 5px at 36% 61%, rgba(244, 190, 132, 0.34) 0 24%, rgba(201, 135, 84, 0.16) 58%, transparent 100%),
+      radial-gradient(ellipse 4px 5px at 78% 79%, rgba(154, 211, 229, 0.36) 0 24%, rgba(102, 171, 194, 0.18) 58%, transparent 100%),
+      radial-gradient(ellipse 4px 5px at 52% 10%, rgba(244, 190, 132, 0.34) 0 24%, rgba(201, 135, 84, 0.16) 58%, transparent 100%),
+      radial-gradient(ellipse 4px 5px at 52% 92%, rgba(154, 211, 229, 0.32) 0 24%, rgba(102, 171, 194, 0.15) 58%, transparent 100%),
       linear-gradient(180deg, #080f1c, #050b13) !important;
+    background-repeat: no-repeat;
   }
 
   .dark-hour-scene__city--far .dark-hour-scene__building,
