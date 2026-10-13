@@ -256,34 +256,57 @@
   }
 
   .App.persona-menu #home.hero .hero-text {
+    width: min(66%, 340px);
+    margin-left: 0;
+    margin-right: auto;
     padding: 0;
-    background: none;
+    background: linear-gradient(90deg, rgba(2, 8, 16, 0.72), rgba(2, 8, 16, 0.52) 70%, transparent);
+    text-align: left;
+  }
+
+  .App.persona-menu #home.hero .typing-container {
+    width: 100%;
+    margin-inline: 0;
   }
 
   .App.persona-menu #home.hero .hero-name {
     width: 100%;
-  }
-
-  .App.persona-menu #home.hero .hero-name {
-    font-size: clamp(2.55rem, 11.2vw, 4.2rem);
+    justify-items: start;
+    font-size: clamp(1.75rem, 8.3vw, 3rem);
     letter-spacing: -0.075em;
     line-height: 0.9;
   }
 
+  .App.persona-menu #home.hero .hero-name-line {
+    text-align: left;
+  }
+
   .App.persona-menu #home.hero .hero-title {
-    font-size: clamp(0.94rem, 4vw, 1.15rem);
+    justify-content: flex-start;
+    font-size: clamp(0.72rem, 3vw, 0.98rem);
     letter-spacing: 0.035em;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    min-width: 0;
+  }
+
+  .App.persona-menu #home.hero .hero-role {
+    flex: 0 0 auto;
+    white-space: nowrap;
   }
 
   .App.persona-menu #home.hero .hero-description {
-    max-width: min(100%, 340px);
-    font-size: 0.96rem;
-    line-height: 1.65;
+    max-width: 100%;
+    margin-right: auto;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    text-align: left;
   }
 
   .App.persona-menu #home.hero .hero-cta {
     display: flex;
     max-width: 100%;
+    justify-content: flex-start;
     gap: 10px;
   }
 
@@ -297,7 +320,7 @@
 
 @media (max-width: 350px) {
   .App.persona-menu #home.hero .hero-name {
-    font-size: clamp(2.35rem, 10.8vw, 2.75rem);
+    font-size: clamp(1.7rem, 8vw, 2.35rem);
   }
 
 }

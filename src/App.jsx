@@ -1,16 +1,15 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import OnlineCounter from './components/OnlineCounter';
 import AnimatedBackground from './components/AnimatedBackground';
-
-const About = lazy(() => import('./components/About'));
-const Skills = lazy(() => import('./components/Skills'));
-const Projects = lazy(() => import('./components/Projects'));
-const Testimonials = lazy(() => import('./components/Testimonials'));
-const Contact = lazy(() => import('./components/Contact'));
-const Footer = lazy(() => import('./components/Footer'));
+import About from './components/About';
+import Skills from './components/Skills';
+import Projects from './components/Projects';
+import Testimonials from './components/Testimonials';
+import Contact from './components/Contact';
+import Footer from './components/Footer';
 
 import { Analytics } from '@vercel/analytics/react';
 import es from './locales/es';
@@ -69,14 +68,12 @@ function App() {
         toggleDarkHour={() => setIsDarkHour((current) => !current)}
       />
       <Hero t={t} language={language} terminalMount={terminalMount} />
-      <Suspense fallback={<div />}>
-        <About t={t} />
-        <Skills t={t} />
-        <Projects t={t} language={language} />
-        <Testimonials t={t} language={language} />
-        <Contact t={t} setTerminalMount={setTerminalMount} />
-        <Footer t={t} />
-      </Suspense>
+      <About t={t} />
+      <Skills t={t} />
+      <Projects t={t} language={language} />
+      <Testimonials t={t} language={language} />
+      <Contact t={t} setTerminalMount={setTerminalMount} />
+      <Footer t={t} />
       <OnlineCounter t={t} />
       <Analytics />
     </div>

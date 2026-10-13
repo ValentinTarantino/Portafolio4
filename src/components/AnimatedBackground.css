@@ -500,14 +500,14 @@
 
 @media (max-width: 700px) {
   .dark-hour-scene {
-    /* Keep the moon and tower on the same centered axis at narrow widths. */
-    --scene-mobile-focus-x: 56%;
+    /* Shift the moon and tower into the open right column beside the hero copy. */
+    --scene-mobile-focus-x: 78%;
     --scene-mobile-moon-focus-x: calc(var(--scene-mobile-focus-x) + 2.7vw);
     --scene-mobile-moon-top: clamp(10rem, 25vh, 14rem);
     --scene-mobile-moon-size: clamp(8rem, 39vw, 13rem);
     --scene-mobile-city-height: clamp(15rem, 41vh, 25rem);
     --scene-mobile-city-roofline: clamp(9.5rem, 26.1vh, 15.9rem);
-    --scene-mobile-tartarus-width: clamp(13rem, min(74vw, 34.3vh), 25rem);
+    --scene-mobile-tartarus-width: clamp(13rem, min(66vw, 34.3vh), 23rem);
     --scene-mobile-tartarus-height: clamp(28rem, min(158.5vw, 73.4vh), 53.5rem);
   }
 
