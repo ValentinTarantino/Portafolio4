@@ -5,6 +5,7 @@ import {
   SiTailwindcss, SiTestinglibrary, SiThreedotjs, SiTypescript, SiVite
 } from 'react-icons/si';
 import awsIcon from '../assets/icons/aws.svg';
+import zustandIcon from '../assets/icons/zustand.svg';
 
 const techIcons = {
   'API': SiPostman,
@@ -50,10 +51,10 @@ const ProjectTechnology = ({ name }) => {
     <span className="transmission-stack__chip" title={name}>
       {name === 'AWS' ? (
         <img className="transmission-stack__icon" src={awsIcon} alt="" aria-hidden="true" />
+      ) : name === 'Zustand' ? (
+        <img className="transmission-stack__icon" src={zustandIcon} alt="" aria-hidden="true" />
       ) : Icon ? (
         <Icon className="transmission-stack__icon" color={techColors[name] || 'currentColor'} aria-hidden="true" />
-      ) : name === 'Zustand' ? (
-        <span className="transmission-stack__icon transmission-stack__bear" aria-hidden="true">🐻</span>
       ) : (
         <SiPostman className="transmission-stack__icon" aria-hidden="true" />
       )}

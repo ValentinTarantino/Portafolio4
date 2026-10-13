@@ -138,7 +138,6 @@ const Projects = ({ t, language, isDarkHour = false, sceneQuality = 'optimized',
     >
       <div className="container">
         <h2 className="section-title" id="projects-title">{t.projects.title}</h2>
-        <p className="section-subtitle">{t.projects.subtitle}</p>
 
         <div className={`transmission-console${isDarkHour ? ' is-dark-hour' : ''}${isStationPowered ? ' is-powered' : ''}`}>
           <header className="transmission-console__header">

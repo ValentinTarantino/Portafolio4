@@ -16,6 +16,9 @@ const en = {
     available: 'Available for new projects'
   },
   about: {
+    onlineLabel: 'Online',
+    profileLabel: 'Developer profile',
+    profileStatement: 'I build digital products that solve real problems.',
     title: 'About Me',
     description: 'I am a Full Stack developer specialized in building modern digital products with a rigorous focus on user experience, performance, and best practices. Experienced in both complex full-stack architectures and delivering freelance solutions for production-grade real clients. I am passionate about structuring optimized databases, designing fluid APIs, and creating intuitive interfaces that add tangible business value.',
     education: 'Academic Background',
@@ -84,12 +87,13 @@ const en = {
     ]
   },
   skills: {
+    listLabel: 'Tools',
     title: 'Technologies in context',
     subtitle: 'Tools I have used across real projects, grouped by area.',
     categories: {
       frontend: 'Frontend & UI',
       frontendDescription: 'Interfaces, state, and 3D experiences',
-      backend: 'Backend & Cloud',
+      backend: 'Backend, DB & Cloud',
       backendDescription: 'APIs, data, and infrastructure',
       tools: 'Quality & Workflow',
       toolsDescription: 'Testing, CI/CD, and development tools',
@@ -99,7 +103,6 @@ const en = {
   },
   projects: {
     title: 'My Projects',
-    subtitle: 'Some featured work',
     transmission: {
       station: 'MONITORING STATION', channel: 'CHANNEL', file: 'FILE NO.',
       signalStatus: 'SIGNAL STATUS', strong: 'STRONG', stable: 'STABLE', unstable: 'UNSTABLE',
@@ -215,8 +218,6 @@ const en = {
   },
   contact: {
     title: 'Contact Me',
-    subtitle: 'Have a project in mind?',
-    stationLabel: 'DIRECT LINK \u00b7 ARGENTINA',
     info: {
       email: 'valentinthomastarantino@gmail.com',
       phone: '+54 1149476457',

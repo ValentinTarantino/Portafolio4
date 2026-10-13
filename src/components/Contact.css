@@ -72,10 +72,23 @@
   opacity: 0.48;
 }
 
-.persona-link-card--email { --card-accent: #ffb84d; grid-column: 1 / -1; }
+.persona-link-card--email {
+  --card-accent: #ff3d5a;
+  --action-start: #d7193f;
+  --action-end: #ff3d5a;
+  grid-column: 1 / -1;
+}
 .persona-link-card--linkedin { --card-accent: #36a8ff; }
-.persona-link-card--github { --card-accent: #b6c5d8; }
-.dark-hour-mode .persona-link-card { --card-accent: var(--contact-cyan); }
+.persona-link-card--github {
+  --card-accent: #b6c0cc;
+  --action-start: #67727f;
+  --action-end: #929eaa;
+}
+.persona-link-card--whatsapp {
+  --card-accent: #35d779;
+  --action-start: #138a46;
+  --action-end: #2bc96c;
+}
 
 .persona-link-card:is(:hover, :focus-visible) {
   z-index: 2;
@@ -176,7 +189,7 @@
   gap: 0.5rem;
   margin-inline: -1.2rem;
   padding: 0.55rem 1.2rem;
-  background: linear-gradient(100deg, var(--contact-blue), color-mix(in srgb, var(--contact-blue) 78%, var(--contact-cyan)));
+  background: linear-gradient(100deg, var(--action-start, var(--contact-blue)), var(--action-end, var(--contact-cyan)));
   color: white;
   font: 900 0.82rem/1 Inter, Arial, sans-serif;
   letter-spacing: 0.08em;
@@ -192,10 +205,6 @@
   stroke-linecap: square;
   stroke-linejoin: miter;
   stroke-width: 2;
-}
-
-.dark-hour-mode .persona-link-card__action {
-  background: linear-gradient(100deg, #087c4a, #12a86a 72%, #36d68d);
 }
 
 .persona-comms__location {

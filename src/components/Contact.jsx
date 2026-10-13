@@ -72,9 +72,7 @@ const Contact = ({ t }) => {
     <section id="contact" className="section contact persona-comms" aria-labelledby="contact-title">
       <div className="container">
         <header className="persona-comms__heading">
-          <span className="persona-comms__eyebrow">{t.contact.stationLabel}</span>
           <h2 className="section-title" id="contact-title">{t.contact.title}</h2>
-          <p className="section-subtitle">{t.contact.subtitle}</p>
         </header>
 
         <div className="persona-link-grid" role="group" aria-label={labels.listLabel}>

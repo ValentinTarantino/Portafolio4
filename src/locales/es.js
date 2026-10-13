@@ -16,6 +16,9 @@ const es = {
     available: 'Disponible para nuevos proyectos'
   },
   about: {
+    onlineLabel: 'Disponible',
+    profileLabel: 'Perfil de desarrollador',
+    profileStatement: 'Creo productos digitales que resuelven problemas reales.',
     title: 'Acerca de mí',
     description: 'Soy desarrollador Full Stack especializado en crear productos digitales modernos con un enfoque riguroso en la experiencia de usuario, el rendimiento y las buenas prácticas. Con experiencia tanto en proyectos complejos de arquitectura completa como en el desarrollo de soluciones freelance para clientes reales de producción. Me apasiona estructurar bases de datos optimizadas, diseñar APIs fluidas y crear interfaces web intuitivas que añadan valor de negocio tangible.',
     education: 'Formación Académica',
@@ -84,12 +87,13 @@ const es = {
     ]
   },
   skills: {
+    listLabel: 'Herramientas',
     title: 'Tecnologías en contexto',
     subtitle: 'Herramientas que utilicé en proyectos reales, agrupadas por área.',
     categories: {
       frontend: 'Frontend y UI',
       frontendDescription: 'Interfaces, estado y experiencias 3D',
-      backend: 'Backend y Cloud',
+      backend: 'Backend, BD y Cloud',
       backendDescription: 'APIs, datos e infraestructura',
       tools: 'Calidad y herramientas',
       toolsDescription: 'Testing, CI/CD y flujo de desarrollo',
@@ -99,7 +103,6 @@ const es = {
   },
   projects: {
     title: 'Mis Proyectos',
-    subtitle: 'Algunos trabajos destacados',
     transmission: {
       station: 'ESTACIÓN DE MONITOREO', channel: 'CANAL', file: 'ARCHIVO N.º',
       signalStatus: 'ESTADO DE SEÑAL', strong: 'FUERTE', stable: 'ESTABLE', unstable: 'INESTABLE',
@@ -215,8 +218,6 @@ const es = {
   },
   contact: {
     title: 'Cont\u00e1ctame',
-    subtitle: '\u00bfTienes un proyecto en mente?',
-    stationLabel: 'ENLACE DIRECTO \u00b7 ARGENTINA',
     info: {
       email: 'valentinthomastarantino@gmail.com',
       phone: '+54 1149476457',

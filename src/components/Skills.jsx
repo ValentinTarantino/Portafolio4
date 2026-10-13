@@ -1,10 +1,11 @@
 import { memo, useMemo } from 'react';
 import './Skills.css';
-import { SiNextdotjs, SiTypescript, SiTailwindcss, SiReact, SiHtml5, SiJavascript, SiCss, SiSass, SiFirebase, SiFigma, SiGit, SiGithub, SiNodedotjs, SiExpress, SiPostgresql, SiPython, SiPrisma, SiFastapi, SiBootstrap, SiVite, SiDocker, SiJest, SiTestinglibrary, SiCypress, SiMongodb, SiThreedotjs, SiGithubactions } from 'react-icons/si';
+import { SiNextdotjs, SiTypescript, SiTailwindcss, SiReact, SiHtml5, SiJavascript, SiCss, SiSass, SiFirebase, SiFigma, SiGit, SiGithub, SiNodedotjs, SiExpress, SiPostgresql, SiPython, SiPrisma, SiFastapi, SiBootstrap, SiVite, SiDocker, SiJest, SiTestinglibrary, SiCypress, SiMongodb, SiThreedotjs, SiGithubactions, SiSqlite, SiOpenai } from 'react-icons/si';
 import claudeIcon from '../assets/icons/claude.png';
 import cursorIcon from '../assets/icons/cursor.png';
 import n8nIcon from '../assets/icons/n8n.svg';
 import awsIcon from '../assets/icons/aws.svg';
+import zustandIcon from '../assets/icons/zustand.svg';
 
 const ICONS = {
   frontend: [
@@ -13,17 +14,18 @@ const ICONS = {
     { name: 'Three.js', brand: '#ffffff', level: 3, icon: <SiThreedotjs size={40} /> },
     { name: 'TypeScript', brand: '#3178C6', level: 4, icon: <SiTypescript size={40} /> },
     { name: 'Tailwind', brand: '#38BDF8', level: 5, icon: <SiTailwindcss size={40} /> },
-    { name: 'JavaScript', brand: '#F7DF1E', level: 5, icon: <SiJavascript size={40} /> },
+    { name: 'JavaScript', brand: '#F7DF1E', level: 5, icon: <span className="javascript-brand-icon"><SiJavascript size={18} /></span> },
     { name: 'HTML5', brand: '#E34F26', level: 5, icon: <SiHtml5 size={40} /> },
     { name: 'CSS', brand: '#1572B6', level: 5, icon: <SiCss size={40} /> },
     { name: 'SASS', brand: '#CF649A', level: 4, icon: <SiSass size={40} /> },
     { name: 'Bootstrap', brand: '#7952B3', level: 3, icon: <SiBootstrap size={40} /> },
-    { name: 'Zustand', brand: '#a8a29e', level: 4, icon: <span style={{ fontSize: '34px' }}>🐻</span> },
+    { name: 'Zustand', brand: '#a8a29e', level: 4, icon: <img src={zustandIcon} width="36" height="36" alt="Zustand" /> },
   ],
   backend: [
     { name: 'Node.js', brand: '#8CC84B', level: 5, icon: <SiNodedotjs size={40} /> },
     { name: 'Express.js', brand: '#ffffff', level: 4, icon: <SiExpress size={40} /> },
     { name: 'PostgreSQL', brand: '#5b9bd5', level: 4, icon: <SiPostgresql size={40} /> },
+    { name: 'SQLite', brand: '#44A2CF', level: 4, icon: <SiSqlite size={40} /> },
     { name: 'MongoDB', brand: '#47A248', level: 3, icon: <SiMongodb size={40} /> },
     { name: 'Firebase', brand: '#FFCA28', level: 4, icon: <SiFirebase size={40} /> },
     { name: 'Python', brand: '#4B8BBE', level: 4, icon: <SiPython size={40} /> },
@@ -44,59 +46,42 @@ const ICONS = {
   ],
   ai: [
     { name: 'Claude', brand: '#D97757', level: 4, icon: <img src={claudeIcon} width="36" height="36" alt="Claude" /> },
+    { name: 'Codex', brand: '#ffffff', level: 4, icon: <SiOpenai size={40} /> },
     { name: 'Cursor', brand: '#ffffff', level: 4, icon: <img src={cursorIcon} width="36" height="36" alt="Cursor" /> },
     { name: 'N8N', brand: '#EA4B71', level: 3, icon: <img src={n8nIcon} width="36" height="36" alt="N8N" /> },
   ]
 };
 
-const CATEGORY_ICONS = {
-  frontend: (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-  ),
-  backend: (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
-  ),
-  tools: (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
-  ),
-  ai: (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"></path><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15z"></path></svg>
-  ),
-};
-
 const Skills = ({ t }) => {
   const skillCategories = useMemo(() => [
-    { key: 'frontend', title: t.skills.categories.frontend, description: t.skills.categories.frontendDescription, skills: ICONS.frontend },
-    { key: 'backend', title: t.skills.categories.backend, description: t.skills.categories.backendDescription, skills: ICONS.backend },
-    { key: 'tools', title: t.skills.categories.tools, description: t.skills.categories.toolsDescription, skills: ICONS.tools },
-    { key: 'ai', title: t.skills.categories.ai, description: t.skills.categories.aiDescription, skills: ICONS.ai }
+    { key: 'frontend', arcana: 'I', title: t.skills.categories.frontend, skills: ICONS.frontend },
+    { key: 'backend', arcana: 'II', title: t.skills.categories.backend, skills: ICONS.backend },
+    { key: 'tools', arcana: 'III', title: t.skills.categories.tools, skills: ICONS.tools },
+    { key: 'ai', arcana: 'IV', title: t.skills.categories.ai, skills: ICONS.ai }
   ], [
-    t.skills.categories.frontend, t.skills.categories.frontendDescription,
-    t.skills.categories.backend, t.skills.categories.backendDescription,
-    t.skills.categories.tools, t.skills.categories.toolsDescription,
-    t.skills.categories.ai, t.skills.categories.aiDescription
+    t.skills.categories.frontend,
+    t.skills.categories.backend,
+    t.skills.categories.tools,
+    t.skills.categories.ai
   ]);
 
   return (
     <section id="skills" className="section skills">
       <div className="container">
-        <h2 className="section-title">{t.skills.title}</h2>
-        <p className="section-subtitle">{t.skills.subtitle}</p>
+        <h2 className="section-title skills-section-title">{t.skills.listLabel}</h2>
 
         <div className="skills-layout">
           <div className="skills-grid-container skills-grid-container--compact">
-            {skillCategories.map((category, index) => (
+            {skillCategories.map((category) => (
               <article
                 key={category.key}
                 className="skill-category-box skill-category-box--compact"
                 data-category={category.key}
               >
                 <div className="category-header">
-                  <span className="category-index">{String(index + 1).padStart(2, '0')}</span>
-                  <span className="category-icon" aria-hidden="true">{CATEGORY_ICONS[category.key]}</span>
+                  <span className="category-arcana" aria-hidden="true">{category.arcana}</span>
                   <div className="category-heading-copy">
                     <h3 className="category-title">{category.title}</h3>
-                    <p className="category-description">{category.description}</p>
                   </div>
                 </div>
                 <ul className="category-skills">

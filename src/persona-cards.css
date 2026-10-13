@@ -811,3 +811,120 @@
     transform: none;
   }
 }
+
+/* About lead card: a developer dossier with an arcana identity mark. */
+.App.persona-menu .developer-card .card-header {
+  align-items: center;
+  margin-bottom: 1.4rem;
+}
+
+.App.persona-menu .profile-identity {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.App.persona-menu .profile-identity-label {
+  color: var(--p3-cyan);
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: 0.66rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.App.persona-menu .profile-arcana-card {
+  display: flex;
+  flex: 0 0 38px;
+  width: 38px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #4be5ff;
+  border-radius: 8px 10px 7px 9px;
+  outline: 1px solid rgba(75, 229, 255, 0.6);
+  outline-offset: -5px;
+  background: #09245a;
+  box-shadow: 3px 4px 0 #030812;
+  color: #f3fbff;
+  font: italic 800 1.15rem/1 Georgia, 'Times New Roman', serif;
+  transform: rotate(6deg);
+}
+
+.App.persona-menu.dark-hour-mode .profile-arcana-card {
+  border-color: #79ffc1;
+  outline-color: rgba(121, 255, 193, 0.55);
+  color: #eafff2;
+}
+
+.App.persona-menu .profile-identity-label::before {
+  content: '// ';
+  color: var(--p3-accent);
+}
+
+.App.persona-menu .developer-card .name-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+}
+
+.App.persona-menu .developer-card .dev-name {
+  max-width: 16ch;
+  margin-bottom: 0;
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.App.persona-menu .developer-card .description-box {
+  position: relative;
+  padding: 1.2rem 1.35rem;
+  border-left-width: 3px;
+  background: linear-gradient(100deg, rgba(53, 201, 255, 0.13), rgba(7, 27, 56, 0.42) 72%);
+}
+
+.App.persona-menu .developer-card .profile-statement {
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(82, 221, 255, 0.2);
+  color: #82eaff;
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.App.persona-menu.dark-hour-mode .developer-card .profile-statement {
+  border-bottom-color: rgba(132, 221, 164, 0.2);
+  color: #8cf0b5;
+}
+
+.App.persona-menu .developer-card .description-box p:not(.profile-statement) {
+  font-size: 0.97rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 480px) {
+  .App.persona-menu .profile-identity {
+    gap: 0.55rem;
+  }
+
+  .App.persona-menu .profile-identity-label {
+    max-width: 9ch;
+    font-size: 0.58rem;
+    line-height: 1.35;
+  }
+
+  .App.persona-menu .profile-arcana-card {
+    flex-basis: 34px;
+    width: 34px;
+    height: 44px;
+  }
+
+  .App.persona-menu .developer-card .description-box {
+    padding: 1rem;
+  }
+
+  .App.persona-menu .developer-card .profile-statement {
+    font-size: 0.98rem;
+  }
+}

@@ -24,10 +24,11 @@ const About = ({ t }) => {
               <div className="card-header">
                 <div className="status-indicator">
                   <div className="status-dot"></div>
-                  <span>Online</span>
+                  <span>{t.about.onlineLabel}</span>
                 </div>
-                <div className="code-badge">
-                  <span>{'</>'}</span>
+                <div className="profile-identity">
+                  <span className="profile-identity-label">{t.about.profileLabel}</span>
+                  <span className="profile-arcana-card" aria-hidden="true">I</span>
                 </div>
               </div>
               
@@ -42,6 +43,7 @@ const About = ({ t }) => {
                 </div>
                 
                 <div className="description-box">
+                  <p className="profile-statement">{t.about.profileStatement}</p>
                   <p>{t.about.description}</p>
                 </div>
               </div>

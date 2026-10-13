@@ -142,6 +142,65 @@ html .App.persona-menu .section-subtitle {
   color: #a8bfd8;
 }
 
+/* Shared LIST-inspired section headings outside Skills. */
+html body .App.persona-menu .section:is(.about, .projects, .testimonials, .contact) .section-title {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 0 1.5rem;
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-text-fill-color: #f4fbff;
+  color: #f4fbff;
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: clamp(2.25rem, 7vw, 5.6rem);
+  font-style: italic;
+  font-weight: 950;
+  letter-spacing: -0.065em;
+  line-height: 0.95;
+  text-align: left;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 0 #168dff;
+}
+
+html body .App.persona-menu .section:is(.about, .projects, .testimonials, .contact) .section-title::after {
+  display: none;
+  content: none;
+}
+
+html body .App.persona-menu.dark-hour-mode .section:is(.about, .projects, .testimonials, .contact) .section-title {
+  text-shadow: 2px 2px 0 #159b64;
+}
+
+html body .App.persona-menu .section.projects > .container > .section-subtitle {
+  text-align: left;
+  margin-inline: 0;
+}
+
+html body .App.persona-menu .section.contact .persona-comms__heading {
+  text-align: left;
+}
+
+html body .App.persona-menu .section.contact .persona-comms__heading .section-subtitle {
+  margin-inline: 0;
+  text-align: left;
+}
+
+@media (max-width: 700px) {
+  html body .App.persona-menu .section:is(.about, .projects, .testimonials, .contact) .section-title {
+    margin-bottom: 1.25rem;
+    font-size: clamp(2.15rem, 10vw, 3.4rem);
+    letter-spacing: -0.055em;
+  }
+}
+
+@media (max-width: 380px) {
+  html body .App.persona-menu .section:is(.about, .projects, .testimonials, .contact) .section-title {
+    font-size: clamp(1.85rem, 9.5vw, 2.2rem);
+    letter-spacing: -0.06em;
+  }
+}
+
 html .App.persona-menu .hero-name {
   color: var(--p3-white);
 }
