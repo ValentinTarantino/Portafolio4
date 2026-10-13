@@ -500,15 +500,18 @@
 
 @media (max-width: 700px) {
   .dark-hour-scene {
+    /* Keep one stable stage while mobile browser chrome expands/collapses. */
+    inset: 0 0 auto;
+    height: 100lvh;
     /* Shift the moon and tower into the open right column beside the hero copy. */
     --scene-mobile-focus-x: 78%;
     --scene-mobile-moon-focus-x: calc(var(--scene-mobile-focus-x) + 2.7vw);
-    --scene-mobile-moon-top: clamp(10rem, 25svh, 14rem);
+    --scene-mobile-moon-top: clamp(10rem, 25lvh, 14rem);
     --scene-mobile-moon-size: clamp(8rem, 39vw, 13rem);
-    --scene-mobile-city-height: clamp(15rem, 41svh, 25rem);
-    --scene-mobile-city-roofline: clamp(9.5rem, 26.1svh, 15.9rem);
-    --scene-mobile-tartarus-width: clamp(13rem, min(66vw, 34.3svh), 23rem);
-    --scene-mobile-tartarus-height: clamp(28rem, min(158.5vw, 73.4svh), 53.5rem);
+    --scene-mobile-city-height: clamp(15rem, 41lvh, 25rem);
+    --scene-mobile-city-roofline: clamp(9.5rem, 26.1lvh, 15.9rem);
+    --scene-mobile-tartarus-width: clamp(13rem, min(66vw, 34.3lvh), 23rem);
+    --scene-mobile-tartarus-height: clamp(28rem, min(158.5vw, 73.4lvh), 53.5rem);
   }
 
   .dark-hour-scene__moon {
@@ -521,11 +524,11 @@
   }
 
   .dark-hour-scene__city {
-    height: clamp(14rem, 32svh, 22rem);
+    height: clamp(14rem, 32lvh, 22rem);
   }
 
   .dark-hour-scene__city--far {
-    height: clamp(12rem, 29svh, 19rem);
+    height: clamp(12rem, 29lvh, 19rem);
     opacity: 0.34;
     filter: blur(0.8px) drop-shadow(0 -3px 12px rgba(53, 111, 145, 0.08));
     -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 34%, #000 100%);
@@ -533,7 +536,7 @@
   }
 
   .dark-hour-scene__city--mid {
-    height: clamp(13rem, 33svh, 21rem);
+    height: clamp(13rem, 33lvh, 21rem);
     opacity: 0.68;
     filter: blur(0.25px) drop-shadow(0 -3px 10px rgba(26, 74, 104, 0.08));
     -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 24%, #000 100%);
@@ -547,9 +550,9 @@
   }
 
   .dark-hour-scene__city-haze {
-    bottom: clamp(4rem, 10svh, 6.5rem);
+    bottom: clamp(4rem, 10lvh, 6.5rem);
     width: min(112vw, 36rem);
-    height: clamp(9rem, 26svh, 13rem);
+    height: clamp(9rem, 26lvh, 13rem);
     background:
       radial-gradient(ellipse 42% 72% at 50% 46%, rgba(50, 98, 126, 0.13), transparent 77%),
       radial-gradient(ellipse 100% 86% at 50% 78%, rgba(4, 13, 23, 0.28), transparent 88%);
@@ -586,13 +589,13 @@
   }
 
   .dark-hour-scene__tartarus {
-    --tartarus-rise-distance: clamp(16rem, 48svh, 26rem);
+    --tartarus-rise-distance: clamp(16rem, 48lvh, 26rem);
     --tartarus-active-opacity: 0.62;
     --tartarus-active-scale: 0.68;
     left: var(--scene-mobile-focus-x);
     right: auto;
     /* The SVG's footing now meets the tallest near-city roof at the shared focus axis. */
-    bottom: calc(var(--scene-mobile-city-roofline) - clamp(5rem, 11svh, 6.5rem));
+    bottom: calc(var(--scene-mobile-city-roofline) - clamp(5rem, 11lvh, 6.5rem));
     width: var(--scene-mobile-tartarus-width);
     height: var(--scene-mobile-tartarus-height);
     transform: translate3d(-50%, var(--tartarus-rise-distance), 0) scale(0.68);
@@ -726,13 +729,6 @@
   .dark-hour-scene__halo {
     transition: none !important;
     transform: none !important;
-  }
-}
-
-/* Keep the mobile tower anchored while browser chrome expands or collapses on scroll. */
-@media (max-width: 700px), (hover: none) and (pointer: coarse) {
-  .dark-hour-scene.is-mobile-scene .dark-hour-scene__tartarus {
-    transform: translate3d(-50%, 0, 0) scale(var(--tartarus-active-scale, 0.68)) !important;
   }
 }
 
