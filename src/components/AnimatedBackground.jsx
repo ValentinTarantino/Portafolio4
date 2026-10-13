@@ -126,7 +126,7 @@ const CityLayer = memo(({ buildings, depth, lightweight }) => {
     <svg
       className={`dark-hour-scene__city dark-hour-scene__city--${depth}`}
       viewBox="0 0 1600 420"
-      preserveAspectRatio="xMidYMax slice"
+      preserveAspectRatio={lightweight ? 'none' : 'xMidYMax slice'}
       focusable="false"
       aria-hidden="true"
     >

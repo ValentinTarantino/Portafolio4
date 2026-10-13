@@ -4,42 +4,42 @@
       <circle cx="150" cy="150" r="149" />
     </clipPath>
     <radialGradient id="mare-dark" cx="38%" cy="28%" r="82%">
-      <stop stop-color="#152c30" stop-opacity=".4" />
-      <stop offset=".58" stop-color="#253c3d" stop-opacity=".24" />
-      <stop offset="1" stop-color="#182e31" stop-opacity=".02" />
+      <stop stop-color="#285b4a" stop-opacity=".48" />
+      <stop offset=".58" stop-color="#356d55" stop-opacity=".3" />
+      <stop offset="1" stop-color="#285b4a" stop-opacity=".02" />
     </radialGradient>
     <radialGradient id="mare-light" cx="35%" cy="30%" r="78%">
-      <stop stop-color="#d8e5d9" stop-opacity=".28" />
-      <stop offset=".6" stop-color="#b5c9bb" stop-opacity=".15" />
-      <stop offset="1" stop-color="#b5c9bb" stop-opacity="0" />
+      <stop stop-color="#e8ffad" stop-opacity=".34" />
+      <stop offset=".6" stop-color="#a8dfa0" stop-opacity=".2" />
+      <stop offset="1" stop-color="#a8dfa0" stop-opacity="0" />
     </radialGradient>
     <radialGradient id="bowl-a" cx="38%" cy="28%" r="68%">
-      <stop stop-color="#263d3d" stop-opacity=".08" />
-      <stop offset=".36" stop-color="#304847" stop-opacity=".17" />
-      <stop offset=".68" stop-color="#1b3032" stop-opacity=".27" />
-      <stop offset=".88" stop-color="#1b3032" stop-opacity=".13" />
-      <stop offset="1" stop-color="#12262a" stop-opacity="0" />
+      <stop stop-color="#285b4a" stop-opacity=".08" />
+      <stop offset=".36" stop-color="#356d55" stop-opacity=".18" />
+      <stop offset=".68" stop-color="#183c32" stop-opacity=".3" />
+      <stop offset=".88" stop-color="#285b4a" stop-opacity=".15" />
+      <stop offset="1" stop-color="#122b25" stop-opacity="0" />
     </radialGradient>
     <radialGradient id="bowl-b" cx="26%" cy="25%" r="84%">
-      <stop stop-color="#52645b" stop-opacity=".04" />
-      <stop offset=".4" stop-color="#304442" stop-opacity=".09" />
-      <stop offset=".75" stop-color="#1a2d30" stop-opacity=".16" />
-      <stop offset="1" stop-color="#102326" stop-opacity="0" />
+      <stop stop-color="#a8dfa0" stop-opacity=".05" />
+      <stop offset=".4" stop-color="#356d55" stop-opacity=".1" />
+      <stop offset=".75" stop-color="#183c32" stop-opacity=".18" />
+      <stop offset="1" stop-color="#102b25" stop-opacity="0" />
     </radialGradient>
     <radialGradient id="basin-depth" cx="58%" cy="64%" r="68%">
-      <stop stop-color="#14292d" stop-opacity=".22" />
-      <stop offset=".58" stop-color="#1b3032" stop-opacity=".13" />
-      <stop offset="1" stop-color="#1b3032" stop-opacity="0" />
+      <stop stop-color="#285b4a" stop-opacity=".24" />
+      <stop offset=".58" stop-color="#183c32" stop-opacity=".15" />
+      <stop offset="1" stop-color="#183c32" stop-opacity="0" />
     </radialGradient>
     <radialGradient id="bowl-small" cx="28%" cy="18%" r="92%">
-      <stop stop-color="#475c53" stop-opacity=".05" />
-      <stop offset=".56" stop-color="#22383a" stop-opacity=".12" />
-      <stop offset="1" stop-color="#14292d" stop-opacity="0" />
+      <stop stop-color="#e8ffad" stop-opacity=".06" />
+      <stop offset=".56" stop-color="#356d55" stop-opacity=".14" />
+      <stop offset="1" stop-color="#183c32" stop-opacity="0" />
     </radialGradient>
     <linearGradient id="lit-slope-a" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#e1eee2" stop-opacity=".18" />
-      <stop offset=".55" stop-color="#bfcec2" stop-opacity=".08" />
-      <stop offset="1" stop-color="#b7c7bb" stop-opacity="0" />
+      <stop stop-color="#e8ffad" stop-opacity=".2" />
+      <stop offset=".55" stop-color="#a8dfa0" stop-opacity=".09" />
+      <stop offset="1" stop-color="#6faf83" stop-opacity="0" />
     </linearGradient>
     <filter id="soft-terrain" x="-18%" y="-18%" width="136%" height="136%">
       <feGaussianBlur stdDeviation="5" />
