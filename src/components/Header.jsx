@@ -78,7 +78,7 @@ const ArgentinaClock = ({ isDarkHour }) => {
   );
 };
 
-const Header = ({ t, language, toggleLanguage, isDarkHour }) => {
+const Header = ({ t, language, toggleLanguage, isDarkHour, sceneQuality, onSceneQualityChange }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
@@ -198,8 +198,41 @@ const Header = ({ t, language, toggleLanguage, isDarkHour }) => {
     >
       <div className="container">
         <div className="header-content">
-          <div className="header-clock">
-            <ArgentinaClock isDarkHour={isDarkHour} />
+          <div className="header-brand">
+            <div className="header-clock">
+              <ArgentinaClock isDarkHour={isDarkHour} />
+            </div>
+            <fieldset className="scene-quality-control">
+              <legend className="scene-quality-control__caption">
+                {language === 'es' ? 'CALIDAD DEL FONDO' : 'SCENE QUALITY'}
+              </legend>
+              <label
+                className={`scene-quality-control__option${sceneQuality === 'optimized' ? ' is-selected' : ''}`}
+                title={language === 'es' ? 'Menos efectos para un uso más ligero' : 'Fewer effects for a lighter experience'}
+              >
+                <input
+                  type="radio"
+                  name="scene-quality"
+                  value="optimized"
+                  checked={sceneQuality === 'optimized'}
+                  onChange={() => onSceneQualityChange('optimized')}
+                />
+                <span>{language === 'es' ? 'Ligera' : 'Light'}</span>
+              </label>
+              <label
+                className={`scene-quality-control__option${sceneQuality === 'full' ? ' is-selected' : ''}`}
+                title={language === 'es' ? 'Activa en mobile los efectos completos de desktop' : 'Enables full desktop effects on mobile'}
+              >
+                <input
+                  type="radio"
+                  name="scene-quality"
+                  value="full"
+                  checked={sceneQuality === 'full'}
+                  onChange={() => onSceneQualityChange('full')}
+                />
+                <span>{language === 'es' ? 'Completa' : 'Full'}</span>
+              </label>
+            </fieldset>
           </div>
 
           <nav id="primary-navigation" className={`nav ${isMenuOpen ? 'nav-open' : ''}`} aria-label={t.nav.menu || 'Navegación principal'}>

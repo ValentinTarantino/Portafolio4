@@ -136,18 +136,20 @@ const CityLayer = memo(({ buildings, depth, lightweight }) => {
   );
 });
 
-const AnimatedBackground = ({ isDarkHour = false }) => {
+const AnimatedBackground = ({ isDarkHour = false, quality = 'optimized' }) => {
   const sceneRef = useRef(null);
   const canvasRef = useRef(null);
   const drawRef = useRef(null);
   const heroActiveRef = useRef(false);
-  const [lightweightScene, setLightweightScene] = useState(() => window.matchMedia(MOBILE_SCENE_QUERY).matches);
+  const [isMobileViewport, setIsMobileViewport] = useState(() => window.matchMedia(MOBILE_SCENE_QUERY).matches);
+  const lightweightScene = isMobileViewport && quality !== 'full';
+  const fullQualityOnMobile = isMobileViewport && quality === 'full';
   const modeRef = useRef(isDarkHour);
   modeRef.current = isDarkHour;
 
   useEffect(() => {
     const query = window.matchMedia(MOBILE_SCENE_QUERY);
-    const updateSceneMode = () => setLightweightScene(query.matches);
+    const updateSceneMode = () => setIsMobileViewport(query.matches);
     if (query.addEventListener) query.addEventListener('change', updateSceneMode);
     else query.addListener?.(updateSceneMode);
     return () => {
@@ -229,8 +231,8 @@ const AnimatedBackground = ({ isDarkHour = false }) => {
     let pointerX = 0;
     let pointerY = 0;
 
-    const lowPowerDevice = (navigator.deviceMemory || 8) <= 4
-      || (navigator.hardwareConcurrency || 8) <= 4;
+    const lowPowerDevice = !fullQualityOnMobile && ((navigator.deviceMemory || 8) <= 4
+      || (navigator.hardwareConcurrency || 8) <= 4);
 
     const createParticles = () => {
       const desktopCount = Math.min(
@@ -241,7 +243,7 @@ const AnimatedBackground = ({ isDarkHour = false }) => {
         lowPowerDevice ? 8 : 12,
         Math.max(lowPowerDevice ? 6 : 8, Math.round(width / (lowPowerDevice ? 52 : 38))),
       );
-      const count = finePointer.matches ? desktopCount : mobileCount;
+      const count = finePointer.matches || fullQualityOnMobile ? desktopCount : mobileCount;
       particles = Array.from({ length: count }, () => ({
         x: random(0, width),
         y: random(0, height),
@@ -259,11 +261,12 @@ const AnimatedBackground = ({ isDarkHour = false }) => {
     const resize = () => {
       width = window.innerWidth;
       height = window.innerHeight;
+      const desktopQuality = finePointer.matches || fullQualityOnMobile;
       pixelRatio = Math.min(
         window.devicePixelRatio || 1,
-        finePointer.matches ? (lowPowerDevice ? 1.25 : 1.5) : (lowPowerDevice ? 1 : 1.25),
+        desktopQuality ? (lowPowerDevice ? 1.25 : 1.5) : (lowPowerDevice ? 1 : 1.25),
       );
-      frameInterval = finePointer.matches
+      frameInterval = desktopQuality
         ? (lowPowerDevice ? 1000 / 30 : 1000 / 40)
         : (lowPowerDevice ? 1000 / 24 : 1000 / 30);
       canvas.width = Math.round(width * pixelRatio);
@@ -381,7 +384,7 @@ const AnimatedBackground = ({ isDarkHour = false }) => {
       document.removeEventListener('visibilitychange', onVisibilityChange);
       motionPreference.removeEventListener?.('change', onMotionPreferenceChange);
     };
-  }, [lightweightScene]);
+  }, [lightweightScene, fullQualityOnMobile]);
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -390,7 +393,7 @@ const AnimatedBackground = ({ isDarkHour = false }) => {
   }, [isDarkHour]);
 
   return (
-    <div className={`dark-hour-scene is-hero-active${isDarkHour ? ' is-dark-hour' : ''}${lightweightScene ? ' is-mobile-scene' : ''}`} ref={sceneRef} aria-hidden="true">
+    <div className={`dark-hour-scene is-hero-active${isDarkHour ? ' is-dark-hour' : ''}${lightweightScene ? ' is-mobile-scene' : ''}${fullQualityOnMobile ? ' is-full-quality' : ''}`} ref={sceneRef} aria-hidden="true">
       <div className="dark-hour-scene__sky" />
       <div className="dark-hour-scene__halo dark-hour-scene__halo--horizon" />
       <div className="dark-hour-scene__moon-field">

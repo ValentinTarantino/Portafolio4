@@ -552,23 +552,23 @@
   }
 
   /* Five reusable roof profiles add skyline variety without adding DOM nodes. */
-  .dark-hour-scene.is-mobile-scene .dark-hour-scene__building[data-roof="0"] {
+  .dark-hour-scene:is(.is-mobile-scene, .is-full-quality) .dark-hour-scene__building[data-roof="0"] {
     clip-path: polygon(0 8%, 18% 8%, 18% 1%, 45% 1%, 45% 8%, 76% 8%, 76% 3%, 100% 3%, 100% 100%, 0 100%);
   }
 
-  .dark-hour-scene.is-mobile-scene .dark-hour-scene__building[data-roof="1"] {
+  .dark-hour-scene:is(.is-mobile-scene, .is-full-quality) .dark-hour-scene__building[data-roof="1"] {
     clip-path: polygon(0 12%, 28% 12%, 28% 5%, 48% 5%, 48% 0, 72% 0, 72% 10%, 100% 10%, 100% 100%, 0 100%);
   }
 
-  .dark-hour-scene.is-mobile-scene .dark-hour-scene__building[data-roof="2"] {
+  .dark-hour-scene:is(.is-mobile-scene, .is-full-quality) .dark-hour-scene__building[data-roof="2"] {
     clip-path: polygon(0 3%, 58% 3%, 58% 11%, 78% 11%, 78% 0, 100% 0, 100% 100%, 0 100%);
   }
 
-  .dark-hour-scene.is-mobile-scene .dark-hour-scene__building[data-roof="3"] {
+  .dark-hour-scene:is(.is-mobile-scene, .is-full-quality) .dark-hour-scene__building[data-roof="3"] {
     clip-path: polygon(0 0, 26% 0, 26% 8%, 64% 8%, 64% 14%, 100% 14%, 100% 100%, 0 100%);
   }
 
-  .dark-hour-scene.is-mobile-scene .dark-hour-scene__building[data-roof="4"] {
+  .dark-hour-scene:is(.is-mobile-scene, .is-full-quality) .dark-hour-scene__building[data-roof="4"] {
     clip-path: polygon(0 10%, 24% 10%, 24% 4%, 41% 4%, 41% 10%, 69% 10%, 69% 0, 89% 0, 89% 7%, 100% 7%, 100% 100%, 0 100%);
   }
 
@@ -957,5 +957,77 @@
     transform: translate3d(-50%, 0, 0) scale(0.68);
     filter: none !important;
     transition: opacity 500ms ease;
+  }
+}
+
+/* Explicit opt-in: restore the desktop scene effects on mobile while keeping
+   the mobile composition and responsive element positions. */
+@media (max-width: 700px), (hover: none) and (pointer: coarse) {
+  .dark-hour-scene.is-full-quality .dark-hour-scene__halo--horizon,
+  .dark-hour-scene.is-full-quality .dark-hour-scene__mist,
+  .dark-hour-scene.is-full-quality .dark-hour-scene__distant-lights,
+  .dark-hour-scene.is-full-quality .dark-hour-scene__city-haze,
+  .dark-hour-scene.is-full-quality .dark-hour-scene__particles {
+    display: block !important;
+  }
+
+  .dark-hour-scene.is-full-quality .dark-hour-scene__moon {
+    animation: dark-hour-moon-breathe 17s ease-in-out infinite alternate !important;
+    box-shadow:
+      0 0 48px rgba(205, 232, 249, 0.24),
+      0 0 110px rgba(167, 211, 239, 0.15),
+      inset 8px 7px 22px rgba(255, 255, 255, 0.22),
+      inset -15px -12px 30px rgba(5, 22, 37, 0.35);
+  }
+
+  .dark-hour-scene.is-full-quality.is-dark-hour .dark-hour-scene__moon {
+    box-shadow:
+      0 0 38px rgba(101, 201, 140, 0.28),
+      0 0 92px rgba(71, 123, 92, 0.2),
+      inset 8px 7px 22px rgba(244, 255, 214, 0.2),
+      inset -15px -12px 30px rgba(20, 39, 23, 0.32);
+  }
+
+  .dark-hour-scene.is-full-quality .dark-hour-scene__moon::before {
+    display: block !important;
+  }
+
+  .dark-hour-scene.is-full-quality .dark-hour-scene__city--far {
+    filter: blur(0.6px) drop-shadow(0 -2px 8px rgba(45, 107, 145, 0.07)) !important;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 34%, #000 100%);
+    mask-image: linear-gradient(180deg, transparent 0%, #000 34%, #000 100%);
+  }
+
+  .dark-hour-scene.is-full-quality .dark-hour-scene__city--mid {
+    filter: blur(0.2px) drop-shadow(0 -2px 7px rgba(45, 107, 145, 0.06)) !important;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 24%, #000 100%);
+    mask-image: linear-gradient(180deg, transparent 0%, #000 24%, #000 100%);
+  }
+
+  .dark-hour-scene.is-full-quality .dark-hour-scene__city--near {
+    filter: drop-shadow(0 -1px 5px rgba(36, 87, 121, 0.055)) !important;
+  }
+
+  .dark-hour-scene.is-full-quality .dark-hour-scene__building::before,
+  .dark-hour-scene.is-full-quality .dark-hour-scene__building::after {
+    display: block !important;
+  }
+
+  .dark-hour-scene.is-full-quality.is-dark-hour .dark-hour-scene__city--far {
+    opacity: 0.43;
+    filter: blur(0.6px) drop-shadow(0 -2px 8px rgba(30, 70, 43, 0.08)) !important;
+  }
+
+  .dark-hour-scene.is-full-quality.is-dark-hour .dark-hour-scene__city--mid {
+    opacity: 0.64;
+    filter: blur(0.2px) drop-shadow(0 -2px 7px rgba(19, 48, 31, 0.1)) !important;
+  }
+
+  .dark-hour-scene.is-full-quality.is-dark-hour .dark-hour-scene__city--near {
+    filter: drop-shadow(0 -1px 5px rgba(1, 7, 5, 0.2)) !important;
+  }
+
+  .dark-hour-scene.is-full-quality.is-dark-hour .dark-hour-scene__tartarus {
+    filter: blur(0) drop-shadow(0 0 2px rgba(0, 5, 3, 0.36)) drop-shadow(0 0 14px rgba(60, 120, 78, 0.08)) !important;
   }
 }

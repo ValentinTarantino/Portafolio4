@@ -27,6 +27,13 @@ function App() {
     }
   });
   const [isDarkHour, setIsDarkHour] = useState(() => isArgentinaDarkHour());
+  const [sceneQuality, setSceneQuality] = useState(() => {
+    try {
+      return window.localStorage.getItem('persona-scene-quality') === 'full' ? 'full' : 'optimized';
+    } catch {
+      return 'optimized';
+    }
+  });
   const [terminalMount, setTerminalMount] = useState(null);
   const t = translations[language];
 
@@ -38,6 +45,14 @@ function App() {
       // The selected language remains available for the current session.
     }
   }, [language]);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem('persona-scene-quality', sceneQuality);
+    } catch {
+      // The selected quality remains available for the current session.
+    }
+  }, [sceneQuality]);
 
   useEffect(() => {
     const syncDarkHour = () => {
@@ -63,12 +78,14 @@ function App() {
 
   return (
     <div className={`App persona-menu${isDarkHour ? ' dark-hour-mode' : ''}`}>
-      <AnimatedBackground isDarkHour={isDarkHour} />
+      <AnimatedBackground isDarkHour={isDarkHour} quality={sceneQuality} />
       <Header
         t={t}
         language={language}
         toggleLanguage={toggleLanguage}
         isDarkHour={isDarkHour}
+        sceneQuality={sceneQuality}
+        onSceneQualityChange={setSceneQuality}
       />
       <Hero t={t} language={language} terminalMount={terminalMount} />
       <About t={t} />
