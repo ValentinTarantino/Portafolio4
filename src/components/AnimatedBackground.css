@@ -385,6 +385,14 @@
   pointer-events: none;
 }
 
+.dark-hour-scene.is-dark-hour :is(
+  .dark-hour-scene__street-car,
+  .dark-hour-scene__street-lamp,
+  .dark-hour-scene__window-lights
+) {
+  display: none !important;
+}
+
 .dark-hour-scene__street-road { fill: url(#street-road); }
 
 .dark-hour-scene__street-curb {
@@ -743,7 +751,7 @@
     height: 100lvh;
     /* Shift the moon and tower into the open right column beside the hero copy. */
     --scene-mobile-focus-x: 79%;
-    --scene-mobile-moon-focus-x: calc(var(--scene-mobile-focus-x) + 2.7vw);
+    --scene-mobile-moon-focus-x: calc(var(--scene-mobile-focus-x) - 3vw);
     --scene-mobile-moon-top: clamp(10rem, 25lvh, 14rem);
     --scene-mobile-moon-size: clamp(8rem, 39vw, 13rem);
     --scene-mobile-city-height: clamp(16rem, 45lvh, 27rem);
@@ -1274,9 +1282,13 @@
     filter: drop-shadow(0 -1px 5px rgba(36, 87, 121, 0.055)) !important;
   }
 
+  .dark-hour-scene.is-full-quality .dark-hour-scene__window-lights {
+    display: block !important;
+  }
+
   .dark-hour-scene.is-full-quality .dark-hour-scene__building::before,
   .dark-hour-scene.is-full-quality .dark-hour-scene__building::after {
-    display: block !important;
+    display: none !important;
   }
 
   .dark-hour-scene.is-full-quality.is-dark-hour .dark-hour-scene__city--far {

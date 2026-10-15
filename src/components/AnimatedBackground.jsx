@@ -277,6 +277,11 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
       }
 
       if (motionPreference.matches) return;
+      if (modeRef.current) {
+        shootingStar = null;
+        nextShootingStarAt = motionTime + random(20, 38);
+        return;
+      }
       if (!shootingStar && motionTime >= nextShootingStarAt) {
         const moonRect = scene.querySelector('.dark-hour-scene__moon')?.getBoundingClientRect();
         const moonX = moonRect ? moonRect.left + moonRect.width / 2 : -1000;
@@ -448,7 +453,7 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
       <div className="dark-hour-scene__city-haze" />
       <CityLayer buildings={CITY_NEAR} depth="near" lightweight={lightweightScene} />
       <CityStreet />
-      <CityWindowLights timeOfDay={timeOfDay} enabled={!lightweightScene} />
+      <CityWindowLights timeOfDay={timeOfDay} enabled={!lightweightScene && !isDarkHour} />
       <canvas className="dark-hour-scene__particles" ref={canvasRef} />
       <div className="dark-hour-scene__vignette" />
     </div>
