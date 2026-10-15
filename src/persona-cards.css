@@ -787,6 +787,56 @@
   }
 }
 
+/* Keep every label and sentence fully visible at narrow widths. */
+.App.persona-menu .about-content > .about-main > .education-card,
+.App.persona-menu .about-content > .about-sidebar > .education-card {
+  overflow: visible;
+}
+
+.App.persona-menu .about-content .education-card > .education-item,
+.App.persona-menu .about-content .education-card > .education-item .education-header,
+.App.persona-menu .about-content .education-card > .education-item .education-header h4,
+.App.persona-menu .about-content .education-card .card-title,
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-item,
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-item span {
+  min-width: 0;
+  overflow: visible;
+  overflow-wrap: anywhere;
+  clip-path: none;
+}
+
+.App.persona-menu .about-content .education-card > .education-item .education-header h4 {
+  flex: 1 1 12rem;
+}
+
+.App.persona-menu .about-content .education-card > .education-item .completion-badge {
+  white-space: normal;
+  text-align: center;
+}
+
+.App.persona-menu .about-content .education-card .timeline {
+  flex-wrap: wrap;
+}
+
+.App.persona-menu .about-content .education-card .timeline-line {
+  flex: 1 1 2rem;
+  min-width: 1.5rem;
+}
+
+.App.persona-menu .about-content .education-card .date-start,
+.App.persona-menu .about-content .education-card .date-end {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.App.persona-menu .developer-card .role-tags .tag {
+  clip-path: none;
+}
+
+.App.persona-menu .developer-card .description-box::before {
+  clip-path: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .App.persona-menu .developer-card,
   .App.persona-menu .education-card,
@@ -927,4 +977,2889 @@
   .App.persona-menu .developer-card .profile-statement {
     font-size: 0.98rem;
   }
+}
+
+/* About section as one connected character dossier. */
+.App.persona-menu .about-content {
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.95fr);
+  grid-template-areas:
+    'profile profile'
+    'experience education'
+    'traits traits';
+  align-items: stretch;
+  gap: 1.15rem;
+}
+
+.App.persona-menu .about-main,
+.App.persona-menu .about-sidebar {
+  display: contents;
+}
+
+.App.persona-menu .about-main > .developer-card {
+  grid-area: profile;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child {
+  grid-area: experience;
+}
+
+.App.persona-menu .about-main > .education-card {
+  grid-area: education;
+}
+
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) {
+  grid-area: traits;
+  margin-top: 0 !important;
+}
+
+.App.persona-menu .about-main > .developer-card {
+  padding: clamp(1.5rem, 3vw, 2.4rem);
+}
+
+.App.persona-menu .developer-card .developer-info {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: clamp(1.25rem, 3vw, 2.4rem);
+}
+
+.App.persona-menu .developer-card .dev-name {
+  max-width: 12ch;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  line-height: 0.98;
+}
+
+.App.persona-menu .profile-identity-label {
+  max-width: 15ch;
+}
+
+.App.persona-menu .profile-arcana-card {
+  flex-basis: 44px;
+  width: 44px;
+  height: 56px;
+  font-size: 1.35rem;
+}
+
+.App.persona-menu .about-content .education-card {
+  height: 100%;
+  padding: 1.35rem;
+}
+
+.App.persona-menu .about-content .education-card .card-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 1.2rem;
+  color: var(--p3-cyan);
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: 0.83rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.App.persona-menu .about-main > .education-card .card-title::after,
+.App.persona-menu .about-sidebar > .education-card:first-child .card-title::after,
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) .card-title::after {
+  margin-left: auto;
+  color: var(--p3-muted);
+  font: 700 0.59rem/1 'Inter', sans-serif;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .card-title::after {
+  content: 'RECORD / 01';
+  color: var(--p3-accent);
+}
+
+.App.persona-menu .about-main > .education-card .card-title::after {
+  content: 'RECORD / 02';
+}
+
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) .card-title::after {
+  content: 'CORE TRAITS';
+}
+
+.App.persona-menu .about-content .education-card > .education-item {
+  position: relative;
+  margin: 0 0 1.15rem 0.2rem;
+  padding-left: 1rem;
+  border-left: 1px solid rgba(82, 221, 255, 0.28);
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item {
+  border-left-color: rgba(255, 61, 97, 0.42);
+}
+
+.App.persona-menu .about-content .education-card > .education-item::before {
+  position: absolute;
+  top: 0.28rem;
+  left: -4px;
+  width: 7px;
+  height: 7px;
+  border: 1px solid #071b38;
+  background: var(--p3-cyan);
+  content: '';
+  transform: rotate(45deg);
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item::before {
+  background: var(--p3-accent);
+}
+
+.App.persona-menu .about-content .education-divider {
+  display: none !important;
+}
+
+.App.persona-menu .about-content .timeline {
+  gap: 0.55rem;
+}
+
+.App.persona-menu .about-content .date-start,
+.App.persona-menu .about-content .date-end {
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+.App.persona-menu .about-content .experience-bullets {
+  gap: 0.55rem;
+  margin-top: 0.75rem;
+}
+
+.App.persona-menu .about-content .experience-bullets li {
+  padding-left: 0.9rem;
+  font-size: 0.82rem;
+}
+
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin: 0;
+}
+
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-item {
+  min-width: 0;
+  min-height: 60px;
+  padding: 0.6rem 0.75rem;
+  border-color: rgba(82, 221, 255, 0.16);
+  border-radius: 3px 10px 3px 8px;
+  background: rgba(5, 19, 38, 0.5);
+}
+
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 3px 8px 3px 7px;
+}
+
+@media (max-width: 900px) {
+  .App.persona-menu .about-content {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'profile'
+      'experience'
+      'education'
+      'traits';
+    gap: 1rem;
+  }
+
+  .App.persona-menu .developer-card .developer-info {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  }
+
+  .App.persona-menu .about-main > .education-card,
+  .App.persona-menu .about-sidebar > .education-card {
+    height: auto;
+  }
+}
+
+@media (min-width: 901px) {
+  .App.persona-menu .about-sidebar > .education-card:nth-child(2) {
+    margin-top: -6rem !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .App.persona-menu .developer-card .developer-info {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.2rem;
+  }
+
+  .App.persona-menu .developer-card .dev-name {
+    max-width: 14ch;
+    font-size: clamp(2.1rem, 10vw, 3rem);
+  }
+
+  .App.persona-menu .about-content .education-card {
+    padding: 1.1rem;
+  }
+
+  .App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+@media (max-width: 360px) {
+  .App.persona-menu .profile-identity-label {
+    max-width: 10ch;
+    font-size: 0.52rem;
+  }
+
+  .App.persona-menu .profile-arcana-card {
+    flex-basis: 36px;
+    width: 36px;
+    height: 48px;
+  }
+
+  .App.persona-menu .about-content .education-card > .education-item {
+    padding-left: 0.75rem;
+  }
+
+  .App.persona-menu .about-content .date-start,
+  .App.persona-menu .about-content .date-end {
+    font-size: 0.66rem;
+  }
+}
+
+/* Stronger diagonal rhythm across the About dossier. */
+.App.persona-menu .about-main > .developer-card {
+  border-radius: 0 24px 0 18px;
+  background-image: linear-gradient(118deg, #10559f 0 25%, #07111e 25% 100%);
+}
+
+.App.persona-menu .about-main > .developer-card::before {
+  height: 5px;
+  clip-path: polygon(0 0, 100% 0, 96% 100%, 0 100%);
+}
+
+.App.persona-menu .about-main > .developer-card::after {
+  top: 0;
+  right: 0;
+  width: 112px;
+  height: 26px;
+  background: linear-gradient(90deg, transparent, rgba(82, 221, 255, 0.32));
+  clip-path: polygon(18% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.App.persona-menu .developer-card .name-section::before {
+  clip-path: polygon(0 0, 100% 0, 86% 100%, 0 100%);
+}
+
+.App.persona-menu .developer-card .role-tags .tag {
+  clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+}
+
+.App.persona-menu .developer-card .description-box {
+  isolation: isolate;
+  position: relative;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  clip-path: none;
+}
+
+.App.persona-menu .developer-card .description-box::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-left: 5px solid #1f7dd0;
+  background: #f1f5fb;
+  clip-path: polygon(7% 0, 100% 0, 93% 100%, 0 100%);
+  content: '';
+}
+
+.App.persona-menu .developer-card .description-box::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 27%;
+  height: 4px;
+  background: var(--p3-accent);
+  clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%);
+  content: '';
+}
+
+.App.persona-menu .developer-card .profile-statement {
+  transform: skewX(-4deg);
+  transform-origin: left center;
+}
+
+.App.persona-menu .about-content .education-card {
+  border-radius: 0 17px 0 12px;
+  background-image: linear-gradient(132deg, rgba(17, 55, 99, 0.98), rgba(5, 15, 31, 0.98));
+}
+
+.App.persona-menu .about-content .education-card .card-title {
+  clip-path: polygon(0 0, 100% 0, 96% 100%, 0 100%);
+}
+
+.App.persona-menu .about-content .education-card > .education-item .education-header {
+  position: relative;
+  isolation: isolate;
+  min-height: 40px;
+  padding: 0.55rem 0.7rem;
+}
+
+.App.persona-menu .about-content .education-card > .education-item .education-header::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: #edf3fa;
+  clip-path: polygon(0 0, 100% 0, 94% 100%, 0 100%);
+  content: '';
+}
+
+.App.persona-menu .about-content .education-card > .education-item .education-header h4 {
+  color: #101d31;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item .education-header::before {
+  background: linear-gradient(105deg, #f3f6fb 0 93%, #ff4964 93% 100%);
+}
+
+.App.persona-menu .about-content .education-card > .education-item .completion-badge {
+  position: relative;
+  z-index: 1;
+  background: #0c579b;
+  border-color: #0c579b;
+  color: #f3fbff;
+}
+
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-item {
+  clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+}
+
+@media (max-width: 600px) {
+  .App.persona-menu .developer-card .description-box::before {
+    clip-path: polygon(3% 0, 100% 0, 97% 100%, 0 100%);
+  }
+
+  .App.persona-menu .developer-card .profile-statement {
+    transform: skewX(-2deg);
+  }
+
+  .App.persona-menu .about-content .education-card .card-title {
+    clip-path: polygon(0 0, 100% 0, 97% 100%, 0 100%);
+  }
+}
+
+/* About becomes a Persona-style status screen with angular stat bands. */
+.App.persona-menu .about-main > .developer-card {
+  overflow: hidden;
+  border: 1px solid rgba(112, 201, 255, 0.55);
+  border-radius: 4px 26px 4px 15px;
+  background-color: #07111e;
+  background-image: linear-gradient(118deg, rgba(13, 84, 157, 0.96) 0 24%, rgba(7, 17, 30, 0.98) 24% 100%);
+  box-shadow: 0 0 0 1px rgba(6, 20, 40, 0.9), 7px 8px 0 rgba(2, 8, 20, 0.76);
+  transform: skewY(-1.35deg);
+  transform-origin: center;
+  margin-block: 1.1rem 2.7rem;
+}
+
+.App.persona-menu .about-main > .developer-card::before {
+  width: min(58%, 420px);
+  height: 4px;
+  background: linear-gradient(90deg, var(--p3-accent) 0 22%, #f4f8ff 22% 86%, var(--p3-cyan));
+}
+
+.App.persona-menu .about-main > .developer-card::after {
+  width: 100px;
+  height: 24px;
+  background: linear-gradient(90deg, transparent, rgba(82, 221, 255, 0.32));
+}
+
+.App.persona-menu .developer-card .card-header {
+  margin-bottom: 1.15rem;
+}
+
+.App.persona-menu .developer-card .status-indicator {
+  padding: 0.4rem 0.7rem;
+  border: 1px solid rgba(143, 230, 193, 0.3);
+  background: rgba(3, 14, 28, 0.55);
+  clip-path: polygon(0 0, 100% 0, 92% 100%, 0 100%);
+}
+
+.App.persona-menu .developer-card .name-section {
+  isolation: isolate;
+  padding: 1rem 1.05rem 1.1rem;
+}
+
+.App.persona-menu .developer-card .name-section::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(7, 37, 95, 0.96), rgba(13, 101, 180, 0.86));
+  clip-path: polygon(0 0, 100% 0, 91% 100%, 0 100%);
+  content: '';
+}
+
+.App.persona-menu .developer-card .dev-name {
+  max-width: 11ch;
+  margin: 0;
+  color: #f6fbff;
+  font-family: Impact, 'Arial Narrow', 'Outfit', sans-serif;
+  font-size: clamp(2.7rem, 5.2vw, 4.3rem);
+  font-style: italic;
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  background: none;
+  -webkit-text-fill-color: #f6fbff;
+  text-shadow: 3px 3px 0 #0c3974;
+  text-transform: uppercase;
+}
+
+.App.persona-menu .developer-card .role-tags {
+  gap: 0.45rem;
+  margin-top: 0.15rem;
+}
+
+.App.persona-menu .developer-card .role-tags .tag {
+  min-height: 30px;
+  border-radius: 2px;
+  font-size: 0.68rem;
+}
+
+.App.persona-menu .developer-card .role-tags .tag.primary {
+  border-bottom: 3px solid var(--p3-accent);
+}
+
+.App.persona-menu .developer-card .description-box {
+  padding: 1.35rem 1.55rem;
+  border: 0;
+  border-left: 5px solid #1f7dd0;
+  border-radius: 0;
+  background: #f1f5fb;
+  box-shadow: 5px 5px 0 rgba(255, 61, 97, 0.9);
+  clip-path: polygon(0 0, 100% 0, 96% 100%, 0 100%);
+}
+
+.App.persona-menu .developer-card .profile-statement {
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 2px solid #d0d8e4;
+  color: #07549a;
+  font-family: Impact, 'Arial Narrow', 'Outfit', sans-serif;
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  font-style: italic;
+  font-weight: 800;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.App.persona-menu .developer-card .description-box p:not(.profile-statement) {
+  color: #1d2b40;
+  font-size: 0.9rem;
+  font-weight: 550;
+  line-height: 1.6;
+}
+
+.App.persona-menu .about-content .education-card {
+  overflow: hidden;
+  border: 1px solid rgba(100, 177, 231, 0.4);
+  border-radius: 3px 17px 3px 12px;
+  background-color: #07111e;
+  background-image: linear-gradient(145deg, rgba(14, 43, 78, 0.96), rgba(5, 15, 31, 0.98));
+  box-shadow: 4px 5px 0 rgba(3, 11, 25, 0.75);
+}
+
+.App.persona-menu .about-content .education-card .card-title {
+  position: relative;
+  min-height: 48px;
+  width: calc(100% + 2.7rem);
+  margin: -1.35rem -1.35rem 1.25rem;
+  padding: 0.8rem 1.35rem;
+  border-bottom: 3px solid var(--p3-cyan);
+  background: linear-gradient(105deg, #080e1b 0 84%, #115ca9 84% 100%);
+  color: #f5f9ff;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .card-title {
+  border-bottom-color: var(--p3-accent);
+}
+
+.App.persona-menu .about-content .education-card > .education-item {
+  margin-bottom: 1.3rem;
+  border-left-color: rgba(82, 221, 255, 0.56);
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item {
+  border-left-color: rgba(255, 61, 97, 0.68);
+}
+
+.App.persona-menu .about-content .education-card > .education-item::before {
+  width: 8px;
+  height: 8px;
+  border: 0;
+  background: var(--p3-cyan);
+  box-shadow: 0 0 0 2px rgba(7, 17, 30, 0.85);
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item::before {
+  background: var(--p3-accent);
+}
+
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-item {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(138, 205, 245, 0.25);
+  border-radius: 2px 8px 2px 6px;
+  background: #edf3fa;
+  color: #10233c;
+}
+
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-item span {
+  color: #142c48;
+  font-size: 0.8rem;
+  font-weight: 750;
+}
+
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-icon {
+  background: #0d5ba5;
+  color: #ffffff;
+}
+
+@media (max-width: 900px) {
+  .App.persona-menu .developer-card .dev-name {
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+  }
+
+}
+
+@media (max-width: 600px) {
+  .App.persona-menu .about-main > .developer-card {
+    padding: 1.15rem;
+    transform: skewY(-0.7deg);
+    margin-block: 0.6rem 1.8rem;
+  }
+
+  .App.persona-menu .developer-card .developer-info {
+    gap: 1rem;
+  }
+
+  .App.persona-menu .developer-card .name-section {
+    padding: 0.9rem;
+  }
+
+  .App.persona-menu .developer-card .dev-name {
+    max-width: 12ch;
+    font-size: clamp(2.35rem, 10vw, 3.25rem);
+  }
+
+  .App.persona-menu .developer-card .description-box {
+    padding: 1rem 1.05rem;
+  }
+
+  .App.persona-menu .about-content .education-card .card-title {
+    width: calc(100% + 2.2rem);
+    margin: -1.1rem -1.1rem 1.1rem;
+    padding: 0.75rem 1.1rem;
+  }
+}
+
+/* About dossier cards: bold Persona-style frames and readable data panels. */
+.App.persona-menu .about-content > .about-main > .education-card,
+.App.persona-menu .about-content > .about-sidebar > .education-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid rgba(82, 221, 255, 0.48);
+  border-radius: 2px 22px 2px 12px;
+  background:
+    linear-gradient(135deg, rgba(18, 75, 132, 0.42), transparent 42%),
+    repeating-linear-gradient(135deg, rgba(82, 221, 255, 0.025) 0 1px, transparent 1px 8px),
+    #07111e;
+  box-shadow: 7px 8px 0 rgba(2, 8, 20, 0.84), inset 0 0 0 1px rgba(255, 255, 255, 0.025);
+}
+
+.App.persona-menu .about-content > .about-main > .education-card::before,
+.App.persona-menu .about-content > .about-sidebar > .education-card::before {
+  z-index: 3;
+  top: 0;
+  left: 0;
+  right: auto;
+  width: 44%;
+  height: 5px;
+  background: linear-gradient(90deg, var(--p3-accent) 0 38%, var(--p3-cyan) 38% 78%, transparent);
+  clip-path: polygon(0 0, 100% 0, 94% 100%, 0 100%);
+}
+
+.App.persona-menu .about-content > .about-main > .education-card::after,
+.App.persona-menu .about-content > .about-sidebar > .education-card::after {
+  z-index: -1;
+  top: auto;
+  right: 0;
+  bottom: 0;
+  width: 68px;
+  height: 68px;
+  background: linear-gradient(135deg, transparent 48%, rgba(82, 221, 255, 0.2) 49% 53%, transparent 54%);
+  clip-path: none;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child {
+  border-color: rgba(255, 61, 97, 0.62);
+  background:
+    linear-gradient(135deg, rgba(126, 20, 47, 0.22), transparent 46%),
+    repeating-linear-gradient(135deg, rgba(255, 61, 97, 0.025) 0 1px, transparent 1px 8px),
+    #07111e;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child::before {
+  width: 58%;
+  background: linear-gradient(90deg, var(--p3-accent), #ff8799 64%, transparent);
+}
+
+.App.persona-menu .about-content .education-card .card-title {
+  position: relative;
+  z-index: 1;
+  min-height: 56px;
+  margin-bottom: 1.4rem;
+  padding: 0.85rem 1.35rem 0.8rem 1.15rem;
+  border: 0;
+  border-bottom: 3px solid var(--p3-cyan);
+  background: linear-gradient(100deg, #050a13 0 76%, #103d70 76% 100%);
+  box-shadow: 0 5px 0 rgba(2, 8, 20, 0.4);
+  color: #f5f8ff;
+  font-size: 0.86rem;
+  letter-spacing: 0.12em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .card-title {
+  border-bottom-color: var(--p3-accent);
+  background: linear-gradient(100deg, #080a12 0 76%, #51152a 76% 100%);
+}
+
+.App.persona-menu .about-content .education-card .card-title svg {
+  flex: 0 0 auto;
+  width: 21px;
+  height: 21px;
+  padding: 3px;
+  border: 1px solid currentColor;
+  color: var(--p3-cyan);
+  filter: drop-shadow(2px 2px 0 rgba(37, 136, 237, 0.28));
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .card-title svg {
+  color: var(--p3-accent);
+}
+
+.App.persona-menu .about-content .education-card .card-title::after {
+  padding: 0.28rem 0.42rem;
+  border: 1px solid rgba(82, 221, 255, 0.45);
+  background: #071b31;
+  color: #aeeeff;
+  font-size: 0.56rem;
+  letter-spacing: 0.1em;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .card-title::after {
+  border-color: rgba(255, 61, 97, 0.6);
+  background: #280d18;
+  color: #ff9caf;
+}
+
+.App.persona-menu .about-content .education-card > .education-item {
+  position: relative;
+  margin: 0 0 1.15rem;
+  padding: 0 0 1.05rem 1rem;
+  border-left: 2px solid rgba(82, 221, 255, 0.62);
+  border-bottom: 1px solid rgba(150, 204, 242, 0.13);
+}
+
+.App.persona-menu .about-content .education-card > .education-item:last-of-type {
+  margin-bottom: 0;
+  border-bottom: 0;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item {
+  border-left-color: rgba(255, 61, 97, 0.78);
+}
+
+.App.persona-menu .about-content .education-card > .education-item::before {
+  top: 0.75rem;
+  left: -5px;
+  width: 8px;
+  height: 8px;
+  border: 1px solid #07111e;
+  background: var(--p3-cyan);
+  box-shadow: 0 0 0 1px var(--p3-cyan), 0 0 12px rgba(82, 221, 255, 0.5);
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item::before {
+  background: var(--p3-accent);
+  box-shadow: 0 0 0 1px var(--p3-accent), 0 0 12px rgba(255, 61, 97, 0.42);
+}
+
+.App.persona-menu .about-content .education-card > .education-item .education-header {
+  min-height: 44px;
+  margin: 0 0 0.55rem;
+  padding: 0.58rem 0.75rem;
+  border-left: 3px solid var(--p3-cyan);
+  background: linear-gradient(100deg, #eef4fb 0 92%, #c7eaff 92% 100%);
+  box-shadow: 3px 3px 0 rgba(37, 136, 237, 0.22);
+  clip-path: polygon(0 0, 100% 0, 96% 100%, 0 100%);
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item .education-header {
+  border-left-color: var(--p3-accent);
+  background: linear-gradient(100deg, #f1f4fa 0 92%, #ffd5dd 92% 100%);
+  box-shadow: 3px 3px 0 rgba(255, 61, 97, 0.24);
+}
+
+.App.persona-menu .about-content .education-card > .education-item .education-header h4 {
+  color: #101d31;
+  font-size: 0.92rem;
+  line-height: 1.3;
+}
+
+.App.persona-menu .about-content .education-card > .education-item .completion-badge {
+  flex: 0 0 auto;
+  padding: 0.3rem 0.45rem;
+  border: 1px solid #1469ac;
+  border-radius: 1px;
+  background: #0c579b;
+  box-shadow: 2px 2px 0 #07111e;
+  color: #f3fbff;
+  font-size: 0.59rem;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.App.persona-menu .about-content .education-card .course-name {
+  color: #d8e6f5;
+  font-size: 0.84rem;
+}
+
+.App.persona-menu .about-content .education-card .timeline {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 0.65rem;
+  padding: 0.4rem 0.55rem;
+  border: 1px solid rgba(82, 221, 255, 0.17);
+  background: rgba(2, 11, 23, 0.56);
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .timeline {
+  border-color: rgba(255, 61, 97, 0.2);
+}
+
+.App.persona-menu .about-content .education-card .date-start,
+.App.persona-menu .about-content .education-card .date-end {
+  color: #8ceaff;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.025em;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .date-start,
+.App.persona-menu .about-sidebar > .education-card:first-child .date-end {
+  color: #ff9caf;
+}
+
+.App.persona-menu .about-content .education-card .timeline-line {
+  height: 2px;
+  background: linear-gradient(90deg, var(--p3-cyan), rgba(82, 221, 255, 0.12));
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .timeline-line {
+  background: linear-gradient(90deg, var(--p3-accent), rgba(255, 61, 97, 0.12));
+}
+
+.App.persona-menu .about-content .experience-bullets {
+  margin: 0.8rem 0 0;
+  padding: 0;
+}
+
+.App.persona-menu .about-content .experience-bullets li {
+  margin-top: 0.45rem;
+  padding: 0.35rem 0.4rem 0.35rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+  color: #cbd8e8;
+  line-height: 1.5;
+}
+
+.App.persona-menu .about-content .experience-bullets li::before {
+  top: 0.72rem;
+  left: 0.2rem;
+  width: 5px;
+  height: 5px;
+  background: var(--p3-accent);
+  transform: rotate(45deg);
+}
+
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) {
+  border-color: rgba(82, 221, 255, 0.62);
+  background-image:
+    linear-gradient(130deg, rgba(20, 89, 157, 0.52), transparent 56%),
+    repeating-linear-gradient(135deg, rgba(82, 221, 255, 0.035) 0 1px, transparent 1px 8px);
+}
+
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) .card-title {
+  background: linear-gradient(100deg, #050a13 0 76%, #0c579b 76% 100%);
+}
+
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-list {
+  gap: 0.65rem;
+}
+
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 92px;
+  padding: 0.8rem 0.7rem;
+  border: 1px solid rgba(132, 218, 255, 0.42);
+  border-radius: 2px 12px 2px 8px;
+  background: linear-gradient(145deg, #102f53, #071626 76%);
+  box-shadow: 3px 4px 0 rgba(1, 7, 17, 0.78), inset 0 1px rgba(255, 255, 255, 0.08);
+  clip-path: polygon(0 0, 100% 0, 94% 100%, 0 100%);
+  transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-icon {
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(82, 221, 255, 0.55);
+  border-radius: 2px 8px 2px 6px;
+  background: #0b5795;
+  box-shadow: 2px 2px 0 rgba(255, 61, 97, 0.85);
+}
+
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-icon svg {
+  width: 17px;
+  height: 17px;
+}
+
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-item span {
+  color: #eef8ff;
+  font-size: 0.73rem;
+  font-weight: 800;
+  letter-spacing: 0.035em;
+  line-height: 1.25;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .App.persona-menu .about-content > .about-main > .education-card:hover,
+  .App.persona-menu .about-content > .about-sidebar > .education-card:hover {
+    border-color: var(--p3-cyan);
+    box-shadow: 9px 10px 0 rgba(2, 8, 20, 0.84), 0 0 24px rgba(37, 136, 237, 0.13);
+  }
+
+  .App.persona-menu .about-sidebar > .education-card:first-child:hover {
+    border-color: var(--p3-accent);
+    box-shadow: 9px 10px 0 rgba(2, 8, 20, 0.84), 0 0 24px rgba(255, 61, 97, 0.13);
+  }
+
+  .App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-item:hover {
+    transform: translate(-2px, -3px) skewX(-2deg);
+    border-color: var(--p3-cyan);
+    background-color: #164d79;
+  }
+}
+
+@media (max-width: 600px) {
+  .App.persona-menu .about-content > .about-main > .education-card,
+  .App.persona-menu .about-content > .about-sidebar > .education-card {
+    box-shadow: 4px 5px 0 rgba(2, 8, 20, 0.82);
+  }
+
+  .App.persona-menu .about-content .education-card .card-title {
+    width: calc(100% + 2.2rem);
+    margin: -1.1rem -1.1rem 1.1rem;
+    padding-inline: 1.1rem;
+  }
+
+  .App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-item {
+    min-height: 78px;
+  }
+}
+
+/* Final content-safety overrides: keep the visual cuts on decoration only. */
+.App.persona-menu .about-content > .about-main > .education-card,
+.App.persona-menu .about-content > .about-sidebar > .education-card {
+  overflow: visible;
+}
+
+.App.persona-menu .about-content .education-card > .education-item .education-header,
+.App.persona-menu .about-content .education-card > .education-item .education-header h4,
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-item,
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-item span {
+  min-width: 0;
+  overflow: visible;
+  overflow-wrap: anywhere;
+  clip-path: none;
+}
+
+.App.persona-menu .about-content .education-card > .education-item .education-header h4 {
+  flex: 1 1 12rem;
+}
+
+.App.persona-menu .about-content .education-card .timeline {
+  flex-wrap: wrap;
+}
+
+.App.persona-menu .about-content .education-card .date-start,
+.App.persona-menu .about-content .education-card .date-end {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.App.persona-menu .developer-card .role-tags .tag,
+.App.persona-menu .developer-card .description-box::before {
+  clip-path: none;
+}
+
+/* Profile panel tuned to the compact blue/black reference layout. */
+.App.persona-menu .about-main > .developer-card {
+  position: relative;
+  overflow: visible;
+  padding: 2.2rem 0.8rem 0.8rem;
+  border: 1px solid rgba(91, 183, 255, 0.58);
+  border-radius: 2px 18px 2px 14px;
+  background:
+    linear-gradient(110deg, rgba(15, 74, 133, 0.58), transparent 64%),
+    #07111e;
+  box-shadow: 5px 6px 0 rgba(2, 8, 20, 0.85), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  transform: skewY(-0.65deg);
+  margin-block: 0.8rem 1.4rem;
+}
+
+.App.persona-menu .about-main > .developer-card::before {
+  top: 0;
+  left: 0;
+  right: auto;
+  width: 60%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--p3-accent) 0 19%, #e9f5ff 19% 76%, var(--p3-cyan));
+  clip-path: none;
+}
+
+.App.persona-menu .about-main > .developer-card::after {
+  top: 0;
+  right: 0;
+  width: 8%;
+  height: 20px;
+  background: linear-gradient(135deg, transparent 35%, rgba(82, 221, 255, 0.18));
+  clip-path: polygon(35% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.App.persona-menu .developer-card .card-header {
+  position: absolute;
+  z-index: 2;
+  inset: 0.22rem 0.9rem auto;
+  display: flex;
+  min-height: 1.45rem;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  pointer-events: none;
+}
+
+.App.persona-menu .developer-card .status-indicator {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+}
+
+.App.persona-menu .developer-card .profile-identity {
+  gap: 0.4rem;
+}
+
+.App.persona-menu .developer-card .profile-identity-label {
+  max-width: none;
+  font-size: 0.54rem;
+}
+
+.App.persona-menu .developer-card .profile-arcana-card {
+  flex-basis: 25px;
+  width: 25px;
+  height: 31px;
+  border-color: var(--p3-cyan);
+  border-radius: 3px 6px 3px 5px;
+  background: #0b2f62;
+  box-shadow: 2px 2px 0 var(--p3-accent);
+  font-size: 0.85rem;
+}
+
+.App.persona-menu .developer-card .developer-info {
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: stretch;
+  gap: 0.5rem;
+}
+
+.App.persona-menu .developer-card .name-section {
+  justify-content: center;
+  gap: 0.65rem;
+  min-width: 0;
+  padding: 0.6rem 0.8rem;
+}
+
+.App.persona-menu .developer-card .name-section::before {
+  background: linear-gradient(115deg, #0b3975, #14549a 78%, #1d75c5);
+  clip-path: polygon(0 0, 100% 0, 96% 100%, 0 100%);
+}
+
+.App.persona-menu .developer-card .dev-name {
+  max-width: none;
+  font-size: clamp(1.9rem, 3.7vw, 3.15rem);
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+  text-shadow: 2px 3px 0 #071c3b;
+}
+
+.App.persona-menu .developer-card .role-tags {
+  gap: 0.35rem;
+}
+
+.App.persona-menu .developer-card .role-tags .tag {
+  min-height: 25px;
+  padding: 0.28rem 0.55rem;
+  border: 1px solid rgba(107, 204, 255, 0.45);
+  border-radius: 2px;
+  background: rgba(4, 19, 40, 0.5);
+  color: #c5eeff;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.App.persona-menu .developer-card .role-tags .tag.primary {
+  border-bottom: 2px solid var(--p3-accent);
+  background: #1679d0;
+  color: #fff;
+}
+
+.App.persona-menu .developer-card .description-box {
+  min-width: 0;
+  padding: 0.65rem 0.85rem;
+  border-left: 4px solid #1f7dd0;
+  background: #050a12;
+  box-shadow: none;
+}
+
+.App.persona-menu .developer-card .description-box::before {
+  display: none;
+}
+
+.App.persona-menu .developer-card .description-box::after {
+  right: 0;
+  bottom: 0;
+  width: 26%;
+  height: 3px;
+  background: var(--p3-accent);
+}
+
+.App.persona-menu .developer-card .profile-statement {
+  margin-bottom: 0.42rem;
+  padding-bottom: 0.38rem;
+  border-bottom: 1px solid rgba(167, 210, 242, 0.35);
+  color: #9bdcff;
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: clamp(0.75rem, 1.2vw, 0.95rem);
+  font-style: italic;
+  line-height: 1.2;
+  text-shadow: 1px 1px 0 #123c69;
+  transform: none;
+}
+
+.App.persona-menu .developer-card .description-box p:not(.profile-statement) {
+  color: #f1f5fa;
+  font-size: clamp(0.66rem, 0.86vw, 0.78rem);
+  font-weight: 500;
+  line-height: 1.27;
+}
+
+@media (max-width: 900px) {
+  .App.persona-menu .about-main > .developer-card {
+    padding: 2.15rem 0.7rem 0.7rem;
+  }
+
+  .App.persona-menu .developer-card .dev-name {
+    font-size: clamp(1.75rem, 5vw, 2.65rem);
+  }
+}
+
+@media (max-width: 600px) {
+  .App.persona-menu .about-main > .developer-card {
+    padding: 2rem 0.55rem 0.55rem;
+    transform: skewY(-0.4deg);
+    margin-block: 0.5rem 1rem;
+  }
+
+  .App.persona-menu .developer-card .card-header {
+    inset-inline: 0.6rem;
+  }
+
+  .App.persona-menu .developer-card .developer-info {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.45rem;
+  }
+
+  .App.persona-menu .developer-card .name-section {
+    min-height: 112px;
+    padding: 0.7rem 0.8rem;
+  }
+
+  .App.persona-menu .developer-card .dev-name {
+    font-size: clamp(2rem, 9vw, 2.9rem);
+  }
+
+  .App.persona-menu .developer-card .description-box {
+    padding: 0.85rem 0.9rem;
+  }
+
+  .App.persona-menu .developer-card .description-box p:not(.profile-statement) {
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+}
+
+/* Persona-inspired split profile: every panel and headline leans into the layout. */
+.App.persona-menu .about-main > .developer-card {
+  padding: 2rem 0.6rem 0.6rem;
+  border: 0;
+  border-radius: 0 0 12px 0;
+  background: #050a18;
+  box-shadow: 9px 10px 0 rgba(1, 6, 18, 0.8), 0 0 0 1px rgba(75, 185, 255, 0.58);
+  transform: skewY(-0.7deg);
+}
+
+.App.persona-menu .about-main > .developer-card::before {
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--p3-accent) 0 15%, #f2f7ff 15% 78%, var(--p3-cyan) 78% 100%);
+}
+
+.App.persona-menu .about-main > .developer-card::after {
+  top: auto;
+  right: 0;
+  bottom: 0;
+  width: 24px;
+  height: 40px;
+  background: var(--p3-accent);
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+
+.App.persona-menu .developer-card .developer-info {
+  grid-template-columns: minmax(0, 1.16fr) minmax(0, 0.94fr);
+  align-items: stretch;
+  gap: 0;
+  min-height: clamp(270px, 28vw, 350px);
+}
+
+.App.persona-menu .developer-card .name-section {
+  justify-content: center;
+  gap: 1.2rem;
+  padding: clamp(1.2rem, 3vw, 2.6rem);
+}
+
+.App.persona-menu .developer-card .name-section::before {
+  background: linear-gradient(135deg, #1762d0, #1b58bf 72%, #104899);
+  clip-path: polygon(0 0, 100% 0, 91% 100%, 0 100%);
+}
+
+.App.persona-menu .developer-card .dev-name {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: none;
+  margin: 0;
+  color: #f8fbff;
+  font-family: Impact, 'Arial Narrow', 'Outfit', sans-serif;
+  font-size: clamp(3.1rem, 7.1vw, 6.4rem);
+  font-style: italic;
+  font-weight: 900;
+  line-height: 0.78;
+  letter-spacing: -0.055em;
+  text-shadow: 5px 5px 0 #030817;
+  text-transform: uppercase;
+  transform: skewX(-4deg) rotate(-1deg);
+  transform-origin: left center;
+}
+
+.App.persona-menu .developer-card .dev-name span {
+  display: block;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+.App.persona-menu .developer-card .dev-name span:nth-child(2) {
+  margin: 0.08em 0 0.13em 0.07em;
+  font-size: 0.48em;
+  line-height: 0.78;
+  letter-spacing: -0.025em;
+}
+
+.App.persona-menu .developer-card .role-tags {
+  gap: 0.45rem;
+  transform: skewX(-5deg);
+  transform-origin: left center;
+}
+
+.App.persona-menu .developer-card .role-tags .tag {
+  padding: 0.38rem 0.68rem;
+  border: 1px solid #f2f7ff;
+  background: #07111e;
+  color: #f7f9fc;
+  font-size: 0.72rem;
+  font-style: italic;
+  transform: skewX(-3deg);
+}
+
+.App.persona-menu .developer-card .role-tags .tag.primary {
+  border-bottom: 1px solid #f2f7ff;
+  background: #07111e;
+}
+
+.App.persona-menu .developer-card .description-box {
+  isolation: isolate;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: clamp(1.35rem, 3vw, 2.8rem) clamp(1.5rem, 3vw, 3rem) clamp(1.35rem, 3vw, 2.8rem) clamp(2rem, 4vw, 4.2rem);
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.App.persona-menu .developer-card .description-box::before {
+  display: block;
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border: 0;
+  background: #eaf5ff;
+  clip-path: polygon(9% 0, 100% 0, 100% 88%, 95% 100%, 0 100%);
+  content: '';
+}
+
+.App.persona-menu .developer-card .description-box::after {
+  top: 0.8rem;
+  right: 1rem;
+  bottom: auto;
+  width: 10px;
+  height: 56px;
+  background: #1762d0;
+  clip-path: none;
+}
+
+.App.persona-menu .developer-card .profile-statement {
+  margin: 0 0 0.35rem;
+  padding: 0;
+  border: 0;
+  color: #071a3c;
+  font-family: Impact, 'Arial Narrow', 'Outfit', sans-serif;
+  font-size: clamp(1.3rem, 2.5vw, 2.35rem);
+  font-style: italic;
+  font-weight: 900;
+  line-height: 0.98;
+  text-shadow: 1.5px 1.5px 0 rgba(23, 98, 208, 0.2);
+  text-transform: uppercase;
+  transform: skewX(-3deg);
+  transform-origin: left center;
+}
+
+.App.persona-menu .developer-card .description-box p:not(.profile-statement) {
+  color: #101d31;
+  font-size: clamp(0.85rem, 1.12vw, 1.02rem);
+  font-weight: 500;
+  line-height: 1.58;
+  transform: skewX(-1deg);
+  transform-origin: left center;
+}
+
+@media (max-width: 900px) {
+  .App.persona-menu .developer-card .developer-info {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
+    min-height: 300px;
+  }
+
+  .App.persona-menu .developer-card .dev-name {
+    font-size: clamp(2.75rem, 7vw, 4.3rem);
+  }
+}
+
+@media (max-width: 600px) {
+  .App.persona-menu .about-main > .developer-card {
+    padding: 2rem 0.45rem 0.45rem;
+    transform: skewY(-0.35deg);
+  }
+
+  .App.persona-menu .developer-card .developer-info {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+
+  .App.persona-menu .developer-card .name-section {
+    min-height: 260px;
+    gap: 1rem;
+    padding: 1.15rem 1.25rem;
+  }
+
+  .App.persona-menu .developer-card .name-section::before {
+    clip-path: polygon(0 0, 100% 0, 96% 100%, 0 100%);
+  }
+
+  .App.persona-menu .developer-card .dev-name {
+    font-size: clamp(3.2rem, 14vw, 5.2rem);
+  }
+
+  .App.persona-menu .developer-card .description-box {
+    min-height: 220px;
+    padding: 2rem 1.25rem 1.25rem;
+  }
+
+  .App.persona-menu .developer-card .description-box::before {
+    clip-path: polygon(4% 0, 100% 0, 100% 96%, 0 100%);
+  }
+
+  .App.persona-menu .developer-card .profile-statement {
+    font-size: clamp(1.35rem, 7vw, 2rem);
+  }
+
+  .App.persona-menu .developer-card .description-box p:not(.profile-statement) {
+    font-size: 0.92rem;
+  }
+}
+
+/* Academic record as a Persona 3 vertical progression timeline. */
+.App.persona-menu .about-main > .education-card {
+  position: relative;
+  overflow: visible;
+  align-self: stretch;
+  padding: 1.25rem 1.45rem 1.4rem;
+  border: 1px solid rgba(82, 221, 255, 0.34);
+  border-radius: 0;
+  background: #07112a;
+  box-shadow: inset 0 0 0 1px rgba(82, 221, 255, 0.035);
+}
+
+.App.persona-menu .about-main > .education-card::before {
+  top: 0;
+  left: 0;
+  right: auto;
+  width: 34%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--p3-accent), var(--p3-cyan), transparent);
+}
+
+.App.persona-menu .about-main > .education-card .card-title {
+  width: 100%;
+  min-height: 0;
+  margin: 0 0 1.3rem;
+  padding: 0 0 0.5rem;
+  border: 0;
+  border-bottom: 2px solid var(--p3-cyan);
+  background: transparent;
+  box-shadow: none;
+  color: #f3f7ff;
+  font-family: Impact, 'Arial Narrow', 'Outfit', sans-serif;
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  font-style: italic;
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  text-transform: uppercase;
+  clip-path: none;
+}
+
+.App.persona-menu .about-main > .education-card .card-title svg {
+  display: none;
+}
+
+.App.persona-menu .about-main > .education-card .card-title::after {
+  content: '';
+  display: none;
+}
+
+.App.persona-menu .about-main > .education-card > .education-item {
+  position: relative;
+  margin: 0 0 0 0.55rem;
+  padding: 0 0 1.2rem 1.75rem;
+  border: 0;
+  border-left: 1px solid rgba(82, 221, 255, 0.34);
+  background: transparent;
+}
+
+.App.persona-menu .about-main > .education-card > .education-item::before {
+  top: 0.12rem;
+  left: -16px;
+  width: 30px;
+  height: 30px;
+  border: 2px solid var(--p3-cyan);
+  border-radius: 50%;
+  background: #07112a;
+  box-shadow: none;
+  transform: none;
+}
+
+.App.persona-menu .about-main > .education-card > .education-item:nth-child(4n + 4)::before {
+  background: linear-gradient(90deg, var(--p3-cyan) 50%, #07112a 50%);
+}
+
+.App.persona-menu .about-main > .education-card > .education-item:nth-child(4n + 2)::before {
+  background: #07112a;
+}
+
+.App.persona-menu .about-main > .education-card > .education-item:nth-child(4n + 6)::before {
+  background: var(--p3-cyan);
+}
+
+.App.persona-menu .about-main > .education-card > .education-item .education-header {
+  min-height: 0;
+  margin: 0 0 0.22rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  clip-path: none;
+}
+
+.App.persona-menu .about-main > .education-card > .education-item .education-header h4 {
+  flex: 1 1 12rem;
+  color: #f4f7ff;
+  font-family: 'Inter', 'Outfit', sans-serif;
+  font-size: 0.92rem;
+  font-style: normal;
+  font-weight: 750;
+  line-height: 1.3;
+}
+
+.App.persona-menu .about-main > .education-card > .education-item .completion-badge {
+  padding: 0.18rem 0.38rem;
+  border: 1px solid rgba(82, 221, 255, 0.4);
+  border-radius: 0;
+  background: rgba(11, 50, 87, 0.82);
+  box-shadow: none;
+  color: #a9e9ff;
+  font-size: 0.55rem;
+}
+
+.App.persona-menu .about-main > .education-card > .education-item .course-name {
+  margin: 0;
+  color: #9cb8d8;
+  font-size: 0.79rem;
+  line-height: 1.35;
+}
+
+.App.persona-menu .about-main > .education-card > .education-item .timeline {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 0.3rem;
+  margin-top: 0.52rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.App.persona-menu .about-main > .education-card > .education-item .timeline-line {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 0;
+  height: auto;
+  background: transparent;
+}
+
+.App.persona-menu .about-main > .education-card > .education-item .timeline-line::before {
+  content: '–';
+  color: var(--p3-cyan);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.App.persona-menu .about-main > .education-card > .education-item .date-start,
+.App.persona-menu .about-main > .education-card > .education-item .date-end {
+  color: var(--p3-cyan);
+  font-size: 0.68rem;
+  font-weight: 650;
+  line-height: 1.4;
+  white-space: normal;
+}
+
+.App.persona-menu.dark-hour-mode .about-main > .education-card {
+  border-color: rgba(148, 217, 186, 0.36);
+  background: #071a18;
+}
+
+.App.persona-menu.dark-hour-mode .about-main > .education-card .card-title {
+  border-bottom-color: #94d9ba;
+}
+
+.App.persona-menu.dark-hour-mode .about-main > .education-card .card-title::after {
+  display: block;
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  border: 0;
+  border-radius: 50%;
+  background: #94d9ba;
+  box-shadow: inset 5px -3px 0 #071a18, 0 0 12px rgba(148, 217, 186, 0.52);
+}
+
+.App.persona-menu.dark-hour-mode .about-main > .education-card > .education-item {
+  border-left-color: rgba(148, 217, 186, 0.36);
+}
+
+.App.persona-menu.dark-hour-mode .about-main > .education-card > .education-item::before {
+  border-color: #94d9ba;
+  background-color: #071a18;
+}
+
+.App.persona-menu.dark-hour-mode .about-main > .education-card > .education-item:nth-child(4n + 4)::before {
+  background: linear-gradient(90deg, #94d9ba 50%, #071a18 50%);
+}
+
+.App.persona-menu.dark-hour-mode .about-main > .education-card > .education-item:nth-child(4n + 6)::before {
+  background: #94d9ba;
+}
+
+@media (max-width: 600px) {
+  .App.persona-menu .about-main > .education-card {
+    padding: 1.1rem 1rem 1.25rem;
+  }
+
+  .App.persona-menu .about-main > .education-card > .education-item {
+    padding-left: 1.4rem;
+  }
+}
+
+/* Correct academic timeline spacing and contrast, including Dark Hour moon. */
+.App.persona-menu .about-main > .education-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0;
+  background-color: #07112a;
+  background-image: none;
+}
+
+.App.persona-menu .about-main > .education-card > .education-item {
+  flex: 0 0 auto;
+  gap: 0.28rem;
+  padding-bottom: 1rem;
+}
+
+.App.persona-menu .about-main > .education-card > .education-item .education-header::before {
+  display: none !important;
+  content: none !important;
+}
+
+.App.persona-menu .about-main > .education-card > .education-item .education-header h4 {
+  color: #f4f7ff !important;
+  background: transparent !important;
+  text-shadow: none;
+}
+
+.App.persona-menu .about-main > .education-card .card-title {
+  flex: 0 0 auto;
+}
+
+.App.persona-menu.dark-hour-mode .about-main > .education-card {
+  background-color: #071a18;
+}
+
+.App.persona-menu.dark-hour-mode .about-main > .education-card .card-title::after {
+  content: "\263D" !important;
+  display: block !important;
+  flex: 0 0 22px;
+  width: 22px;
+  height: 22px;
+  margin-left: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: #9af6bd;
+  font: 900 1.8rem/1 Georgia, serif;
+  text-shadow: 0 0 12px rgba(154, 246, 189, 0.78);
+  text-align: center;
+}
+
+.App.persona-menu.dark-hour-mode .about-main > .education-card > .education-item .education-header::before {
+  display: none !important;
+  content: none !important;
+}
+
+/* Match the five lunar phases in the academic reference. */
+.App.persona-menu .about-main > .education-card {
+  --timeline-night: #07112a;
+  --timeline-moon: #ffd84f;
+}
+
+.App.persona-menu .about-main > .education-card > .education-item::before {
+  border-color: var(--timeline-moon);
+  background: var(--timeline-night);
+}
+
+/* New moon: outlined disc. */
+.App.persona-menu .about-main > .education-card > .education-item:nth-child(2)::before {
+  background: var(--timeline-night);
+}
+
+/* Crescent, half, gibbous and full moon. */
+.App.persona-menu .about-main > .education-card > .education-item:nth-child(4)::before {
+  background: radial-gradient(ellipse 20px 18px at 0% 50%, var(--timeline-night) 0 90%, transparent 100%), var(--timeline-moon);
+}
+
+.App.persona-menu .about-main > .education-card > .education-item:nth-child(6)::before {
+  background: linear-gradient(90deg, var(--timeline-night) 0 50%, var(--timeline-moon) 50% 100%);
+}
+
+.App.persona-menu .about-main > .education-card > .education-item:nth-child(8)::before {
+  background: radial-gradient(ellipse 7px 16px at 0% 50%, var(--timeline-night) 0 72%, transparent 100%), var(--timeline-moon);
+}
+
+.App.persona-menu .about-main > .education-card > .education-item:nth-child(10)::before {
+  background: var(--timeline-moon);
+}
+
+.App.persona-menu.dark-hour-mode .about-main > .education-card {
+  --timeline-night: #071a18;
+  --timeline-moon: #e5f56a;
+}
+
+.App.persona-menu.dark-hour-mode .about-main > .education-card .card-title::after {
+  content: none !important;
+  display: none !important;
+}
+
+.App.persona-menu .about-main > .education-card > .education-item:last-child {
+  border-left-color: transparent;
+}
+
+.App.persona-menu .about-main > .education-card {
+  height: auto;
+  align-self: start;
+}
+
+.App.persona-menu.dark-hour-mode .about-main > .education-card > .education-item:last-child {
+  border-left-color: transparent;
+}
+
+/* Use the open space below Academic Record for the soft-skill card. */
+.App.persona-menu .about-content {
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.95fr);
+  grid-template-areas:
+    'profile profile'
+    'experience education'
+    'experience traits';
+  align-items: stretch;
+}
+
+@media (max-width: 900px) {
+  .App.persona-menu .about-content {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'profile'
+      'experience'
+      'education'
+      'traits';
+  }
+}
+
+/* Professional experience as compact Persona-style career records. */
+.App.persona-menu .about-sidebar > .education-card:first-child {
+  align-self: start;
+  height: auto;
+  padding: 0.7rem;
+  overflow: visible;
+  border: 1px solid rgba(255, 61, 97, 0.68);
+  border-radius: 2px 16px 2px 10px;
+  background:
+    linear-gradient(135deg, rgba(83, 17, 43, 0.2), transparent 46%),
+    #050d1a;
+  box-shadow: 4px 5px 0 rgba(2, 8, 20, 0.78);
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child::before {
+  left: 0;
+  right: auto;
+  width: 72%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--p3-accent) 0 45%, var(--p3-cyan) 45% 86%, transparent);
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .card-title {
+  width: calc(100% + 1.4rem);
+  min-height: 38px;
+  margin: -0.7rem -0.7rem 0.7rem;
+  padding: 0.55rem 0.75rem;
+  border-bottom: 2px solid var(--p3-accent);
+  background: linear-gradient(100deg, #050912 0 80%, #471329 80% 100%);
+  color: #f4f8ff;
+  font-size: 0.7rem;
+  letter-spacing: 0.09em;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .card-title svg {
+  width: 17px;
+  height: 17px;
+  padding: 2px;
+  color: var(--p3-accent);
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .card-title::after {
+  content: '03 / CAREER';
+  margin-left: auto;
+  padding: 0.24rem 0.36rem;
+  border: 1px solid rgba(255, 61, 97, 0.5);
+  background: #200d17;
+  color: #ff9caf;
+  font: 800 0.52rem/1 'Inter', sans-serif;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item {
+  margin: 0 0 0.6rem;
+  padding: 0.65rem;
+  border: 1px solid rgba(90, 177, 235, 0.24);
+  border-left: 2px solid var(--p3-accent);
+  background: linear-gradient(130deg, rgba(13, 34, 59, 0.82), rgba(5, 13, 26, 0.92));
+  gap: 0.35rem;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item::before {
+  top: 0.82rem;
+  left: -5px;
+  width: 7px;
+  height: 7px;
+  border: 0;
+  border-radius: 0;
+  background: var(--p3-accent);
+  box-shadow: 0 0 8px rgba(255, 61, 97, 0.55);
+  transform: rotate(45deg);
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item .education-header {
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item .education-header::before {
+  display: none !important;
+  content: none !important;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item .education-header h4 {
+  color: #f5f7fc;
+  font-family: Impact, 'Arial Narrow', 'Outfit', sans-serif;
+  font-size: clamp(0.82rem, 1.05vw, 0.98rem);
+  font-style: italic;
+  font-weight: 800;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item .course-name {
+  color: #a9bed5;
+  font-size: 0.7rem;
+  line-height: 1.35;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item .timeline {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.4rem;
+  margin-top: 0.08rem;
+  padding: 0.28rem 0.42rem;
+  border: 1px solid rgba(255, 61, 97, 0.2);
+  background: rgba(19, 8, 17, 0.72);
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item .timeline-line {
+  flex: 1 1 1rem;
+  height: 1px;
+  background: linear-gradient(90deg, var(--p3-accent), rgba(255, 61, 97, 0.25));
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item .date-start,
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item .date-end {
+  color: #ff8ea5;
+  font-size: 0.58rem;
+  font-weight: 800;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item .experience-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0.08rem 0 0.1rem;
+  border: 1px solid rgba(82, 221, 255, 0.35);
+  background: rgba(4, 24, 39, 0.86);
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .experience-metric {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.12rem;
+  padding: 0.36rem 0.25rem;
+  text-align: center;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .experience-metric + .experience-metric {
+  border-left: 1px solid rgba(82, 221, 255, 0.25);
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .experience-metric strong {
+  color: var(--p3-cyan);
+  font-family: Impact, 'Arial Narrow', sans-serif;
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .experience-metric::before {
+  color: var(--p3-cyan);
+  font-size: 0.72rem;
+  line-height: 1;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .experience-metric:nth-child(1)::before {
+  content: "\265F";
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .experience-metric:nth-child(2)::before {
+  content: "\25F7";
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .experience-metric:nth-child(3)::before {
+  content: "\2699";
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .experience-metric span {
+  color: #c7d6e7;
+  font-size: 0.52rem;
+  line-height: 1.15;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .experience-bullets {
+  gap: 0.12rem;
+  margin: 0.15rem 0 0;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .experience-bullets li {
+  margin: 0;
+  padding: 0.2rem 0.2rem 0.24rem 0.78rem;
+  border-bottom: 1px solid rgba(153, 198, 231, 0.1);
+  color: #d4dfec;
+  font-size: 0.66rem;
+  line-height: 1.35;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .experience-bullets li::before {
+  top: 0.52rem;
+  left: 0.16rem;
+  width: 5px;
+  height: 5px;
+  background: var(--p3-accent);
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .education-divider {
+  display: none !important;
+}
+
+@media (max-width: 600px) {
+  .App.persona-menu .about-sidebar > .education-card:first-child {
+    padding: 0.55rem;
+  }
+
+  .App.persona-menu .about-sidebar > .education-card:first-child .card-title {
+    width: calc(100% + 1.1rem);
+    margin: -0.55rem -0.55rem 0.55rem;
+    padding-inline: 0.6rem;
+  }
+
+  .App.persona-menu .about-sidebar > .education-card:first-child > .education-item {
+    padding: 0.55rem;
+  }
+
+  .App.persona-menu .about-sidebar > .education-card:first-child .experience-bullets li {
+    font-size: 0.72rem;
+  }
+}
+
+/* Improve experience copy readability and remove the decorative bullet marks. */
+.App.persona-menu .about-sidebar > .education-card:first-child .card-title {
+  font-size: 0.8rem;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .card-title::after {
+  font-size: 0.58rem;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item .education-header h4 {
+  color: #f6f8fc;
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 1.3;
+  text-transform: none;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item .course-name {
+  color: #c2d2e4;
+  font-size: 0.76rem;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item .date-start,
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item .date-end {
+  font-size: 0.64rem;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .experience-metric strong {
+  font-size: 1.12rem;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .experience-metric span {
+  color: #e0e9f4;
+  font-size: 0.62rem;
+  line-height: 1.25;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .experience-bullets {
+  gap: 0.2rem;
+  list-style: none;
+  padding-left: 0;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .experience-bullets li {
+  padding: 0.28rem 0.2rem 0.32rem 0.42rem;
+  color: #e0e8f2;
+  font-size: 0.74rem;
+  line-height: 1.45;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .experience-bullets li::before {
+  display: none;
+  content: none;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .experience-bullets li::marker {
+  content: "";
+}
+
+@media (max-width: 600px) {
+  .App.persona-menu .about-sidebar > .education-card:first-child .experience-bullets li {
+    font-size: 0.78rem;
+  }
+
+  .App.persona-menu .about-sidebar > .education-card:first-child .experience-metric span {
+    font-size: 0.58rem;
+  }
+}
+
+/* Deep-blue career identity, distinct from the cyan academic timeline. */
+.App.persona-menu .about-sidebar > .education-card:first-child {
+  border-color: rgba(31, 91, 151, 0.9);
+  background:
+    linear-gradient(135deg, rgba(13, 45, 82, 0.34), transparent 46%),
+    #050d1a;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child::before {
+  background: linear-gradient(90deg, #174c83 0 45%, #36a8db 45% 86%, transparent);
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .card-title {
+  border-bottom-color: #1e5a91;
+  background: linear-gradient(100deg, #050912 0 80%, #102d4d 80% 100%);
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .card-title svg {
+  color: #67b9ed;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .card-title::after {
+  border-color: rgba(63, 139, 199, 0.58);
+  background: #0b1b30;
+  color: #9bcdf1;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item {
+  border-color: rgba(62, 126, 183, 0.28);
+  border-left-color: #1c5489;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item::before {
+  background: #2878b4;
+  box-shadow: 0 0 8px rgba(40, 120, 180, 0.48);
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item .timeline {
+  border-color: rgba(49, 107, 159, 0.36);
+  background: rgba(7, 19, 34, 0.84);
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item .timeline-line {
+  background: linear-gradient(90deg, #28669d, rgba(40, 102, 157, 0.24));
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item .date-start,
+.App.persona-menu .about-sidebar > .education-card:first-child > .education-item .date-end {
+  color: #8ec7ef;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .experience-metric::before {
+  content: none;
+  display: none;
+}
+
+.App.persona-menu .experience-bullets {
+  list-style: none !important;
+}
+
+.App.persona-menu .experience-bullets li::before,
+.App.persona-menu .experience-bullets li::marker {
+  content: none !important;
+  display: none !important;
+}
+
+/* Recast soft skills as Persona-style social links below the academic record. */
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) {
+  align-self: start;
+  margin-top: 0 !important;
+}
+
+.App.persona-menu .about-content {
+  grid-template-areas:
+    'profile profile'
+    'experience education'
+    'traits traits';
+}
+
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) .card-title::after {
+  content: none;
+  display: none;
+}
+
+.App.persona-menu .about-sidebar > .education-card:nth-child(2)::before {
+  background: linear-gradient(90deg, var(--p3-cyan) 0 45%, #79eaff 45% 86%, transparent);
+}
+
+.App.persona-menu .about-main > .education-card::before {
+  background: linear-gradient(90deg, var(--p3-cyan) 0 45%, #79eaff 45% 86%, transparent);
+  background-color: var(--p3-cyan);
+}
+
+.App.persona-menu .about-main > .education-card .card-title > span,
+.App.persona-menu .about-sidebar > .education-card:first-child .card-title > span {
+  color: #72edff;
+  font-family: Impact, 'Arial Narrow', 'Roboto Condensed', sans-serif;
+  font-size: clamp(1.45rem, 2.2vw, 1.8rem);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  text-shadow: 1px 1px 0 #06365b;
+  text-transform: lowercase;
+}
+
+.App.persona-menu.dark-hour-mode .about-main > .education-card .card-title > span,
+.App.persona-menu.dark-hour-mode .about-sidebar > .education-card:first-child .card-title > span {
+  color: #66ffb4;
+  text-shadow: 1px 1px 0 #063b2a;
+}
+
+.App.persona-menu .about-main > .education-card .card-title > span::first-letter,
+.App.persona-menu .about-sidebar > .education-card:first-child .card-title > span::first-letter {
+  text-transform: uppercase;
+}
+
+/* Profile dossier: stronger Persona-style tilt, diagonal panels and clearer type. */
+.App.persona-menu .about-main > .developer-card {
+  transform: skewY(-1.65deg) rotate(-0.15deg);
+  border-radius: 0 0 2px 14px;
+  box-shadow: 11px 12px 0 rgba(1, 6, 18, 0.82), 0 0 0 1px rgba(75, 185, 255, 0.62);
+}
+
+.App.persona-menu .developer-card .card-header,
+.App.persona-menu .developer-card .developer-info {
+  transform: skewY(-0.55deg);
+}
+
+.App.persona-menu .profile-identity-label {
+  display: none;
+}
+
+.App.persona-menu .developer-card .name-section::before {
+  clip-path: polygon(0 0, 100% 0, 89% 100%, 0 100%);
+}
+
+.App.persona-menu .developer-card .dev-name {
+  font-size: clamp(3.25rem, 7.6vw, 6.8rem);
+  letter-spacing: -0.065em;
+  line-height: 0.76;
+  text-shadow: 6px 6px 0 #030817;
+  transform: skewX(-6deg) rotate(-1.25deg);
+}
+
+.App.persona-menu .developer-card .role-tags .tag {
+  transform: skewX(-7deg);
+  font-family: Impact, 'Arial Narrow', sans-serif;
+  font-style: italic;
+  letter-spacing: 0.045em;
+}
+
+.App.persona-menu .developer-card .description-box {
+  padding-left: clamp(2.4rem, 4.4vw, 4.6rem);
+}
+
+.App.persona-menu .developer-card .profile-statement {
+  max-width: 17ch;
+  font-size: clamp(1.65rem, 3.15vw, 2.8rem);
+  letter-spacing: -0.035em;
+  line-height: 0.93;
+  transform: skewX(-5deg) rotate(-0.6deg);
+}
+
+.App.persona-menu .developer-card .description-box p:not(.profile-statement) {
+  max-width: 54ch;
+  font-size: clamp(0.88rem, 1.08vw, 1rem);
+  letter-spacing: -0.012em;
+  line-height: 1.5;
+  transform: skewX(-1.5deg);
+}
+
+@media (max-width: 900px) {
+  .App.persona-menu .about-main > .developer-card {
+    transform: skewY(-1deg) rotate(-0.1deg);
+  }
+
+  .App.persona-menu .developer-card .dev-name {
+    font-size: clamp(2.8rem, 7.4vw, 4.5rem);
+  }
+}
+
+@media (max-width: 600px) {
+  .App.persona-menu .about-main > .developer-card {
+    transform: skewY(-0.45deg);
+  }
+
+  .App.persona-menu .developer-card .card-header,
+  .App.persona-menu .developer-card .developer-info {
+    transform: none;
+  }
+
+  .App.persona-menu .developer-card .dev-name {
+    font-size: clamp(3.05rem, 14vw, 5rem);
+  }
+
+  .App.persona-menu .developer-card .description-box {
+    padding-left: 1.35rem;
+  }
+
+  .App.persona-menu .developer-card .profile-statement {
+    font-size: clamp(1.55rem, 7.8vw, 2.2rem);
+  }
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .card-title > span {
+  color: #69baff;
+  text-shadow: 1px 1px 0 #092340;
+}
+
+/* Match the profile dossier to the blue Persona 3 battle-screen reference. */
+.App.persona-menu .about-main > .developer-card {
+  border: 1px solid #00bfff;
+  background-color: #030b1c;
+  background-image:
+    repeating-linear-gradient(132deg, transparent 0 34px, rgba(32, 112, 240, 0.08) 35px 37px, transparent 38px 76px),
+    linear-gradient(120deg, rgba(7, 31, 77, 0.62), transparent 58%);
+  box-shadow: 11px 12px 0 rgba(1, 6, 18, 0.82), 0 0 0 1px rgba(0, 191, 255, 0.42);
+}
+
+.App.persona-menu .developer-card::before {
+  background: linear-gradient(90deg, #ff3158 0 16%, #f4f8ff 16% 73%, #08d5ff 73% 100%);
+}
+
+.App.persona-menu .developer-card .status-indicator {
+  color: #12d9ff;
+  font-style: italic;
+}
+
+.App.persona-menu .developer-card .status-dot {
+  background: #08d5ff;
+  box-shadow: 0 0 10px rgba(8, 213, 255, 0.72);
+}
+
+.App.persona-menu .profile-arcana-card {
+  border-color: #08d5ff;
+  outline-color: rgba(8, 213, 255, 0.7);
+  background: #052e77;
+  box-shadow: 3px 4px 0 #ff3158;
+}
+
+.App.persona-menu .developer-card .name-section::before {
+  background-color: #0348c9;
+  background-image:
+    linear-gradient(132deg, transparent 0 43%, rgba(0, 92, 255, 0.7) 43% 53%, transparent 53%),
+    linear-gradient(132deg, transparent 0 62%, rgba(22, 92, 231, 0.62) 62% 76%, transparent 76%),
+    repeating-linear-gradient(132deg, transparent 0 56px, rgba(4, 110, 255, 0.16) 57px 60px, transparent 61px 112px),
+    linear-gradient(125deg, #003cae, #0752d4 56%, #0642b7);
+}
+
+.App.persona-menu .developer-card .dev-name span:nth-child(2) {
+  margin: 0.04em 0 0.08em 0.04em;
+  font-size: 0.78em;
+  line-height: 0.8;
+  letter-spacing: -0.015em;
+}
+
+.App.persona-menu .developer-card .dev-name {
+  letter-spacing: -0.025em;
+}
+
+.App.persona-menu .developer-card .role-tags .tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.48rem;
+  border: 1px solid #03d6ff;
+  background: #041129;
+  letter-spacing: 0.09em;
+}
+
+.App.persona-menu .developer-card .role-tags .tag::before {
+  width: 3px;
+  height: 1.1em;
+  background: #ff3158;
+  content: '';
+}
+
+.App.persona-menu .developer-card .role-tags .tag.primary {
+  border-color: #03d6ff;
+  background: #041129;
+  box-shadow: none;
+}
+
+.App.persona-menu .developer-card .description-box::before {
+  background: linear-gradient(145deg, #d9eff7, #c3e1f3);
+}
+
+.App.persona-menu .developer-card .description-box::after {
+  background: #0878ff;
+}
+
+.App.persona-menu .developer-card::before {
+  top: 0.32rem;
+  right: 0.65rem;
+  left: 0.65rem;
+  width: auto;
+  height: 3px;
+  background: linear-gradient(90deg, #0bd8ff 0 48%, #f1f8ff 48% 77%, #0878ff 77% 100%);
+}
+
+.App.persona-menu .developer-card::after {
+  top: auto;
+  right: 0.7rem;
+  bottom: 0.65rem;
+  width: 22px;
+  height: 16px;
+  background: #ff3158;
+  clip-path: polygon(35% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.App.persona-menu .developer-card .description-box::after {
+  top: 1rem;
+  right: 1.15rem;
+  width: 30px;
+  height: 4px;
+  background: #0878ff;
+  clip-path: polygon(8% 0, 100% 0, 92% 100%, 0 100%);
+}
+
+.App.persona-menu .about-main > .developer-card {
+  padding-top: 1.15rem;
+}
+
+.App.persona-menu .developer-card .description-box p:not(.profile-statement) {
+  color: #173b5e;
+  font-family: 'Inter', 'Outfit', sans-serif;
+  font-size: clamp(0.92rem, 1.12vw, 1.04rem);
+  font-weight: 550;
+  letter-spacing: 0.005em;
+  line-height: 1.58;
+}
+
+.App.persona-menu .about-main > .developer-card {
+  border: 0;
+  box-shadow: 11px 12px 0 rgba(1, 6, 18, 0.82);
+}
+
+.App.persona-menu .developer-card::before,
+.App.persona-menu .developer-card::after {
+  display: none;
+}
+
+.App.persona-menu .about-sidebar > .education-card:first-child .card-title::after {
+  content: none;
+  display: none;
+}
+
+.App.persona-menu .about-main > .education-card::before {
+  background: linear-gradient(90deg, var(--p3-cyan) 0 45%, #79eaff 45% 86%, transparent);
+}
+
+.App.persona-menu .about-content > .about-main > .education-card::before {
+  background: linear-gradient(90deg, var(--p3-cyan) 0 45%, #79eaff 45% 86%, transparent);
+}
+
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-list {
+  position: relative;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.45rem 0.65rem;
+  margin-top: 0.2rem;
+}
+
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-item {
+  min-height: 3.4rem;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.48rem 0.55rem;
+  border: 1px solid rgba(82, 221, 255, 0.26);
+  border-left: 2px solid rgba(82, 221, 255, 0.7);
+  background: linear-gradient(105deg, rgba(13, 44, 69, 0.9), rgba(5, 15, 29, 0.88));
+  clip-path: none;
+}
+
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-icon {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  border: 2px solid var(--p3-cyan);
+  border-radius: 50%;
+  background: #07172a;
+  color: var(--p3-cyan);
+  box-shadow: none;
+}
+
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-item span {
+  color: #edf6ff;
+  font-size: 0.72rem;
+  line-height: 1.2;
+}
+
+@media (max-width: 560px) {
+  .App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .App.persona-menu .about-sidebar > .education-card:first-child:hover {
+    border-color: #347db5;
+    box-shadow: 6px 7px 0 rgba(2, 8, 20, 0.78), 0 0 22px rgba(32, 105, 167, 0.17);
+  }
+}
+
+/* About layout: keep every panel fluid from wide desktop through narrow phones. */
+.App.persona-menu .about-content {
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  grid-template-areas:
+    'profile profile'
+    'experience education'
+    'traits traits';
+  align-items: start;
+}
+
+.App.persona-menu .about-main > .developer-card,
+.App.persona-menu .about-main > .education-card,
+.App.persona-menu .about-sidebar > .education-card {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  height: auto;
+}
+
+.App.persona-menu .about-main > .developer-card {
+  min-height: 0;
+  padding-inline: clamp(0.75rem, 2vw, 1.25rem);
+}
+
+.App.persona-menu .developer-card .developer-info {
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1.06fr) minmax(0, 0.94fr);
+}
+
+.App.persona-menu .developer-card .name-section,
+.App.persona-menu .developer-card .description-box {
+  min-width: 0;
+}
+
+.App.persona-menu .developer-card .role-tags {
+  display: flex;
+  max-width: 100%;
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
+}
+
+.App.persona-menu .developer-card .role-tags .tag {
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+.App.persona-menu .about-main > .education-card,
+.App.persona-menu .about-sidebar > .education-card:first-child,
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) {
+  align-self: start;
+}
+
+.App.persona-menu .about-main > .education-card > .education-item,
+.App.persona-menu .about-sidebar > .education-card > .education-item {
+  min-width: 0;
+}
+
+.App.persona-menu .about-content .education-card .education-header h4 {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.App.persona-menu .about-content .education-card .timeline {
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.App.persona-menu .about-content .education-card .timeline-line {
+  min-width: 1rem;
+}
+
+.App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-list {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+@media (max-width: 900px) {
+  .App.persona-menu .about-content {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'profile'
+      'experience'
+      'education'
+      'traits';
+    gap: 1rem;
+  }
+
+  .App.persona-menu .about-main > .developer-card,
+  .App.persona-menu .about-sidebar > .education-card:first-child,
+  .App.persona-menu .about-main > .education-card,
+  .App.persona-menu .about-sidebar > .education-card:nth-child(2) {
+    grid-column: 1;
+  }
+
+  .App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .App.persona-menu .developer-card .developer-info {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+
+  .App.persona-menu .developer-card .name-section {
+    min-height: clamp(230px, 58vw, 320px);
+    padding: clamp(1.1rem, 5vw, 2rem);
+  }
+
+  .App.persona-menu .developer-card .description-box {
+    padding: 2rem clamp(1.25rem, 5vw, 2.4rem) 1.5rem;
+  }
+
+  .App.persona-menu .developer-card .description-box::before {
+    clip-path: polygon(4% 0, 100% 0, 100% 96%, 0 100%);
+  }
+
+  .App.persona-menu .developer-card .profile-statement {
+    max-width: 25ch;
+  }
+}
+
+@media (max-width: 560px) {
+  .App.persona-menu .about-content {
+    gap: 0.8rem;
+  }
+
+  .App.persona-menu .developer-card .name-section {
+    min-height: 220px;
+    padding: 1rem 1.1rem;
+  }
+
+  .App.persona-menu .developer-card .dev-name {
+    font-size: clamp(2.55rem, 13vw, 4.25rem);
+    line-height: 0.78;
+  }
+
+  .App.persona-menu .developer-card .dev-name span:nth-child(2) {
+    font-size: 0.72em;
+  }
+
+  .App.persona-menu .developer-card .role-tags {
+    gap: 0.4rem;
+  }
+
+  .App.persona-menu .developer-card .role-tags .tag {
+    padding: 0.32rem 0.48rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.055em;
+  }
+
+  .App.persona-menu .developer-card .description-box {
+    gap: 0.7rem;
+    padding: 1.7rem 1.1rem 1.2rem;
+  }
+
+  .App.persona-menu .developer-card .profile-statement {
+    font-size: clamp(1.45rem, 7vw, 2rem);
+  }
+
+  .App.persona-menu .developer-card .description-box p:not(.profile-statement) {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-item {
+    min-height: 3.2rem;
+    padding: 0.42rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .App.persona-menu .about-main > .developer-card {
+    padding-inline: 0.55rem;
+  }
+
+  .App.persona-menu .developer-card .name-section {
+    min-height: 205px;
+    padding-inline: 0.85rem;
+  }
+
+  .App.persona-menu .developer-card .dev-name {
+    font-size: clamp(2.3rem, 12vw, 3rem);
+  }
+
+  .App.persona-menu .developer-card .role-tags {
+    column-gap: 0.32rem;
+  }
+
+  .App.persona-menu .developer-card .role-tags .tag {
+    padding-inline: 0.36rem;
+    font-size: 0.57rem;
+  }
+
+  .App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Green Persona dossier for Dark Hour: keep the established geometry and tilt,
+   while replacing the blue/red career palette with layered forest greens. */
+.App.persona-menu.dark-hour-mode .about-main > .developer-card {
+  border-color: #54d99a;
+  background-color: #04150f;
+  background-image:
+    repeating-linear-gradient(132deg, transparent 0 34px, rgba(67, 210, 136, 0.08) 35px 37px, transparent 38px 76px),
+    linear-gradient(120deg, rgba(11, 69, 43, 0.72), transparent 58%);
+  box-shadow: 11px 12px 0 rgba(0, 8, 4, 0.82), 0 0 0 1px rgba(84, 217, 154, 0.34);
+}
+
+.App.persona-menu.dark-hour-mode .developer-card .name-section::before {
+  background-color: #075234;
+  background-image:
+    linear-gradient(132deg, transparent 0 43%, rgba(28, 173, 99, 0.72) 43% 53%, transparent 53%),
+    linear-gradient(132deg, transparent 0 62%, rgba(53, 206, 123, 0.52) 62% 76%, transparent 76%),
+    repeating-linear-gradient(132deg, transparent 0 56px, rgba(90, 237, 158, 0.14) 57px 60px, transparent 61px 112px),
+    linear-gradient(125deg, #06452d, #087345 56%, #075c39);
+}
+
+.App.persona-menu.dark-hour-mode .developer-card .dev-name {
+  text-shadow: 6px 6px 0 #03140c;
+}
+
+.App.persona-menu.dark-hour-mode .developer-card .role-tags .tag {
+  border-color: #56d99a;
+  background: #061a11;
+}
+
+.App.persona-menu.dark-hour-mode .developer-card .role-tags .tag::before {
+  background: #79efad;
+}
+
+.App.persona-menu.dark-hour-mode .developer-card .role-tags .tag.primary {
+  border-color: #79efad;
+  background: #061a11;
+}
+
+.App.persona-menu.dark-hour-mode .developer-card .description-box {
+  border-left-color: #15965b;
+  background: #e5f5ea;
+  box-shadow: 5px 5px 0 rgba(15, 91, 53, 0.62);
+}
+
+.App.persona-menu.dark-hour-mode .developer-card .description-box::before {
+  background: linear-gradient(145deg, #eaf8ee, #d5eddd);
+}
+
+.App.persona-menu.dark-hour-mode .developer-card .description-box::after {
+  background: #17884f;
+}
+
+.App.persona-menu.dark-hour-mode .developer-card .profile-statement {
+  border-bottom-color: #b8ddc4;
+  color: #167747;
+}
+
+.App.persona-menu.dark-hour-mode .developer-card .description-box p:not(.profile-statement) {
+  color: #1d3b2b;
+}
+
+/* Carry the same Dark Hour greens through the career, study and social-skill
+   panels beside the About profile. */
+.App.persona-menu.dark-hour-mode .about-sidebar > .education-card:first-child {
+  border-color: rgba(83, 171, 121, 0.78);
+  background: linear-gradient(135deg, rgba(23, 91, 53, 0.28), transparent 48%), #06130f;
+}
+
+.App.persona-menu.dark-hour-mode .about-sidebar > .education-card:first-child::before,
+.App.persona-menu.dark-hour-mode .about-main > .education-card::before,
+.App.persona-menu.dark-hour-mode .about-sidebar > .education-card:nth-child(2)::before {
+  background: linear-gradient(90deg, #65dda0 0 45%, #a4efc5 45% 86%, transparent);
+}
+
+.App.persona-menu.dark-hour-mode .about-sidebar > .education-card:first-child .card-title,
+.App.persona-menu.dark-hour-mode .about-sidebar > .education-card:nth-child(2) .card-title {
+  border-bottom-color: #65dda0;
+  background: linear-gradient(100deg, #050d0a 0 80%, #123d2a 80% 100%);
+}
+
+.App.persona-menu.dark-hour-mode .about-sidebar > .education-card:first-child .card-title svg {
+  color: #94d9ba;
+}
+
+.App.persona-menu.dark-hour-mode .about-sidebar > .education-card:first-child .card-title > span,
+.App.persona-menu.dark-hour-mode .about-main > .education-card .card-title > span {
+  color: #82eeb3;
+  text-shadow: 1px 1px 0 #123c28;
+}
+
+.App.persona-menu.dark-hour-mode .about-sidebar > .education-card:first-child > .education-item {
+  border-color: rgba(93, 170, 124, 0.32);
+  border-left-color: #39885e;
+  background: linear-gradient(130deg, rgba(17, 56, 38, 0.78), rgba(5, 19, 13, 0.94));
+}
+
+.App.persona-menu.dark-hour-mode .about-sidebar > .education-card:first-child > .education-item::before {
+  background: #65c98c;
+  box-shadow: 0 0 8px rgba(101, 201, 140, 0.42);
+}
+
+.App.persona-menu.dark-hour-mode .about-sidebar > .education-card:first-child > .education-item .course-name {
+  color: #aec8b7;
+}
+
+.App.persona-menu.dark-hour-mode .about-sidebar > .education-card:first-child > .education-item .timeline {
+  border-color: rgba(102, 191, 140, 0.34);
+  background: rgba(4, 22, 14, 0.86);
+}
+
+.App.persona-menu.dark-hour-mode .about-sidebar > .education-card:first-child > .education-item .timeline-line {
+  background: linear-gradient(90deg, #4eae76, rgba(78, 174, 118, 0.24));
+}
+
+.App.persona-menu.dark-hour-mode .about-sidebar > .education-card:first-child > .education-item .date-start,
+.App.persona-menu.dark-hour-mode .about-sidebar > .education-card:first-child > .education-item .date-end {
+  color: #a1e8bd;
+}
+
+.App.persona-menu.dark-hour-mode .about-main > .education-card {
+  border-color: rgba(91, 170, 123, 0.48);
+  background-color: #071711;
+  background-image: repeating-linear-gradient(132deg, transparent 0 34px, rgba(89, 183, 124, 0.035) 35px 37px, transparent 38px 76px);
+}
+
+.App.persona-menu.dark-hour-mode .about-main > .education-card .card-title {
+  border-bottom-color: #65dda0;
+}
+
+.App.persona-menu.dark-hour-mode .about-main > .education-card > .education-item {
+  border-left-color: rgba(132, 221, 164, 0.38);
+}
+
+.App.persona-menu.dark-hour-mode .about-main > .education-card .course-name {
+  color: #a9c6b3;
+}
+
+.App.persona-menu.dark-hour-mode .about-main > .education-card .date-start,
+.App.persona-menu.dark-hour-mode .about-main > .education-card .date-end {
+  color: #9ae6b8;
+}
+
+.App.persona-menu.dark-hour-mode .about-sidebar > .education-card:nth-child(2) {
+  border-color: rgba(83, 171, 121, 0.52);
+  background-color: #06130f;
+  background-image: repeating-linear-gradient(132deg, transparent 0 34px, rgba(89, 183, 124, 0.035) 35px 37px, transparent 38px 76px);
+}
+
+.App.persona-menu.dark-hour-mode .about-sidebar > .education-card:nth-child(2) .card-title svg {
+  color: #94d9ba;
+}
+
+.App.persona-menu.dark-hour-mode .about-sidebar > .education-card:nth-child(2) .soft-skill-item {
+  border-color: rgba(117, 198, 148, 0.38);
+  border-left-color: #6ccb91;
+  background: linear-gradient(105deg, rgba(18, 57, 38, 0.92), rgba(5, 20, 14, 0.92));
+}
+
+.App.persona-menu.dark-hour-mode .about-sidebar > .education-card:nth-child(2) .soft-skill-icon {
+  border-color: #94d9ba;
+  background: #0b3824;
+  color: #a3ebc0;
+}
+
+.App.persona-menu.dark-hour-mode .about-sidebar > .education-card:nth-child(2) .soft-skill-item span {
+  color: #ecf8ef;
+}
+
+.App.persona-menu.dark-hour-mode .skills .section-title.skills-section-title {
+  text-shadow: 2px 2px 0 #159b64;
+}
+
+/* Preserve the same opening direction of each academic moon phase in Dark Hour. */
+.App.persona-menu.dark-hour-mode .about-main > .education-card > .education-item::before {
+  border-color: var(--timeline-moon);
+  background: var(--timeline-night);
+  box-shadow: 0 0 9px rgba(166, 255, 92, 0.28), inset 0 0 5px rgba(210, 255, 93, 0.12);
+}
+
+.App.persona-menu.dark-hour-mode .about-main > .education-card > .education-item:nth-child(2)::before {
+  background: var(--timeline-night);
+}
+
+.App.persona-menu.dark-hour-mode .about-main > .education-card > .education-item:nth-child(4)::before {
+  background: radial-gradient(ellipse 20px 18px at 0% 50%, var(--timeline-night) 0 90%, transparent 100%), var(--timeline-moon);
+}
+
+.App.persona-menu.dark-hour-mode .about-main > .education-card > .education-item:nth-child(6)::before {
+  background: linear-gradient(90deg, var(--timeline-night) 0 50%, var(--timeline-moon) 50% 100%);
+}
+
+.App.persona-menu.dark-hour-mode .about-main > .education-card > .education-item:nth-child(8)::before {
+  background: radial-gradient(ellipse 7px 16px at 0% 50%, var(--timeline-night) 0 72%, transparent 100%), var(--timeline-moon);
+}
+
+.App.persona-menu.dark-hour-mode .about-main > .education-card > .education-item:nth-child(10)::before {
+  background: var(--timeline-moon);
+}
+
+@media (max-width: 900px) {
+  .App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-item {
+    justify-content: flex-start;
+    padding-left: 0.25rem;
+    text-align: left;
+  }
+}
+
+/* Compact About records on tablets and phones. The desktop academic card uses
+   flex: 1 and space-between, which otherwise stretches each record vertically. */
+@media (max-width: 900px) {
+  .App.persona-menu .about-main > .education-card,
+  .App.persona-menu .about-sidebar > .education-card:first-child {
+    flex: 0 0 auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    align-self: start !important;
+    justify-content: flex-start !important;
+  }
+
+  .App.persona-menu .about-main > .education-card > .education-item,
+  .App.persona-menu .about-sidebar > .education-card:first-child > .education-item {
+    display: grid !important;
+    grid-auto-rows: max-content;
+    align-content: start !important;
+    align-self: start !important;
+    flex: 0 0 auto !important;
+    height: max-content !important;
+    min-height: 0 !important;
+    justify-content: flex-start !important;
+    gap: 0.45rem;
+  }
+
+  /* About.css changes education headers to a column on mobile. The shared
+     12rem flex-basis then becomes a 12rem tall h4, creating the blank block. */
+  .App.persona-menu .about-content .education-card > .education-item .education-header h4 {
+    flex: 0 1 auto !important;
+    width: 100%;
+    height: auto !important;
+    min-height: 0 !important;
+    align-self: flex-start;
+  }
+
+  .App.persona-menu .about-content .education-card .timeline {
+    display: flex !important;
+    align-items: center;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 0.45rem;
+    text-align: left;
+  }
+
+  .App.persona-menu .about-content .education-card .timeline-line {
+    display: block;
+    flex: 1 1 1rem;
+    width: auto;
+    min-width: 0;
+    height: 1px;
+    align-self: center;
+  }
+
+  .App.persona-menu .about-content .education-card .date-start,
+  .App.persona-menu .about-content .education-card .date-end {
+    white-space: nowrap;
+    overflow-wrap: normal;
+    font-size: 0.66rem;
+    line-height: 1.2;
+  }
+
+  .App.persona-menu .about-content .education-card .education-divider {
+    margin-block: 0.65rem !important;
+  }
+}
+
+/* One Outfit type system for the career and education records. */
+.App.persona-menu .about-sidebar > .education-card:first-child,
+.App.persona-menu .about-sidebar > .education-card:first-child *,
+.App.persona-menu .about-main > .education-card,
+.App.persona-menu .about-main > .education-card * {
+  font-family: 'Outfit', sans-serif;
 }

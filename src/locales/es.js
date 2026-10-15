@@ -18,9 +18,11 @@ const es = {
   about: {
     onlineLabel: 'Disponible',
     profileLabel: 'Perfil de desarrollador',
-    profileStatement: 'Creo productos digitales que resuelven problemas reales.',
+    identityHeadline: 'Full Stack',
+    profileRole: 'Developer',
+    profileStatement: 'Arquitectura sólida. Experiencias simples.',
     title: 'Acerca de mí',
-    description: 'Soy desarrollador Full Stack especializado en crear productos digitales modernos con un enfoque riguroso en la experiencia de usuario, el rendimiento y las buenas prácticas. Con experiencia tanto en proyectos complejos de arquitectura completa como en el desarrollo de soluciones freelance para clientes reales de producción. Me apasiona estructurar bases de datos optimizadas, diseñar APIs fluidas y crear interfaces web intuitivas que añadan valor de negocio tangible.',
+    description: 'He trabajado en arquitecturas completas y soluciones freelance en producción. Combino el foco en la experiencia de usuario, el rendimiento y las buenas prácticas con bases de datos optimizadas, APIs fluidas e interfaces intuitivas que aportan valor tangible al negocio.',
     education: 'Formación Académica',
     currentEducation: 'Formación Actual',
     experienceLabel: 'Años de experiencia',
@@ -29,6 +31,7 @@ const es = {
     stats: {
       users: 'usuarios activos',
       latency: 'reducción de latencia',
+      deployments: 'pasos de despliegue',
       years: 'años de experiencia'
     },
     stackTitle: 'Stack principal',
@@ -82,7 +85,7 @@ const es = {
     softSkills: [
       'Comunicación asertiva',
       'Gestión de proyectos',
-      'Autogestión',
+      'Atención al detalle',
       'Resolución de problemas'
     ]
   },

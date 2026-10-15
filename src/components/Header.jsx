@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { formatArgentinaClock, getArgentinaTimeParts } from '../utils/argentinaTime';
+import PersonaCalendar from './PersonaCalendar';
 
 import './Header.css';
 
@@ -202,37 +203,10 @@ const Header = ({ t, language, toggleLanguage, isDarkHour, sceneQuality, onScene
             <div className="header-clock">
               <ArgentinaClock isDarkHour={isDarkHour} />
             </div>
-            <fieldset className="scene-quality-control">
-              <legend className="scene-quality-control__caption">
-                {language === 'es' ? 'CALIDAD DEL FONDO' : 'SCENE QUALITY'}
-              </legend>
-              <label
-                className={`scene-quality-control__option${sceneQuality === 'optimized' ? ' is-selected' : ''}`}
-                title={language === 'es' ? 'Menos efectos para un uso más ligero' : 'Fewer effects for a lighter experience'}
-              >
-                <input
-                  type="radio"
-                  name="scene-quality"
-                  value="optimized"
-                  checked={sceneQuality === 'optimized'}
-                  onChange={() => onSceneQualityChange('optimized')}
-                />
-                <span>{language === 'es' ? 'Ligera' : 'Light'}</span>
-              </label>
-              <label
-                className={`scene-quality-control__option${sceneQuality === 'full' ? ' is-selected' : ''}`}
-                title={language === 'es' ? 'Activa en mobile los efectos completos de desktop' : 'Enables full desktop effects on mobile'}
-              >
-                <input
-                  type="radio"
-                  name="scene-quality"
-                  value="full"
-                  checked={sceneQuality === 'full'}
-                  onChange={() => onSceneQualityChange('full')}
-                />
-                <span>{language === 'es' ? 'Completa' : 'Full'}</span>
-              </label>
-            </fieldset>
+            <div className="header-calendar-slot">
+              <PersonaCalendar language={language} isDarkHour={isDarkHour} />
+            </div>
+
           </div>
 
           <nav id="primary-navigation" className={`nav ${isMenuOpen ? 'nav-open' : ''}`} aria-label={t.nav.menu || 'Navegación principal'}>
@@ -256,6 +230,39 @@ const Header = ({ t, language, toggleLanguage, isDarkHour, sceneQuality, onScene
                   </a>
                 </li>
               ))}
+              <li className="scene-quality-menu-item">
+                <fieldset className="scene-quality-control">
+                  <legend className="scene-quality-control__caption">
+                    {language === 'es' ? 'CALIDAD DEL FONDO' : 'SCENE QUALITY'}
+                  </legend>
+                  <label
+                    className={`scene-quality-control__option${sceneQuality === 'optimized' ? ' is-selected' : ''}`}
+                    title={language === 'es' ? 'Menos efectos para un uso más ligero' : 'Fewer effects for a lighter experience'}
+                  >
+                    <input
+                      type="radio"
+                      name="scene-quality"
+                      value="optimized"
+                      checked={sceneQuality === 'optimized'}
+                      onChange={() => onSceneQualityChange('optimized')}
+                    />
+                    <span>{language === 'es' ? 'Ligera' : 'Light'}</span>
+                  </label>
+                  <label
+                    className={`scene-quality-control__option${sceneQuality === 'full' ? ' is-selected' : ''}`}
+                    title={language === 'es' ? 'Activa en mobile los efectos completos de desktop' : 'Enables full desktop effects on mobile'}
+                  >
+                    <input
+                      type="radio"
+                      name="scene-quality"
+                      value="full"
+                      checked={sceneQuality === 'full'}
+                      onChange={() => onSceneQualityChange('full')}
+                    />
+                    <span>{language === 'es' ? 'Completa' : 'Full'}</span>
+                  </label>
+                </fieldset>
+              </li>
               <li className="language-menu-item">
                 <div
                   className="language-toggle"

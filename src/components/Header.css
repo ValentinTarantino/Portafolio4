@@ -46,6 +46,12 @@
 }
 
 .header-clock {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+}
+
+.header-calendar-slot {
   position: relative;
   display: grid;
   place-items: center;
@@ -392,10 +398,6 @@
     padding: 0.8rem 1rem;
   }
 
-  .argentina-clock {
-    width: 3.6rem;
-    height: 3.6rem;
-  }
 }
 
 /* ============================================
@@ -575,7 +577,7 @@
 }
 
 @media (min-width: 701px) and (hover: hover) and (pointer: fine) {
-  .scene-quality-control {
+  .header-brand > .scene-quality-control {
     display: none;
   }
 }
@@ -604,7 +606,21 @@
   }
 }
 
-/* Argentina clock replaces the manual mode switch. */
+.header.dark-hour-active {
+  background: linear-gradient(105deg, rgba(3, 20, 14, 0.97), rgba(7, 34, 23, 0.96) 52%, rgba(3, 19, 13, 0.97)) !important;
+  border-bottom-color: rgba(82, 196, 126, 0.34);
+  box-shadow: inset 0 1px 0 rgba(118, 224, 158, 0.08), 0 5px 26px rgba(2, 18, 11, 0.48), 0 1px rgba(78, 210, 132, 0.1);
+}
+
+@media (max-width: 480px) {
+  .header .scene-quality-control { width: 5.4rem; }
+}
+
+@media (max-width: 380px) {
+  .header .scene-quality-control { width: 5rem; }
+}
+
+/* Reused original Argentina clock styles. */
 .argentina-clock {
   display: inline-grid;
   width: 4.25rem;
@@ -622,7 +638,7 @@
 }
 
 .argentina-clock__dial {
-  fill: rgba(5, 20, 38, 0.5);
+  fill: transparent;
 }
 
 .argentina-clock__rim {
@@ -638,9 +654,7 @@
   stroke-width: 0.8;
 }
 
-.argentina-clock__marker {
-  fill: currentColor;
-}
+.argentina-clock__marker { fill: currentColor; }
 
 .argentina-clock__roman {
   fill: currentColor;
@@ -652,9 +666,7 @@
 }
 
 .argentina-clock__hand--hour,
-.argentina-clock__hand--minute {
-  fill: currentColor;
-}
+.argentina-clock__hand--minute { fill: currentColor; }
 
 .argentina-clock__hand--hour {
   stroke: currentColor;
@@ -679,20 +691,40 @@
   stroke-width: 0.7;
 }
 
-.argentina-clock.is-dark-hour {
-  color: #58cc83;
+.argentina-clock.is-dark-hour { color: #58cc83; }
+.argentina-clock.is-dark-hour .argentina-clock__rim { stroke-opacity: 1; }
+.argentina-clock.is-dark-hour .argentina-clock__dial { fill: transparent; }
+
+@media (max-width: 1024px) {
+  .argentina-clock {
+    width: 3.6rem;
+    height: 3.6rem;
+  }
 }
 
-.argentina-clock.is-dark-hour .argentina-clock__rim {
-  stroke-opacity: 1;
+@media (max-width: 480px) {
+  .argentina-clock {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .header-brand { gap: 0.35rem; }
 }
 
-.argentina-clock.is-dark-hour .argentina-clock__dial {
-  fill: rgba(5, 25, 18, 0.62);
+.scene-quality-menu-item {
+  display: none;
 }
 
-.header.dark-hour-active {
-  background: linear-gradient(105deg, rgba(3, 20, 14, 0.97), rgba(7, 34, 23, 0.96) 52%, rgba(3, 19, 13, 0.97)) !important;
-  border-bottom-color: rgba(82, 196, 126, 0.34);
-  box-shadow: inset 0 1px 0 rgba(118, 224, 158, 0.08), 0 5px 26px rgba(2, 18, 11, 0.48), 0 1px rgba(78, 210, 132, 0.1);
+@media (max-width: 1024px) {
+  .scene-quality-menu-item {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .scene-quality-menu-item .scene-quality-control {
+    width: 8.5rem;
+  }
 }

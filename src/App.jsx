@@ -14,6 +14,8 @@ import { Analytics } from '@vercel/analytics/react';
 import es from './locales/es';
 import en from './locales/en';
 import { isArgentinaDarkHour } from './utils/argentinaTime';
+import { getArgentinaTimeParts } from './utils/argentinaTime';
+import { getDayPeriod } from './utils/dayPeriod';
 
 const translations = { es, en };
 
@@ -27,6 +29,7 @@ function App() {
     }
   });
   const [isDarkHour, setIsDarkHour] = useState(false);
+  const [timeOfDay, setTimeOfDay] = useState(() => getDayPeriod(getArgentinaTimeParts().hour));
   const [sceneQuality, setSceneQuality] = useState(() => {
     try {
       return window.localStorage.getItem('persona-scene-quality') === 'full' ? 'full' : 'optimized';
@@ -59,12 +62,20 @@ function App() {
       const forcedHour = import.meta.env.DEV
         ? new URLSearchParams(window.location.search).get('hora')
         : null;
+      const argentinaHour = getArgentinaTimeParts().hour;
+      const actualPeriod = getDayPeriod(argentinaHour);
       const shouldBeDarkHour = forcedHour === 'oscura'
         ? true
         : forcedHour === 'normal'
           ? false
-          : isArgentinaDarkHour();
+          : isArgentinaDarkHour({ hour: argentinaHour });
+      const visualPeriod = forcedHour === 'oscura'
+        ? 'darkHour'
+        : forcedHour === 'normal' && actualPeriod === 'darkHour'
+          ? 'night'
+          : actualPeriod;
       setIsDarkHour((current) => current === shouldBeDarkHour ? current : shouldBeDarkHour);
+      setTimeOfDay((current) => current === visualPeriod ? current : visualPeriod);
     };
 
     syncDarkHour();
@@ -84,8 +95,8 @@ function App() {
   };
 
   return (
-    <div className={`App persona-menu${isDarkHour ? ' dark-hour-mode' : ''}`}>
-      <AnimatedBackground isDarkHour={isDarkHour} quality={sceneQuality} />
+    <div className={`App persona-menu${isDarkHour ? ' dark-hour-mode' : ''}${timeOfDay === 'night' ? ' deep-night-mode' : ''}`}>
+      <AnimatedBackground isDarkHour={isDarkHour} timeOfDay={timeOfDay} quality={sceneQuality} />
       <Header
         t={t}
         language={language}

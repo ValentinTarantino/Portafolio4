@@ -7,7 +7,7 @@ const About = ({ t }) => {
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>,
     // Kanban / Layout (Gestión de proyectos)
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>,
-    // Target / Crosshair (Autogestión)
+    // Target / Crosshair (Atención al detalle)
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>,
     // Lightbulb (Resolución de problemas)
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg>
@@ -21,24 +21,17 @@ const About = ({ t }) => {
         <div className="about-content">
           <div className="about-main">
             <div className="developer-card glass-card">
-              <div className="card-header">
-                <div className="status-indicator">
-                  <div className="status-dot"></div>
-                  <span>{t.about.onlineLabel}</span>
-                </div>
-                <div className="profile-identity">
-                  <span className="profile-identity-label">{t.about.profileLabel}</span>
-                  <span className="profile-arcana-card" aria-hidden="true">I</span>
-                </div>
-              </div>
-              
               <div className="developer-info">
                 <div className="name-section">
-                  <h3 className="dev-name">Valentín Thomas Tarantino</h3>
+                  <h3 className="dev-name">
+                    <span>{t.about.identityHeadline}</span>
+                    <span>{t.about.profileRole}</span>
+                  </h3>
                   <div className="role-tags">
-                    <span className="tag primary">Full Stack</span>
-                    <span className="tag secondary">React</span>
-                    <span className="tag tertiary">Js</span>
+                    <span className="tag primary">Next.js</span>
+                    <span className="tag secondary">React.js</span>
+                    <span className="tag tertiary">TypeScript</span>
+                    <span className="tag secondary">Node.js</span>
                   </div>
                 </div>
                 
@@ -47,6 +40,7 @@ const About = ({ t }) => {
                   <p>{t.about.description}</p>
                 </div>
               </div>
+
             </div>
             
             <div className="education-card glass-card">
@@ -60,7 +54,6 @@ const About = ({ t }) => {
               <div className="education-item">
                 <div className="education-header">
                   <h4>{t.about.educationItems.frontEndCourse}</h4>
-                  <span className="completion-badge">{t.about.certified}</span>
                 </div>
                 <p className="course-name">{t.about.educationItems.coderhouse}</p>
                 <div className="timeline">
@@ -74,7 +67,6 @@ const About = ({ t }) => {
               <div className="education-item">
                 <div className="education-header">
                   <h4>{t.about.educationItems.trainingProgram}</h4>
-                  <span className="completion-badge">{t.about.certified}</span>
                 </div>
                 <p className="course-name">{t.about.educationItems.utn}</p>
                 <div className="timeline">
@@ -88,7 +80,6 @@ const About = ({ t }) => {
               <div className="education-item">
                 <div className="education-header">
                   <h4>{t.about.educationItems.fullStackCareer}</h4>
-                  <span className="completion-badge">{t.about.certified}</span>
                 </div>
                 <p className="course-name">{t.about.educationItems.coderhouse}</p>
                 <div className="timeline">
@@ -102,7 +93,6 @@ const About = ({ t }) => {
               <div className="education-item">
                 <div className="education-header">
                   <h4>{t.about.educationItems.aiAutomation}</h4>
-                  <span className="completion-badge">{t.about.certified}</span>
                 </div>
                 <p className="course-name">{t.about.educationItems.coderhouse}</p>
                 <div className="timeline">
@@ -116,7 +106,6 @@ const About = ({ t }) => {
               <div className="education-item">
                 <div className="education-header">
                   <h4>{t.about.educationItems.aiAutomationAdvanced}</h4>
-                  <span className="completion-badge">{t.about.certified}</span>
                 </div>
                 <p className="course-name">{t.about.educationItems.coderhouse}</p>
                 <div className="timeline">
@@ -131,10 +120,6 @@ const About = ({ t }) => {
           <div className="about-sidebar">
             <div className="education-card glass-card">
               <div className="card-title">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z" stroke="currentColor" strokeWidth="2"/>
-                  <path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16" stroke="currentColor" strokeWidth="2"/>
-                </svg>
                 <span>{t.about.experience}</span>
               </div>
 

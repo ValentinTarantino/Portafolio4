@@ -79,6 +79,10 @@
   grid-column: 1 / -1;
 }
 .persona-link-card--linkedin { --card-accent: #36a8ff; }
+.App.dark-hour-mode .persona-link-card--linkedin {
+  --action-start: #087ef0;
+  --action-end: #47d9ff;
+}
 .persona-link-card--github {
   --card-accent: #b6c0cc;
   --action-start: #67727f;

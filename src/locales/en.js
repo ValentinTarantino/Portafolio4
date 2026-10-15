@@ -18,9 +18,11 @@ const en = {
   about: {
     onlineLabel: 'Online',
     profileLabel: 'Developer profile',
-    profileStatement: 'I build digital products that solve real problems.',
+    identityHeadline: 'Full Stack',
+    profileRole: 'Developer',
+    profileStatement: 'Solid architecture. Simple experiences.',
     title: 'About Me',
-    description: 'I am a Full Stack developer specialized in building modern digital products with a rigorous focus on user experience, performance, and best practices. Experienced in both complex full-stack architectures and delivering freelance solutions for production-grade real clients. I am passionate about structuring optimized databases, designing fluid APIs, and creating intuitive interfaces that add tangible business value.',
+    description: 'I have worked on complete application architectures and production freelance projects. I combine a focus on user experience, performance, and solid engineering practices with optimized databases, fluid APIs, and intuitive interfaces that deliver tangible business value.',
     education: 'Academic Background',
     currentEducation: 'Current Education',
     experienceLabel: 'Years of experience',
@@ -29,6 +31,7 @@ const en = {
     stats: {
       users: 'active users',
       latency: 'latency reduction',
+      deployments: 'deployment steps',
       years: 'years of experience'
     },
     stackTitle: 'Main stack',
@@ -82,7 +85,7 @@ const en = {
     softSkills: [
       'Assertive communication',
       'Project management',
-      'Autonomy',
+      'Attention to detail',
       'Problem solving'
     ]
   },

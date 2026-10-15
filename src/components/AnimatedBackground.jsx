@@ -1,5 +1,7 @@
 import { memo, useEffect, useRef, useState } from 'react';
 import Tartarus from './Tartarus';
+import CityWindowLights from './CityWindowLights';
+import CityStreet from './CityStreet';
 import './AnimatedBackground.css';
 
 // Width and facade height of each contiguous skyline segment in the original SVG viewBox.
@@ -52,74 +54,32 @@ const CityLayer = memo(({ buildings, depth, lightweight }) => {
     x += width;
 
     const columns = width >= 75 ? 2 : 1;
-    const rows = Math.max(1, Math.floor(height / 100));
-    const windowWidth = columns === 2 ? 15 : 21;
-    const windowHeight = 5.5;
-    const horizontalStart = columns === 1
-      ? (100 - windowWidth) / 2
-      : 12;
-    const horizontalRange = columns === 1
-      ? 0
-      : 100 - horizontalStart * 2 - windowWidth;
-    const verticalStart = rows === 1 ? 44 : 10;
-    const verticalRange = rows === 1 ? 0 : 90 - windowHeight - verticalStart;
-    const windows = [];
-
-    if (!lightweight) for (let row = 0; row < rows; row += 1) {
-      for (let column = 0; column < columns; column += 1) {
-        const hash = buildingIndex * 17 + row * 7 + column * 11 + layerIndex * 13;
-        const randomValue = Math.abs(Math.sin(
-          (buildingIndex + 1) * 127.1 + (row + 1) * 311.7 + (column + 1) * 74.7 + layerIndex * 57.3,
-        ) * 43758.5453) % 1;
-        const jitter = Math.sin(hash * 1.73) * 1.1;
-        const leftInFacade = horizontalStart
-          + (columns > 1 ? (horizontalRange * column) / (columns - 1) : 0);
-        const topInFacade = Math.min(
-          90 - windowHeight,
-          Math.max(8, verticalStart + (verticalRange * row) / Math.max(rows - 1, 1) + jitter),
-        );
-        const illuminated = randomValue < 0.45;
-        const toneIndex = hash % 10;
-        const lightTone = toneIndex < 2 ? 'cool' : toneIndex < 5 ? 'copper' : 'amber';
-
-        windows.push(
-          <span
-            className={`dark-hour-scene__window${illuminated ? ` is-lit is-${lightTone}` : ''}`}
-            key={`${row}-${column}`}
-            style={{
-              left: `${leftInFacade}%`,
-              top: `${topInFacade}%`,
-              width: `${windowWidth}%`,
-              height: `${windowHeight}%`,
-              '--window-alpha': illuminated ? 0.2 + (hash % 3) * 0.035 : 0.025,
-              '--window-peak-alpha': illuminated ? 0.26 + (hash % 3) * 0.03 : 0.025,
-              '--window-delay': `${(hash % 17) * -0.8}s`,
-              '--window-shutdown-delay': `${((buildingIndex * 3 + row * 5 + column * 2 + layerIndex * 7) % 9) * 0.075}s`,
-            }}
-          />,
-        );
-      }
-    }
+    const rows = Math.max(2, Math.floor(height / 64));
+    const roofY = 420 - height;
 
     return (
-      <foreignObject
-        key={`${depth}-${buildingIndex}`}
-        x={left}
-        y={420 - height}
-        width={width}
-        height={height}
-        overflow="hidden"
-      >
-        <div
-          xmlns="http://www.w3.org/1999/xhtml"
-          className="dark-hour-scene__building"
-          data-tone={buildingIndex % 4}
-          data-roof={(buildingIndex + layerIndex * 2) % 5}
-          style={{ '--facade-reflection': buildingIndex % 5 === 2 ? 0.1 : 0.025 }}
+      <g key={`${depth}-${buildingIndex}`}>
+        <foreignObject
+          x={left}
+          y={roofY}
+          width={width}
+          height={height}
+          overflow="hidden"
         >
-          {windows}
-        </div>
-      </foreignObject>
+          <div
+            xmlns="http://www.w3.org/1999/xhtml"
+            className="dark-hour-scene__building"
+            data-tone={buildingIndex % 4}
+            data-roof={(buildingIndex + layerIndex * 2) % 5}
+            data-grid-columns={columns}
+            data-grid-rows={rows}
+            data-grid-seed={buildingIndex + layerIndex * 31}
+            data-grid-depth={depth}
+            data-grid-edge={buildingIndex === 0 || buildingIndex === visibleBuildings.length - 1 ? 1 : 0}
+            style={{ '--facade-reflection': buildingIndex % 5 === 2 ? 0.1 : 0.025 }}
+          />
+        </foreignObject>
+      </g>
     );
   });
 
@@ -136,7 +96,7 @@ const CityLayer = memo(({ buildings, depth, lightweight }) => {
   );
 });
 
-const AnimatedBackground = ({ isDarkHour = false, quality = 'optimized' }) => {
+const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quality = 'optimized' }) => {
   const sceneRef = useRef(null);
   const canvasRef = useRef(null);
   const drawRef = useRef(null);
@@ -230,6 +190,8 @@ const AnimatedBackground = ({ isDarkHour = false, quality = 'optimized' }) => {
     let frameInterval = 1000 / 30;
     let pointerX = 0;
     let pointerY = 0;
+    let shootingStar = null;
+    let nextShootingStarAt = random(18, 32);
 
     const lowPowerDevice = !fullQualityOnMobile && ((navigator.deviceMemory || 8) <= 4
       || (navigator.hardwareConcurrency || 8) <= 4);
@@ -245,16 +207,16 @@ const AnimatedBackground = ({ isDarkHour = false, quality = 'optimized' }) => {
       );
       const count = finePointer.matches || fullQualityOnMobile ? desktopCount : mobileCount;
       particles = Array.from({ length: count }, () => ({
-        x: random(0, width),
-        y: random(0, height),
-        radius: random(0.55, 1.65),
-        speed: random(3.5, 10),
-        drift: random(1.5, 7.5),
-        secondaryDrift: random(0.45, 2.2),
-        phase: random(0, Math.PI * 2),
-        frequency: random(0.12, 0.42),
-        secondaryPhase: random(0, Math.PI * 2),
-        alpha: random(0.12, 0.37),
+          x: random(0, width),
+          y: random(0, height),
+          radius: random(0.7, 1.8),
+          speed: random(4.5, 12),
+          drift: random(1.5, 7.5),
+          secondaryDrift: random(0.45, 2.2),
+          phase: random(0, Math.PI * 2),
+          frequency: random(0.12, 0.42),
+          secondaryPhase: random(0, Math.PI * 2),
+          alpha: random(0.16, 0.4),
       }));
     };
 
@@ -275,7 +237,7 @@ const AnimatedBackground = ({ isDarkHour = false, quality = 'optimized' }) => {
       canvas.style.height = `${height}px`;
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
       createParticles();
-      draw(0, 0);
+      draw(0, elapsed);
     };
 
     const draw = (delta, time) => {
@@ -308,9 +270,85 @@ const AnimatedBackground = ({ isDarkHour = false, quality = 'optimized' }) => {
           + Math.sin(particle.secondaryPhase + motionTime * particle.frequency * 0.37) * particle.secondaryDrift * (1 - modeMix * 0.48);
         const shimmer = 0.9 + Math.sin(motionTime * 0.32 + particle.phase) * 0.1;
         context.beginPath();
-        context.fillStyle = `rgba(${red}, ${green}, ${blue}, ${particle.alpha * shimmer * (1 - modeMix * 0.55)})`;
+        const modeOpacity = 1 - modeMix * 0.55;
+        context.fillStyle = `rgba(${red}, ${green}, ${blue}, ${particle.alpha * shimmer * modeOpacity})`;
         context.arc(x, particle.y, particle.radius, 0, Math.PI * 2);
         context.fill();
+      }
+
+      if (motionPreference.matches) return;
+      if (!shootingStar && motionTime >= nextShootingStarAt) {
+        const moonRect = scene.querySelector('.dark-hour-scene__moon')?.getBoundingClientRect();
+        const moonX = moonRect ? moonRect.left + moonRect.width / 2 : -1000;
+        const moonY = moonRect ? moonRect.top + moonRect.height / 2 : -1000;
+        const moonRadius = moonRect ? Math.min(moonRect.width, moonRect.height) / 2 + 26 : 0;
+        let safePath = null;
+
+        for (let attempt = 0; attempt < 18 && !safePath; attempt += 1) {
+          const startX = random(width * 0.03, width * 0.68);
+          const startY = random(height * 0.06, height * 0.27);
+          const travelX = random(width * 0.17, width * 0.28);
+          const travelY = random(height * 0.1, height * 0.19);
+          const trailLength = random(90, 150);
+          const angle = Math.atan2(travelY, travelX);
+          const tailX = startX - Math.cos(angle) * trailLength;
+          const tailY = startY - Math.sin(angle) * trailLength;
+          const endX = startX + travelX;
+          const endY = startY + travelY;
+          const dx = endX - tailX;
+          const dy = endY - tailY;
+          const segmentLengthSquared = dx * dx + dy * dy;
+          const projection = segmentLengthSquared
+            ? Math.max(0, Math.min(1, ((moonX - tailX) * dx + (moonY - tailY) * dy) / segmentLengthSquared))
+            : 0;
+          const nearestX = tailX + dx * projection;
+          const nearestY = tailY + dy * projection;
+          const clearsMoon = Math.hypot(nearestX - moonX, nearestY - moonY) > moonRadius;
+
+          if (clearsMoon && endX < width * 0.98 && endY < height * 0.48) {
+            safePath = { startX, startY, travelX, travelY, trailLength };
+          }
+        }
+
+        if (safePath) {
+          shootingStar = {
+            ...safePath,
+            startTime: motionTime,
+            duration: random(0.85, 1.15),
+          };
+        } else {
+          nextShootingStarAt = motionTime + random(5, 9);
+        }
+      }
+
+      if (shootingStar) {
+        const progress = (motionTime - shootingStar.startTime) / shootingStar.duration;
+        if (progress >= 1) {
+          shootingStar = null;
+          nextShootingStarAt = motionTime + random(20, 38);
+        } else {
+          const fade = Math.sin(Math.PI * Math.min(progress, 1));
+          const headX = shootingStar.startX + shootingStar.travelX * progress;
+          const headY = shootingStar.startY + shootingStar.travelY * progress;
+          const angle = Math.atan2(shootingStar.travelY, shootingStar.travelX);
+          const tailX = headX - Math.cos(angle) * shootingStar.trailLength;
+          const tailY = headY - Math.sin(angle) * shootingStar.trailLength;
+          const trail = context.createLinearGradient(tailX, tailY, headX, headY);
+          trail.addColorStop(0, 'rgba(91, 205, 255, 0)');
+          trail.addColorStop(0.68, `rgba(91, 205, 255, ${0.34 * fade})`);
+          trail.addColorStop(0.94, `rgba(202, 246, 255, ${0.78 * fade})`);
+          trail.addColorStop(1, `rgba(255, 255, 255, ${0.96 * fade})`);
+          context.beginPath();
+          context.moveTo(tailX, tailY);
+          context.lineTo(headX, headY);
+          context.strokeStyle = trail;
+          context.lineWidth = 1.4;
+          context.stroke();
+          context.beginPath();
+          context.arc(headX, headY, 1.7, 0, Math.PI * 2);
+          context.fillStyle = `rgba(231, 251, 255, ${0.9 * fade})`;
+          context.fill();
+        }
       }
     };
     drawRef.current = draw;
@@ -324,7 +362,7 @@ const AnimatedBackground = ({ isDarkHour = false, quality = 'optimized' }) => {
       const delta = previousTime ? Math.min((time - previousTime) / 1000, 0.04) : 0;
       previousTime = time;
       lastFrameTime = time;
-      elapsed = time;
+      elapsed += delta * 1000;
       draw(delta, elapsed);
       frameId = window.requestAnimationFrame(animate);
     };
@@ -393,20 +431,24 @@ const AnimatedBackground = ({ isDarkHour = false, quality = 'optimized' }) => {
   }, [isDarkHour]);
 
   return (
-    <div className={`dark-hour-scene is-hero-active${isDarkHour ? ' is-dark-hour' : ''}${lightweightScene ? ' is-mobile-scene' : ''}${fullQualityOnMobile ? ' is-full-quality' : ''}`} ref={sceneRef} aria-hidden="true">
+    <div className={`dark-hour-scene is-hero-active${isDarkHour ? ' is-dark-hour' : ''}${lightweightScene ? ' is-mobile-scene' : ''}${fullQualityOnMobile ? ' is-full-quality' : ''}`} data-time-of-day={timeOfDay} ref={sceneRef} aria-hidden="true">
       <div className="dark-hour-scene__sky" />
+      <div className="dark-hour-scene__energy-currents" />
       <div className="dark-hour-scene__halo dark-hour-scene__halo--horizon" />
+      <div className="dark-hour-scene__clouds" />
       <div className="dark-hour-scene__moon-field">
         <div className="dark-hour-scene__moon" />
       </div>
       <div className="dark-hour-scene__mist dark-hour-scene__mist--far" />
       <div className="dark-hour-scene__mist dark-hour-scene__mist--near" />
       <div className="dark-hour-scene__distant-lights" />
-      <Tartarus />
+      <Tartarus isDarkHour={isDarkHour} />
       <CityLayer buildings={CITY_FAR} depth="far" lightweight={lightweightScene} />
       <CityLayer buildings={CITY_MID} depth="mid" lightweight={lightweightScene} />
       <div className="dark-hour-scene__city-haze" />
       <CityLayer buildings={CITY_NEAR} depth="near" lightweight={lightweightScene} />
+      <CityStreet />
+      <CityWindowLights timeOfDay={timeOfDay} enabled={!lightweightScene} />
       <canvas className="dark-hour-scene__particles" ref={canvasRef} />
       <div className="dark-hour-scene__vignette" />
     </div>
