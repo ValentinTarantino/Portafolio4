@@ -508,6 +508,8 @@
 }
 
 .transmission-console {
+  --tx-standby-screen-height: clamp(13rem, 22vw, 17rem);
+  position: relative;
   width: min(100%, 1160px);
   margin-inline: auto;
   padding: clamp(0.85rem, 2vw, 1.2rem);
@@ -566,28 +568,47 @@
 }
 
 .transmission-standby {
-  display: grid;
-  min-height: 15rem;
-  place-content: center;
-  justify-items: center;
-  gap: 0.8rem;
-  color: var(--tx-muted);
-  text-align: center;
+  padding-top: 0.75rem;
 }
 
-.transmission-standby p {
-  margin: 0;
-  font: 700 0.8rem/1.5 'Share Tech Mono', 'Lucida Console', 'Courier New', monospace;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+.transmission-standby__screen {
+  position: relative;
+  height: var(--tx-standby-screen-height);
+  overflow: hidden;
+  border: 1px solid var(--tx-line);
+  border-radius: 3px;
+  background:
+    linear-gradient(rgba(37, 106, 153, 0.035) 1px, transparent 1px),
+    radial-gradient(ellipse at 50% 52%, color-mix(in srgb, var(--tx-accent) 7%, transparent), transparent 64%),
+    linear-gradient(145deg, color-mix(in srgb, var(--tx-panel) 86%, #020711), #030916 72%);
+  background-size: 100% 4px, auto, auto;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.52), 0 0 16px color-mix(in srgb, var(--tx-accent) 5%, transparent);
+  transition: height 900ms cubic-bezier(0.18, 0.82, 0.24, 1);
 }
 
-.transmission-standby__indicator {
-  width: 0.8rem;
-  height: 0.8rem;
-  border: 1px solid var(--tx-muted);
-  border-radius: 50%;
-  box-shadow: 0 0 14px color-mix(in srgb, var(--tx-accent) 25%, transparent);
+.transmission-standby.is-starting .transmission-standby__screen {
+  height: var(--tx-screen-open-height, 42rem);
+  transform-origin: center;
+  animation: transmission-screen-on 900ms cubic-bezier(0.18, 0.82, 0.24, 1) both;
+}
+
+.transmission-standby__screen::before,
+.transmission-standby__screen::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: '';
+}
+
+.transmission-standby__screen::before {
+  background: repeating-linear-gradient(180deg, transparent 0 3px, color-mix(in srgb, var(--tx-accent) 3%, transparent) 4px);
+}
+
+.transmission-standby__screen::after {
+  inset: auto 8% 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--tx-accent) 26%, transparent), transparent);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--tx-accent) 22%, transparent);
 }
 
 .transmission-console__station,
@@ -646,9 +667,117 @@
   transition: opacity 300ms ease, transform 300ms ease;
 }
 
+.transmission-console__body.is-measuring {
+  position: absolute;
+  inset-inline: clamp(0.85rem, 2vw, 1.2rem);
+  top: 0;
+  width: auto;
+  visibility: hidden;
+  opacity: 0;
+  transform: none;
+  transition: none;
+}
+
 .transmission-console__body.is-on {
   opacity: 1;
   transform: scaleY(1) translateY(0);
+}
+
+.transmission-console__body.is-shutting-down {
+  position: relative;
+  z-index: 1;
+  display: block;
+  height: var(--tx-station-close-height);
+  min-height: 0;
+  overflow: hidden;
+  opacity: 1;
+  transform: none;
+  pointer-events: none;
+  animation: transmission-station-frame-close 760ms cubic-bezier(0.2, 0.8, 0.24, 1) both;
+}
+
+.transmission-console__body-content {
+  display: contents;
+}
+
+.transmission-console__body.is-shutting-down > .transmission-console__body-content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 100%;
+  grid-template-columns: inherit;
+  gap: inherit;
+  visibility: hidden;
+}
+
+.transmission-console__body.is-shutting-down > .transmission-standby--closing {
+  position: absolute;
+  z-index: 0;
+  inset: 0.75rem 0 0;
+  padding: 0;
+  pointer-events: none;
+}
+
+.transmission-standby--closing .transmission-standby__screen {
+  width: 100%;
+  height: 100%;
+}
+
+.transmission-console__body.is-shutting-down::after {
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  right: 0;
+  left: 0;
+  height: 2px;
+  background: var(--tx-accent);
+  box-shadow: 0 0 8px var(--tx-accent), 0 0 20px color-mix(in srgb, var(--tx-accent) 75%, transparent);
+  content: '';
+  opacity: 0;
+  pointer-events: none;
+  transform: scaleX(0);
+  transform-origin: center;
+  animation: transmission-station-close-line 760ms cubic-bezier(0.2, 0.8, 0.24, 1) both;
+}
+
+.transmission-console__body.is-on .transmission-channels {
+  animation: transmission-content-appear 380ms 70ms ease-out both;
+}
+
+.transmission-console__body.is-on .transmission-monitor {
+  animation: transmission-project-switch 520ms cubic-bezier(0.2, 0.8, 0.24, 1) both;
+}
+
+.transmission-console__body.is-on .transmission-monitor::before {
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  background: var(--tx-accent);
+  box-shadow: 0 0 8px var(--tx-accent), 0 0 20px color-mix(in srgb, var(--tx-accent) 75%, transparent);
+  content: '';
+  opacity: 0;
+  pointer-events: none;
+  animation: transmission-switch-edge 520ms cubic-bezier(0.2, 0.8, 0.24, 1) both;
+}
+
+.transmission-console__body.is-on .transmission-monitor__image {
+  animation: transmission-project-image 520ms cubic-bezier(0.2, 0.8, 0.24, 1) both;
+}
+
+.transmission-console.is-dark-hour .transmission-console__body.is-on .transmission-monitor__image {
+  animation: transmission-project-image 520ms cubic-bezier(0.2, 0.8, 0.24, 1) both,
+    transmission-image-interference 2.6s steps(1, end) 520ms infinite;
+}
+
+.transmission-console__body.is-on .transmission-readouts {
+  animation: transmission-content-appear 380ms 230ms ease-out both;
+}
+
+.transmission-console__body.is-on .transmission-project-copy {
+  animation: transmission-content-appear 440ms 330ms ease-out both;
 }
 
 .transmission-channels {
@@ -856,6 +985,7 @@
 }
 
 .transmission-terminal-access__mount {
+  position: relative;
   display: flex;
   justify-content: center;
   margin-top: 0.9rem;
@@ -872,13 +1002,146 @@
   pointer-events: auto;
 }
 
+.transmission-terminal-access__mount.is-closing {
+  pointer-events: none;
+}
+
+.transmission-terminal-access__mount.is-open.is-opening::before {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  width: min(100%, 720px);
+  margin-inline: auto;
+  background: linear-gradient(var(--tx-accent), var(--tx-accent)) no-repeat;
+  background-position: 0 0;
+  background-size: 2px 100%;
+  filter: drop-shadow(0 0 7px var(--tx-accent)) drop-shadow(0 0 14px color-mix(in srgb, var(--tx-accent) 70%, transparent));
+  content: '';
+  pointer-events: none;
+  animation: transmission-terminal-edge 650ms cubic-bezier(0.2, 0.8, 0.24, 1) both;
+}
+
 .transmission-terminal-access__mount .terminal-container {
   width: min(100%, 720px);
   max-width: 720px;
 }
 
+.transmission-terminal-access__mount.is-open.is-opening .terminal-container {
+  animation: transmission-terminal-open 650ms cubic-bezier(0.2, 0.8, 0.24, 1) both;
+}
+
+.transmission-terminal-access__mount.is-closing::before {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  width: min(100%, 720px);
+  margin-inline: auto;
+  background: linear-gradient(var(--tx-accent), var(--tx-accent)) no-repeat;
+  background-position: 100% 0;
+  background-size: 2px 100%;
+  filter: drop-shadow(0 0 7px var(--tx-accent)) drop-shadow(0 0 14px color-mix(in srgb, var(--tx-accent) 70%, transparent));
+  content: '';
+  pointer-events: none;
+  animation: transmission-terminal-edge-close 650ms cubic-bezier(0.2, 0.8, 0.24, 1) both;
+}
+
+.transmission-terminal-access__mount.is-closing .terminal-container {
+  animation: transmission-terminal-close 650ms cubic-bezier(0.2, 0.8, 0.24, 1) both;
+}
+
 .transmission-terminal-access__mount .terminal-body {
-  height: clamp(340px, 52vh, 440px);
+  height: clamp(320px, 44vh, 400px);
+  padding: clamp(1.2rem, 2.6vw, 1.8rem);
+  background:
+    radial-gradient(ellipse at 88% 8%, color-mix(in srgb, var(--sees-terminal-accent, #42c9ff) 12%, transparent), transparent 48%),
+    linear-gradient(155deg, var(--sees-terminal-bg-start, #071a2d), var(--sees-terminal-bg-end, #030b18) 72%);
+  scrollbar-color: color-mix(in srgb, var(--tx-accent) 38%, transparent) transparent;
+}
+
+.App.persona-menu .transmission-terminal-access__mount .sees-terminal {
+  --sees-terminal-accent: #42c9ff;
+  --sees-terminal-bg-start: #071a2d;
+  --sees-terminal-bg-end: #030b18;
+  border: 1px solid color-mix(in srgb, var(--sees-terminal-accent) 46%, #102b43);
+  border-radius: 10px;
+  background: var(--sees-terminal-bg-end);
+  box-shadow:
+    0 18px 50px rgba(0, 5, 18, 0.46),
+    0 0 28px color-mix(in srgb, var(--sees-terminal-accent) 11%, transparent),
+    inset 0 1px rgba(255, 255, 255, 0.045);
+  isolation: isolate;
+}
+
+.App.persona-menu .transmission-terminal-access__mount .sees-terminal::before {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--sees-terminal-accent), transparent);
+  opacity: 0.85;
+}
+
+.App.persona-menu .transmission-terminal-access__mount .sees-terminal .terminal-header {
+  min-height: 48px;
+  padding-inline: 1rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--sees-terminal-accent) 22%, transparent);
+  background: linear-gradient(105deg, color-mix(in srgb, var(--sees-terminal-accent) 14%, #0a1930), #0a1425 72%);
+}
+
+.App.persona-menu .transmission-terminal-access__mount .sees-terminal .terminal-buttons {
+  display: none;
+}
+
+.App.persona-menu .transmission-terminal-access__mount .sees-terminal .terminal-title {
+  margin-left: 0;
+  color: color-mix(in srgb, var(--sees-terminal-accent) 82%, white);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.App.persona-menu .transmission-terminal-access__mount .sees-terminal .terminal-reset-btn {
+  min-width: 2.1rem;
+  min-height: 2rem;
+  margin-left: auto;
+  border-color: color-mix(in srgb, var(--sees-terminal-accent) 62%, transparent);
+  background: color-mix(in srgb, var(--sees-terminal-accent) 18%, #061426);
+  color: var(--sees-terminal-accent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--sees-terminal-accent) 24%, transparent), inset 0 0 9px color-mix(in srgb, var(--sees-terminal-accent) 12%, transparent);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--sees-terminal-accent) 65%, transparent);
+  transition: color 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.App.persona-menu .transmission-terminal-access__mount .sees-terminal .terminal-reset-btn:hover {
+  color: white;
+  border-color: var(--sees-terminal-accent);
+  background: color-mix(in srgb, var(--sees-terminal-accent) 34%, #061426);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--sees-terminal-accent) 48%, transparent), inset 0 0 12px color-mix(in srgb, var(--sees-terminal-accent) 20%, transparent);
+  transform: translateY(-1px);
+}
+
+.App.dark-hour-mode.persona-menu .transmission-terminal-access__mount .sees-terminal {
+  --sees-terminal-accent: #43f5a2;
+  --sees-terminal-bg-start: #08251a;
+  --sees-terminal-bg-end: #03130d;
+  border-color: color-mix(in srgb, var(--sees-terminal-accent) 44%, #12392c);
+  box-shadow:
+    0 18px 50px rgba(0, 8, 5, 0.48),
+    0 0 30px color-mix(in srgb, var(--sees-terminal-accent) 12%, transparent),
+    inset 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.App.dark-hour-mode.persona-menu .transmission-terminal-access__mount .sees-terminal .terminal-header {
+  background: linear-gradient(105deg, color-mix(in srgb, var(--sees-terminal-accent) 13%, #092118), #07160f 72%);
+}
+
+.App.dark-hour-mode.persona-menu .transmission-terminal-access__mount .sees-terminal .terminal-body {
+  background:
+    radial-gradient(ellipse at 88% 8%, color-mix(in srgb, var(--sees-terminal-accent) 14%, transparent), transparent 48%),
+    linear-gradient(155deg, var(--sees-terminal-bg-start), var(--sees-terminal-bg-end) 72%);
+  scrollbar-color: color-mix(in srgb, var(--sees-terminal-accent) 38%, transparent) transparent;
+}
+
+.App.dark-hour-mode.persona-menu .transmission-terminal-access__mount .sees-terminal .terminal-title {
+  color: color-mix(in srgb, var(--sees-terminal-accent) 83%, white);
 }
 
 .transmission-readouts {
@@ -1100,6 +1363,154 @@
   100% { opacity: 1; transform: translateX(0); }
 }
 
+@keyframes transmission-screen-on {
+  0% {
+    opacity: 0.2;
+    filter: brightness(3.2) saturate(0.45);
+    transform: scaleY(0.012);
+  }
+  22% {
+    opacity: 1;
+    filter: brightness(2.4) saturate(0.7);
+    transform: scaleY(0.035);
+  }
+  48% {
+    opacity: 1;
+    filter: brightness(1.6) saturate(0.9);
+    transform: scaleY(1.025);
+  }
+  68% {
+    filter: brightness(1.18) saturate(1);
+    transform: scaleY(0.99);
+  }
+  100% {
+    opacity: 1;
+    filter: brightness(1) saturate(1);
+    transform: scaleY(1);
+  }
+}
+
+@keyframes transmission-content-appear {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes transmission-project-switch {
+  0% {
+    opacity: 0.35;
+    filter: brightness(2.2) saturate(0.45);
+    transform: translateX(8px) scale(0.99);
+  }
+  38% {
+    opacity: 1;
+    filter: brightness(1.55) saturate(0.8);
+    transform: translateX(0) scale(1);
+  }
+  72% {
+    filter: brightness(1.16) saturate(1.08);
+  }
+  100% {
+    opacity: 1;
+    filter: brightness(1) saturate(1);
+    transform: none;
+  }
+}
+
+@keyframes transmission-project-image {
+  0% { clip-path: inset(0 100% 0 0); }
+  38% { clip-path: inset(0 48% 0 0); }
+  72%, 100% { clip-path: inset(0); }
+}
+
+@keyframes transmission-terminal-open {
+  0% {
+    opacity: 0.35;
+    filter: brightness(2.2) saturate(0.45);
+    clip-path: inset(0 100% 0 0);
+    transform: translateX(8px) scale(0.99);
+  }
+  38% {
+    opacity: 1;
+    filter: brightness(1.55) saturate(0.8);
+    clip-path: inset(0 48% 0 0);
+    transform: translateX(0) scale(1);
+  }
+  72% {
+    filter: brightness(1.16) saturate(1.08);
+    clip-path: inset(0);
+  }
+  100% {
+    opacity: 1;
+    filter: brightness(1) saturate(1);
+    clip-path: inset(0);
+    transform: none;
+  }
+}
+
+@keyframes transmission-terminal-edge {
+  0% { background-position: 0 0; opacity: 1; }
+  38% { background-position: 52% 0; opacity: 1; }
+  72% { background-position: 100% 0; opacity: 1; }
+  100% { background-position: 100% 0; opacity: 0; }
+}
+
+@keyframes transmission-terminal-close {
+  0% {
+    opacity: 1;
+    filter: brightness(1) saturate(1);
+    clip-path: inset(0);
+    transform: none;
+  }
+  38% {
+    opacity: 1;
+    filter: brightness(1.16) saturate(1.08);
+    clip-path: inset(0 48% 0 0);
+    transform: translateX(0) scale(1);
+  }
+  72% {
+    opacity: 0.7;
+    filter: brightness(1.8) saturate(0.65);
+    clip-path: inset(0 100% 0 0);
+    transform: translateX(-8px) scale(0.99);
+  }
+  100% {
+    opacity: 0;
+    filter: brightness(2.2) saturate(0.45);
+    clip-path: inset(0 100% 0 0);
+    transform: translateX(-8px) scale(0.99);
+  }
+}
+
+@keyframes transmission-terminal-edge-close {
+  0% { background-position: 100% 0; opacity: 1; }
+  38% { background-position: 52% 0; opacity: 1; }
+  72% { background-position: 0 0; opacity: 1; }
+  100% { background-position: 0 0; opacity: 0; }
+}
+
+@keyframes transmission-switch-edge {
+  0% { left: 0; opacity: 1; }
+  38% { left: 52%; opacity: 1; }
+  72% { left: calc(100% - 2px); opacity: 1; }
+  100% { left: calc(100% - 2px); opacity: 0; }
+}
+
+@keyframes transmission-station-frame-close {
+  0% {
+    height: var(--tx-station-close-height);
+  }
+  100% {
+    height: calc(var(--tx-standby-screen-height) + 0.75rem);
+  }
+}
+
+@keyframes transmission-station-close-line {
+  0%, 20% { opacity: 0; transform: scaleX(0); }
+  38%, 54% { opacity: 1; transform: scaleX(1); }
+  82% { opacity: 1; transform: scaleX(0.025); }
+  100% { opacity: 0; transform: scaleX(0); }
+}
+
 @keyframes transmission-rec {
   50% { opacity: 0.32; }
 }
@@ -1177,6 +1588,8 @@
 }
 
 @media (max-width: 719px) {
+  .transmission-console__body.is-measuring { inset-inline: 0.7rem; }
+
   .transmission-section[data-quality='optimized'] .transmission-monitor__scanlines { display: none; }
   .transmission-section[data-quality='optimized'] .transmission-rec-dot,
   .transmission-section[data-quality='optimized'] .transmission-monitor,
@@ -1187,11 +1600,24 @@
 
 @media (prefers-reduced-motion: reduce) {
   .transmission-monitor,
+  .transmission-standby__screen,
+  .transmission-console__body.is-on .transmission-channels,
+  .transmission-console__body.is-on .transmission-monitor,
+  .transmission-console__body.is-on .transmission-monitor::before,
+  .transmission-console__body.is-on .transmission-readouts,
+  .transmission-console__body.is-on .transmission-project-copy,
+  .transmission-console__body.is-shutting-down,
+  .transmission-console__body.is-shutting-down::after,
+  .transmission-terminal-access__mount.is-open.is-opening::before,
+  .transmission-terminal-access__mount.is-open.is-opening .terminal-container,
+  .transmission-terminal-access__mount.is-closing::before,
+  .transmission-terminal-access__mount.is-closing .terminal-container,
   .transmission-monitor__image,
   .transmission-monitor::after,
   .transmission-rec-dot,
   .transmission-console.is-dark-hour .transmission-signal-bars i:nth-child(2) { animation: none; }
   .transmission-terminal-access__mount,
+  .transmission-standby__screen,
   .transmission-console__body { transition: none; }
 }
 

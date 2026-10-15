@@ -1,4 +1,4 @@
-import { lazy, memo, Suspense, useCallback, useEffect, useRef, useState } from 'react';
+import { lazy, memo, Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import './Projects.css';
 import projectsData from '../data/projects';
 import ProjectTechnology from './ProjectTechnology';
@@ -36,11 +36,20 @@ const Projects = ({ t, language, isDarkHour = false, sceneQuality = 'optimized',
   const [isSectionVisible, setIsSectionVisible] = useState(false);
   const [isPageVisible, setIsPageVisible] = useState(true);
   const [showDeveloperTerminal, setShowDeveloperTerminal] = useState(false);
+  const [isDeveloperTerminalOpening, setIsDeveloperTerminalOpening] = useState(false);
+  const [isDeveloperTerminalClosing, setIsDeveloperTerminalClosing] = useState(false);
   const [isStationPowered, setIsStationPowered] = useState(false);
   const [isStationContentMounted, setIsStationContentMounted] = useState(false);
+  const [isScreenStarting, setIsScreenStarting] = useState(false);
+  const [isScreenShuttingDown, setIsScreenShuttingDown] = useState(false);
+  const [screenOpenHeight, setScreenOpenHeight] = useState(null);
+  const [stationCloseHeight, setStationCloseHeight] = useState(null);
   const sectionRef = useRef(null);
   const terminalMountRef = useRef(null);
   const stationUnmountTimerRef = useRef(null);
+  const stationPowerOnTimerRef = useRef(null);
+  const terminalOpeningTimerRef = useRef(null);
+  const stationContentRef = useRef(null);
   const channelRefs = useRef({});
   const labels = t.projects.transmission;
   const setMonitorTerminalMount = useCallback((node) => {
@@ -48,27 +57,84 @@ const Projects = ({ t, language, isDarkHour = false, sceneQuality = 'optimized',
     setProjectTerminalMount?.(node);
   }, [setProjectTerminalMount]);
 
-  const toggleDeveloperTerminal = () => setShowDeveloperTerminal((isOpen) => !isOpen);
-
-  const toggleStationPower = () => {
-    window.clearTimeout(stationUnmountTimerRef.current);
-    if (isStationPowered) {
-      setIsStationPowered(false);
-      stationUnmountTimerRef.current = window.setTimeout(() => setIsStationContentMounted(false), 300);
+  const toggleDeveloperTerminal = () => {
+    window.clearTimeout(terminalOpeningTimerRef.current);
+    const terminalMotionDuration = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 650;
+    if (isDeveloperTerminalClosing) {
+      setIsDeveloperTerminalClosing(false);
+      setIsDeveloperTerminalOpening(true);
+      terminalOpeningTimerRef.current = window.setTimeout(() => setIsDeveloperTerminalOpening(false), terminalMotionDuration);
+      return;
+    }
+    if (showDeveloperTerminal) {
+      setIsDeveloperTerminalOpening(false);
+      setIsDeveloperTerminalClosing(true);
+      terminalOpeningTimerRef.current = window.setTimeout(() => {
+        setShowDeveloperTerminal(false);
+        setIsDeveloperTerminalClosing(false);
+      }, terminalMotionDuration);
       return;
     }
 
-    setIsStationContentMounted(true);
-    window.requestAnimationFrame(() => setIsStationPowered(true));
+    setShowDeveloperTerminal(true);
+    setIsDeveloperTerminalClosing(false);
+    setIsDeveloperTerminalOpening(true);
+    terminalOpeningTimerRef.current = window.setTimeout(() => setIsDeveloperTerminalOpening(false), terminalMotionDuration);
   };
 
-  useEffect(() => () => window.clearTimeout(stationUnmountTimerRef.current), []);
+  const toggleStationPower = () => {
+    window.clearTimeout(stationUnmountTimerRef.current);
+    window.clearTimeout(stationPowerOnTimerRef.current);
+    const stationMotionDuration = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 760;
+    if (isScreenStarting) {
+      setIsScreenStarting(false);
+      setIsStationContentMounted(false);
+      return;
+    }
+    if (isScreenShuttingDown) {
+      setIsScreenShuttingDown(false);
+      setIsStationPowered(true);
+      return;
+    }
+    if (isStationPowered) {
+      setStationCloseHeight(stationContentRef.current?.getBoundingClientRect().height || 0);
+      setIsStationPowered(false);
+      setIsScreenShuttingDown(true);
+      stationUnmountTimerRef.current = window.setTimeout(() => {
+        setIsStationContentMounted(false);
+        setIsScreenShuttingDown(false);
+      }, stationMotionDuration);
+      return;
+    }
+
+    setIsStationPowered(false);
+    setIsStationContentMounted(true);
+    setIsScreenStarting(true);
+    stationPowerOnTimerRef.current = window.setTimeout(() => {
+      setIsScreenStarting(false);
+      setIsStationContentMounted(true);
+      window.requestAnimationFrame(() => setIsStationPowered(true));
+    }, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 900);
+  };
+
+  useEffect(() => () => {
+    window.clearTimeout(stationUnmountTimerRef.current);
+    window.clearTimeout(stationPowerOnTimerRef.current);
+    window.clearTimeout(terminalOpeningTimerRef.current);
+  }, []);
 
   const visibleProjects = projectsData;
   const activeProject = visibleProjects.find((project) => project.id === activeId && project.available)
     || visibleProjects.find((project) => project.available);
   const activeNumber = activeProject?.number || 1;
   const content = activeProject && getProjectContent(activeProject, language);
+
+  useLayoutEffect(() => {
+    if (!isScreenStarting || !stationContentRef.current) return;
+    const contentElement = stationContentRef.current;
+    const contentPaddingTop = Number.parseFloat(window.getComputedStyle(contentElement).paddingTop) || 0;
+    setScreenOpenHeight(Math.max(0, Math.ceil(contentElement.scrollHeight - contentPaddingTop)));
+  }, [isScreenStarting, isStationContentMounted, activeProject?.id, language]);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -150,24 +216,35 @@ const Projects = ({ t, language, isDarkHour = false, sceneQuality = 'optimized',
               <span>{isStationPowered ? (isDarkHour ? labels.tartarusDetected : labels.noAnomalies) : labels.powerStandby}</span>
             </div>
             <button
-              className={`transmission-power-button${isStationPowered ? ' is-on' : ''}`}
+              className={`transmission-power-button${isStationPowered || isScreenStarting ? ' is-on' : ''}`}
               type="button"
-              aria-pressed={isStationPowered}
+              aria-pressed={isStationPowered || isScreenStarting}
               onClick={toggleStationPower}
             >
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v10m5.66-6.66a8 8 0 1 1-11.32 0" /></svg>
-              {isStationPowered ? labels.stationPowerOff : labels.stationPowerOn}
+              {isStationPowered || isScreenStarting ? labels.stationPowerOff : labels.stationPowerOn}
             </button>
           </header>
 
-          {!isStationContentMounted && (
-            <div className="transmission-standby" aria-live="polite">
-              <span className="transmission-standby__indicator" aria-hidden="true" />
-              <p>{labels.powerHint}</p>
+          {(!isStationContentMounted || isScreenStarting) && (
+              <div className={`transmission-standby${isScreenStarting ? ' is-starting' : ''}`} aria-hidden="true">
+              <div className="transmission-standby__screen" style={screenOpenHeight === null ? undefined : { '--tx-screen-open-height': `${screenOpenHeight}px` }}>
+              </div>
             </div>
           )}
 
-          {isStationContentMounted && <div className={`transmission-console__body${isStationPowered ? ' is-on' : ''}`}>
+          {isStationContentMounted && <div
+            ref={stationContentRef}
+            style={isScreenShuttingDown && stationCloseHeight !== null ? { '--tx-station-close-height': `${stationCloseHeight}px` } : undefined}
+            className={`transmission-console__body${isScreenStarting ? ' is-measuring' : ''}${isStationPowered ? ' is-on' : ''}${isScreenShuttingDown ? ' is-shutting-down' : ''}`}
+          >
+            {isScreenShuttingDown && (
+              <div className="transmission-standby transmission-standby--closing" aria-hidden="true">
+                <div className="transmission-standby__screen">
+                </div>
+              </div>
+            )}
+            <div className="transmission-console__body-content">
             <div className="transmission-channels" role="tablist" aria-orientation="vertical" aria-label={labels.channelList}>
               {visibleProjects.map((project, index) => {
                 const selected = project.id === activeProject?.id;
@@ -263,6 +340,7 @@ const Projects = ({ t, language, isDarkHour = false, sceneQuality = 'optimized',
                 </div>
               </div>
             )}
+            </div>
           </div>}
         </div>
 
@@ -284,7 +362,7 @@ const Projects = ({ t, language, isDarkHour = false, sceneQuality = 'optimized',
           {showDeveloperTerminal && (
             <div
               id="projects-developer-terminal"
-              className="transmission-terminal-access__mount is-open"
+              className={`transmission-terminal-access__mount is-open${isDeveloperTerminalOpening ? ' is-opening' : ''}${isDeveloperTerminalClosing ? ' is-closing' : ''}`}
               ref={setMonitorTerminalMount}
             />
           )}

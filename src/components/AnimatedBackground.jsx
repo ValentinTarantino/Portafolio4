@@ -29,6 +29,23 @@ const CITY_NEAR = [
 ];
 
 const MOBILE_SCENE_QUERY = '(max-width: 700px), (hover: none) and (pointer: coarse)';
+const TARTARUS_REVEAL_KEY = 'persona-tartarus-revealed';
+
+const hasTartarusBeenRevealed = () => {
+  try {
+    return window.sessionStorage.getItem(TARTARUS_REVEAL_KEY) === 'true';
+  } catch {
+    return false;
+  }
+};
+
+const rememberTartarusReveal = () => {
+  try {
+    window.sessionStorage.setItem(TARTARUS_REVEAL_KEY, 'true');
+  } catch {
+    // The scene still reveals for the current page if storage is unavailable.
+  }
+};
 
 const lightweightCity = (buildings) => {
   // Keep individual rooflines, but render only every other building on mobile.
@@ -129,6 +146,7 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
       scene.classList.add('is-hero-active');
       if (scene.classList.contains('is-dark-hour')) {
         scene.classList.add('has-revealed-tartarus');
+        rememberTartarusReveal();
       }
       return undefined;
     }
@@ -140,6 +158,7 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
       scene.classList.toggle('is-hero-active', entry.isIntersecting);
       if (entry.isIntersecting && scene.classList.contains('is-dark-hour')) {
         scene.classList.add('has-revealed-tartarus');
+        rememberTartarusReveal();
       }
     }, { threshold: 0 });
 
@@ -156,8 +175,10 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
       return;
     }
 
-    if (heroActiveRef.current) {
+    const pageRestoredBelowHero = window.scrollY > window.innerHeight * 0.25;
+    if (heroActiveRef.current || hasTartarusBeenRevealed() || pageRestoredBelowHero) {
       scene.classList.add('has-revealed-tartarus');
+      rememberTartarusReveal();
     }
   }, [isDarkHour]);
 
@@ -444,10 +465,21 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
       <div className="dark-hour-scene__moon-field">
         <div className="dark-hour-scene__moon" />
       </div>
+      <div className="dark-hour-scene__lunar-shadow" />
       <div className="dark-hour-scene__mist dark-hour-scene__mist--far" />
       <div className="dark-hour-scene__mist dark-hour-scene__mist--near" />
+      <div className="dark-hour-scene__reactive-fog" />
       <div className="dark-hour-scene__distant-lights" />
       <Tartarus isDarkHour={isDarkHour} />
+      <svg className="dark-hour-scene__filters" aria-hidden="true" focusable="false">
+        <defs>
+          <filter id="tartarus-spatial-warp" x="-20%" y="-20%" width="140%" height="140%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.018 0.032" numOctaves="1" seed="8" result="warp" />
+            <feDisplacementMap in="SourceGraphic" in2="warp" scale="9" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        </defs>
+      </svg>
+      <div className="dark-hour-scene__distortion" />
       <CityLayer buildings={CITY_FAR} depth="far" lightweight={lightweightScene} />
       <CityLayer buildings={CITY_MID} depth="mid" lightweight={lightweightScene} />
       <div className="dark-hour-scene__city-haze" />

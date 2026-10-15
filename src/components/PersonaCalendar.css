@@ -51,15 +51,49 @@
 }
 
 .persona-calendar__weekday {
+  position: relative;
+  isolation: isolate;
   display: inline-block;
-  padding: 3px 4px 2px;
+  padding: 3px 4px 5px;
   color: #fff;
-  background: #d63850;
-  clip-path: polygon(0 0, 100% 0, 91% 100%, 0 100%);
+  background: transparent;
   font-size: 0.53rem;
   font-weight: 900;
   letter-spacing: -0.015em;
   text-transform: uppercase;
+}
+
+.persona-calendar__weekday::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: #d63850;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  content: "";
+}
+
+.persona-calendar__weekday.is-saturday::before {
+  background: #35c9f5;
+}
+
+.persona-calendar__weekday.is-sunday::before {
+  background: #d63850;
+}
+
+.persona-calendar__weekday.is-workday::before {
+  background: #2878d0;
+}
+
+.App.dark-hour-mode .persona-calendar__weekday.is-saturday::before {
+  background: #35c9f5;
+}
+
+.App.dark-hour-mode .persona-calendar__weekday.is-sunday::before {
+  background: #d63850;
+}
+
+.App.dark-hour-mode .persona-calendar__weekday.is-workday::before {
+  background: #2878d0;
 }
 
 .persona-calendar__period {
@@ -67,10 +101,11 @@
   max-width: 100%;
   overflow: hidden;
   color: #58c9ff;
-  font-size: 0.71rem;
-  font-weight: 850;
+  font-size: 0.76rem;
+  font-weight: 900;
   letter-spacing: 0.005em;
   line-height: 1.08;
+  -webkit-text-stroke: 0.3px currentColor;
   text-overflow: ellipsis;
   text-transform: uppercase;
   white-space: nowrap;
@@ -101,7 +136,7 @@
   }
 
   .persona-calendar__period {
-    font-size: 0.67rem;
+    font-size: 0.71rem;
   }
 }
 
@@ -129,7 +164,7 @@
   }
 
   .persona-calendar__period {
-    font-size: 0.61rem;
+    font-size: 0.65rem;
   }
 }
 
@@ -151,6 +186,6 @@
   }
 
   .persona-calendar__period {
-    font-size: 0.56rem;
+    font-size: 0.59rem;
   }
 }

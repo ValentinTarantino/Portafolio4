@@ -96,7 +96,7 @@ const es = {
     categories: {
       frontend: 'Frontend y UI',
       frontendDescription: 'Interfaces, estado y experiencias 3D',
-      backend: 'Backend, BD y Cloud',
+      backend: 'Backend, DB y Cloud',
       backendDescription: 'APIs, datos e infraestructura',
       tools: 'Calidad y herramientas',
       toolsDescription: 'Testing, CI/CD y flujo de desarrollo',

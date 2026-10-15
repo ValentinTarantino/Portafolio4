@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getDayPeriod, getNextDayPeriodChange } from '../utils/dayPeriod';
+import { getDayPeriod } from '../utils/dayPeriod';
+import { getArgentinaTimeParts } from '../utils/argentinaTime';
 import './PersonaCalendar.css';
 
 const PERIOD_LABELS = {
@@ -21,21 +22,38 @@ const PERIOD_LABELS = {
 
 const getCalendarData = (now, language) => {
   const locale = language === 'en' ? 'en' : 'es';
-  const dateParts = new Intl.DateTimeFormat(locale, {
+  const dateParts = new Intl.DateTimeFormat('es-AR', {
     day: '2-digit',
     month: '2-digit',
+    year: 'numeric',
+    timeZone: 'America/Argentina/Buenos_Aires',
   }).formatToParts(now);
   const values = Object.fromEntries(dateParts.map(({ type, value }) => [type, value]));
-  const weekday = new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(now).replace('.', '');
+  const weekday = new Intl.DateTimeFormat(locale === 'en' ? 'en-US' : 'es-AR', {
+    weekday: 'short',
+    timeZone: 'America/Argentina/Buenos_Aires',
+  }).format(now).replace('.', '');
+  const weekdayIndex = new Intl.DateTimeFormat('en-US', {
+    weekday: 'short',
+    timeZone: 'America/Argentina/Buenos_Aires',
+  }).format(now);
+  const weekdayClass = weekdayIndex === 'Sat'
+    ? 'is-saturday'
+    : weekdayIndex === 'Sun'
+      ? 'is-sunday'
+      : 'is-workday';
+  const { hour } = getArgentinaTimeParts(now);
 
   return {
     day: values.day,
     month: values.month,
     weekday,
-    period: getDayPeriod(now.getHours()),
-    isoDate: `${now.getFullYear()}-${values.month}-${values.day}`,
+    weekdayClass,
+    period: getDayPeriod(hour),
+    isoDate: `${values.year}-${values.month}-${values.day}`,
     fullDate: new Intl.DateTimeFormat(language === 'en' ? 'en-US' : 'es-AR', {
       dateStyle: 'full',
+      timeZone: 'America/Argentina/Buenos_Aires',
     }).format(now),
   };
 };
@@ -44,31 +62,22 @@ const PersonaCalendar = ({ language = 'es', isDarkHour = false }) => {
   const [calendar, setCalendar] = useState(() => getCalendarData(new Date(), language));
 
   useEffect(() => {
-    let timeoutId;
-    let disposed = false;
-
-    const scheduleNextUpdate = () => {
-      window.clearTimeout(timeoutId);
-      const now = new Date();
-      setCalendar(getCalendarData(now, language));
-      const delay = Math.max(0, getNextDayPeriodChange(now) - now.getTime()) + 50;
-      timeoutId = window.setTimeout(() => {
-        if (!disposed) scheduleNextUpdate();
-      }, delay);
+    const updateCalendar = () => {
+      setCalendar(getCalendarData(new Date(), language));
     };
 
     const refreshWhenVisible = () => {
-      if (document.visibilityState === 'visible') scheduleNextUpdate();
+      if (document.visibilityState === 'visible') updateCalendar();
     };
 
-    scheduleNextUpdate();
-    window.addEventListener('focus', scheduleNextUpdate);
+    updateCalendar();
+    const intervalId = window.setInterval(updateCalendar, 30_000);
+    window.addEventListener('focus', updateCalendar);
     document.addEventListener('visibilitychange', refreshWhenVisible);
 
     return () => {
-      disposed = true;
-      window.clearTimeout(timeoutId);
-      window.removeEventListener('focus', scheduleNextUpdate);
+      window.clearInterval(intervalId);
+      window.removeEventListener('focus', updateCalendar);
       document.removeEventListener('visibilitychange', refreshWhenVisible);
     };
   }, [language]);
@@ -87,7 +96,7 @@ const PersonaCalendar = ({ language = 'es', isDarkHour = false }) => {
           <span className="persona-calendar__divider" aria-hidden="true">/</span>
           <span className="persona-calendar__date-secondary">{calendar.month}</span>
         </time>
-        <span className="persona-calendar__weekday">{calendar.weekday}</span>
+        <span className={`persona-calendar__weekday ${calendar.weekdayClass}`}>{calendar.weekday}</span>
       </div>
       <span
         className={`persona-calendar__period${calendar.period === 'afternoon' ? ' is-afternoon' : ''}${isDarkHour ? ' is-dark-hour' : ''}`}

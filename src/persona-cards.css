@@ -3623,12 +3623,12 @@
 
 .App.persona-menu.dark-hour-mode .developer-card .description-box {
   border-left-color: #15965b;
-  background: #e5f5ea;
+  background: #dce9df;
   box-shadow: 5px 5px 0 rgba(15, 91, 53, 0.62);
 }
 
 .App.persona-menu.dark-hour-mode .developer-card .description-box::before {
-  background: linear-gradient(145deg, #eaf8ee, #d5eddd);
+  background: linear-gradient(145deg, #e5eee7, #d7e5da);
 }
 
 .App.persona-menu.dark-hour-mode .developer-card .description-box::after {

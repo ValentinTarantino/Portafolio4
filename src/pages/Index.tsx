@@ -23,7 +23,7 @@ const translations = {
       greeting: '',
       name: 'Valentín Thomas Tarantino',
       title: 'Desarrollador Full Stack',
-      description: 'Apasionado por crear experiencias web únicas y funcionales. Especializado en React, JavaScript y diseño UI/UX.',
+      description: 'Desarrollo aplicaciones web interactivas y escalables con React y JavaScript.',
       downloadCV: 'Descargar CV',
       contactMe: 'Contáctame'
     },
@@ -77,7 +77,7 @@ const translations = {
       greeting: '',
       name: 'Valentín Thomas Tarantino',
       title: 'Full Stack Developer',
-      description: 'Passionate about creating unique and functional web experiences. Specialized in React, JavaScript and UI/UX design.',
+      description: 'I build interactive, scalable web apps with React and JavaScript.',
       downloadCV: 'Download CV',
       contactMe: 'Contact Me'
     },

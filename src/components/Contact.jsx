@@ -78,8 +78,8 @@ const Contact = ({ t }) => {
         <div className="persona-link-grid" role="group" aria-label={labels.listLabel}>
           <ContactCard type="email" number="01" labels={labels} detail={t.contact.info.email} action={labels.copy} onCopy={copyEmail} copied={copied} />
           <ContactCard type="linkedin" number="02" labels={labels} detail={labels.details.linkedin} action={labels.open} href="https://www.linkedin.com/in/valentin-tarantino" />
-          <ContactCard type="github" number="03" labels={labels} detail={labels.details.github} action={labels.open} href="https://github.com/ValentinTarantino" />
-          <ContactCard type="whatsapp" number="04" labels={labels} detail={t.contact.info.phone} action={labels.message} href="https://wa.me/541149476457" />
+          <ContactCard type="whatsapp" number="03" labels={labels} detail={t.contact.info.phone} action={labels.message} href="https://wa.me/541149476457" />
+          <ContactCard type="github" number="04" labels={labels} detail={labels.details.github} action={labels.open} href="https://github.com/ValentinTarantino" />
         </div>
 
         <div className="persona-comms__location">

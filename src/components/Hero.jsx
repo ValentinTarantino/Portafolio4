@@ -738,14 +738,14 @@ const Hero = ({ t, language, projectTerminalMount }) => {
 
 
           {[projectTerminalMount].map((mount, terminalIndex) => mount && createPortal(
-            <div className={`terminal-container ${superActive ? 'super-active' : ''}`}>
+            <div className={`terminal-container sees-terminal ${superActive ? 'super-active' : ''}`}>
               <div className="terminal-header" onClick={(event) => focusInput(event.currentTarget.closest('.terminal-container'))}>
                 <div className="terminal-buttons">
                   <span className="btn-close"></span>
                   <span className="btn-minimize"></span>
                   <span className="btn-maximize"></span>
                 </div>
-                <div className="terminal-title">developer.js</div>
+                <div className="terminal-title">S.E.E.S</div>
                 <button className="terminal-reset-btn" onClick={(event) => handleReset(event.currentTarget.closest('.terminal-container'))} title="Reset terminal" type="button" tabIndex={-1} onMouseDown={(e) => e.preventDefault()}>
                   ↻
                 </button>

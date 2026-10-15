@@ -12,6 +12,9 @@ const Tartarus = ({ isDarkHour = false }) => {
     const motion = gsap.matchMedia();
     motion.add('(prefers-reduced-motion: no-preference)', () => {
       const conduits = gsap.utils.toArray('.tartarus-energy-flow', svgRef.current);
+      const scene = svgRef.current.closest('.dark-hour-scene');
+      const reactiveFog = scene?.querySelector('.dark-hour-scene__reactive-fog');
+      const distortion = scene?.querySelector('.dark-hour-scene__distortion');
       const timeline = gsap.timeline({ repeat: -1 });
 
       timeline.to(conduits, {
@@ -20,6 +23,26 @@ const Tartarus = ({ isDarkHour = false }) => {
         stagger: 0.7,
         ease: 'none',
       }, 0);
+      if (reactiveFog) {
+        timeline.to(reactiveFog, {
+          opacity: 0.5,
+          scaleX: 1.16,
+          duration: 4.4,
+          repeat: 1,
+          yoyo: true,
+          ease: 'sine.inOut',
+        }, 0);
+      }
+      if (distortion) {
+        timeline.to(distortion, {
+          opacity: 0.34,
+          scale: 1.06,
+          duration: 2.2,
+          repeat: 3,
+          yoyo: true,
+          ease: 'sine.inOut',
+        }, 0);
+      }
       timeline.set(conduits, { strokeDashoffset: 0 }, 8.8);
       timeline.paused(document.hidden);
       const onVisibilityChange = () => timeline.paused(document.hidden);

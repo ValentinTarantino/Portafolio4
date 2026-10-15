@@ -208,6 +208,65 @@
   transition: background 1.8s ease, filter 1.8s ease, opacity 1.8s ease, box-shadow 1.8s ease;
 }
 
+.dark-hour-scene__lunar-shadow {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.8s ease;
+}
+
+.dark-hour-scene.is-dark-hour .dark-hour-scene__lunar-shadow {
+  opacity: 0.9;
+}
+
+.dark-hour-scene__lunar-shadow::before,
+.dark-hour-scene__lunar-shadow::after {
+  content: "";
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.dark-hour-scene__lunar-shadow::before {
+  top: clamp(10rem, 15vh, 14rem);
+  left: -66vw;
+  width: 92vw;
+  height: 30vh;
+  background:
+    radial-gradient(ellipse 20% 52% at 20% 53%, rgba(0, 8, 7, 0.62), transparent 100%),
+    radial-gradient(ellipse 27% 43% at 53% 41%, rgba(3, 14, 11, 0.46), transparent 100%),
+    radial-gradient(ellipse 18% 48% at 82% 58%, rgba(0, 8, 7, 0.42), transparent 100%);
+  filter: blur(12px);
+  mix-blend-mode: multiply;
+}
+
+.dark-hour-scene.is-dark-hour .dark-hour-scene__lunar-shadow::before {
+  animation: dark-hour-lunar-shadow-drift 54s ease-in-out -23s infinite alternate;
+}
+
+.dark-hour-scene__lunar-shadow::after {
+  left: -82vw;
+  bottom: 8vh;
+  width: 132vw;
+  height: 29vh;
+  background:
+    radial-gradient(ellipse 24% 46% at 18% 44%, rgba(0, 7, 6, 0.45), transparent 100%),
+    radial-gradient(ellipse 32% 48% at 52% 55%, rgba(2, 13, 10, 0.37), transparent 100%),
+    radial-gradient(ellipse 25% 42% at 83% 42%, rgba(0, 7, 6, 0.42), transparent 100%);
+  filter: blur(17px);
+  opacity: 0.74;
+  mix-blend-mode: soft-light;
+}
+
+.dark-hour-scene.is-dark-hour .dark-hour-scene__lunar-shadow::after {
+  animation: dark-hour-city-shadow-drift 72s ease-in-out -31s infinite alternate-reverse;
+}
+
 .dark-hour-scene.is-dark-hour .dark-hour-scene__moon {
   opacity: 0.96;
   filter: none;
@@ -299,32 +358,83 @@
 }
 
 .dark-hour-scene.is-dark-hour .dark-hour-scene__mist::after {
-  opacity: 0.82;
-  background: radial-gradient(ellipse, rgba(92, 174, 87, 0.2), rgba(44, 112, 62, 0.11) 46%, transparent 73%);
+  opacity: 0.94;
+  background: radial-gradient(ellipse, rgba(100, 183, 91, 0.28), rgba(47, 113, 62, 0.14) 46%, transparent 73%);
+}
+
+.dark-hour-scene.is-dark-hour .dark-hour-scene__mist::before {
+  position: absolute;
+  inset: 8% -14%;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse 38% 48% at 26% 55%, rgba(136, 205, 103, 0.3), transparent 100%),
+    radial-gradient(ellipse 34% 42% at 72% 48%, rgba(63, 142, 80, 0.24), transparent 100%);
+  content: '';
+  opacity: 0.7;
+  pointer-events: none;
+  filter: blur(22px);
+  mix-blend-mode: screen;
+  animation: tartarus-atmosphere-wisp 16s ease-in-out infinite alternate;
 }
 
 .dark-hour-scene__mist--far {
-  left: -22vw;
-  bottom: 19vh;
+  left: -15vw;
+  bottom: 23vh;
+  width: 96vw;
+  height: 28vh;
   background: radial-gradient(ellipse, rgba(68, 131, 169, 0.14), rgba(34, 89, 128, 0.06) 48%, transparent 72%);
   animation: dark-hour-mist-drift 64s ease-in-out infinite alternate;
 }
 
 .dark-hour-scene.is-dark-hour .dark-hour-scene__mist--far {
-  background: radial-gradient(ellipse, rgba(105, 186, 88, 0.16), rgba(48, 111, 61, 0.075) 48%, transparent 72%);
+  background: radial-gradient(ellipse, rgba(112, 190, 94, 0.27), rgba(48, 111, 61, 0.13) 48%, transparent 72%);
+  z-index: 1;
+  will-change: transform, opacity;
+  animation: tartarus-atmosphere-far 16s ease-in-out infinite alternate;
 }
 
 .dark-hour-scene__mist--near {
-  right: -30vw;
-  bottom: 8vh;
-  width: 90vw;
+  right: -24vw;
+  bottom: 12vh;
+  width: 110vw;
+  height: 27vh;
   opacity: 0.34;
   background: radial-gradient(ellipse, rgba(76, 146, 181, 0.13), rgba(30, 85, 123, 0.055) 48%, transparent 72%);
   animation: dark-hour-mist-drift 82s ease-in-out infinite alternate-reverse;
 }
 
 .dark-hour-scene.is-dark-hour .dark-hour-scene__mist--near {
-  background: radial-gradient(ellipse, rgba(83, 164, 82, 0.15), rgba(33, 91, 53, 0.07) 48%, transparent 72%);
+  background: radial-gradient(ellipse, rgba(91, 174, 86, 0.3), rgba(33, 91, 53, 0.16) 48%, transparent 72%);
+  z-index: 2;
+  will-change: transform, opacity;
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  -webkit-mask-image: radial-gradient(ellipse, #000 30%, rgba(0, 0, 0, 0.92) 54%, transparent 80%);
+  mask-image: radial-gradient(ellipse, #000 30%, rgba(0, 0, 0, 0.92) 54%, transparent 80%);
+  animation: tartarus-atmosphere-near 23s ease-in-out infinite alternate-reverse;
+}
+
+.dark-hour-scene__reactive-fog {
+  position: absolute;
+  z-index: 2;
+  inset: auto 0 7vh;
+  height: 39vh;
+  opacity: 0;
+  visibility: hidden;
+  transform: scaleX(0.88);
+  transform-origin: var(--scene-tartarus-focus-x, 78%) 55%;
+  background:
+    radial-gradient(ellipse 25vw 18vh at var(--scene-tartarus-focus-x, 78%) 66%, rgba(107, 227, 117, 0.23), transparent 76%),
+    radial-gradient(ellipse 42vw 19vh at var(--scene-tartarus-focus-x, 78%) 76%, rgba(43, 151, 88, 0.18), transparent 78%);
+  filter: blur(24px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.dark-hour-scene.is-dark-hour.has-revealed-tartarus .dark-hour-scene__reactive-fog {
+  opacity: 0.18;
+  visibility: visible;
 }
 
 .dark-hour-scene__distant-lights {
@@ -387,7 +497,6 @@
 
 .dark-hour-scene.is-dark-hour :is(
   .dark-hour-scene__street-car,
-  .dark-hour-scene__street-lamp,
   .dark-hour-scene__window-lights
 ) {
   display: none !important;
@@ -507,11 +616,14 @@
 }
 
 .dark-hour-scene.is-dark-hour .dark-hour-scene__street-curb { stroke: rgba(115, 153, 91, 0.16); }
-.dark-hour-scene.is-dark-hour .dark-hour-scene__street-metal { stroke: #1c3023; }
-.dark-hour-scene.is-dark-hour .dark-hour-scene__lamp-glow { fill: url(#street-lamp-green); }
-.dark-hour-scene.is-dark-hour .dark-hour-scene__lamp-pool {
-  fill: url(#street-lamp-green);
-  opacity: 0.72;
+.dark-hour-scene.is-dark-hour .dark-hour-scene__street-lamp { opacity: 0.72; }
+.dark-hour-scene.is-dark-hour .dark-hour-scene__street-metal { stroke: #17271d; }
+.dark-hour-scene.is-dark-hour .dark-hour-scene__lamp-shade {
+  fill: #0c1a12;
+  stroke: #21382a;
+}
+.dark-hour-scene.is-dark-hour :is(.dark-hour-scene__lamp-glow, .dark-hour-scene__lamp-pool) {
+  display: none;
 }
 .dark-hour-scene.is-dark-hour .dark-hour-scene__car-headlight {
   fill: #e4f4a1;
@@ -561,7 +673,6 @@
 }
 
 .dark-hour-scene.is-dark-hour .dark-hour-scene__city--mid {
-  opacity: 0.64;
 }
 
 .dark-hour-scene__tartarus {
@@ -605,6 +716,42 @@
   opacity: var(--tartarus-active-opacity);
   transform: translate3d(-50%, 0, 0) scale(var(--tartarus-active-scale));
   filter: blur(0.45px);
+}
+
+.dark-hour-scene__filters {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.dark-hour-scene__distortion {
+  position: absolute;
+  z-index: 3;
+  top: clamp(12rem, 25vh, 22rem);
+  left: calc(100% - clamp(4vw, 13vw, 15rem) - clamp(9rem, 21vw, 19rem) / 2);
+  width: clamp(18rem, 34vw, 33rem);
+  height: clamp(25rem, 54vh, 44rem);
+  border-radius: 50%;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%) scale(0.96);
+  transform-origin: 50% 52%;
+  background:
+    repeating-radial-gradient(ellipse at 50% 52%, transparent 0 22px, rgba(101, 241, 185, 0.055) 24px 25px, transparent 28px 57px),
+    radial-gradient(ellipse at 50% 52%, rgba(95, 238, 182, 0.1), transparent 69%);
+  -webkit-mask-image: radial-gradient(ellipse, transparent 5%, #000 35%, rgba(0, 0, 0, 0.72) 58%, transparent 78%);
+  mask-image: radial-gradient(ellipse, transparent 5%, #000 35%, rgba(0, 0, 0, 0.72) 58%, transparent 78%);
+  filter: url(#tartarus-spatial-warp) blur(1.2px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.dark-hour-scene.is-dark-hour.has-revealed-tartarus .dark-hour-scene__distortion {
+  opacity: 0.12;
+  visibility: visible;
 }
 
 .dark-hour-scene__building {
@@ -734,6 +881,34 @@
   to { transform: translate3d(8vw, -2vh, 0); }
 }
 
+@keyframes dark-hour-lunar-shadow-drift {
+  from { transform: translate3d(0, 0, 0) scale(0.94, 0.9); }
+  to { transform: translate3d(135vw, 1.5vh, 0) scale(1.08, 1.04); }
+}
+
+@keyframes dark-hour-city-shadow-drift {
+  from { transform: translate3d(0, 0, 0) scaleX(0.94); }
+  to { transform: translate3d(132vw, -1vh, 0) scaleX(1.08); }
+}
+
+@keyframes tartarus-atmosphere-far {
+  0% { opacity: 0.42; transform: translate3d(-12vw, 0.8vh, 0) scaleX(0.92); }
+  50% { opacity: 0.62; }
+  100% { opacity: 0.48; transform: translate3d(12vw, -1.8vh, 0) scaleX(1.08); }
+}
+
+@keyframes tartarus-atmosphere-near {
+  0% { opacity: 0.3; transform: translate3d(13vw, 0.5vh, 0) scaleX(1.08); }
+  50% { opacity: 0.5; }
+  100% { opacity: 0.36; transform: translate3d(-13vw, -1.4vh, 0) scaleX(0.94); }
+}
+
+@keyframes tartarus-atmosphere-wisp {
+  0% { opacity: 0.35; transform: translate3d(-18vw, 0.4vh, 0) scaleX(0.82); }
+  50% { opacity: 0.78; }
+  100% { opacity: 0.48; transform: translate3d(18vw, -1.2vh, 0) scaleX(1.12); }
+}
+
 @keyframes dark-hour-cloud-drift {
   from { transform: translate3d(-2vw, 1vh, 0) scale(0.98); }
   to { transform: translate3d(3vw, -1.5vh, 0) scale(1.03); }
@@ -745,14 +920,25 @@
 }
 
 @media (max-width: 700px) {
+  /* Keep the Dark Hour backdrop clean on phones; reserve these added layers for larger screens. */
+  .dark-hour-scene.is-dark-hour :is(
+    .dark-hour-scene__lunar-shadow,
+    .dark-hour-scene__mist,
+    .dark-hour-scene__reactive-fog,
+    .dark-hour-scene__distortion
+  ) {
+    display: none;
+  }
+
   .dark-hour-scene {
     /* Keep one stable stage while mobile browser chrome expands/collapses. */
     inset: 0 0 auto;
     height: 100lvh;
-    /* Shift the moon and tower into the open right column beside the hero copy. */
-    --scene-mobile-focus-x: 79%;
-    --scene-mobile-moon-focus-x: calc(var(--scene-mobile-focus-x) - 3vw);
-    --scene-mobile-moon-top: clamp(10rem, 25lvh, 14rem);
+    /* Keep the tower and moon to the right of the hero copy on mobile. */
+    --scene-mobile-focus-x: 76%;
+    --scene-mobile-moon-focus-x: var(--scene-mobile-focus-x);
+    --scene-tartarus-focus-x: var(--scene-mobile-moon-focus-x);
+    --scene-mobile-moon-top: clamp(13rem, 34lvh, 19rem);
     --scene-mobile-moon-size: clamp(8rem, 39vw, 13rem);
     --scene-mobile-city-height: clamp(16rem, 45lvh, 27rem);
     --scene-mobile-city-roofline: clamp(9.5rem, 26.1lvh, 15.9rem);
@@ -767,6 +953,34 @@
     width: var(--scene-mobile-moon-size);
     opacity: 0.92;
     transform: translateX(-50%);
+  }
+
+  .dark-hour-scene__lunar-shadow::before {
+    top: calc(var(--scene-mobile-moon-top) + 1rem);
+    left: -60vw;
+    width: 88vw;
+    height: 23lvh;
+    filter: blur(9px);
+  }
+
+  .dark-hour-scene__lunar-shadow::after {
+    bottom: 8vh;
+    height: 21lvh;
+    filter: blur(13px);
+  }
+
+  .dark-hour-scene__distortion {
+    top: calc(var(--scene-mobile-moon-top) + 2rem);
+    left: var(--scene-mobile-moon-focus-x);
+    width: clamp(14rem, 64vw, 24rem);
+    height: clamp(20rem, 53vh, 32rem);
+    filter: blur(1px);
+  }
+
+  .dark-hour-scene__reactive-fog {
+    inset-block-end: 8vh;
+    height: 31vh;
+    filter: blur(18px);
   }
 
   .dark-hour-scene__city {
@@ -875,7 +1089,7 @@
     --tartarus-rise-distance: clamp(16rem, 48lvh, 26rem);
     --tartarus-active-opacity: 0.62;
     --tartarus-active-scale: 0.68;
-    left: calc(var(--scene-mobile-focus-x) + 4vw);
+    left: var(--scene-mobile-focus-x);
     right: auto;
     /* The SVG's footing now meets the tallest near-city roof at the shared focus axis. */
     bottom: calc(var(--scene-mobile-city-roofline) - clamp(5rem, 11lvh, 6.5rem));
@@ -1007,14 +1221,28 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .dark-hour-scene__lunar-shadow::before {
+    left: 40vw;
+  }
+
+  .dark-hour-scene__lunar-shadow::after {
+    left: -35vw;
+  }
+
+  .dark-hour-scene__lunar-shadow,
   .dark-hour-scene__moon,
+  .dark-hour-scene__lunar-shadow::before,
+  .dark-hour-scene__lunar-shadow::after,
   .dark-hour-scene__energy-currents::before,
   .dark-hour-scene__energy-currents::after,
   .dark-hour-scene__clouds::before,
   .dark-hour-scene__clouds::after,
   .dark-hour-scene__mist,
+  .dark-hour-scene__mist::before,
   .dark-hour-scene__sky::after,
   .dark-hour-scene__mist::after,
+  .dark-hour-scene__reactive-fog,
+  .dark-hour-scene__distortion,
   .dark-hour-scene__tartarus,
   .dark-hour-scene__city-haze,
   .dark-hour-scene__street-car {
@@ -1032,7 +1260,7 @@
   }
 }
 
-.dark-hour-scene.is-paused :is(.dark-hour-scene__moon, .dark-hour-scene__mist) {
+.dark-hour-scene.is-paused :is(.dark-hour-scene__moon, .dark-hour-scene__lunar-shadow::before, .dark-hour-scene__lunar-shadow::after, .dark-hour-scene__mist, .dark-hour-scene__mist::before) {
   animation-play-state: paused !important;
 }
 
