@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState, useEffect } from 'react';
+import { lazy, Suspense, useState, useEffect, useRef } from 'react';
 import './App.css';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -27,6 +27,47 @@ const translations = { es, en };
 const SectionFallback = ({ id, minHeight }) => (
   <div {...(id ? { id } : {})} style={{ minHeight }} aria-hidden="true" />
 );
+
+// Renders children only when close to the viewport, so below-fold chunks
+// are neither fetched nor evaluated until needed. Fallback keeps the
+// anchor id working for nav links in the meantime.
+const useNearViewport = (margin = '1200px 0px') => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return undefined;
+    if (typeof IntersectionObserver === 'undefined') {
+      setVisible(true);
+      return undefined;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: margin }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [margin]);
+  return [ref, visible];
+};
+
+const NearViewportSection = ({ id, minHeight, children }) => {
+  const [ref, visible] = useNearViewport();
+  return (
+    <div ref={ref}>
+      {visible ? (
+        <Suspense fallback={<SectionFallback id={id} minHeight={minHeight} />}>{children}</Suspense>
+      ) : (
+        <SectionFallback id={id} minHeight={minHeight} />
+      )}
+    </div>
+  );
+};
 
 function App() {
   const [language, setLanguage] = useState(() => {
@@ -103,22 +144,7 @@ function App() {
     setLanguage((current) => current === 'es' ? 'en' : 'es');
   };
 
-  // Warm up below-fold chunks once the browser is idle, so they are
-  // ready before the user scrolls — without blocking the initial paint.
-  useEffect(() => {
-    const warm = () => {
-      import('./components/Projects');
-      import('./components/Capabilities');
-      import('./components/Contact');
-      import('./components/Footer');
-    };
-    if ('requestIdleCallback' in window) {
-      const id = window.requestIdleCallback(warm, { timeout: 6000 });
-      return () => window.cancelIdleCallback(id);
-    }
-    const timer = window.setTimeout(warm, 4000);
-    return () => window.clearTimeout(timer);
-  }, []);
+
 
   return (
     <div className={`App persona-menu${isDarkHour ? ' dark-hour-mode' : ''}${timeOfDay === 'night' ? ' deep-night-mode' : ''}`}>
@@ -134,18 +160,18 @@ function App() {
       <Hero t={t} language={language} projectTerminalMount={projectTerminalMount} />
       <About t={t} />
       <Skills t={t} />
-      <Suspense fallback={<SectionFallback id="projects" minHeight="110vh" />}>
+      <NearViewportSection id="projects" minHeight="110vh">
         <Projects t={t} language={language} isDarkHour={isDarkHour} sceneQuality={sceneQuality} setProjectTerminalMount={setProjectTerminalMount} />
-      </Suspense>
-      <Suspense fallback={<SectionFallback id="testimonials" minHeight="100vh" />}>
+      </NearViewportSection>
+      <NearViewportSection id="testimonials" minHeight="100vh">
         <Capabilities t={t} language={language} isDarkHour={isDarkHour} />
-      </Suspense>
-      <Suspense fallback={<SectionFallback id="contact" minHeight="80vh" />}>
+      </NearViewportSection>
+      <NearViewportSection id="contact" minHeight="80vh">
         <Contact t={t} />
-      </Suspense>
-      <Suspense fallback={<SectionFallback minHeight="50vh" />}>
+      </NearViewportSection>
+      <NearViewportSection minHeight="50vh">
         <Footer t={t} />
-      </Suspense>
+      </NearViewportSection>
       <Analytics />
     </div>
   );

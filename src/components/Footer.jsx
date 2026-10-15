@@ -93,7 +93,7 @@ const Footer = ({ t }) => {
               <div className="tech-stack-grid">
                 {techStack.map((tech, index) => (
                   <div key={index} className="tech-item" style={{ '--tech-color': tech.color }}>
-                    <span className="tech-icon-wrapper">{tech.icon}</span>
+                    <span className="tech-icon-wrapper" aria-hidden="true">{tech.icon}</span>
                     <span className="tech-name">{tech.name}</span>
                   </div>
                 ))}

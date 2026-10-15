@@ -60,11 +60,16 @@
         gtag('js', new Date());
         gtag('config', 'G-SVJ1BJWB41');
       }
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(loadGtag, { timeout: 8000 });
-      } else {
-        window.addEventListener('load', loadGtag);
-      }
+      var loadOnInteraction = function () {
+        loadGtag();
+        window.removeEventListener('pointerdown', loadOnInteraction);
+        window.removeEventListener('scroll', loadOnInteraction);
+        window.removeEventListener('keydown', loadOnInteraction);
+      };
+      window.addEventListener('pointerdown', loadOnInteraction, { passive: true });
+      window.addEventListener('scroll', loadOnInteraction, { passive: true });
+      window.addEventListener('keydown', loadOnInteraction);
+      window.setTimeout(loadGtag, 25000);
     </script>
   </head>
 

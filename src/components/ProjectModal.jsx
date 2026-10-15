@@ -1,5 +1,4 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { FiX, FiTarget, FiCpu, FiAward, FiServer, FiDatabase, FiLayout } from 'react-icons/fi';
 import './ProjectModal.css';
 
@@ -13,7 +12,6 @@ const getIconForTitle = (title) => {
 
 const ProjectModal = ({ project, t, onClose }) => {
   const [activeTab, setActiveTab] = useState('overview');
-  const shouldReduceMotion = useReducedMotion();
   const dialogRef = useRef(null);
   const closeButtonRef = useRef(null);
   const scrollAreaRef = useRef(null);
@@ -125,18 +123,14 @@ const ProjectModal = ({ project, t, onClose }) => {
         if (event.target === event.currentTarget) onClose();
       }}
     >
-      <motion.div
+      <div
         ref={dialogRef}
-        className="modal-content glass-card"
+        className="modal-content glass-card modal-enter"
         role="dialog"
         aria-modal="true"
         aria-labelledby="project-modal-title"
         tabIndex={-1}
         onClick={(event) => event.stopPropagation()}
-        initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.975, y: 18 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.985, y: 10 }}
-        transition={shouldReduceMotion ? { duration: 0.01 } : { type: 'spring', stiffness: 280, damping: 28 }}
       >
         <header className="modal-header">
           <div className="modal-project-header">
@@ -196,15 +190,10 @@ const ProjectModal = ({ project, t, onClose }) => {
             aria-labelledby={`case-study-tab-${activeTab}`}
             tabIndex={0}
           >
-            <AnimatePresence mode="wait" initial={false}>
               {activeTab === 'overview' && (
-                <motion.div
+                <div
                   key="overview"
-                  className="modal-grid"
-                  initial={shouldReduceMotion ? false : { opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -6 }}
-                  transition={shouldReduceMotion ? { duration: 0.01 } : { duration: 0.18 }}
+                  className="modal-grid modal-tab-enter"
                 >
                   <section className="modal-section challenge">
                     <div className="modal-section-title">
@@ -229,17 +218,13 @@ const ProjectModal = ({ project, t, onClose }) => {
                     </div>
                     <p className="highlighted-metrics">{study.metrics}</p>
                   </section>
-                </motion.div>
+                </div>
               )}
 
               {activeTab === 'architecture' && hasArchitecture && (
-                <motion.div
+                <div
                   key="architecture"
-                  className="modal-architecture"
-                  initial={shouldReduceMotion ? false : { opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -6 }}
-                  transition={shouldReduceMotion ? { duration: 0.01 } : { duration: 0.18 }}
+                  className="modal-architecture modal-tab-enter"
                 >
                   <div
                     className="architecture-diagram"
@@ -266,9 +251,8 @@ const ProjectModal = ({ project, t, onClose }) => {
                       </div>
                     ))}
                   </div>
-                </motion.div>
+                </div>
               )}
-            </AnimatePresence>
           </div>
 
           <footer className="modal-footer">
@@ -288,7 +272,7 @@ const ProjectModal = ({ project, t, onClose }) => {
             </div>
           </footer>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };
