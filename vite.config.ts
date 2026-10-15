@@ -14,6 +14,20 @@ export default defineConfig(({ mode }) => ({
     mode === 'development' &&
     componentTagger(),
   ].filter(Boolean),
+  build: {
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          three: ['three'],
+          motion: ['framer-motion'],
+          gsap: ['gsap', '@gsap/react'],
+          icons: ['react-icons', 'lucide-react'],
+          firebase: ['firebase/app', 'firebase/firestore'],
+        },
+      },
+    },
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
