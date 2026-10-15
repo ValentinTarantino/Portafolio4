@@ -69,7 +69,7 @@ const Footer = ({ t }) => {
 
             {/* Navigation Column */}
             <div className="footer-nav-col">
-              <h4 className="footer-col-title">{t.footer.navigation}</h4>
+              <h3 className="footer-col-title">{t.footer.navigation}</h3>
               <nav className="footer-nav">
                 {navLinks.map((link) => (
                   <a 
@@ -86,10 +86,10 @@ const Footer = ({ t }) => {
 
             {/* Tech Stack Column */}
             <div className="footer-tech-col">
-              <h4 className="footer-col-title">
+              <h3 className="footer-col-title">
                 <FiCode className="col-icon" />
                 {t.footer.madeWith}
-              </h4>
+              </h3>
               <div className="tech-stack-grid">
                 {techStack.map((tech, index) => (
                   <div key={index} className="tech-item" style={{ '--tech-color': tech.color }}>

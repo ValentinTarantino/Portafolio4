@@ -248,15 +248,20 @@ const CityWindowLights = ({ timeOfDay = 'afternoon', enabled = true }) => {
       const roadRect = streetRoad?.getBoundingClientRect();
       const roadTop = roadRect?.height > 0 ? roadRect.top : height + 100;
 
+      // Read pass: collect every rect first so layout is computed once,
+      // then write all matrices without interleaved reads (no forced reflow).
+      const facadeRects = facadeDescriptors.map((item) => item.facade.getBoundingClientRect());
+      const descriptorRects = descriptors.map((item) => item.facade.getBoundingClientRect());
+
       facadeDescriptors.forEach((item, index) => {
-        const rect = item.facade.getBoundingClientRect();
+        const rect = facadeRects[index];
         center.set(rect.left + rect.width * 0.5, height - rect.top - rect.height * 0.5, item.depth * 0.18);
         scale.set(rect.width, rect.height, 1);
         matrix.compose(center, quaternion, scale);
         facadeMasks.setMatrixAt(index, matrix);
       });
       descriptors.forEach((item, index) => {
-        const rect = item.facade.getBoundingClientRect();
+        const rect = descriptorRects[index];
         const insetX = rect.width * 0.15;
         const usableWidth = rect.width - insetX * 2;
         const x = rect.left + insetX + usableWidth * (item.column + 0.5) / item.columns;

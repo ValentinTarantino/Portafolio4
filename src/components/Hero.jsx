@@ -1,9 +1,9 @@
 import { lazy, memo, Suspense, useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import './Hero.css';
 import './HeroEditorial.css';
 const DinoGame = lazy(() => import('./DinoGame'));
+const CvModal = lazy(() => import('./CvModal'));
 
 // Dynamic terminal outputs renderer for seamless real-time bilingual updates
 const renderHistoryItem = (item, index, isSpanish) => {
@@ -336,7 +336,16 @@ const HERO_ROLES = ['Fullstack Dev', 'Frontend Dev', 'Next.js & React Specialist
 
 const Hero = ({ t, language, projectTerminalMount }) => {
   const isSpanish = language === 'es';
-  const prefersReducedMotion = useReducedMotion();
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const onChange = (e) => setPrefersReducedMotion(e.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
 
   // Interactive Terminal States
   const [terminalHistory, setTerminalHistory] = useState([]);
@@ -463,20 +472,6 @@ const Hero = ({ t, language, projectTerminalMount }) => {
       document.removeEventListener('visibilitychange', onVisibilityChange);
     };
   }, [prefersReducedMotion]);
-
-  // CV preview modal: lock body scroll + close on Escape
-  useEffect(() => {
-    if (!cvOpen) return;
-    document.body.style.overflow = 'hidden';
-    const onKey = (e) => {
-      if (e.key === 'Escape') setCvOpen(false);
-    };
-    window.addEventListener('keydown', onKey);
-    return () => {
-      document.body.style.overflow = 'unset';
-      window.removeEventListener('keydown', onKey);
-    };
-  }, [cvOpen]);
 
   const terminalBodyRef = useRef(null);
   const inputRef = useRef(null);
@@ -702,26 +697,19 @@ const Hero = ({ t, language, projectTerminalMount }) => {
                 <span className="hero-name-line">{t.hero.name.split(' ')[1]}</span>
                 <span className="hero-name-line hero-name-line--surname">{t.hero.name.split(' ').slice(2).join(' ')}</span>
               </h1>
-              <h2 className="hero-title fade-in-up">
-                <span className="title-bracket">{'<'}</span>
-                <span className="hero-role" aria-label={HERO_ROLES[heroRoleIndex]}>
-                  <AnimatePresence initial={false}>
-                    {Array.from(visibleHeroRole, (character, index) => (
-                    <motion.span
+              <h2 className="hero-title fade-in-up" aria-label={`< ${HERO_ROLES[heroRoleIndex]} />`}>
+                <span className="title-bracket" aria-hidden="true">{'<'}</span>
+                <span className="hero-role" aria-hidden="true">
+                  {Array.from(visibleHeroRole, (character, index) => (
+                    <span
                       className="hero-role-char"
                       key={`${heroRoleIndex}-${index}`}
-                      aria-hidden="true"
-                      initial={prefersReducedMotion ? false : { opacity: 0, width: 0, y: 2 }}
-                      animate={{ opacity: 1, width: 'auto', y: 0 }}
-                      exit={{ opacity: 0, width: 0, y: -1 }}
-                      transition={{ duration: prefersReducedMotion ? 0 : 0.14, ease: 'easeOut' }}
                     >
                       {character === ' ' ? '\u00a0' : character}
-                    </motion.span>
-                    ))}
-                  </AnimatePresence>
+                    </span>
+                  ))}
                 </span>
-                <span className="title-bracket">{'/>'}</span>
+                <span className="title-bracket" aria-hidden="true">{'/>'}</span>
               </h2>
               <p className="hero-description fade-in-up">{t.hero.description}</p>
               <div className="hero-cta fade-in-up">
@@ -837,44 +825,11 @@ const Hero = ({ t, language, projectTerminalMount }) => {
       </div>
 
       {/* CV preview modal — shows the PDF instead of downloading it */}
-      <AnimatePresence>
-        {cvOpen && (
-          <div className="cv-modal-overlay" onClick={() => setCvOpen(false)}>
-            <motion.div
-              className="cv-modal-content glass-card"
-              onClick={(e) => e.stopPropagation()}
-              initial={{ opacity: 0, scale: 0.95, y: 30 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 30 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-              role="dialog"
-              aria-modal="true"
-              aria-label={t.hero.cvModalTitle}
-            >
-              <div className="cv-modal-header">
-                <h3>{t.hero.cvModalTitle}</h3>
-                <div className="cv-modal-actions">
-                  <a href={cvUrl} download className="cv-download-link">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                      <polyline points="7 10 12 15 17 10"></polyline>
-                      <line x1="12" y1="15" x2="12" y2="3"></line>
-                    </svg>
-                    <span>{t.hero.cvDownload}</span>
-                  </a>
-                  <button type="button" className="cv-modal-close" onClick={() => setCvOpen(false)} aria-label={t.hero.cvClose}>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="18" y1="6" x2="6" y2="18"></line>
-                      <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              <iframe key={cvSrc} src={cvSrc} title={t.hero.cvModalTitle} className="cv-modal-frame" />
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+      {cvOpen && (
+        <Suspense fallback={null}>
+          <CvModal t={t} cvUrl={cvUrl} cvSrc={cvSrc} onClose={() => setCvOpen(false)} />
+        </Suspense>
+      )}
     </section>
   );
 };
