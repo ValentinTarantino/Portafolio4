@@ -55,13 +55,6 @@ function ThreeShowcase({ active, copy, onArcanaChange }) {
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     reducedMotionRef.current = reducedMotion;
-    const lowPower = (navigator.deviceMemory && navigator.deviceMemory <= 4)
-      || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
-    if (lowPower || !window.WebGLRenderingContext) {
-      setFallback(true);
-      return undefined;
-    }
-
     let renderer;
     let scene;
     let camera;
@@ -78,7 +71,8 @@ function ThreeShowcase({ active, copy, onArcanaChange }) {
 
     try {
       renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false, powerPreference: 'low-power' });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+      const isTouchViewport = window.matchMedia('(pointer: coarse)').matches;
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isTouchViewport ? 1.15 : 1.5));
       renderer.setClearColor(0x000000, 0);
       scene = new THREE.Scene();
       camera = new THREE.PerspectiveCamera(34, 1, 0.1, 30);
