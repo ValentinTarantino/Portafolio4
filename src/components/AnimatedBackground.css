@@ -191,19 +191,19 @@
   width: clamp(9rem, 21vw, 19rem);
   aspect-ratio: 1;
   border-radius: 50%;
-  opacity: 0.92;
+  opacity: 1;
   background:
-    radial-gradient(ellipse 24% 16% at 70% 43%, rgba(18, 45, 55, 0.2), transparent 74%),
-    radial-gradient(ellipse 19% 13% at 27% 63%, rgba(221, 240, 231, 0.11), transparent 76%),
+    radial-gradient(ellipse 24% 16% at 70% 43%, rgba(140, 195, 240, 0.28), transparent 74%),
+    radial-gradient(ellipse 19% 13% at 27% 63%, rgba(235, 248, 255, 0.2), transparent 76%),
     radial-gradient(ellipse 24% 17% at 28% 38%, rgba(40, 91, 74, 0), transparent 78%),
     radial-gradient(ellipse 34% 25% at 72% 67%, rgba(111, 175, 131, 0), transparent 78%),
-    radial-gradient(ellipse 52% 48% at 35% 30%, rgba(255, 255, 255, 1), rgba(240, 248, 252, 0.94) 28%, rgba(177, 210, 226, 0.64) 61%, rgba(79, 119, 140, 0.34) 83%, rgba(19, 41, 59, 0.14) 100%);
+    radial-gradient(ellipse 52% 48% at 35% 30%, rgba(255, 255, 255, 1), rgba(234, 246, 255, 1) 28%, rgba(168, 212, 240, 0.85) 61%, rgba(93, 159, 208, 0.5) 83%, rgba(30, 80, 130, 0.22) 100%);
   box-shadow:
-    0 0 48px rgba(205, 232, 249, 0.24),
-    0 0 110px rgba(167, 211, 239, 0.15),
-    inset 8px 7px 22px rgba(255, 255, 255, 0.22),
-    inset -15px -12px 30px rgba(5, 22, 37, 0.35);
-  border: 1px solid rgba(225, 243, 252, 0.26);
+    0 0 60px rgba(190, 225, 255, 0.4),
+    0 0 130px rgba(140, 195, 245, 0.28),
+    inset 8px 7px 22px rgba(255, 255, 255, 0.3),
+    inset -15px -12px 30px rgba(8, 34, 58, 0.4);
+  border: 1px solid rgba(230, 245, 255, 0.5);
   animation: dark-hour-moon-breathe 17s ease-in-out infinite alternate;
   transition: background 1.8s ease, filter 1.8s ease, opacity 1.8s ease, box-shadow 1.8s ease;
 }
@@ -312,8 +312,8 @@
   inset: -38%;
   border-radius: inherit;
   background:
-    radial-gradient(ellipse at 49% 51%, rgba(175, 218, 233, 0.17) 0 28%, rgba(105, 164, 185, 0.11) 44%, rgba(45, 104, 132, 0.055) 59%, transparent 75%),
-    radial-gradient(ellipse at 43% 46%, rgba(224, 243, 246, 0.075), transparent 57%);
+    radial-gradient(ellipse at 49% 51%, rgba(175, 218, 233, 0.3) 0 28%, rgba(105, 164, 185, 0.2) 44%, rgba(45, 104, 132, 0.1) 59%, transparent 75%),
+    radial-gradient(ellipse at 43% 46%, rgba(224, 243, 246, 0.14), transparent 57%);
   filter: blur(18px);
   pointer-events: none;
 }
@@ -324,7 +324,7 @@
   inset: 1%;
   border-radius: inherit;
   background:
-    radial-gradient(ellipse at 27% 25%, rgba(245, 251, 255, 0.18), transparent 39%),
+    radial-gradient(ellipse at 27% 25%, rgba(245, 251, 255, 0.3), transparent 39%),
     radial-gradient(ellipse at 72% 69%, rgba(11, 35, 42, 0.14), transparent 47%),
     url('../assets/moon-terrain.svg');
   background-size: 100% 100%;
@@ -520,7 +520,8 @@
 .dark-hour-scene__street-metal {
   fill: none;
   stroke: #152a3d;
-  stroke-width: 2.2;
+  stroke-width: 2.8;
+  stroke-opacity: 1;
   stroke-linecap: square;
   stroke-linejoin: round;
 }
@@ -529,6 +530,31 @@
   fill: #12263a;
   stroke: #213a4f;
   stroke-width: 0.8;
+}
+
+.dark-hour-scene__lamp-beam {
+  opacity: 0.55;
+  filter: blur(3px);
+  transition: opacity 400ms ease;
+}
+
+.dark-hour-scene__lamp-glow {
+  opacity: 0.9;
+  transition: opacity 400ms ease;
+}
+
+
+
+.dark-hour-scene__lamp-bulb {
+  fill: none;
+  stroke: #fff0c7;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  opacity: 1;
+}
+
+.dark-hour-scene__street-lamp--cool .dark-hour-scene__lamp-bulb {
+  stroke: #d5f2ff;
 }
 
 .dark-hour-scene__street-car {
@@ -609,7 +635,7 @@
 }
 
 .dark-hour-scene.is-dark-hour .dark-hour-scene__street-curb { stroke: rgba(115, 153, 91, 0.16); }
-.dark-hour-scene.is-dark-hour .dark-hour-scene__street-lamp { opacity: 0.72; }
+.dark-hour-scene.is-dark-hour .dark-hour-scene__street-lamp { opacity: 1; }
 .dark-hour-scene.is-dark-hour .dark-hour-scene__street-metal { stroke: #17271d; }
 .dark-hour-scene.is-dark-hour .dark-hour-scene__lamp-shade {
   fill: #0c1a12;
@@ -960,7 +986,7 @@
     left: var(--scene-mobile-moon-focus-x);
     right: auto;
     width: var(--scene-mobile-moon-size);
-    opacity: 0.92;
+    opacity: 1;
     transform: translateX(-50%);
   }
 
@@ -1023,7 +1049,7 @@
   }
 
   .dark-hour-scene__street-lamp {
-    opacity: 0.72;
+    opacity: 1;
   }
 
   .dark-hour-scene__street-car {
@@ -1224,8 +1250,18 @@
 }
 
 @media (max-width: 1024px), (hover: none) and (pointer: coarse) {
+  /* Keep the road lamps visible at all hours, without bringing back
+     the moving vehicles that were removed for performance. */
   .dark-hour-scene__street {
+    display: block;
+  }
+
+  .dark-hour-scene__street-car {
     display: none;
+  }
+
+  .dark-hour-scene__street-lamp {
+    opacity: 1;
   }
 }
 
@@ -1296,9 +1332,9 @@
   .dark-hour-scene__moon {
     animation: none !important;
     box-shadow:
-      0 0 36px rgba(205, 232, 249, 0.22),
-      0 0 82px rgba(167, 211, 239, 0.14),
-      inset -10px -9px 22px rgba(5, 22, 37, 0.32);
+      0 0 44px rgba(190, 225, 255, 0.38),
+      0 0 96px rgba(140, 195, 245, 0.26),
+      inset -10px -9px 22px rgba(8, 34, 58, 0.38);
     transition: filter 700ms ease, box-shadow 700ms ease;
   }
 

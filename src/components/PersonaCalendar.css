@@ -67,33 +67,33 @@
   position: absolute;
   z-index: -1;
   inset: 0;
-  background: #d63850;
+  background: #1e3a8a;
   clip-path: polygon(0 0, 100% 0, 50% 100%);
   content: "";
 }
 
 .persona-calendar__weekday.is-saturday::before {
-  background: #35c9f5;
+  background: #1e3a8a;
 }
 
 .persona-calendar__weekday.is-sunday::before {
-  background: #d63850;
+  background: #1e3a8a;
 }
 
 .persona-calendar__weekday.is-workday::before {
-  background: #2878d0;
+  background: #1e3a8a;
 }
 
 .App.dark-hour-mode .persona-calendar__weekday.is-saturday::before {
-  background: #35c9f5;
+  background: #1e3a8a;
 }
 
 .App.dark-hour-mode .persona-calendar__weekday.is-sunday::before {
-  background: #d63850;
+  background: #1e3a8a;
 }
 
 .App.dark-hour-mode .persona-calendar__weekday.is-workday::before {
-  background: #2878d0;
+  background: #1e3a8a;
 }
 
 .persona-calendar__period {

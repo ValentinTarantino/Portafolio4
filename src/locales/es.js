@@ -266,7 +266,7 @@ const es = {
       { roman: 'XVII', title: 'La Estrella', description: 'Esperanza y confianza para seguir después de la crisis.' },
       { roman: 'XVIII', title: 'La Luna', description: 'Atravesar la incertidumbre y distinguir intuición de temor.' },
       { roman: 'XIX', title: 'El Sol', description: 'Claridad y vitalidad que crecen al compartirlas.' },
-      { roman: 'XX', title: 'Aeon', description: 'Un llamado a despertar, aceptar el pasado y elegir cómo seguir.' },
+      { roman: 'XX', title: 'Eón', description: 'Un llamado a despertar, aceptar el pasado y elegir cómo seguir.' },
       { roman: 'XX', title: 'El Juicio', description: 'Una evaluación final reúne las decisiones y anuncia un cambio.' },
       { roman: 'XXI', title: 'El Mundo', description: 'La culminación de un recorrido y la apertura hacia algo más amplio.' },
     ],

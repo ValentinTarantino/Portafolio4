@@ -33,8 +33,15 @@ const TAROT_ARCANA_FRONTS = [
   '/83px-P3P_World_Arcana_Graphic.png',
 ];
 const TAROT_FOOL_BACK = '/behind.webp';
+// Aura glow color per arcana index (0 El Loco … XXI El Mundo).
+const TAROT_AURA_COLORS = [
+  '#8fd0ff', '#c084fc', '#9db8e8', '#7ddc8e', '#ff9a5c', '#c98f4e',
+  '#ff7fa5', '#5cc8ff', '#9fb7d9', '#ffd97a', '#b78cff', '#ff8a5c',
+  '#6fd6c9', '#6f7bb8', '#7fe3d0', '#ff5c5c', '#ffa53b', '#aee6ff',
+  '#8fa8ff', '#ffcf3f', '#7dffd4', '#e8ecff', '#d4af37',
+];
 
-function ThreeShowcase({ active, copy, onArcanaChange }) {
+function ThreeShowcase({ active, copy, arcanaIndex = 0, onArcanaChange }) {
   const mountRef = useRef(null);
   const sceneRef = useRef(null);
   const rendererRef = useRef(null);
@@ -219,11 +226,16 @@ function ThreeShowcase({ active, copy, onArcanaChange }) {
     }
   }, [active]);
 
+  const auraColor = TAROT_AURA_COLORS[arcanaIndex % TAROT_AURA_COLORS.length];
+
   return (
     <div
       className={`capabilities__orb-stage capabilities__tarot-stage${fallback ? ' is-fallback' : ''}`}
       ref={mountRef}
+      data-arcana-index={arcanaIndex}
+      style={{ '--tarot-aura': auraColor }}
     >
+      <div className="capabilities__tarot-aura" aria-hidden="true" />
       <canvas aria-label={copy.canvasLabel} />
       {fallback && <div className="capabilities__fallback-tarot" style={{ backgroundImage: `url(${TAROT_ARCANA_FRONTS[0]})` }} aria-hidden="true" />}
     </div>
@@ -350,7 +362,7 @@ const Capabilities = ({ t, language, isDarkHour }) => {
 
                 {id === 'threeD' && (
                   <div className="capabilities__demo capabilities__demo--three">
-                    <ThreeShowcase active={activeCapability === index} copy={copy} onArcanaChange={setActiveArcanaIndex} />
+                    <ThreeShowcase active={activeCapability === index} copy={copy} arcanaIndex={activeArcanaIndex} onArcanaChange={setActiveArcanaIndex} />
                     <div className="capabilities__three-copy" aria-live="polite" data-arcana-roman={threeCopy?.roman} data-arcana-length={threeCopy?.roman?.length || 1}>
                       <div className="capabilities__arcana-meta">
                         <span className="capabilities__arcana-kicker">{copy.arcanaKicker}</span>

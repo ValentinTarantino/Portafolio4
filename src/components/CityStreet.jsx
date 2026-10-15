@@ -1,7 +1,11 @@
-const StreetLamp = ({ x, top, direction = 1, tone = 'warm' }) => (
+const StreetLamp = ({ x, top, direction = 1, tone = 'cool' }) => (
   <g className={`dark-hour-scene__street-lamp dark-hour-scene__street-lamp--${tone}`} transform={`translate(${x} 0) scale(${direction} 1)`}>
+    <path className="dark-hour-scene__lamp-beam" fill="url(#lamp-beam-cool)" d={`M -44 ${top - 1} L -34 ${top + 3} L -8 164 L -128 164 Z M 44 ${top - 1} L 34 ${top + 3} L 8 164 L 128 164 Z`} />
+    <circle className="dark-hour-scene__lamp-glow" fill="url(#lamp-glow-cool)" cx="-39" cy={top - 2} r="9" />
+    <circle className="dark-hour-scene__lamp-glow" fill="url(#lamp-glow-cool)" cx="39" cy={top - 2} r="9" />
     <path className="dark-hour-scene__street-metal" d={`M 0 184 V ${top + 17} M 0 ${top + 17} Q -5 ${top + 8} -18 ${top + 3} L -43 ${top - 3} M 0 ${top + 17} Q 5 ${top + 8} 18 ${top + 3} L 43 ${top - 3}`} />
     <path className="dark-hour-scene__lamp-shade" d={`M -46 ${top - 4} L -30 ${top - 8} L -29 ${top - 5} L -45 ${top - 1} Z M 46 ${top - 4} L 30 ${top - 8} L 29 ${top - 5} L 45 ${top - 1} Z`} />
+    <path className="dark-hour-scene__lamp-bulb" d={`M -45 ${top - 1} L -33 ${top - 4} M 45 ${top - 1} L 33 ${top - 4}`} />
   </g>
 );
 
@@ -24,17 +28,21 @@ const CityStreet = () => (
         <stop offset="0.45" stopColor="#8bc9e9" stopOpacity="0.12" />
         <stop offset="1" stopColor="#8bc9e9" stopOpacity="0" />
       </linearGradient>
+      <linearGradient id="lamp-beam-cool" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stopColor="#a9d8ff" stopOpacity="0.46" />
+        <stop offset="0.5" stopColor="#a9d8ff" stopOpacity="0.25" />
+        <stop offset="1" stopColor="#a9d8ff" stopOpacity="0.1" />
+      </linearGradient>
+      <radialGradient id="lamp-glow-cool" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0" stopColor="#a9d8ff" stopOpacity="0.42" />
+        <stop offset="0.55" stopColor="#a9d8ff" stopOpacity="0.2" />
+        <stop offset="1" stopColor="#a9d8ff" stopOpacity="0" />
+      </radialGradient>
     </defs>
 
     <rect className="dark-hour-scene__street-road" x="0" y="163" width="1600" height="57" />
     <path className="dark-hour-scene__street-curb" d="M 0 164 H 1600" />
     <path className="dark-hour-scene__street-mark" d="M 85 197 H 182 M 340 197 H 432 M 1150 197 H 1240 M 1410 197 H 1500" />
-
-    <StreetLamp x={132} top={53} direction={-1} tone="warm" />
-    <StreetLamp x={470} top={68} direction={-1} tone="cool" />
-    <StreetLamp x={812} top={78} direction={-1} tone="cool" />
-    <StreetLamp x={1100} top={64} direction={-1} tone="warm" />
-    <StreetLamp x={1434} top={59} direction={-1} tone="warm" />
 
     <g className="dark-hour-scene__street-car dark-hour-scene__street-car--truck">
       <g transform="translate(0 174) scale(0.62 1.35) translate(0 -174)">
@@ -83,6 +91,12 @@ const CityStreet = () => (
         <path className="dark-hour-scene__car-headlight" d="M 136 157 L 140 158 V 161 L 136 161 Z M 136 165 L 140 166 V 169 L 136 169 Z" />
       </g>
     </g>
+
+    <StreetLamp x={132} top={53} direction={-1} tone="cool" />
+    <StreetLamp x={470} top={68} direction={-1} tone="cool" />
+    <StreetLamp x={812} top={78} direction={-1} tone="cool" />
+    <StreetLamp x={1100} top={64} direction={-1} tone="cool" />
+    <StreetLamp x={1434} top={59} direction={-1} tone="cool" />
   </svg>
 );
 
