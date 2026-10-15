@@ -157,6 +157,7 @@ function App() {
         sceneQuality={sceneQuality}
         onSceneQualityChange={setSceneQuality}
       />
+      <main id="main-content">
       <Hero t={t} language={language} projectTerminalMount={projectTerminalMount} />
       <About t={t} />
       <Skills t={t} />
@@ -169,6 +170,7 @@ function App() {
       <NearViewportSection id="contact" minHeight="80vh">
         <Contact t={t} />
       </NearViewportSection>
+      </main>
       <NearViewportSection minHeight="50vh">
         <Footer t={t} />
       </NearViewportSection>

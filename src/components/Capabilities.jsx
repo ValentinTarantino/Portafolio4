@@ -1,5 +1,4 @@
 import { lazy, memo, Suspense, useEffect, useRef, useState } from 'react';
-import * as THREE from 'three';
 import { ArrowDownRight, ArrowUpRight, CirclePlay, Monitor } from 'lucide-react';
 import './Capabilities.css';
 
@@ -59,6 +58,14 @@ function ThreeShowcase({ active, copy, arcanaIndex = 0, onArcanaChange }) {
     const host = mountRef.current;
     const canvas = host?.querySelector('canvas');
     if (!host || !canvas) return undefined;
+
+    // three.js loads on demand: this showcase lives in a below-fold lazy
+    // section, so it must not join the initial bundle.
+    let cancelled = false;
+    let cleanup;
+    (async () => {
+      const THREE = await import('three');
+      if (cancelled) return;
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     reducedMotionRef.current = reducedMotion;
@@ -193,7 +200,7 @@ function ThreeShowcase({ active, copy, arcanaIndex = 0, onArcanaChange }) {
       return undefined;
     }
 
-    return () => {
+    cleanup = () => {
       contextLost = true;
       window.cancelAnimationFrame(frameRef.current);
       resizeObserver?.disconnect();
@@ -214,6 +221,11 @@ function ThreeShowcase({ active, copy, arcanaIndex = 0, onArcanaChange }) {
       rendererRef.current = null;
       cameraRef.current = null;
       objectRef.current = null;
+    };
+    })();
+    return () => {
+      cancelled = true;
+      cleanup?.();
     };
   }, [onArcanaChange]);
 

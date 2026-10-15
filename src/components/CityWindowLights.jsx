@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import * as THREE from 'three';
 
 const vertexShader = /* glsl */`
   attribute float instancePhase;
@@ -109,6 +108,14 @@ const CityWindowLights = ({ timeOfDay = 'afternoon', enabled = true }) => {
     const canvas = canvasRef.current;
     const sceneRoot = canvas?.parentElement;
     if (!canvas || !sceneRoot || !enabled) return undefined;
+
+    // three.js loads on demand so it never blocks (or even downloads on)
+    // the initial paint when this scene is disabled, e.g. on mobile.
+    let cancelled = false;
+    let cleanup = () => {};
+    (async () => {
+      const THREE = await import('three');
+      if (cancelled) return;
 
     let renderer;
     try {
@@ -383,7 +390,7 @@ const CityWindowLights = ({ timeOfDay = 'afternoon', enabled = true }) => {
     document.addEventListener('visibilitychange', onVisibilityChange);
     reducedMotion.addEventListener?.('change', onMotionChange);
 
-    return () => {
+    cleanup = () => {
       window.cancelAnimationFrame(frameId);
       window.cancelAnimationFrame(resizeFrameId);
       window.removeEventListener('resize', onResize);
@@ -401,6 +408,11 @@ const CityWindowLights = ({ timeOfDay = 'afternoon', enabled = true }) => {
       facadeMaskMaterial.dispose();
       renderer.dispose();
       renderer.forceContextLoss();
+    };
+    })();
+    return () => {
+      cancelled = true;
+      cleanup();
     };
   }, [enabled]);
 

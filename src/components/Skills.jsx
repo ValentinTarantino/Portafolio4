@@ -1,8 +1,8 @@
 import { memo, useMemo } from 'react';
 import './Skills.css';
 import { SiNextdotjs, SiTypescript, SiTailwindcss, SiReact, SiHtml5, SiJavascript, SiCss, SiSass, SiFirebase, SiFigma, SiGit, SiGithub, SiNodedotjs, SiExpress, SiPostgresql, SiPython, SiPrisma, SiFastapi, SiBootstrap, SiVite, SiDocker, SiJest, SiTestinglibrary, SiCypress, SiMongodb, SiThreedotjs, SiGithubactions, SiSqlite, SiOpenai } from 'react-icons/si';
-import claudeIcon from '../assets/icons/claude.webp';
-import cursorIcon from '../assets/icons/cursor.png';
+import claudeIcon from '../assets/icons/claude-96.webp';
+import cursorIcon from '../assets/icons/cursor-96.webp';
 import n8nIcon from '../assets/icons/n8n.svg';
 import awsIcon from '../assets/icons/aws.svg';
 import zustandIcon from '../assets/icons/zustand.svg';
