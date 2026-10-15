@@ -1273,7 +1273,7 @@
   animation-play-state: paused !important;
 }
 
-/* Mobile keeps the recognizable scene but renders it as a still, low-cost backdrop. */
+/* Mobile keeps the recognizable scene with a low-cost, mostly still backdrop. */
 @media (max-width: 700px), (hover: none) and (pointer: coarse) {
   .dark-hour-scene__sky {
     background: linear-gradient(180deg, #050b18 0%, #08162b 58%, #091727 100%);
@@ -1467,6 +1467,31 @@
     transform: translate3d(-50%, 0, 0) scale(0.68);
     filter: blur(0.45px) !important;
     transition: opacity 500ms ease;
+  }
+}
+
+@media (max-width: 700px), (hover: none) and (pointer: coarse) {
+  .dark-hour-scene.is-mobile-scene.is-dark-hour :is(
+    .dark-hour-scene__energy-currents::before,
+    .dark-hour-scene__energy-currents::after,
+    .dark-hour-scene__clouds::before,
+    .dark-hour-scene__clouds::after
+  ) {
+    animation: none !important;
+    filter: blur(14px);
+    mix-blend-mode: normal;
+    will-change: auto;
+  }
+
+  .dark-hour-scene.is-mobile-scene.is-dark-hour .dark-hour-scene__city--far,
+  .dark-hour-scene.is-mobile-scene.is-dark-hour .dark-hour-scene__city--mid,
+  .dark-hour-scene.is-mobile-scene.is-dark-hour .dark-hour-scene__city--near {
+    filter: none;
+  }
+
+  .dark-hour-scene.is-mobile-scene.is-dark-hour .tartarus-core-aura {
+    animation: none;
+    filter: blur(7px);
   }
 }
 

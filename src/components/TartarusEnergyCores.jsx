@@ -84,7 +84,7 @@ const haloFragmentShader = `
   }
 `;
 
-const mountEnergyScene = (host, THREE) => {
+const mountEnergyScene = (host, THREE, lightweight) => {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let renderer;
     let resizeObserver;
@@ -95,7 +95,7 @@ const mountEnergyScene = (host, THREE) => {
     const tweens = [];
 
     try {
-    renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'low-power' });
+    renderer = new THREE.WebGLRenderer({ alpha: true, antialias: !lightweight, powerPreference: 'low-power' });
     } catch {
     // The existing SVG tower remains visible if WebGL is unavailable.
     host.dataset.webgl = 'unavailable';
@@ -103,7 +103,7 @@ const mountEnergyScene = (host, THREE) => {
     }
 
     renderer.setClearColor(0x000000, 0);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lightweight ? 1 : 1.5));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.18;
@@ -119,7 +119,7 @@ const mountEnergyScene = (host, THREE) => {
     camera.position.set(210, 450, 500);
     camera.lookAt(210, 450, 0);
 
-    const sphereGeometry = new THREE.SphereGeometry(1, 32, 24);
+    const sphereGeometry = new THREE.SphereGeometry(1, lightweight ? 20 : 32, lightweight ? 14 : 24);
     const haloGeometry = new THREE.PlaneGeometry(1, 1);
     const ambient = new THREE.HemisphereLight(0xb8ffff, 0x07313c, 1.1);
     scene.add(ambient);
@@ -244,14 +244,20 @@ const mountEnergyScene = (host, THREE) => {
       scene.add(bead);
     });
 
+    let lastRenderTime = 0;
+    const renderInterval = lightweight ? 1000 / 30 : 0;
     const render = () => {
-    if (!disposed && active) renderer.render(scene, camera);
+    const now = performance.now();
+    if (!disposed && active && now - lastRenderTime >= renderInterval) {
+      lastRenderTime = now;
+      renderer.render(scene, camera);
+    }
     };
     const resize = () => {
     const { width, height } = host.getBoundingClientRect();
     if (!width || !height) return;
     renderer.setSize(width, height, false);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lightweight ? 1 : 1.5));
     render();
     };
 
@@ -317,7 +323,7 @@ const mountEnergyScene = (host, THREE) => {
 
 };
 
-const TartarusEnergyCores = ({ isDarkHour }) => {
+const TartarusEnergyCores = ({ isDarkHour, lightweight = false }) => {
   const hostRef = useRef(null);
 
   useGSAP(() => {
@@ -328,7 +334,7 @@ const TartarusEnergyCores = ({ isDarkHour }) => {
     const host = hostRef.current;
 
     import('three').then((THREE) => {
-      if (!cancelled) cleanup = mountEnergyScene(host, THREE);
+      if (!cancelled) cleanup = mountEnergyScene(host, THREE, lightweight);
     }).catch(() => {
       if (!cancelled) host.dataset.webgl = 'unavailable';
     });
@@ -337,7 +343,7 @@ const TartarusEnergyCores = ({ isDarkHour }) => {
       cancelled = true;
       cleanup?.();
     };
-  }, { scope: hostRef, dependencies: [isDarkHour], revertOnUpdate: true });
+  }, { scope: hostRef, dependencies: [isDarkHour, lightweight], revertOnUpdate: true });
 
   return <div ref={hostRef} className="tartarus-energy-webgl" aria-hidden="true" />;
 };

@@ -3,11 +3,11 @@ import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import TartarusEnergyCores from './TartarusEnergyCores';
 
-const Tartarus = ({ isDarkHour = false }) => {
+const Tartarus = ({ isDarkHour = false, lightweight = false }) => {
   const svgRef = useRef(null);
 
   useGSAP(() => {
-    if (!isDarkHour) return undefined;
+    if (!isDarkHour || lightweight) return undefined;
 
     const motion = gsap.matchMedia();
     motion.add('(prefers-reduced-motion: no-preference)', () => {
@@ -51,7 +51,7 @@ const Tartarus = ({ isDarkHour = false }) => {
     });
 
     return () => motion.revert();
-  }, { scope: svgRef, dependencies: [isDarkHour], revertOnUpdate: true });
+  }, { scope: svgRef, dependencies: [isDarkHour, lightweight], revertOnUpdate: true });
 
   return (
   <svg
@@ -407,7 +407,7 @@ const Tartarus = ({ isDarkHour = false }) => {
         className="tartarus-energy-webgl-host"
         style={{ width: '100%', height: '100%', overflow: 'visible', pointerEvents: 'none' }}
       >
-        <TartarusEnergyCores isDarkHour={isDarkHour} />
+        <TartarusEnergyCores isDarkHour={isDarkHour} lightweight={lightweight} />
       </div>
     </foreignObject>
   </svg>

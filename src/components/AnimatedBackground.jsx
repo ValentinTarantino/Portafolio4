@@ -470,7 +470,7 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
       <div className="dark-hour-scene__mist dark-hour-scene__mist--near" />
       <div className="dark-hour-scene__reactive-fog" />
       <div className="dark-hour-scene__distant-lights" />
-      <Tartarus isDarkHour={isDarkHour} />
+      <Tartarus isDarkHour={isDarkHour} lightweight={lightweightScene} />
       <svg className="dark-hour-scene__filters" aria-hidden="true" focusable="false">
         <defs>
           <filter id="tartarus-spatial-warp" x="-20%" y="-20%" width="140%" height="140%">
