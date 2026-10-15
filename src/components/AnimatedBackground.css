@@ -1523,6 +1523,15 @@
     display: block !important;
   }
 
+  /* Low quality draws windows into each building's background gradient.
+     Full quality uses the WebGL canvas, so remove those static windows there
+     to avoid showing both sets at the same time. */
+  .dark-hour-scene.is-full-quality .dark-hour-scene__city--far .dark-hour-scene__building[data-tone],
+  .dark-hour-scene.is-full-quality .dark-hour-scene__city--mid .dark-hour-scene__building[data-tone],
+  .dark-hour-scene.is-full-quality .dark-hour-scene__city--near .dark-hour-scene__building[data-tone] {
+    background-image: none !important;
+  }
+
   .dark-hour-scene.is-full-quality .dark-hour-scene__building::before,
   .dark-hour-scene.is-full-quality .dark-hour-scene__building::after {
     display: none !important;
