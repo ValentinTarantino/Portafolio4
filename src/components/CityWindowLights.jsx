@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 
 const vertexShader = /* glsl */`
@@ -101,6 +101,7 @@ const CityWindowLights = ({ timeOfDay = 'afternoon', enabled = true }) => {
   const materialRef = useRef(null);
   const renderRef = useRef(null);
   const periodTweenRef = useRef(null);
+  const [ready, setReady] = useState(false);
   const periodRef = useRef(timeOfDay);
   periodRef.current = timeOfDay;
 
@@ -111,8 +112,12 @@ const CityWindowLights = ({ timeOfDay = 'afternoon', enabled = true }) => {
 
     // three.js loads on demand so it never blocks (or even downloads on)
     // the initial paint when this scene is disabled, e.g. on mobile.
+    // On desktop the boot itself waits for an idle slot, keeping the load
+    // window free for the LCP text; lights fade in gracefully when ready.
     let cancelled = false;
     let cleanup = () => {};
+    let idleId;
+    const boot = () => {
     (async () => {
       const THREE = await import('three');
       if (cancelled) return;
@@ -386,6 +391,7 @@ const CityWindowLights = ({ timeOfDay = 'afternoon', enabled = true }) => {
 
     resize();
     start();
+    setReady(true);
     window.addEventListener('resize', onResize, { passive: true });
     document.addEventListener('visibilitychange', onVisibilityChange);
     reducedMotion.addEventListener?.('change', onMotionChange);
@@ -410,8 +416,15 @@ const CityWindowLights = ({ timeOfDay = 'afternoon', enabled = true }) => {
       renderer.forceContextLoss();
     };
     })();
+    };
+    if ('requestIdleCallback' in window) {
+      idleId = window.requestIdleCallback(boot, { timeout: 6000 });
+    } else {
+      boot();
+    }
     return () => {
       cancelled = true;
+      if (idleId) window.cancelIdleCallback(idleId);
       cleanup();
     };
   }, [enabled]);
@@ -434,7 +447,7 @@ const CityWindowLights = ({ timeOfDay = 'afternoon', enabled = true }) => {
     periodTweenRef.current = timeline;
   }, [timeOfDay]);
 
-  return <canvas className="dark-hour-scene__window-lights" ref={canvasRef} aria-hidden="true" />;
+  return <canvas className={`dark-hour-scene__window-lights${ready ? ' is-ready' : ''}`} ref={canvasRef} aria-hidden="true" />;
 };
 
 export default CityWindowLights;
