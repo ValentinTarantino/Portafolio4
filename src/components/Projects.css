@@ -1546,13 +1546,39 @@
   .transmission-terminal-access__intro button { width: 100%; }
 
   .transmission-console__header {
-    align-items: flex-start;
-    font-size: 0.72rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+    gap: 0.45rem;
+    font-size: 0.66rem;
   }
 
-  .transmission-power-button { padding-inline: 0.45rem; font-size: 0.62rem; }
+  .transmission-console__station,
+  .transmission-status {
+    min-width: 0;
+    max-width: none;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0.28rem;
+    line-height: 1.25;
+  }
 
-  .transmission-status { max-width: 48%; }
+  .transmission-console__station > span:last-child,
+  .transmission-status > span:last-child {
+    min-width: 0;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .transmission-power-button {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: end;
+    padding-inline: 0.55rem;
+    font-size: 0.62rem;
+  }
 
   .transmission-console__body { grid-template-columns: minmax(0, 1fr); }
 

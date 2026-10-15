@@ -45,7 +45,7 @@ const translations = {
       viewCode: 'Ver Código',
     },
     testimonials: {
-      title: 'Testimonios',
+      title: 'Capacidades',
       subtitle: 'Lo que dicen quienes trabajaron conmigo'
     },
     contact: {
@@ -99,7 +99,7 @@ const translations = {
       viewCode: 'View Code'
     },
     testimonials: {
-      title: 'Testimonials',
+      title: 'Capabilities',
       subtitle: 'What people say about working with me'
     },
     contact: {

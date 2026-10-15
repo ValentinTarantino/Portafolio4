@@ -88,6 +88,12 @@ const Tartarus = ({ isDarkHour = false }) => {
         <stop offset="0" stopColor="#07150f" />
         <stop offset="1" stopColor="#020907" />
       </linearGradient>
+      <radialGradient id="tartarus-core-aura-gradient" gradientUnits="objectBoundingBox" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0" stopColor="#c5ff79" stopOpacity="0.48" />
+        <stop offset="0.24" stopColor="#7eff55" stopOpacity="0.3" />
+        <stop offset="0.62" stopColor="#49d86a" stopOpacity="0.11" />
+        <stop offset="1" stopColor="#35c76c" stopOpacity="0" />
+      </radialGradient>
       <filter id="tartarus-green-light" x="-5%" y="-2%" width="110%" height="104%" colorInterpolationFilters="sRGB">
         <feColorMatrix type="matrix" values="1.08 0 0 0 0  0 1.65 0 0 0.02  0 0 1.12 0 0  0 0 0 1 0" />
       </filter>
@@ -388,6 +394,12 @@ const Tartarus = ({ isDarkHour = false }) => {
       <path d="M252 511H273V516H286V526H296V533H286V543H276V550H253V543H246V519H252Z" />
       <path d="M143 657H153V652H169V660H180V672H187V681H177V692H165V700H145V693H137V669H143Z" />
     </g>
+    </g>
+    <g className="tartarus-core-auras" aria-hidden="true">
+      <circle className="tartarus-core-aura" cx="223" cy="200" r="125" fill="url(#tartarus-core-aura-gradient)" />
+      <circle className="tartarus-core-aura" cx="187" cy="396" r="90" fill="url(#tartarus-core-aura-gradient)" />
+      <circle className="tartarus-core-aura" cx="258" cy="529" r="90" fill="url(#tartarus-core-aura-gradient)" />
+      <circle className="tartarus-core-aura" cx="168" cy="677" r="90" fill="url(#tartarus-core-aura-gradient)" />
     </g>
     <foreignObject x="0" y="0" width="420" height="900" pointerEvents="none">
       <div

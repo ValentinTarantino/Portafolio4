@@ -6,7 +6,7 @@ import AnimatedBackground from './components/AnimatedBackground';
 import About from './components/About';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
-import Testimonials from './components/Testimonials';
+import Capabilities from './components/Capabilities';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
@@ -109,7 +109,7 @@ function App() {
       <About t={t} />
       <Skills t={t} />
       <Projects t={t} language={language} isDarkHour={isDarkHour} sceneQuality={sceneQuality} setProjectTerminalMount={setProjectTerminalMount} />
-      <Testimonials t={t} language={language} />
+      <Capabilities t={t} language={language} isDarkHour={isDarkHour} />
       <Contact t={t} />
       <Footer t={t} />
       <Analytics />

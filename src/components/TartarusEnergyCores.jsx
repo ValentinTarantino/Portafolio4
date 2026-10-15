@@ -3,7 +3,7 @@ import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 
 const ANCHORS = [
-  { x: 223.1, y: 200, radius: 19.5, haloRadius: 16.75, phase: 0 },
+  { x: 223.1, y: 200, radius: 19.5, haloRadius: 27, haloColor: 0x50ff79, haloGlow: 1.42, phase: 0 },
   { x: 187, y: 396, radius: 15.6, phase: 1.7 },
   { x: 257.6, y: 529, radius: 15.6, phase: 3.1 },
   { x: 168.2, y: 677, radius: 17.5, phase: 4.6 },
@@ -71,12 +71,13 @@ const shellFragmentShader = `
 
 const haloFragmentShader = `
   uniform float uGlow;
+  uniform vec3 uColor;
   varying vec2 vUv;
 
   void main() {
     float radius = distance(vUv, vec2(0.5));
     float falloff = exp(-radius * radius * 23.0) * (1.0 - smoothstep(0.32, 0.5, radius));
-    vec3 color = mix(vec3(0.08, 0.62, 0.76), vec3(0.3, 1.0, 1.2), smoothstep(0.0, 0.34, radius));
+    vec3 color = uColor * mix(0.62, 1.2, smoothstep(0.0, 0.34, radius));
     gl_FragColor = vec4(color, falloff * uGlow);
     #include <tonemapping_fragment>
     #include <colorspace_fragment>
@@ -123,11 +124,14 @@ const mountEnergyScene = (host, THREE) => {
     const ambient = new THREE.HemisphereLight(0xb8ffff, 0x07313c, 1.1);
     scene.add(ambient);
 
-  ANCHORS.forEach(({ x, y, radius, haloRadius = radius, phase }) => {
+  ANCHORS.forEach(({ x, y, radius, haloRadius = radius, haloColor = 0x2dd9ff, haloGlow = 1.22, phase }) => {
     const anchor = new THREE.Group();
     // These are the SVG's original viewBox coordinates; no animation targets the group.
     anchor.position.set(x, 900 - y, 0);
-    const haloUniforms = { uGlow: { value: 1.22 } };
+    const haloUniforms = {
+      uGlow: { value: haloGlow },
+      uColor: { value: new THREE.Color(haloColor) },
+    };
     const coreUniforms = { uTime: { value: 0 }, uPhase: { value: phase } };
     uniforms.push(coreUniforms);
     glowValues.push(haloUniforms.uGlow);
@@ -194,7 +198,10 @@ const mountEnergyScene = (host, THREE) => {
       const bead = new THREE.Group();
       // Apply the same horizontal mapping as the SVG architecture; the bead stays spherical.
       bead.position.set(210 + (x - 210) * 0.82, 900 - y, 0);
-      const haloUniforms = { uGlow: { value: 0.68 } };
+      const haloUniforms = {
+        uGlow: { value: 0.68 },
+        uColor: { value: new THREE.Color(0x2dd9ff) },
+      };
       const coreUniforms = { uTime: { value: 0 }, uPhase: { value: phase } };
       uniforms.push(coreUniforms);
       glowValues.push(haloUniforms.uGlow);

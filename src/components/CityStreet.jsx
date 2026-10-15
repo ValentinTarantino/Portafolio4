@@ -1,10 +1,7 @@
 const StreetLamp = ({ x, top, direction = 1, tone = 'warm' }) => (
   <g className={`dark-hour-scene__street-lamp dark-hour-scene__street-lamp--${tone}`} transform={`translate(${x} 0) scale(${direction} 1)`}>
-    <path className="dark-hour-scene__street-metal" d={`M 0 184 V ${top + 12} Q 0 ${top} 10 ${top} H 22`} />
-    <path className="dark-hour-scene__street-metal" d={`M 8 ${top - 2} H 27 V ${top + 2} H 8`} />
-    <path className="dark-hour-scene__lamp-shade" d={`M 22 ${top - 4} H 34 L 31 ${top + 2} H 23 Z`} />
-    <circle className={`dark-hour-scene__lamp-glow dark-hour-scene__lamp-glow--${tone}`} cx="28" cy={top + 2} r="4" />
-    <ellipse className="dark-hour-scene__lamp-pool" cx="28" cy="184" rx="64" ry="9" />
+    <path className="dark-hour-scene__street-metal" d={`M 0 184 V ${top + 17} M 0 ${top + 17} Q -5 ${top + 8} -18 ${top + 3} L -43 ${top - 3} M 0 ${top + 17} Q 5 ${top + 8} 18 ${top + 3} L 43 ${top - 3}`} />
+    <path className="dark-hour-scene__lamp-shade" d={`M -46 ${top - 4} L -30 ${top - 8} L -29 ${top - 5} L -45 ${top - 1} Z M 46 ${top - 4} L 30 ${top - 8} L 29 ${top - 5} L 45 ${top - 1} Z`} />
   </g>
 );
 
@@ -22,21 +19,6 @@ const CityStreet = () => (
         <stop offset="0.22" stopColor="#050d17" stopOpacity="0.72" />
         <stop offset="1" stopColor="#030811" stopOpacity="0.94" />
       </linearGradient>
-      <radialGradient id="street-lamp-warm">
-        <stop offset="0" stopColor="#ffd99a" stopOpacity="0.34" />
-        <stop offset="0.32" stopColor="#d49b5c" stopOpacity="0.16" />
-        <stop offset="1" stopColor="#d49b5c" stopOpacity="0" />
-      </radialGradient>
-      <radialGradient id="street-lamp-green">
-        <stop offset="0" stopColor="#ecf69a" stopOpacity="0.32" />
-        <stop offset="0.34" stopColor="#8fcb72" stopOpacity="0.15" />
-        <stop offset="1" stopColor="#8fcb72" stopOpacity="0" />
-      </radialGradient>
-      <radialGradient id="street-lamp-cool">
-        <stop offset="0" stopColor="#bcecff" stopOpacity="0.32" />
-        <stop offset="0.36" stopColor="#70b9e1" stopOpacity="0.14" />
-        <stop offset="1" stopColor="#70b9e1" stopOpacity="0" />
-      </radialGradient>
       <linearGradient id="street-headlight" x1="0" y1="0" x2="1" y2="0">
         <stop offset="0" stopColor="#bcecff" stopOpacity="0.28" />
         <stop offset="0.45" stopColor="#8bc9e9" stopOpacity="0.12" />
@@ -49,7 +31,9 @@ const CityStreet = () => (
     <path className="dark-hour-scene__street-mark" d="M 85 197 H 182 M 340 197 H 432 M 1150 197 H 1240 M 1410 197 H 1500" />
 
     <StreetLamp x={132} top={53} direction={-1} tone="warm" />
+    <StreetLamp x={470} top={68} direction={-1} tone="cool" />
     <StreetLamp x={812} top={78} direction={-1} tone="cool" />
+    <StreetLamp x={1100} top={64} direction={-1} tone="warm" />
     <StreetLamp x={1434} top={59} direction={-1} tone="warm" />
 
     <g className="dark-hour-scene__street-car dark-hour-scene__street-car--truck">

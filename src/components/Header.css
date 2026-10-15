@@ -623,8 +623,8 @@
 /* Reused original Argentina clock styles. */
 .argentina-clock {
   display: inline-grid;
-  width: 4.25rem;
-  height: 4.25rem;
+  width: 4.65rem;
+  height: 4.65rem;
   place-items: center;
   color: #5595d2;
   background: transparent;
@@ -697,18 +697,25 @@
 
 @media (max-width: 1024px) {
   .argentina-clock {
-    width: 3.6rem;
-    height: 3.6rem;
+    width: 4.15rem;
+    height: 4.15rem;
   }
 }
 
 @media (max-width: 480px) {
   .argentina-clock {
-    width: 2.75rem;
-    height: 2.75rem;
+    width: 3.65rem;
+    height: 3.65rem;
   }
 
   .header-brand { gap: 0.35rem; }
+}
+
+@media (max-width: 380px) {
+  .argentina-clock {
+    width: 3.35rem;
+    height: 3.35rem;
+  }
 }
 
 .scene-quality-menu-item {
