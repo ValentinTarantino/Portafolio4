@@ -258,7 +258,7 @@
 
 .dark-hour-scene__moon {
   position: absolute;
-  top: clamp(5rem, 15vh, 10rem);
+  top: clamp(7rem, 21vh, 13rem);
   right: clamp(4vw, 13vw, 15rem);
   width: clamp(9rem, 21vw, 19rem);
   aspect-ratio: 1;
@@ -305,7 +305,7 @@
 }
 
 .dark-hour-scene__lunar-shadow::before {
-  top: clamp(10rem, 15vh, 14rem);
+  top: clamp(12rem, 21vh, 17rem);
   left: -66vw;
   width: 92vw;
   height: 30vh;

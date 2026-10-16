@@ -2,9 +2,12 @@
 .App.persona-menu #home.hero {
   --hero-ink: rgba(3, 14, 31, 0.9);
   min-height: max(700px, 100svh);
-  padding: clamp(96px, 12vh, 146px) 0 clamp(64px, 8vh, 104px);
+  padding: clamp(140px, 22vh, 240px) 0 clamp(64px, 8vh, 104px);
   overflow: hidden;
   isolation: isolate;
+  /* El centrado vertical ignoraba el padding: el contenido arranca
+     exactamente donde indica padding-top en todos los tamaños. */
+  align-items: flex-start;
 }
 
 .App.persona-menu #home.hero > .container {
@@ -386,7 +389,7 @@
 @media (max-height: 800px) {
   .App.persona-menu #home.hero {
     min-height: 100svh;
-    padding: 88px 0 48px;
+    padding: clamp(120px, 24vh, 180px) 0 48px;
   }
 
   .App.persona-menu #home.hero .hero-description {
