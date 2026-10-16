@@ -1,6 +1,4 @@
-import { useRef } from 'react';
-import { useGSAP } from '@gsap/react';
-import { gsap } from 'gsap';
+import { useEffect, useRef } from 'react';
 
 const ANCHORS = [
   { x: 223.1, y: 200, radius: 19.5, haloRadius: 27, haloColor: 0x50ff79, haloGlow: 1.42, phase: 0 },
@@ -92,7 +90,6 @@ const mountEnergyScene = (host, THREE, lightweight) => {
   let disposed = false;
     const uniforms = [];
     const glowValues = [];
-    const tweens = [];
 
     try {
     renderer = new THREE.WebGLRenderer({ alpha: true, antialias: !lightweight, powerPreference: 'low-power' });
@@ -266,48 +263,56 @@ const mountEnergyScene = (host, THREE, lightweight) => {
     window.addEventListener('resize', resize);
     resize();
 
+    // GSAP-free driver with identical curves: uTime ramps 0 → 2π linearly
+    // per duration and repeats; glow ping-pongs between its initial value
+    // and 1.08 with a sine.inOut easing — pixel-identical motion.
     const animated = !reducedMotion.matches;
+    const easeInOutSine = (p) => -(Math.cos(Math.PI * p) - 1) / 2;
+    const uTimeJobs = uniforms.map((uniform, index) => ({ target: uniform.uTime, duration: 12 + index * 1.4 }));
+    const glowJobs = glowValues.map((glow, index) => ({ target: glow, start: glow.value, duration: 2.8 + index * 0.45 }));
+    let animTime = 0;
+    let lastTick = 0;
+    let tickId = 0;
+    const tick = (now) => {
+      tickId = 0;
+      if (disposed) return;
+      const dt = Math.min(Math.max((now - lastTick) / 1000, 0), 0.1);
+      lastTick = now;
+      if (active) {
+        animTime += dt;
+        uTimeJobs.forEach(({ target, duration }) => {
+          target.value = ((animTime % duration) / duration) * Math.PI * 2;
+        });
+        glowJobs.forEach(({ target, start, duration }) => {
+          const phase = (animTime % (duration * 2)) / duration;
+          const eased = phase < 1 ? easeInOutSine(phase) : easeInOutSine(2 - phase);
+          target.value = start + (1.08 - start) * eased;
+        });
+        render();
+      }
+      if (!disposed && animated && active) tickId = window.requestAnimationFrame(tick);
+    };
     const setActive = () => {
     active = !document.hidden;
-    if (animated && active) gsap.ticker.add(render);
-    else gsap.ticker.remove(render);
-    tweens.forEach((tween) => tween.paused(!active));
+    if (animated && active) {
+      lastTick = performance.now();
+      if (!tickId) tickId = window.requestAnimationFrame(tick);
+    }
     if (active) render();
     };
     document.addEventListener('visibilitychange', setActive);
 
-    if (animated) {
-      uniforms.forEach((uniform, index) => {
-      const tween = gsap.to(uniform.uTime, {
-        value: Math.PI * 2,
-        duration: 12 + index * 1.4,
-        repeat: -1,
-        ease: 'none',
-      });
-      tweens.push(tween);
-    });
-    glowValues.forEach((glow, index) => {
-      const tween = gsap.to(glow, {
-        value: 1.08,
-        duration: 2.8 + index * 0.45,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-      });
-      tweens.push(tween);
-    });
-      if (active) gsap.ticker.add(render);
+    if (animated && active) {
+      lastTick = performance.now();
+      tickId = window.requestAnimationFrame(tick);
     }
-
-    if (!active) tweens.forEach((tween) => tween.pause());
 
     return () => {
     disposed = true;
     document.removeEventListener('visibilitychange', setActive);
+    if (tickId) window.cancelAnimationFrame(tickId);
       window.removeEventListener('resize', resize);
     resizeObserver?.disconnect();
-    gsap.ticker.remove(render);
-    tweens.forEach((tween) => tween.kill());
     scene.traverse((object) => {
       if (object.isMesh) {
         object.material.dispose();
@@ -326,7 +331,7 @@ const mountEnergyScene = (host, THREE, lightweight) => {
 const TartarusEnergyCores = ({ isDarkHour, lightweight = false }) => {
   const hostRef = useRef(null);
 
-  useGSAP(() => {
+  useEffect(() => {
     if (!isDarkHour || !hostRef.current) return undefined;
 
     let cancelled = false;
@@ -343,7 +348,7 @@ const TartarusEnergyCores = ({ isDarkHour, lightweight = false }) => {
       cancelled = true;
       cleanup?.();
     };
-  }, { scope: hostRef, dependencies: [isDarkHour, lightweight], revertOnUpdate: true });
+  }, [isDarkHour, lightweight]);
 
   return <div ref={hostRef} className="tartarus-energy-webgl" aria-hidden="true" />;
 };

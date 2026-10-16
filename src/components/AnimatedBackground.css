@@ -167,7 +167,7 @@
     radial-gradient(ellipse 42% 27% at 12% 24%, rgba(76, 174, 93, 0.13), transparent 100%),
     radial-gradient(ellipse 48% 30% at 70% 57%, rgba(94, 178, 83, 0.12), transparent 100%),
     radial-gradient(ellipse 38% 26% at 39% 83%, rgba(129, 197, 91, 0.085), transparent 100%);
-  filter: blur(23px);
+  filter: blur(14px);
   animation: dark-hour-energy-drift 104s ease-in-out infinite alternate;
 }
 
@@ -178,7 +178,7 @@
     conic-gradient(from 198deg at 68% 56%, transparent 0deg, rgba(91, 191, 106, 0.065) 26deg, transparent 72deg, transparent 174deg, rgba(191, 218, 105, 0.05) 205deg, transparent 246deg),
     radial-gradient(ellipse 46% 26% at 89% 29%, rgba(102, 180, 81, 0.105), transparent 100%),
     radial-gradient(ellipse 45% 32% at 18% 70%, rgba(71, 157, 87, 0.095), transparent 100%);
-  filter: blur(29px);
+  filter: blur(18px);
   animation: dark-hour-energy-drift 132s ease-in-out -46s infinite alternate-reverse;
 }
 
@@ -809,14 +809,6 @@
   filter: blur(0.45px);
 }
 
-.dark-hour-scene__filters {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
 .dark-hour-scene__distortion {
   position: absolute;
   z-index: 3;
@@ -834,7 +826,7 @@
     radial-gradient(ellipse at 50% 52%, rgba(95, 238, 182, 0.1), transparent 69%);
   -webkit-mask-image: radial-gradient(ellipse, transparent 5%, #000 35%, rgba(0, 0, 0, 0.72) 58%, transparent 78%);
   mask-image: radial-gradient(ellipse, transparent 5%, #000 35%, rgba(0, 0, 0, 0.72) 58%, transparent 78%);
-  filter: url(#tartarus-spatial-warp) blur(1.2px);
+  filter: blur(1.2px);
   mix-blend-mode: screen;
   pointer-events: none;
   will-change: transform, opacity;

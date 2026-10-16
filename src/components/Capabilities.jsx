@@ -8,7 +8,7 @@ const noop = () => {};
 const DEVICE_WIDTHS = { desktop: '100%', tablet: '72%', mobile: '36%' };
 const TAROT_ARCANA_FRONTS = [
   '/Fool-0.webp',
-  '/mago.jpg',
+  '/mago.webp',
   '/3.png',
   '/83px-P3P_Empress_Arcana_Graphic.png',
   '/83px-P3P_Emperor_Arcana_Graphic.png',

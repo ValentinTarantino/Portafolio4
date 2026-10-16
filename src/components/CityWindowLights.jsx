@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
 
 const vertexShader = /* glsl */`
   attribute float instancePhase;
@@ -341,6 +340,15 @@ const CityWindowLights = ({ timeOfDay = 'afternoon', enabled = true }) => {
       previousFrameTime = time;
       elapsed += delta;
       uniforms.uTime.value = elapsed;
+      const periodTween = periodTweenRef.current;
+      if (periodTween) {
+        if (periodTween.start < 0) periodTween.start = elapsed;
+        const progress = Math.min((elapsed - periodTween.start) / 1.4, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        uniforms.uNight.value = periodTween.fromNight + (periodTween.toNight - periodTween.fromNight) * eased;
+        uniforms.uDarkHour.value = periodTween.fromDarkHour + (periodTween.toDarkHour - periodTween.fromDarkHour) * eased;
+        if (progress >= 1) periodTweenRef.current = null;
+      }
       if (!reducedMotion.matches) {
         if (!cityPulse.active && elapsed >= cityPulse.nextAt) {
           cityPulse.active = true;
@@ -402,7 +410,6 @@ const CityWindowLights = ({ timeOfDay = 'afternoon', enabled = true }) => {
       window.removeEventListener('resize', onResize);
       document.removeEventListener('visibilitychange', onVisibilityChange);
       reducedMotion.removeEventListener?.('change', onMotionChange);
-      periodTweenRef.current?.kill();
       periodTweenRef.current = null;
       scene.remove(mesh);
       scene.remove(facadeMasks);
@@ -429,22 +436,27 @@ const CityWindowLights = ({ timeOfDay = 'afternoon', enabled = true }) => {
     };
   }, [enabled]);
 
+  // Manual 1.4s power2.out tween (1 - (1 - t)^3), identical to the
+  // previous GSAP timeline, driven by the existing animation loop clock.
   useEffect(() => {
     const material = materialRef.current;
     if (!material) return;
-    periodTweenRef.current?.kill();
-    const timeline = gsap.timeline({ onUpdate: () => renderRef.current?.() })
-      .to(material.uniforms.uNight, {
-        value: timeOfDay === 'night' ? 1 : 0,
-        duration: 1.4,
-        ease: 'power2.out',
-      }, 0)
-      .to(material.uniforms.uDarkHour, {
-        value: timeOfDay === 'darkHour' ? 1 : 0,
-        duration: 1.4,
-        ease: 'power2.out',
-      }, 0);
-    periodTweenRef.current = timeline;
+    const toNight = timeOfDay === 'night' ? 1 : 0;
+    const toDarkHour = timeOfDay === 'darkHour' ? 1 : 0;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      material.uniforms.uNight.value = toNight;
+      material.uniforms.uDarkHour.value = toDarkHour;
+      periodTweenRef.current = null;
+      renderRef.current?.();
+      return;
+    }
+    periodTweenRef.current = {
+      fromNight: material.uniforms.uNight.value,
+      toNight,
+      fromDarkHour: material.uniforms.uDarkHour.value,
+      toDarkHour,
+      start: -1,
+    };
   }, [timeOfDay]);
 
   return <canvas className={`dark-hour-scene__window-lights${ready ? ' is-ready' : ''}`} ref={canvasRef} aria-hidden="true" />;

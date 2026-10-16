@@ -316,6 +316,11 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
           : Math.max(targetMode, modeMix - step);
       }
 
+      // In full dark hour the canvas is static (no meteors, frozen dust):
+      // keep the last frame instead of repainting every animation tick.
+      // One-shot draws (delta 0: resize, mode changes) still repaint.
+      if (!motionPreference.matches && targetMode === 1 && modeMix >= 1 && delta > 0) return;
+
       context.clearRect(0, 0, width, height);
       const motionTime = time * 0.001;
       const red = Math.round(132 + (112 - 132) * modeMix);
@@ -519,14 +524,6 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
       <div className="dark-hour-scene__reactive-fog" />
       <div className="dark-hour-scene__distant-lights" />
       <Tartarus isDarkHour={isDarkHour} lightweight={lightweightScene} />
-      <svg className="dark-hour-scene__filters" aria-hidden="true" focusable="false">
-        <defs>
-          <filter id="tartarus-spatial-warp" x="-20%" y="-20%" width="140%" height="140%">
-            <feTurbulence type="fractalNoise" baseFrequency="0.018 0.032" numOctaves="1" seed="8" result="warp" />
-            <feDisplacementMap in="SourceGraphic" in2="warp" scale="9" xChannelSelector="R" yChannelSelector="G" />
-          </filter>
-        </defs>
-      </svg>
       <div className="dark-hour-scene__distortion" />
       <div className="dark-hour-scene__aurora" aria-hidden="true" />
       <CityLayer buildings={CITY_FAR} depth="far" lightweight={lightweightScene} />

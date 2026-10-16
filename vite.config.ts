@@ -20,7 +20,6 @@ export default defineConfig(({ mode }) => ({
       output: {
         manualChunks: {
           three: ['three'],
-          gsap: ['gsap', '@gsap/react'],
           icons: ['react-icons', 'lucide-react'],
           firebase: ['firebase/app', 'firebase/firestore'],
         },

@@ -1,57 +1,107 @@
-import { useRef } from 'react';
-import { useGSAP } from '@gsap/react';
-import { gsap } from 'gsap';
+import { useEffect, useRef } from 'react';
 import TartarusEnergyCores from './TartarusEnergyCores';
 
 const Tartarus = ({ isDarkHour = false, lightweight = false }) => {
   const svgRef = useRef(null);
 
-  useGSAP(() => {
+  // GSAP-free driver replicating the exact 8.8s master loop: conduits sweep
+  // 0 → -24 linearly with 0.7s stagger, fog breathes 4.4s yoyo and the
+  // distortion pulses 2.2s x4 — all with sine.inOut, same as before.
+  useEffect(() => {
     if (!isDarkHour || lightweight) return undefined;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
 
-    const motion = gsap.matchMedia();
-    motion.add('(prefers-reduced-motion: no-preference)', () => {
-      const conduits = gsap.utils.toArray('.tartarus-energy-flow', svgRef.current);
-      const scene = svgRef.current.closest('.dark-hour-scene');
-      const reactiveFog = scene?.querySelector('.dark-hour-scene__reactive-fog');
-      const distortion = scene?.querySelector('.dark-hour-scene__distortion');
-      const timeline = gsap.timeline({ repeat: -1 });
+    const easeInOutSine = (p) => -(Math.cos(Math.PI * p) - 1) / 2;
+    const conduits = [...(svgRef.current?.querySelectorAll('.tartarus-energy-flow') ?? [])];
+    const scene = svgRef.current?.closest('.dark-hour-scene');
+    const reactiveFog = scene?.querySelector('.dark-hour-scene__reactive-fog');
+    const distortion = scene?.querySelector('.dark-hour-scene__distortion');
+    const masterCycle = Math.max(8.8, 6 + 0.7 * Math.max(conduits.length - 1, 0));
 
-      timeline.to(conduits, {
-        strokeDashoffset: -24,
-        duration: 6,
-        stagger: 0.7,
-        ease: 'none',
-      }, 0);
-      if (reactiveFog) {
-        timeline.to(reactiveFog, {
-          opacity: 0.5,
-          scaleX: 1.16,
-          duration: 4.4,
-          repeat: 1,
-          yoyo: true,
-          ease: 'sine.inOut',
-        }, 0);
+    const readScaleX = (el) => {
+      const matrix = window.getComputedStyle(el).transform;
+      if (!matrix || matrix === 'none') return 1;
+      const values = matrix.slice(7, -1).split(',').map(Number);
+      return Number.isFinite(values[0]) ? values[0] : 1;
+    };
+    const fogStart = reactiveFog
+      ? { opacity: parseFloat(window.getComputedStyle(reactiveFog).opacity) || 0, scaleX: readScaleX(reactiveFog) }
+      : null;
+    const distortionStart = distortion
+      ? { opacity: parseFloat(window.getComputedStyle(distortion).opacity) || 0, scale: readScaleX(distortion) }
+      : null;
+
+    const hero = document.getElementById('home');
+    let running = !document.hidden;
+    let heroVisible = true;
+    let acc = 0;
+    let lastTick = 0;
+    let frameId = 0;
+
+    const paint = () => {
+      const local = acc % masterCycle;
+      conduits.forEach((conduit, index) => {
+        const start = index * 0.7;
+        const e = local - start;
+        const dash = e < 0 ? 0 : e < 6 ? (-24 * e) / 6 : local < 8.8 ? -24 : 0;
+        conduit.style.strokeDashoffset = String(dash);
+      });
+      if (fogStart && reactiveFog) {
+        const phase = (acc % 8.8) / 4.4;
+        const eased = phase < 1 ? easeInOutSine(phase) : easeInOutSine(2 - phase);
+        reactiveFog.style.opacity = String(fogStart.opacity + (0.5 - fogStart.opacity) * eased);
+        reactiveFog.style.transform = `scaleX(${fogStart.scaleX + (1.16 - fogStart.scaleX) * eased})`;
       }
-      if (distortion) {
-        timeline.to(distortion, {
-          opacity: 0.34,
-          scale: 1.06,
-          duration: 2.2,
-          repeat: 3,
-          yoyo: true,
-          ease: 'sine.inOut',
-        }, 0);
+      if (distortionStart && distortion) {
+        const phase = (acc % 8.8) / 2.2;
+        const segment = Math.floor(phase);
+        const eased = segment % 2 === 0 ? easeInOutSine(phase - segment) : easeInOutSine(1 - (phase - segment));
+        distortion.style.opacity = String(distortionStart.opacity + (0.34 - distortionStart.opacity) * eased);
+        const scale = distortionStart.scale + (1.06 - distortionStart.scale) * eased;
+        distortion.style.transform = `translateX(-50%) scale(${scale})`;
       }
-      timeline.set(conduits, { strokeDashoffset: 0 }, 8.8);
-      timeline.paused(document.hidden);
-      const onVisibilityChange = () => timeline.paused(document.hidden);
-      document.addEventListener('visibilitychange', onVisibilityChange);
-      return () => document.removeEventListener('visibilitychange', onVisibilityChange);
-    });
+    };
 
-    return () => motion.revert();
-  }, { scope: svgRef, dependencies: [isDarkHour, lightweight], revertOnUpdate: true });
+    const tick = (now) => {
+      frameId = 0;
+      const dt = Math.min(Math.max((now - lastTick) / 1000, 0), 0.1);
+      lastTick = now;
+      if (running) {
+        acc += dt;
+        paint();
+        frameId = window.requestAnimationFrame(tick);
+      }
+    };
+    const syncRunning = () => {
+      const shouldRun = !document.hidden && heroVisible;
+      if (shouldRun === running) return;
+      running = shouldRun;
+      if (running) {
+        lastTick = performance.now();
+        if (!frameId) frameId = window.requestAnimationFrame(tick);
+      }
+    };
+    const onVisibilityChange = () => syncRunning();
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    let heroObserver;
+    if (hero && 'IntersectionObserver' in window) {
+      heroObserver = new IntersectionObserver(([entry]) => {
+        heroVisible = entry.isIntersecting;
+        syncRunning();
+      }, { threshold: 0 });
+      heroObserver.observe(hero);
+    }
+    if (running) {
+      lastTick = performance.now();
+      frameId = window.requestAnimationFrame(tick);
+    }
+
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+      heroObserver?.disconnect();
+      if (frameId) window.cancelAnimationFrame(frameId);
+    };
+  }, [isDarkHour, lightweight]);
 
   return (
   <svg
