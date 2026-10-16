@@ -160,6 +160,13 @@
   stroke-width: 1.7;
 }
 
+.persona-link-card__icon .pixel-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: pixelated;
+}
+
 .persona-link-card__icon svg path[fill="currentColor"] { fill: currentColor; stroke: none; }
 .persona-link-card__identity-text { display: grid; min-width: 0; flex: 1 1 auto; gap: 0.25rem; }
 

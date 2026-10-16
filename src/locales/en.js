@@ -4,7 +4,7 @@ const en = {
     about: 'About',
     skills: 'Skills',
     projects: 'Projects',
-    testimonials: 'Capabilities',
+    capabilities: 'Capabilities',
     contact: 'Contact'
   },
   hero: {
@@ -214,10 +214,6 @@ const en = {
         ]
       }
     }
-  },
-  testimonials: {
-    title: 'Capabilities',
-    subtitle: 'What people I worked with say'
   },
   capabilities: {
     title: 'Capabilities',

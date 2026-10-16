@@ -155,6 +155,54 @@ html {
   background: transparent;
 }
 
+/* Skeleton shown while a lazy section loads */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  animation: skeleton-shimmer 1.6s infinite;
+}
+
+.skeleton-title {
+  width: min(320px, 60%);
+  height: 2.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.skeleton-line {
+  height: 0.9rem;
+  margin-bottom: 0.8rem;
+}
+
+.skeleton-line.short {
+  width: 70%;
+}
+
+.skeleton-block {
+  height: 220px;
+  margin-top: 1.5rem;
+  border-radius: 16px;
+}
+
+@keyframes skeleton-shimmer {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton::after {
+    animation: none;
+  }
+}
+
 /* Section transitions */
 .section:not(.about) {
 

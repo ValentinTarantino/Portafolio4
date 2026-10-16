@@ -285,7 +285,7 @@ const Capabilities = ({ t, language, isDarkHour }) => {
 
   return (
     <section
-      id="testimonials"
+      id="capabilities"
       className="section capabilities"
       data-dark-hour={isDarkHour ? 'true' : 'false'}
       aria-labelledby="capabilities-title"

@@ -3,18 +3,18 @@ import './Contact.css';
 
 const ContactIcon = ({ type }) => {
   if (type === 'email') {
-    return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5h18v11H3z" /><path d="m3.5 7 8.5 6.5L20.5 7" /></svg>;
+    return <img src="/gmail.png" alt="" aria-hidden="true" width="32" height="32" className="pixel-avatar" />;
   }
 
   if (type === 'linkedin') {
-    return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9v10M5 5v.01M10 19v-6a4 4 0 0 1 8 0v6M10 9v10" /><circle cx="5" cy="5" r="1.4" /></svg>;
+    return <img src="/avatar-pixel.png" alt="" aria-hidden="true" width="32" height="32" className="pixel-avatar" />;
   }
 
   if (type === 'whatsapp') {
-    return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.7a8.5 8.5 0 0 1-12.6 7.5L3 20l.9-4.7a8.5 8.5 0 1 1 16.6-3.6Z" /><path d="M8.3 8.1c.2-.5.5-.5.8-.5h.5c.2 0 .4.1.5.4l.7 1.7c.1.2.1.4-.1.6l-.5.6c-.2.2-.2.4-.1.6.7 1.2 1.6 2 2.8 2.6.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.6.8c.3.1.4.3.4.5 0 .3-.2 1.1-.7 1.5-.5.5-1.2.7-2 .5-1-.2-2.3-.8-3.8-2.1-1.2-1.1-2.1-2.5-2.4-3.5-.3-1.1 0-2 .4-2.7Z" /></svg>;
+    return <img src="/wsp.jpg" alt="" aria-hidden="true" width="32" height="32" className="pixel-avatar" />;
   }
 
-  return <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.5 21.6c.6.1.8-.2.8-.6v-2.2c-3.4.7-4.1-1.4-4.1-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.4-5.5-6.1 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.7.3 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.7-2.8 5.7-5.5 6.1.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6A11.1 11.1 0 0 0 12 .9Z" /></svg>;
+  return <img src="/github.png" alt="" aria-hidden="true" width="32" height="32" className="pixel-avatar" />;
 };
 
 const ContactCard = ({ type, number, labels, detail, action, href, onCopy, copied }) => {

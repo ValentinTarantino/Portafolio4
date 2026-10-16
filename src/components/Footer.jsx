@@ -9,7 +9,7 @@ const Footer = ({ t }) => {
     { label: t.nav.about, href: '#about' },
     { label: t.nav.skills, href: '#skills' },
     { label: t.nav.projects, href: '#projects' },
-    { label: t.nav.testimonials, href: '#testimonials' },
+    { label: t.nav.capabilities, href: '#capabilities' },
     { label: t.nav.contact, href: '#contact' }
   ];
 

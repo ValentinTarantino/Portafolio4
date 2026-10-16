@@ -25,7 +25,14 @@ const translations = { es, en };
 // Keeps layout stable while a lazy section loads (no CLS) and preserves
 // anchor targets for nav links.
 const SectionFallback = ({ id, minHeight }) => (
-  <div {...(id ? { id } : {})} style={{ minHeight }} aria-hidden="true" />
+  <div {...(id ? { id } : {})} className="section section-fallback" style={{ minHeight }} aria-hidden="true">
+    <div className="container">
+      <div className="skeleton skeleton-title" />
+      <div className="skeleton skeleton-line" />
+      <div className="skeleton skeleton-line short" />
+      <div className="skeleton skeleton-block" />
+    </div>
+  </div>
 );
 
 // Renders children only when close to the viewport, so below-fold chunks
@@ -164,7 +171,7 @@ function App() {
       <NearViewportSection id="projects" minHeight="110vh">
         <Projects t={t} language={language} isDarkHour={isDarkHour} sceneQuality={sceneQuality} setProjectTerminalMount={setProjectTerminalMount} />
       </NearViewportSection>
-      <NearViewportSection id="testimonials" minHeight="100vh">
+      <NearViewportSection id="capabilities" minHeight="100vh">
         <Capabilities t={t} language={language} isDarkHour={isDarkHour} />
       </NearViewportSection>
       <NearViewportSection id="contact" minHeight="80vh">

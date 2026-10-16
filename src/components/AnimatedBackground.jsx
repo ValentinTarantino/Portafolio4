@@ -31,6 +31,50 @@ const CITY_NEAR = [
 const MOBILE_SCENE_QUERY = '(max-width: 700px), (hover: none) and (pointer: coarse)';
 const TARTARUS_REVEAL_KEY = 'persona-tartarus-revealed';
 
+// Deterministic PRNG so the starfield is stable between renders.
+const mulberry32 = (seed) => () => {
+  seed |= 0;
+  seed = (seed + 0x6d2b79f5) | 0;
+  let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+  t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+  return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+};
+
+// Builds two box-shadow star layers (bright + dim) confined to the upper
+// sky so stars never overlap the city, skipping the moon disc (measured
+// live so it holds on every breakpoint). One string each = a single paint.
+const buildStarfield = (width, height) => {
+  const skyHeight = Math.round(height * 0.62);
+  const moonRect = document.querySelector('.dark-hour-scene__moon')?.getBoundingClientRect();
+  const moon = moonRect && moonRect.width > 0
+    ? {
+        x: moonRect.left + moonRect.width / 2,
+        y: moonRect.top + moonRect.height / 2,
+        r: moonRect.width / 2 + 10,
+      }
+    : null;
+  const makeLayer = (count, seed, blur, color) => {
+    const random = mulberry32(seed);
+    const parts = [];
+    let placed = 0;
+    let guard = 0;
+    while (placed < count && guard < count * 12) {
+      guard += 1;
+      const x = Math.round(random() * width);
+      const y = Math.round(random() * skyHeight);
+      if (moon && Math.hypot(x - moon.x, y - moon.y) < moon.r) continue;
+      placed += 1;
+      parts.push(`${x}px ${y}px ${blur} 0 ${color}`);
+    }
+    return parts.join(',');
+  };
+  const mobile = width < 700;
+  return {
+    bright: makeLayer(mobile ? 20 : 38, 11, '2px', 'rgba(207, 232, 255, 0.9)'),
+    dim: makeLayer(mobile ? 44 : 86, 77, '1px', 'rgba(159, 195, 232, 0.55)'),
+  };
+};
+
 const hasTartarusBeenRevealed = () => {
   try {
     return window.sessionStorage.getItem(TARTARUS_REVEAL_KEY) === 'true';
@@ -119,6 +163,7 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
   const drawRef = useRef(null);
   const heroActiveRef = useRef(false);
   const [isMobileViewport, setIsMobileViewport] = useState(() => window.matchMedia(MOBILE_SCENE_QUERY).matches);
+  const [starfield, setStarfield] = useState(() => buildStarfield(window.innerWidth, window.innerHeight));
   const lightweightScene = isMobileViewport && quality !== 'full';
   const fullQualityOnMobile = isMobileViewport && quality === 'full';
   const modeRef = useRef(isDarkHour);
@@ -132,6 +177,23 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
     return () => {
       if (query.removeEventListener) query.removeEventListener('change', updateSceneMode);
       else query.removeListener?.(updateSceneMode);
+    };
+  }, []);
+
+  useEffect(() => {
+    let frameId = 0;
+    const rebuild = () => {
+      setStarfield(buildStarfield(window.innerWidth, window.innerHeight));
+    };
+    const onResize = () => {
+      window.cancelAnimationFrame(frameId);
+      frameId = window.requestAnimationFrame(rebuild);
+    };
+    rebuild();
+    window.addEventListener('resize', onResize, { passive: true });
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      window.removeEventListener('resize', onResize);
     };
   }, []);
 
@@ -218,27 +280,9 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
       || (navigator.hardwareConcurrency || 8) <= 4);
 
     const createParticles = () => {
-      const desktopCount = Math.min(
-        lowPowerDevice ? 30 : 44,
-        Math.max(lowPowerDevice ? 14 : 18, Math.round(width / (lowPowerDevice ? 42 : 32))),
-      );
-      const mobileCount = Math.min(
-        lowPowerDevice ? 8 : 12,
-        Math.max(lowPowerDevice ? 6 : 8, Math.round(width / (lowPowerDevice ? 52 : 38))),
-      );
-      const count = finePointer.matches || fullQualityOnMobile ? desktopCount : mobileCount;
-      particles = Array.from({ length: count }, () => ({
-          x: random(0, width),
-          y: random(0, height),
-          radius: random(0.7, 1.8),
-          speed: random(4.5, 12),
-          drift: random(1.5, 7.5),
-          secondaryDrift: random(0.45, 2.2),
-          phase: random(0, Math.PI * 2),
-          frequency: random(0.12, 0.42),
-          secondaryPhase: random(0, Math.PI * 2),
-          alpha: random(0.16, 0.4),
-      }));
+      // Ambient dust particles disabled by design; the canvas stays alive
+      // for shooting stars only.
+      particles = [];
     };
 
     const resize = () => {
@@ -459,6 +503,10 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
   return (
     <div className={`dark-hour-scene is-hero-active${isDarkHour ? ' is-dark-hour' : ''}${lightweightScene ? ' is-mobile-scene' : ''}${fullQualityOnMobile ? ' is-full-quality' : ''}`} data-time-of-day={timeOfDay} ref={sceneRef} aria-hidden="true">
       <div className="dark-hour-scene__sky" />
+      <div className="dark-hour-scene__stars" aria-hidden="true">
+        <i className="dark-hour-scene__stars--bright" style={{ boxShadow: starfield.bright }} />
+        <i className="dark-hour-scene__stars--dim" style={{ boxShadow: starfield.dim }} />
+      </div>
       <div className="dark-hour-scene__energy-currents" />
       <div className="dark-hour-scene__halo dark-hour-scene__halo--horizon" />
       <div className="dark-hour-scene__clouds" />
@@ -480,6 +528,7 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
         </defs>
       </svg>
       <div className="dark-hour-scene__distortion" />
+      <div className="dark-hour-scene__aurora" aria-hidden="true" />
       <CityLayer buildings={CITY_FAR} depth="far" lightweight={lightweightScene} />
       <CityLayer buildings={CITY_MID} depth="mid" lightweight={lightweightScene} />
       <div className="dark-hour-scene__city-haze" />

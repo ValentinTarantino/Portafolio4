@@ -143,7 +143,7 @@ html .App.persona-menu .section-subtitle {
 }
 
 /* Shared LIST-inspired section headings outside Skills. */
-html body .App.persona-menu .section:is(.about, .projects, .testimonials, .contact) .section-title {
+html body .App.persona-menu .section:is(.about, .projects, .capabilities, .contact) .section-title {
   width: fit-content;
   max-width: 100%;
   margin: 0 0 1.5rem;
@@ -163,12 +163,12 @@ html body .App.persona-menu .section:is(.about, .projects, .testimonials, .conta
   text-shadow: 2px 2px 0 #168dff;
 }
 
-html body .App.persona-menu .section:is(.about, .projects, .testimonials, .contact) .section-title::after {
+html body .App.persona-menu .section:is(.about, .projects, .capabilities, .contact) .section-title::after {
   display: none;
   content: none;
 }
 
-html body .App.persona-menu.dark-hour-mode .section:is(.about, .projects, .testimonials, .contact) .section-title {
+html body .App.persona-menu.dark-hour-mode .section:is(.about, .projects, .capabilities, .contact) .section-title {
   text-shadow: 2px 2px 0 #159b64;
 }
 
@@ -187,7 +187,7 @@ html body .App.persona-menu .section.contact .persona-comms__heading .section-su
 }
 
 @media (max-width: 700px) {
-  html body .App.persona-menu .section:is(.about, .projects, .testimonials, .contact) .section-title {
+  html body .App.persona-menu .section:is(.about, .projects, .capabilities, .contact) .section-title {
     margin-bottom: 1.25rem;
     font-size: clamp(2.15rem, 10vw, 3.4rem);
     letter-spacing: -0.055em;
@@ -195,7 +195,7 @@ html body .App.persona-menu .section.contact .persona-comms__heading .section-su
 }
 
 @media (max-width: 380px) {
-  html body .App.persona-menu .section:is(.about, .projects, .testimonials, .contact) .section-title {
+  html body .App.persona-menu .section:is(.about, .projects, .capabilities, .contact) .section-title {
     font-size: clamp(1.85rem, 9.5vw, 2.2rem);
     letter-spacing: -0.06em;
   }

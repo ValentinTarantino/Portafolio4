@@ -4,7 +4,7 @@ const es = {
     about: 'Acerca de',
     skills: 'Herramientas',
     projects: 'Proyectos',
-    testimonials: 'Capacidades',
+    capabilities: 'Capacidades',
     contact: 'Contacto'
   },
   hero: {
@@ -214,10 +214,6 @@ const es = {
         ]
       }
     }
-  },
-  testimonials: {
-    title: 'Capacidades',
-    subtitle: 'Lo que dicen quienes trabajaron conmigo'
   },
   capabilities: {
     title: 'Capacidades',

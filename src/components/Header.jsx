@@ -138,7 +138,7 @@ const Header = ({ t, language, toggleLanguage, isDarkHour, sceneQuality, onScene
           header.classList.toggle('nav-dark', !isLight);
         }
 
-        const sections = ['home', 'about', 'skills', 'projects', 'testimonials', 'contact'];
+        const sections = ['home', 'about', 'skills', 'projects', 'capabilities', 'contact'];
         const scrollPos = scrollY + 150;
         const isAtTop = scrollY <= 80;
         const isAtBottom = !isAtTop && scrollY + window.innerHeight >= document.documentElement.scrollHeight - 100;
@@ -216,7 +216,7 @@ const Header = ({ t, language, toggleLanguage, isDarkHour, sceneQuality, onScene
                 { id: 'about', label: t.nav.about },
                 { id: 'skills', label: t.nav.skills },
                 { id: 'projects', label: t.nav.projects },
-                { id: 'testimonials', label: t.nav.testimonials },
+                { id: 'capabilities', label: t.nav.capabilities },
                 { id: 'contact', label: t.nav.contact },
               ].map(({ id, label }) => (
                 <li key={id}>

@@ -521,14 +521,17 @@
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 1.5rem;
+  padding: calc(4.65rem + 1.5rem) 1.5rem 1.5rem;
+  overflow-y: auto;
 }
 
 .cv-modal-content {
   width: min(900px, 100%);
-  height: min(85vh, 820px);
+  height: min(78vh, 760px);
+  flex-shrink: 0;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -567,6 +570,7 @@
   justify-content: space-between;
   gap: 1rem;
   margin-bottom: 0.75rem;
+  flex-shrink: 0;
 }
 
 .cv-modal-header h3 {
@@ -630,12 +634,12 @@
 
 @media (max-width: 600px) {
   .cv-modal-overlay {
-    padding: 0;
+    padding: 4rem 0 0;
   }
 
   .cv-modal-content {
     width: 100%;
-    height: 100dvh;
+    height: calc(100dvh - 4rem);
     border-radius: 0;
     padding: 0.6rem;
   }
