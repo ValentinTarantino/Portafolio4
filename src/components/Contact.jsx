@@ -11,7 +11,7 @@ const ContactIcon = ({ type }) => {
   }
 
   if (type === 'whatsapp') {
-    return <img src="/wsp.jpg" alt="" aria-hidden="true" width="32" height="32" className="pixel-avatar" />;
+    return <img src="/wsp.webp" alt="" aria-hidden="true" width="32" height="32" className="pixel-avatar" />;
   }
 
   return <img src="/github.png" alt="" aria-hidden="true" width="32" height="32" className="pixel-avatar" />;

@@ -132,7 +132,7 @@ const Header = ({ t, language, toggleLanguage, isDarkHour, sceneQuality, onScene
         const isLight = luminance > 0.5;
 
         if (header) {
-          header.style.background = `rgba(${color.r}, ${color.g}, ${color.b}, 0.85)`;
+          header.style.background = `rgb(${color.r}, ${color.g}, ${color.b})`;
           header.style.color = isLight ? '#1a1a2e' : '#ffffff';
           header.classList.toggle('nav-light', isLight);
           header.classList.toggle('nav-dark', !isLight);
@@ -197,6 +197,7 @@ const Header = ({ t, language, toggleLanguage, isDarkHour, sceneQuality, onScene
       ref={headerRef}
       className={`header ${scrolled ? 'scrolled' : ''} nav-dark${isDarkHour ? ' dark-hour-active' : ''}`}
     >
+      <span className="header-fx" aria-hidden="true" />
       <div className="container">
         <div className="header-content">
           <div className="header-brand">

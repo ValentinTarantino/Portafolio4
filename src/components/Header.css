@@ -5,14 +5,9 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  background: rgba(12, 12, 12, 0.6);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: #040f23;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  /* Borde brillante sutil superior - efecto glass premium */
-  box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 4px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
   /* Transición ultra suave para cambios de color */
   transition: background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1),
               color 0.5s ease,
@@ -23,12 +18,76 @@
 }
 
 .header.scrolled {
-  background: rgba(12, 12, 12, 0.85);
-  /* Sombra más elaborada con profundidad */
-  box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+  background: #040f23;
+  box-shadow:
     0 8px 40px rgba(0, 0, 0, 0.4),
     0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* Capa de energía del navbar: recorta el flujo sin tocar el layout */
+.header-fx {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+
+
+/* Barrido diagonal luminoso cada ~7s (solo transform + opacity) */
+.header-fx::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: 0;
+  width: 34%;
+  background: linear-gradient(100deg, transparent, rgba(53, 201, 255, 0.28) 45%, rgba(190, 240, 255, 0.5) 50%, rgba(53, 201, 255, 0.28) 55%, transparent);
+  filter: blur(6px);
+  transform: translateX(-140%) skewX(-12deg);
+  animation: header-fx-sweep 7s ease-in-out infinite;
+}
+
+.header.dark-hour-active .header-fx::before {
+  background: linear-gradient(100deg, transparent, rgba(97, 217, 141, 0.3) 45%, rgba(215, 255, 230, 0.52) 50%, rgba(97, 217, 141, 0.3) 55%, transparent);
+}
+
+@keyframes header-fx-sweep {
+  0% { transform: translateX(-140%) skewX(-12deg); opacity: 0; }
+  8% { opacity: 1; }
+  32% { transform: translateX(360%) skewX(-12deg); opacity: 1; }
+  40%, 100% { transform: translateX(360%) skewX(-12deg); opacity: 0; }
+}
+
+/* Línea de energía inferior con flujo continuo */
+.header-fx::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #35c9ff 20%, #bff0ff 50%, #35c9ff 80%, transparent);
+  background-size: 200% 100%;
+  box-shadow: 0 0 12px rgba(53, 201, 255, 0.55);
+  animation: header-fx-flow 3.5s linear infinite;
+}
+
+.header.dark-hour-active .header-fx::after {
+  background: linear-gradient(90deg, transparent, #61d98d 20%, #d7ffe6 50%, #61d98d 80%, transparent);
+  box-shadow: 0 0 12px rgba(97, 217, 141, 0.55);
+}
+
+@keyframes header-fx-flow {
+  from { background-position: 100% 0; }
+  to { background-position: -100% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-fx::after {
+    animation: none;
+    opacity: 0.6;
+  }
 }
 
 .header-content {
@@ -296,11 +355,9 @@
     overflow: visible;
   }
 
-  /* Modo oscuro - fondo oscuro */
+  /* Modo oscuro - fondo oscuro sólido */
   .header.nav-dark .nav {
-    background: linear-gradient(145deg, rgba(25, 25, 40, 0.98) 0%, rgba(15, 15, 28, 1) 100%);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    background: linear-gradient(145deg, #191928 0%, #0f0f1c 100%);
     border: 2px solid rgba(255, 255, 255, 0.15);
     box-shadow: 
       0 10px 40px rgba(0, 0, 0, 0.5),
@@ -408,8 +465,6 @@
 
 /* Modo Oscuro (fondos oscuros) */
 .header.nav-dark {
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
 
@@ -442,8 +497,6 @@
 
 /* Modo Claro (fondos más claros) */
 .header.nav-light {
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
 }
 
@@ -556,13 +609,6 @@
     min-width: 18px !important;
   }
 
-  /* Deshabilitar backdrop-filter en mobile por rendimiento */
-  .header,
-  .header.nav-dark,
-  .header.nav-light {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-  }
 }
 
 /* MEDIA QUERIES - Separador visual */

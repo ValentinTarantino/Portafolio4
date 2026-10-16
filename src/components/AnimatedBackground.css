@@ -708,6 +708,9 @@
 
 .dark-hour-scene.is-dark-hour .dark-hour-scene__street-curb { stroke: rgba(115, 153, 91, 0.16); }
 .dark-hour-scene.is-dark-hour .dark-hour-scene__street-lamp { opacity: 1; }
+.dark-hour-scene.is-dark-hour .dark-hour-scene__lamp-beam { opacity: 0; }
+.dark-hour-scene.is-dark-hour .dark-hour-scene__lamp-glow { opacity: 0; }
+.dark-hour-scene.is-dark-hour .dark-hour-scene__lamp-bulb { opacity: 0.42; filter: none; }
 .dark-hour-scene.is-dark-hour .dark-hour-scene__street-metal { stroke: #17271d; }
 .dark-hour-scene.is-dark-hour .dark-hour-scene__lamp-shade {
   fill: #0c1a12;
