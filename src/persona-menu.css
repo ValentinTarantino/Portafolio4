@@ -163,6 +163,13 @@ html body .App.persona-menu .section:is(.about, .projects, .capabilities, .conta
   text-shadow: 2px 2px 0 #168dff;
 }
 
+@media (max-height: 800px) {
+  html body .App.persona-menu .section:is(.about, .projects, .capabilities, .contact) .section-title {
+    margin-bottom: 0.9rem;
+    font-size: clamp(1.8rem, 4vh, 2.6rem);
+  }
+}
+
 html body .App.persona-menu .section:is(.about, .projects, .capabilities, .contact) .section-title::after {
   display: none;
   content: none;

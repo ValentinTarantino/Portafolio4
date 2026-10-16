@@ -165,6 +165,7 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
   const [isMobileViewport, setIsMobileViewport] = useState(() => window.matchMedia(MOBILE_SCENE_QUERY).matches);
   const [starfield, setStarfield] = useState(() => buildStarfield(window.innerWidth, window.innerHeight));
   const lightweightScene = isMobileViewport && quality !== 'full';
+  const lightMode = quality === 'light';
   const fullQualityOnMobile = isMobileViewport && quality === 'full';
   const modeRef = useRef(isDarkHour);
   modeRef.current = isDarkHour;
@@ -285,17 +286,22 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
       particles = [];
     };
 
+    let heroVisible = true;
     const resize = () => {
       width = window.innerWidth;
       height = window.innerHeight;
       const desktopQuality = finePointer.matches || fullQualityOnMobile;
-      pixelRatio = Math.min(
-        window.devicePixelRatio || 1,
-        desktopQuality ? (lowPowerDevice ? 1.25 : 1.5) : (lowPowerDevice ? 1 : 1.25),
-      );
-      frameInterval = desktopQuality
-        ? (lowPowerDevice ? 1000 / 30 : 1000 / 40)
-        : (lowPowerDevice ? 1000 / 24 : 1000 / 30);
+      pixelRatio = lightMode
+        ? 1
+        : Math.min(
+          window.devicePixelRatio || 1,
+          desktopQuality ? (lowPowerDevice ? 1.25 : 1.5) : (lowPowerDevice ? 1 : 1.25),
+        );
+      frameInterval = lightMode
+        ? 1000 / 30
+        : desktopQuality
+          ? (lowPowerDevice ? 1000 / 30 : 1000 / 40)
+          : (lowPowerDevice ? 1000 / 24 : 1000 / 30);
       canvas.width = Math.round(width * pixelRatio);
       canvas.height = Math.round(height * pixelRatio);
       canvas.style.width = `${width}px`;
@@ -429,7 +435,7 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
     drawRef.current = draw;
 
     const animate = (time) => {
-      if (!visible || motionPreference.matches) return;
+      if (!visible || !heroVisible || motionPreference.matches) return;
       if (lastFrameTime && time - lastFrameTime < frameInterval) {
         frameId = window.requestAnimationFrame(animate);
         return;
@@ -458,6 +464,15 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
       visible = !document.hidden;
       start();
     };
+    const hero = document.getElementById('home');
+    let heroObserver;
+    if (hero && 'IntersectionObserver' in window) {
+      heroObserver = new IntersectionObserver(([entry]) => {
+        heroVisible = entry.isIntersecting;
+        start();
+      }, { threshold: 0 });
+      heroObserver.observe(hero);
+    }
 
     const onPointerMove = (event) => {
       if (motionPreference.matches || !finePointer.matches || event.pointerType === 'touch') return;
@@ -492,12 +507,13 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
       window.cancelAnimationFrame(frameId);
       window.cancelAnimationFrame(pointerFrameId);
       window.cancelAnimationFrame(resizeFrameId);
+      heroObserver?.disconnect();
       window.removeEventListener('resize', onResize);
       window.removeEventListener('pointermove', onPointerMove);
       document.removeEventListener('visibilitychange', onVisibilityChange);
       motionPreference.removeEventListener?.('change', onMotionPreferenceChange);
     };
-  }, [lightweightScene, fullQualityOnMobile]);
+  }, [lightweightScene, fullQualityOnMobile, lightMode]);
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -506,7 +522,7 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
   }, [isDarkHour]);
 
   return (
-    <div className={`dark-hour-scene is-hero-active${isDarkHour ? ' is-dark-hour' : ''}${lightweightScene ? ' is-mobile-scene' : ''}${fullQualityOnMobile ? ' is-full-quality' : ''}`} data-time-of-day={timeOfDay} ref={sceneRef} aria-hidden="true">
+    <div className={`dark-hour-scene is-hero-active${isDarkHour ? ' is-dark-hour' : ''}${lightweightScene ? ' is-mobile-scene' : ''}${fullQualityOnMobile ? ' is-full-quality' : ''}${lightMode ? ' is-light-mode' : ''}`} data-time-of-day={timeOfDay} ref={sceneRef} aria-hidden="true">
       <div className="dark-hour-scene__sky" />
       <div className="dark-hour-scene__stars" aria-hidden="true">
         <i className="dark-hour-scene__stars--bright" style={{ boxShadow: starfield.bright }} />
@@ -523,7 +539,7 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
       <div className="dark-hour-scene__mist dark-hour-scene__mist--near" />
       <div className="dark-hour-scene__reactive-fog" />
       <div className="dark-hour-scene__distant-lights" />
-      <Tartarus isDarkHour={isDarkHour} lightweight={lightweightScene} />
+      <Tartarus isDarkHour={isDarkHour} lightweight={lightweightScene} lowPower={lightMode} />
       <div className="dark-hour-scene__distortion" />
       <div className="dark-hour-scene__aurora" aria-hidden="true" />
       <CityLayer buildings={CITY_FAR} depth="far" lightweight={lightweightScene} />
@@ -531,7 +547,7 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
       <div className="dark-hour-scene__city-haze" />
       <CityLayer buildings={CITY_NEAR} depth="near" lightweight={lightweightScene} />
       <CityStreet />
-      <CityWindowLights timeOfDay={timeOfDay} enabled={!lightweightScene && !isDarkHour} />
+      <CityWindowLights timeOfDay={timeOfDay} enabled={!lightweightScene && !isDarkHour} sparse={quality === 'light'} lowPower={lightMode} />
       <canvas className="dark-hour-scene__particles" ref={canvasRef} />
       <div className="dark-hour-scene__vignette" />
     </div>

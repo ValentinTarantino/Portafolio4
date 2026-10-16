@@ -811,3 +811,20 @@
     padding: 0.65rem 0.8rem;
   }
 }
+
+/* Laptops 1025-1280: grilla más angosta y stack tecnológico en 1 columna */
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .footer-main-grid {
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .tech-stack-grid {
+    grid-template-columns: 1fr;
+    max-width: 220px;
+  }
+
+  .footer-tagline {
+    max-width: 260px;
+  }
+}

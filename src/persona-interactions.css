@@ -68,7 +68,7 @@
 
 .App.persona-menu :is(
   a[href]:not(.nav-link):not(.footer-nav-link),
-  button:not(.menu-toggle):not(.modal-close-btn):not(.cv-modal-close):not(.terminal-reset-btn),
+  button:not(.menu-toggle):not(.modal-close-btn):not(.cv-modal-close):not(.terminal-reset-btn):not(.sq-gear),
   [role='button'],
   [role='tab'],
   .logo,
@@ -373,7 +373,7 @@ html .App.persona-menu :is(
 @media (hover: none) {
   .App.persona-menu :is(
     a[href]:not(.nav-link):not(.footer-nav-link),
-    button:not(.menu-toggle):not(.modal-close-btn):not(.cv-modal-close):not(.terminal-reset-btn),
+  button:not(.menu-toggle):not(.modal-close-btn):not(.cv-modal-close):not(.terminal-reset-btn):not(.sq-gear),
     [role='button'],
     [role='tab'],
     .logo,

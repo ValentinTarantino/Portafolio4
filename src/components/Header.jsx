@@ -79,6 +79,109 @@ const ArgentinaClock = ({ isDarkHour }) => {
   );
 };
 
+const NAV_SECTION_IDS = ['home', 'about', 'skills', 'projects', 'capabilities', 'contact'];
+
+const QUALITY_OPTIONS = [
+  {
+    value: 'full',
+    es: 'Completa',
+    en: 'Full',
+    titleEs: 'Activa en mobile los efectos completos de desktop',
+    titleEn: 'Enables full desktop effects on mobile',
+  },
+  {
+    value: 'light',
+    es: 'Modo light',
+    en: 'Light mode',
+    titleEs: 'Fuerza los efectos livianos también en escritorio',
+    titleEn: 'Forces lightweight effects on desktop too',
+  },
+];
+
+const SceneQualityMenu = ({ language, sceneQuality, onSceneQualityChange, direct = false }) => {
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef(null);
+  const gearRef = useRef(null);
+
+  useEffect(() => {
+    if (!open) return undefined;
+    const onPointerDown = (event) => {
+      if (rootRef.current && !rootRef.current.contains(event.target)) setOpen(false);
+    };
+    const onKey = (event) => {
+      if (event.key === 'Escape') {
+        setOpen(false);
+        gearRef.current?.focus();
+      }
+    };
+    document.addEventListener('pointerdown', onPointerDown);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [open ]);
+
+  const label = language === 'es' ? 'Calidad de gráficos' : 'Graphics quality';
+
+  const renderOptions = (inline) => QUALITY_OPTIONS.map((option) => (
+    <div
+      key={option.value}
+      className={`sq-option${sceneQuality === option.value ? ' is-selected' : ''}`}
+      role={inline ? 'radio' : 'menuitemradio'}
+      aria-checked={sceneQuality === option.value}
+      tabIndex={0}
+      title={language === 'es' ? option.titleEs : option.titleEn}
+      onClick={() => {
+        onSceneQualityChange(option.value);
+        if (!inline) setOpen(false);
+      }}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          onSceneQualityChange(option.value);
+          if (!inline) setOpen(false);
+        }
+      }}
+    >
+      <span>{language === 'es' ? option.es : option.en}</span>
+    </div>
+  ));
+
+  if (direct) {
+    return (
+      <div className="scene-quality-menu scene-quality-menu--inline" role="radiogroup" aria-label={label}>
+        {renderOptions(true)}
+      </div>
+    );
+  }
+
+  return (
+    <div className="scene-quality-menu" ref={rootRef}>
+      <button
+        type="button"
+        className="sq-gear"
+        ref={gearRef}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-label={label}
+        title={label}
+        onClick={() => setOpen((current) => !current)}
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="3" />
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+        </svg>
+      </button>
+      {open && (
+        <div className="sq-panel" role="menu" aria-label={label}>
+          {renderOptions(false)}
+        </div>
+      )}
+    </div>
+  );
+};
+
 const Header = ({ t, language, toggleLanguage, isDarkHour, sceneQuality, onSceneQualityChange }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -100,6 +203,22 @@ const Header = ({ t, language, toggleLanguage, isDarkHour, sceneQuality, onScene
     b: Math.round(c1.b + (c2.b - c1.b) * f)
   });
 
+  // Geometry reads are cached (2s TTL): per-scroll getBoundingClientRect
+  // calls forced a reflow on every scroll event.
+  const layoutCacheRef = useRef({ time: 0, tops: new Map(), scrollHeight: 0 });
+  const getLayout = () => {
+    const cached = layoutCacheRef.current;
+    if (performance.now() - cached.time < 2000 && cached.tops.size > 0) return cached;
+    const tops = new Map();
+    NAV_SECTION_IDS.forEach((id) => {
+      const element = document.getElementById(id);
+      tops.set(id, element ? element.getBoundingClientRect().top + window.scrollY : Infinity);
+    });
+    const fresh = { time: performance.now(), tops, scrollHeight: document.documentElement.scrollHeight };
+    layoutCacheRef.current = fresh;
+    return fresh;
+  };
+
   useEffect(() => {
     let rafId = null;
 
@@ -112,7 +231,8 @@ const Header = ({ t, language, toggleLanguage, isDarkHour, sceneQuality, onScene
 
         setScrolled(scrollY > 50);
 
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const { tops, scrollHeight } = getLayout();
+        const docHeight = scrollHeight - window.innerHeight;
         const scrollPercent = Math.min((scrollY / docHeight) * 100, 100);
 
         let start = gradientStops[0];
@@ -138,10 +258,9 @@ const Header = ({ t, language, toggleLanguage, isDarkHour, sceneQuality, onScene
           header.classList.toggle('nav-dark', !isLight);
         }
 
-        const sections = ['home', 'about', 'skills', 'projects', 'capabilities', 'contact'];
         const scrollPos = scrollY + 150;
         const isAtTop = scrollY <= 80;
-        const isAtBottom = !isAtTop && scrollY + window.innerHeight >= document.documentElement.scrollHeight - 100;
+        const isAtBottom = !isAtTop && scrollY + window.innerHeight >= scrollHeight - 100;
         let currentSection = 'home';
 
         if (isAtTop) {
@@ -149,11 +268,10 @@ const Header = ({ t, language, toggleLanguage, isDarkHour, sceneQuality, onScene
         } else if (isAtBottom) {
           currentSection = 'contact';
         } else {
-          for (let i = sections.length - 1; i >= 0; i--) {
-            const element = document.getElementById(sections[i]);
-            const sectionTop = element ? element.getBoundingClientRect().top + scrollY : Infinity;
-            if (element && scrollPos >= sectionTop) {
-              currentSection = sections[i];
+          for (let i = NAV_SECTION_IDS.length - 1; i >= 0; i--) {
+            const sectionTop = tops.get(NAV_SECTION_IDS[i]);
+            if (sectionTop !== Infinity && scrollPos >= sectionTop) {
+              currentSection = NAV_SECTION_IDS[i];
               break;
             }
           }
@@ -174,11 +292,17 @@ const Header = ({ t, language, toggleLanguage, isDarkHour, sceneQuality, onScene
       });
     };
 
+    const bustLayoutCache = () => {
+      layoutCacheRef.current = { time: 0, tops: new Map(), scrollHeight: 0 };
+    };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', bustLayoutCache);
     handleScroll();
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', bustLayoutCache);
       if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);
@@ -232,37 +356,7 @@ const Header = ({ t, language, toggleLanguage, isDarkHour, sceneQuality, onScene
                 </li>
               ))}
               <li className="scene-quality-menu-item">
-                <fieldset className="scene-quality-control">
-                  <legend className="scene-quality-control__caption">
-                    {language === 'es' ? 'CALIDAD DEL FONDO' : 'SCENE QUALITY'}
-                  </legend>
-                  <label
-                    className={`scene-quality-control__option${sceneQuality === 'optimized' ? ' is-selected' : ''}`}
-                    title={language === 'es' ? 'Menos efectos para un uso más ligero' : 'Fewer effects for a lighter experience'}
-                  >
-                    <input
-                      type="radio"
-                      name="scene-quality"
-                      value="optimized"
-                      checked={sceneQuality === 'optimized'}
-                      onChange={() => onSceneQualityChange('optimized')}
-                    />
-                    <span>{language === 'es' ? 'Ligera' : 'Light'}</span>
-                  </label>
-                  <label
-                    className={`scene-quality-control__option${sceneQuality === 'full' ? ' is-selected' : ''}`}
-                    title={language === 'es' ? 'Activa en mobile los efectos completos de desktop' : 'Enables full desktop effects on mobile'}
-                  >
-                    <input
-                      type="radio"
-                      name="scene-quality"
-                      value="full"
-                      checked={sceneQuality === 'full'}
-                      onChange={() => onSceneQualityChange('full')}
-                    />
-                    <span>{language === 'es' ? 'Completa' : 'Full'}</span>
-                  </label>
-                </fieldset>
+                <SceneQualityMenu language={language} sceneQuality={sceneQuality} onSceneQualityChange={onSceneQualityChange} direct />
               </li>
               <li className="language-menu-item">
                 <div
@@ -289,6 +383,7 @@ const Header = ({ t, language, toggleLanguage, isDarkHour, sceneQuality, onScene
           </nav>
 
           <div className="header-actions">
+            <SceneQualityMenu language={language} sceneQuality={sceneQuality} onSceneQualityChange={onSceneQualityChange} />
             <div
               className="language-toggle"
               role="button"

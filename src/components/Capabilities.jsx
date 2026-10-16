@@ -106,11 +106,38 @@ function ThreeShowcase({ active, copy, arcanaIndex = 0, onArcanaChange }) {
         texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 4);
         return texture;
       };
-      const frontTextures = TAROT_ARCANA_FRONTS.map(loadTexture);
+      // Ventana de texturas: solo la carta actual + las 2 siguientes viven
+      // en GPU (con wrap Mundo→Loco); el resto se carga al rotar y se libera
+      // al salir de la ventana.
+      const ARCANA_COUNT = TAROT_ARCANA_FRONTS.length;
+      const frontTextureCache = new Map();
+      const normalizeArcana = (index) => ((index % ARCANA_COUNT) + ARCANA_COUNT) % ARCANA_COUNT;
+      const getFrontTexture = (index) => {
+        const normalized = normalizeArcana(index);
+        let texture = frontTextureCache.get(normalized);
+        if (!texture) {
+          texture = loadTexture(TAROT_ARCANA_FRONTS[normalized]);
+          frontTextureCache.set(normalized, texture);
+        }
+        return texture;
+      };
+      const retainTextureWindow = (index) => {
+        const keep = new Set([index, index + 1, index + 2].map(normalizeArcana));
+        getFrontTexture(index);
+        getFrontTexture(index + 1);
+        getFrontTexture(index + 2);
+        frontTextureCache.forEach((texture, key) => {
+          if (!keep.has(key)) {
+            texture.dispose();
+            frontTextureCache.delete(key);
+          }
+        });
+      };
+      retainTextureWindow(arcanaIndexRef.current);
       const backTexture = loadTexture(TAROT_FOOL_BACK);
       const card = new THREE.Group();
       const edgeMaterial = new THREE.MeshStandardMaterial({ color: 0x071722, metalness: 0.35, roughness: 0.4 });
-      const frontMaterial = new THREE.MeshStandardMaterial({ map: frontTextures[arcanaIndexRef.current], roughness: 0.72, metalness: 0.06 });
+      const frontMaterial = new THREE.MeshStandardMaterial({ map: getFrontTexture(arcanaIndexRef.current), roughness: 0.72, metalness: 0.06 });
       const cardMaterial = new THREE.Mesh(
         new THREE.BoxGeometry(2.16, 3.2, 0.032),
         [edgeMaterial, edgeMaterial, edgeMaterial, edgeMaterial,
@@ -145,8 +172,9 @@ function ThreeShowcase({ active, copy, arcanaIndex = 0, onArcanaChange }) {
           floatShadow.scale.x = 1.15 + (floatOffset * 0.7);
           const isBackFacing = Math.cos(card.rotation.y) < 0;
           if (isBackFacing && !wasBackFacingRef.current) {
-            arcanaIndexRef.current = (arcanaIndexRef.current + 1) % frontTextures.length;
-            frontMaterial.map = frontTextures[arcanaIndexRef.current];
+            arcanaIndexRef.current = (arcanaIndexRef.current + 1) % ARCANA_COUNT;
+            retainTextureWindow(arcanaIndexRef.current);
+            frontMaterial.map = getFrontTexture(arcanaIndexRef.current);
             frontMaterial.needsUpdate = true;
           } else if (!isBackFacing && wasBackFacingRef.current) {
             onArcanaChange(arcanaIndexRef.current);
@@ -202,6 +230,8 @@ function ThreeShowcase({ active, copy, arcanaIndex = 0, onArcanaChange }) {
 
     cleanup = () => {
       contextLost = true;
+      frontTextureCache.forEach((texture) => texture.dispose());
+      frontTextureCache.clear();
       window.cancelAnimationFrame(frameRef.current);
       resizeObserver?.disconnect();
       canvas.removeEventListener('webglcontextlost', contextLostHandler);

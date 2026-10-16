@@ -210,6 +210,18 @@ html {
   padding-top: 130px;
 }
 
+/* Pantallas bajas: compactar secciones para laptops 600-800px de alto */
+@media (max-height: 800px) {
+  .section {
+    padding: 48px 0;
+  }
+
+  .section:not(.about) {
+    margin-top: -30px;
+    padding-top: 78px;
+  }
+}
+
 .section:not(.about)::before {
   content: '';
   position: absolute;

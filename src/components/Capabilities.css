@@ -213,3 +213,19 @@
 @media (prefers-reduced-motion: reduce) {
   .capabilities *, .capabilities *::before, .capabilities *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* Laptops 1025-1280: compactar layout, índice y panel */
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .capabilities__layout { gap: 1.2rem; }
+  .capabilities__index-item { min-height: 76px; }
+  .capabilities__panel { min-height: 440px; }
+  .capabilities__orb-stage { min-height: 280px; }
+  .capabilities__three-copy { padding: 1.2rem; }
+  .capabilities__three-copy h4 { font-size: 1.6rem; }
+  .capabilities__three-copy::before { font-size: clamp(5rem, 9vw, 7rem); }
+}
+
+@media (max-width: 1024px) {
+  .capabilities__demo--three { grid-template-columns: minmax(0, 1fr); }
+  .capabilities__orb-stage { min-height: 240px; border-right: 0; border-bottom: 1px solid var(--cap-line); }
+}

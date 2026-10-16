@@ -546,3 +546,45 @@
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
 }
+
+/* Laptops 1025-1280: aliviar la grilla y compactar tarjetas */
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .about-content {
+    gap: 2rem;
+  }
+
+  .dev-name {
+    font-size: 1.7rem;
+  }
+
+  .developer-card {
+    padding: 1.6rem;
+  }
+
+  .education-card {
+    padding: 1.25rem;
+  }
+
+  .timeline {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .date-start,
+  .date-end {
+    white-space: nowrap;
+    font-size: 0.75rem;
+  }
+
+  .timeline-line {
+    min-width: 40px;
+  }
+}
+
+/* Pantallas bajas: reducir el solape hero/about */
+@media (max-height: 800px) {
+  .about {
+    margin-top: -60px;
+    padding-top: 140px;
+  }
+}

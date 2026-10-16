@@ -82,7 +82,7 @@ const haloFragmentShader = `
   }
 `;
 
-const mountEnergyScene = (host, THREE, lightweight) => {
+const mountEnergyScene = (host, THREE, lightweight, lowPower = false) => {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let renderer;
     let resizeObserver;
@@ -92,7 +92,7 @@ const mountEnergyScene = (host, THREE, lightweight) => {
     const glowValues = [];
 
     try {
-    renderer = new THREE.WebGLRenderer({ alpha: true, antialias: !lightweight, powerPreference: 'low-power' });
+    renderer = new THREE.WebGLRenderer({ alpha: true, antialias: !lightweight && !lowPower, powerPreference: 'low-power' });
     } catch {
     // The existing SVG tower remains visible if WebGL is unavailable.
     host.dataset.webgl = 'unavailable';
@@ -100,7 +100,7 @@ const mountEnergyScene = (host, THREE, lightweight) => {
     }
 
     renderer.setClearColor(0x000000, 0);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lightweight ? 1 : 1.5));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lightweight || lowPower ? 1 : 1.25));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.18;
@@ -242,7 +242,7 @@ const mountEnergyScene = (host, THREE, lightweight) => {
     });
 
     let lastRenderTime = 0;
-    const renderInterval = lightweight ? 1000 / 30 : 0;
+    const renderInterval = lightweight || lowPower ? 1000 / 30 : 0;
     const render = () => {
     const now = performance.now();
     if (!disposed && active && now - lastRenderTime >= renderInterval) {
@@ -254,7 +254,7 @@ const mountEnergyScene = (host, THREE, lightweight) => {
     const { width, height } = host.getBoundingClientRect();
     if (!width || !height) return;
     renderer.setSize(width, height, false);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lightweight ? 1 : 1.5));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lightweight || lowPower ? 1 : 1.25));
     render();
     };
 
@@ -267,6 +267,9 @@ const mountEnergyScene = (host, THREE, lightweight) => {
     // per duration and repeats; glow ping-pongs between its initial value
     // and 1.08 with a sine.inOut easing — pixel-identical motion.
     const animated = !reducedMotion.matches;
+    // Solo en modo light el loop descansa fuera del hero. Se observa #home
+    // y no el host porque vive en un foreignObject donde el observer falla.
+    let heroVisible = true;
     const easeInOutSine = (p) => -(Math.cos(Math.PI * p) - 1) / 2;
     const uTimeJobs = uniforms.map((uniform, index) => ({ target: uniform.uTime, duration: 12 + index * 1.4 }));
     const glowJobs = glowValues.map((glow, index) => ({ target: glow, start: glow.value, duration: 2.8 + index * 0.45 }));
@@ -278,7 +281,7 @@ const mountEnergyScene = (host, THREE, lightweight) => {
       if (disposed) return;
       const dt = Math.min(Math.max((now - lastTick) / 1000, 0), 0.1);
       lastTick = now;
-      if (active) {
+      if (active && (!lowPower || heroVisible)) {
         animTime += dt;
         uTimeJobs.forEach(({ target, duration }) => {
           target.value = ((animTime % duration) / duration) * Math.PI * 2;
@@ -290,17 +293,28 @@ const mountEnergyScene = (host, THREE, lightweight) => {
         });
         render();
       }
-      if (!disposed && animated && active) tickId = window.requestAnimationFrame(tick);
+      if (!disposed && animated && active && (!lowPower || heroVisible)) tickId = window.requestAnimationFrame(tick);
     };
     const setActive = () => {
     active = !document.hidden;
-    if (animated && active) {
+    if (animated && active && (!lowPower || heroVisible)) {
       lastTick = performance.now();
       if (!tickId) tickId = window.requestAnimationFrame(tick);
     }
     if (active) render();
     };
     document.addEventListener('visibilitychange', setActive);
+    let heroObserver;
+    if (lowPower) {
+      const hero = document.getElementById('home');
+      if (hero && 'IntersectionObserver' in window) {
+        heroObserver = new IntersectionObserver(([entry]) => {
+          heroVisible = entry.isIntersecting;
+          setActive();
+        }, { threshold: 0 });
+        heroObserver.observe(hero);
+      }
+    }
 
     if (animated && active) {
       lastTick = performance.now();
@@ -310,6 +324,7 @@ const mountEnergyScene = (host, THREE, lightweight) => {
     return () => {
     disposed = true;
     document.removeEventListener('visibilitychange', setActive);
+    heroObserver?.disconnect();
     if (tickId) window.cancelAnimationFrame(tickId);
       window.removeEventListener('resize', resize);
     resizeObserver?.disconnect();
@@ -328,7 +343,7 @@ const mountEnergyScene = (host, THREE, lightweight) => {
 
 };
 
-const TartarusEnergyCores = ({ isDarkHour, lightweight = false }) => {
+const TartarusEnergyCores = ({ isDarkHour, lightweight = false, lowPower = false }) => {
   const hostRef = useRef(null);
 
   useEffect(() => {
@@ -339,7 +354,7 @@ const TartarusEnergyCores = ({ isDarkHour, lightweight = false }) => {
     const host = hostRef.current;
 
     import('three').then((THREE) => {
-      if (!cancelled) cleanup = mountEnergyScene(host, THREE, lightweight);
+      if (!cancelled) cleanup = mountEnergyScene(host, THREE, lightweight, lowPower);
     }).catch(() => {
       if (!cancelled) host.dataset.webgl = 'unavailable';
     });
@@ -348,7 +363,7 @@ const TartarusEnergyCores = ({ isDarkHour, lightweight = false }) => {
       cancelled = true;
       cleanup?.();
     };
-  }, [isDarkHour, lightweight]);
+  }, [isDarkHour, lightweight, lowPower]);
 
   return <div ref={hostRef} className="tartarus-energy-webgl" aria-hidden="true" />;
 };

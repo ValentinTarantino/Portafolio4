@@ -1701,4 +1701,31 @@
   .transmission-readout strong { font-size: 0.82rem; }
 }
 
+/* Laptops 1025-1280: riel de canales más angosto y consola compacta */
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .transmission-console__body {
+    grid-template-columns: 130px minmax(0, 1fr);
+    gap: 0.65rem;
+  }
+
+  .transmission-project-copy h3 {
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+  }
+
+  .transmission-readout {
+    min-height: 52px;
+  }
+}
+
+/* Pantallas bajas: consola compacta con lecturas en una fila */
+@media (max-height: 800px) {
+  .transmission-console {
+    padding: 0.7rem;
+  }
+
+  .transmission-readouts {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
 /* Responsive - Modo Claro */

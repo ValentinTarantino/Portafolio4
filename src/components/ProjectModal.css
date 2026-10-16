@@ -899,3 +899,32 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Laptops 1025-1280: diagrama de arquitectura en 2 columnas */
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .App.persona-menu .project-modal .architecture-diagram {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 1.6rem;
+  }
+}
+
+/* Pantallas bajas: modal compacto que entra en 600-800px de alto */
+@media (max-height: 800px) {
+  .App.persona-menu .project-modal .modal-content {
+    height: 94vh;
+    height: 94dvh;
+  }
+
+  .App.persona-menu .project-modal .modal-header {
+    padding: 0.8rem 1rem 0.6rem;
+  }
+
+  .App.persona-menu .project-modal .modal-tab-btn {
+    min-height: 42px;
+    padding: 0.55rem 0.8rem;
+  }
+
+  .App.persona-menu .project-modal .modal-scroll-area {
+    padding: 0.85rem 1rem 1rem;
+  }
+}

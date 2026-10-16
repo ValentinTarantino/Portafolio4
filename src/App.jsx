@@ -89,7 +89,8 @@ function App() {
   const [timeOfDay, setTimeOfDay] = useState(() => getDayPeriod(getArgentinaTimeParts().hour));
   const [sceneQuality, setSceneQuality] = useState(() => {
     try {
-      return window.localStorage.getItem('persona-scene-quality') === 'full' ? 'full' : 'optimized';
+      const saved = window.localStorage.getItem('persona-scene-quality');
+      return saved === 'full' || saved === 'light' ? saved : 'optimized';
     } catch {
       return 'optimized';
     }
@@ -154,7 +155,7 @@ function App() {
 
 
   return (
-    <div className={`App persona-menu${isDarkHour ? ' dark-hour-mode' : ''}${timeOfDay === 'night' ? ' deep-night-mode' : ''}`}>
+    <div className={`App persona-menu${isDarkHour ? ' dark-hour-mode' : ''}${timeOfDay === 'night' ? ' deep-night-mode' : ''}${sceneQuality === 'light' ? ' is-light-mode' : ''}`}>
       <AnimatedBackground isDarkHour={isDarkHour} timeOfDay={timeOfDay} quality={sceneQuality} />
       <Header
         t={t}
@@ -169,7 +170,7 @@ function App() {
       <About t={t} />
       <Skills t={t} />
       <NearViewportSection id="projects" minHeight="110vh">
-        <Projects t={t} language={language} isDarkHour={isDarkHour} sceneQuality={sceneQuality} setProjectTerminalMount={setProjectTerminalMount} />
+        <Projects t={t} language={language} isDarkHour={isDarkHour} sceneQuality={sceneQuality === 'light' ? 'optimized' : sceneQuality} setProjectTerminalMount={setProjectTerminalMount} />
       </NearViewportSection>
       <NearViewportSection id="capabilities" minHeight="100vh">
         <Capabilities t={t} language={language} isDarkHour={isDarkHour} />

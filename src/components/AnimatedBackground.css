@@ -419,6 +419,62 @@
   filter: blur(38px);
 }
 
+/* MODO LIGHT: se retira toda la familia de niebla y todos los filtros
+   costosos (las animaciones de esas capas mueren con ellas). Vale tanto
+   por clase en la escena como en la raíz .App, por redundancia. */
+.App.is-light-mode .dark-hour-scene__mist,
+.App.is-light-mode .dark-hour-scene__clouds,
+.App.is-light-mode .dark-hour-scene__city-haze,
+.App.is-light-mode .dark-hour-scene__reactive-fog,
+.App.is-light-mode .dark-hour-scene__lunar-shadow,
+.App.is-light-mode .dark-hour-scene__energy-currents,
+.App.is-light-mode .dark-hour-scene__distortion,
+.App.is-light-mode .dark-hour-scene__distant-lights,
+.App.is-light-mode .dark-hour-scene__halo--horizon,
+.dark-hour-scene.is-light-mode .dark-hour-scene__mist,
+.dark-hour-scene.is-light-mode .dark-hour-scene__clouds,
+.dark-hour-scene.is-light-mode .dark-hour-scene__city-haze,
+.dark-hour-scene.is-light-mode .dark-hour-scene__reactive-fog,
+.dark-hour-scene.is-light-mode .dark-hour-scene__lunar-shadow,
+.dark-hour-scene.is-light-mode .dark-hour-scene__energy-currents,
+.dark-hour-scene.is-light-mode .dark-hour-scene__distortion,
+.dark-hour-scene.is-light-mode .dark-hour-scene__distant-lights,
+.dark-hour-scene.is-light-mode .dark-hour-scene__halo--horizon {
+  display: none;
+}
+
+/* Luna sin filtros en modo light: se conserva el disco y sus cráteres,
+   salen el halo con blur, los brillos y las sombras internas. */
+.App.is-light-mode .dark-hour-scene__moon,
+.dark-hour-scene.is-light-mode .dark-hour-scene__moon {
+  box-shadow: none;
+}
+
+.App.is-light-mode .dark-hour-scene__moon::before,
+.dark-hour-scene.is-light-mode .dark-hour-scene__moon::before {
+  display: none;
+}
+
+.App.is-light-mode .dark-hour-scene__moon::after,
+.dark-hour-scene.is-light-mode .dark-hour-scene__moon::after {
+  box-shadow: none;
+}
+
+/* Ciudad sin filtros en modo light: se va el blur y los drop-shadow
+   de las capas (el dibujo de los edificios queda intacto). */
+.App.is-light-mode :is(
+  .dark-hour-scene__city--far,
+  .dark-hour-scene__city--mid,
+  .dark-hour-scene__city--near
+),
+.dark-hour-scene.is-light-mode :is(
+  .dark-hour-scene__city--far,
+  .dark-hour-scene__city--mid,
+  .dark-hour-scene__city--near
+) {
+  filter: none;
+}
+
 .dark-hour-scene__mist::after {
   content: "";
   position: absolute;
@@ -446,7 +502,6 @@
   pointer-events: none;
   filter: blur(22px);
   mix-blend-mode: screen;
-  animation: tartarus-atmosphere-wisp 16s ease-in-out infinite alternate;
 }
 
 .dark-hour-scene__mist--far {
@@ -461,8 +516,6 @@
 .dark-hour-scene.is-dark-hour .dark-hour-scene__mist--far {
   background: radial-gradient(ellipse, rgba(112, 190, 94, 0.27), rgba(48, 111, 61, 0.13) 48%, transparent 72%);
   z-index: 1;
-  will-change: transform, opacity;
-  animation: tartarus-atmosphere-far 16s ease-in-out infinite alternate;
 }
 
 .dark-hour-scene__mist--near {
@@ -478,12 +531,8 @@
 .dark-hour-scene.is-dark-hour .dark-hour-scene__mist--near {
   background: radial-gradient(ellipse, rgba(91, 174, 86, 0.3), rgba(33, 91, 53, 0.16) 48%, transparent 72%);
   z-index: 2;
-  will-change: transform, opacity;
-  -webkit-backdrop-filter: blur(3px);
-  backdrop-filter: blur(3px);
   -webkit-mask-image: radial-gradient(ellipse, #000 30%, rgba(0, 0, 0, 0.92) 54%, transparent 80%);
   mask-image: radial-gradient(ellipse, #000 30%, rgba(0, 0, 0, 0.92) 54%, transparent 80%);
-  animation: tartarus-atmosphere-near 23s ease-in-out infinite alternate-reverse;
 }
 
 .dark-hour-scene__reactive-fog {

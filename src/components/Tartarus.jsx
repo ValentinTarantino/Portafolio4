@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import TartarusEnergyCores from './TartarusEnergyCores';
 
-const Tartarus = ({ isDarkHour = false, lightweight = false }) => {
+const Tartarus = ({ isDarkHour = false, lightweight = false, lowPower = false }) => {
   const svgRef = useRef(null);
 
   // GSAP-free driver replicating the exact 8.8s master loop: conduits sweep
@@ -62,13 +62,18 @@ const Tartarus = ({ isDarkHour = false, lightweight = false }) => {
       }
     };
 
+    let lastPaint = 0;
     const tick = (now) => {
       frameId = 0;
       const dt = Math.min(Math.max((now - lastTick) / 1000, 0), 0.1);
       lastTick = now;
       if (running) {
         acc += dt;
-        paint();
+        // En modo light la coreografía corre a 30fps: mismo ciclo de 8.8s.
+        if (!lowPower || now - lastPaint >= 1000 / 30) {
+          lastPaint = now;
+          paint();
+        }
         frameId = window.requestAnimationFrame(tick);
       }
     };
@@ -101,7 +106,7 @@ const Tartarus = ({ isDarkHour = false, lightweight = false }) => {
       heroObserver?.disconnect();
       if (frameId) window.cancelAnimationFrame(frameId);
     };
-  }, [isDarkHour, lightweight]);
+  }, [isDarkHour, lightweight, lowPower]);
 
   return (
   <svg
@@ -457,7 +462,7 @@ const Tartarus = ({ isDarkHour = false, lightweight = false }) => {
         className="tartarus-energy-webgl-host"
         style={{ width: '100%', height: '100%', overflow: 'visible', pointerEvents: 'none' }}
       >
-        <TartarusEnergyCores isDarkHour={isDarkHour} lightweight={lightweight} />
+        <TartarusEnergyCores isDarkHour={isDarkHour} lightweight={lightweight} lowPower={lowPower} />
       </div>
     </foreignObject>
   </svg>

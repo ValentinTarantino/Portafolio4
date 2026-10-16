@@ -381,3 +381,19 @@
     transition: none !important;
   }
 }
+
+/* Laptops de poca altura: compactar hero para que entre sin scroll forzado */
+@media (max-height: 800px) {
+  .App.persona-menu #home.hero {
+    min-height: 100svh;
+    padding: 88px 0 48px;
+  }
+
+  .App.persona-menu #home.hero .hero-description {
+    margin-bottom: 18px;
+  }
+
+  .App.persona-menu .scroll-indicator {
+    display: none;
+  }
+}
