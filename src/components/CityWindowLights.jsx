@@ -182,10 +182,10 @@ const CityWindowLights = ({ timeOfDay = 'afternoon', enabled = true, sparse = fa
           });
           if (occluded) return;
           const toneRandom = hash01(item.seed * 191 + item.row * 37 + item.column * 59);
-          // En modo light solo queda un subconjunto (~1/3, mismas semillas):
-          // las que quedan encendidas también lo están en modo completo.
-          const density = sparse ? 0.32 : 1;
-          const lightChance = (item.depth === 2 ? 0.48 : item.depth === 1 ? 0.32 : 0.22) * density;
+          const lightChance = item.depth === 2 ? 0.48 : item.depth === 1 ? 0.32 : 0.22;
+          // Subconjunto del modo light (~1/3, mismas semillas): las que quedan
+          // encendidas también lo están en modo completo. Se aplica durante
+          // todo el ciclo, no solo al estado inicial.
           const animationChance = item.depth === 2 ? (item.edge ? 1 : 0.42) : 0;
           const rowChance = hash01(item.seed * 317 + item.row * 43 + item.column * 71) < 0.78;
           built.push({
@@ -196,6 +196,7 @@ const CityWindowLights = ({ timeOfDay = 'afternoon', enabled = true, sparse = fa
             tone: toneRandom > 0.72 ? 2 : toneRandom > 0.42 ? 1 : 0,
             phase: item.random * Math.PI * 2,
             lit: item.random < lightChance ? 1 : 0,
+            sparseLit: item.random < lightChance * 0.15 ? 1 : 0,
             animated: hash01(item.seed * 233 + item.row * 61 + item.column * 89) < animationChance ? 1 : 0,
             depthN: item.depth / 2,
             screenX: x / Math.max(viewportWidth, 1),
@@ -223,6 +224,9 @@ const CityWindowLights = ({ timeOfDay = 'afternoon', enabled = true, sparse = fa
         const settled = mix(win.lit, activeState, time >= firstChange ? 1 : 0);
         const diff = win.screenX - pulseX;
         const pulseWave = Math.exp(-Math.pow(diff * 14.0, 2.0)) * pulseStrength * win.pulseEligible;
+        // En modo light las ventanas fuera del subconjunto quedan apagadas
+        // siempre (ciclos y pulso incluidos), no solo al inicio.
+        if (sparse && !win.sparseLit) return { settled: 0, pulseWave: 0 };
         return { settled: mix(win.lit, settled, win.animated), pulseWave };
       };
 
@@ -233,7 +237,7 @@ const CityWindowLights = ({ timeOfDay = 'afternoon', enabled = true, sparse = fa
             ? 1
             : 0.97 + 0.018 * Math.sin(time * 1.15 + win.phase) + 0.01 * Math.sin(time * 2.1 + win.phase * 1.7);
           const { settled, pulseWave } = frozen
-            ? { settled: win.lit, pulseWave: 0 }
+            ? { settled: sparse && !win.sparseLit ? 0 : win.lit, pulseWave: 0 }
             : liveStateOf(win, time);
           const liveState = Math.max(settled, pulseWave * 0.78);
           const lit = mix(0.008, mix(0.68, 0.94, win.depthN), liveState);
