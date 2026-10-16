@@ -34,31 +34,6 @@
 
 
 
-/* Barrido diagonal luminoso cada ~7s (solo transform + opacity) */
-.header-fx::before {
-  content: '';
-  position: absolute;
-  top: -20%;
-  bottom: -20%;
-  left: 0;
-  width: 34%;
-  background: linear-gradient(100deg, transparent, rgba(53, 201, 255, 0.28) 45%, rgba(190, 240, 255, 0.5) 50%, rgba(53, 201, 255, 0.28) 55%, transparent);
-  filter: blur(6px);
-  transform: translateX(-140%) skewX(-12deg);
-  animation: header-fx-sweep 7s ease-in-out infinite;
-}
-
-.header.dark-hour-active .header-fx::before {
-  background: linear-gradient(100deg, transparent, rgba(97, 217, 141, 0.3) 45%, rgba(215, 255, 230, 0.52) 50%, rgba(97, 217, 141, 0.3) 55%, transparent);
-}
-
-@keyframes header-fx-sweep {
-  0% { transform: translateX(-140%) skewX(-12deg); opacity: 0; }
-  8% { opacity: 1; }
-  32% { transform: translateX(360%) skewX(-12deg); opacity: 1; }
-  40%, 100% { transform: translateX(360%) skewX(-12deg); opacity: 0; }
-}
-
 /* Línea de energía inferior con flujo continuo */
 .header-fx::after {
   content: '';
