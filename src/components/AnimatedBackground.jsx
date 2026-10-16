@@ -105,8 +105,9 @@ const MOBILE_CITY = {
   near: lightweightCity(CITY_NEAR),
 };
 
-const CityLayer = memo(({ buildings, depth, lightweight }) => {
-  const visibleBuildings = lightweight ? MOBILE_CITY[depth] : buildings;
+const CityLayer = memo(({ buildings, depth, lightweight, fullBuildings = false }) => {
+  // En modo light se conservan todos los edificios del modo completo.
+  const visibleBuildings = lightweight && !fullBuildings ? MOBILE_CITY[depth] : buildings;
   let x = 0;
   const layerIndex = depth === 'far' ? 0 : depth === 'mid' ? 1 : 2;
 
@@ -148,7 +149,7 @@ const CityLayer = memo(({ buildings, depth, lightweight }) => {
     <svg
       className={`dark-hour-scene__city dark-hour-scene__city--${depth}`}
       viewBox="0 0 1600 420"
-      preserveAspectRatio={lightweight ? 'none' : 'xMidYMax slice'}
+      preserveAspectRatio={lightweight && !fullBuildings ? 'none' : 'xMidYMax slice'}
       focusable="false"
       aria-hidden="true"
     >
@@ -542,12 +543,12 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
       <Tartarus isDarkHour={isDarkHour} lightweight={lightweightScene} lowPower={lightMode} />
       <div className="dark-hour-scene__distortion" />
       <div className="dark-hour-scene__aurora" aria-hidden="true" />
-      <CityLayer buildings={CITY_FAR} depth="far" lightweight={lightweightScene} />
-      <CityLayer buildings={CITY_MID} depth="mid" lightweight={lightweightScene} />
+      <CityLayer buildings={CITY_FAR} depth="far" lightweight={lightweightScene} fullBuildings={lightMode} />
+      <CityLayer buildings={CITY_MID} depth="mid" lightweight={lightweightScene} fullBuildings={lightMode} />
       <div className="dark-hour-scene__city-haze" />
-      <CityLayer buildings={CITY_NEAR} depth="near" lightweight={lightweightScene} />
+      <CityLayer buildings={CITY_NEAR} depth="near" lightweight={lightweightScene} fullBuildings={lightMode} />
       <CityStreet />
-      <CityWindowLights timeOfDay={timeOfDay} enabled={!lightweightScene && !isDarkHour} sparse={quality === 'light'} lowPower={lightMode} />
+      <CityWindowLights timeOfDay={timeOfDay} enabled={!lightweightScene && !isDarkHour} lowPower={lightMode} hideWindows={lightMode} />
       <canvas className="dark-hour-scene__particles" ref={canvasRef} />
       <div className="dark-hour-scene__vignette" />
     </div>

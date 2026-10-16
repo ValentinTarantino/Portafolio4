@@ -1541,27 +1541,20 @@
     background-repeat: no-repeat;
   }
 
-  /* Modo light en mobile/responsive: solo un subconjunto de ventanas
-     estáticas por edificio (las demás se apagan). */
+  /* Modo light en mobile/responsive: edificios sin ventanas estáticas. */
   .dark-hour-scene.is-light-mode .dark-hour-scene__city--far .dark-hour-scene__building[data-tone],
   .App.is-light-mode .dark-hour-scene__city--far .dark-hour-scene__building[data-tone] {
-    background-image:
-      radial-gradient(ellipse 4px 5px at 72% 66%, rgba(244, 190, 132, 0.38) 0 24%, rgba(201, 135, 84, 0.18) 58%, transparent 100%),
-      linear-gradient(180deg, #1a3047, #0b1928) !important;
+    background-image: linear-gradient(180deg, #1a3047, #0b1928) !important;
   }
 
   .dark-hour-scene.is-light-mode .dark-hour-scene__city--mid .dark-hour-scene__building[data-tone],
   .App.is-light-mode .dark-hour-scene__city--mid .dark-hour-scene__building[data-tone] {
-    background-image:
-      radial-gradient(ellipse 4px 5px at 70% 46%, rgba(154, 211, 229, 0.4) 0 24%, rgba(102, 171, 194, 0.2) 58%, transparent 100%),
-      linear-gradient(180deg, #10243a, #081522) !important;
+    background-image: linear-gradient(180deg, #10243a, #081522) !important;
   }
 
   .dark-hour-scene.is-light-mode .dark-hour-scene__city--near .dark-hour-scene__building[data-tone],
   .App.is-light-mode .dark-hour-scene__city--near .dark-hour-scene__building[data-tone] {
-    background-image:
-      radial-gradient(ellipse 4px 5px at 68% 38%, rgba(154, 211, 229, 0.4) 0 24%, rgba(102, 171, 194, 0.2) 58%, transparent 100%),
-      linear-gradient(180deg, #080f1c, #050b13) !important;
+    background-image: linear-gradient(180deg, #080f1c, #050b13) !important;
   }
 
   .dark-hour-scene__city--far .dark-hour-scene__building,

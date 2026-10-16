@@ -50,7 +50,7 @@ const makeGlowSprite = (tint) => {
   return canvas;
 };
 
-const CityWindowLights = ({ timeOfDay = 'afternoon', enabled = true, sparse = false, lowPower = false }) => {
+const CityWindowLights = ({ timeOfDay = 'afternoon', enabled = true, lowPower = false, hideWindows = false }) => {
   const canvasRef = useRef(null);
   const bootedRef = useRef(false);
   const materialRef = useRef(null);
@@ -146,6 +146,8 @@ const CityWindowLights = ({ timeOfDay = 'afternoon', enabled = true, sparse = fa
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
       const computeWindows = (viewportWidth, viewportHeight, roadTop) => {
+        // En modo light no hay ventanas de edificios en absoluto.
+        if (hideWindows) return [];
         // Read pass: collect every rect first so layout is computed once,
         // then derive all windows without interleaved reads (no forced reflow).
         const facadeRects = facadeDescriptors.map((item) => item.facade.getBoundingClientRect());
@@ -196,7 +198,6 @@ const CityWindowLights = ({ timeOfDay = 'afternoon', enabled = true, sparse = fa
             tone: toneRandom > 0.72 ? 2 : toneRandom > 0.42 ? 1 : 0,
             phase: item.random * Math.PI * 2,
             lit: item.random < lightChance ? 1 : 0,
-            sparseLit: item.random < lightChance * 0.15 ? 1 : 0,
             animated: hash01(item.seed * 233 + item.row * 61 + item.column * 89) < animationChance ? 1 : 0,
             depthN: item.depth / 2,
             screenX: x / Math.max(viewportWidth, 1),
@@ -224,9 +225,6 @@ const CityWindowLights = ({ timeOfDay = 'afternoon', enabled = true, sparse = fa
         const settled = mix(win.lit, activeState, time >= firstChange ? 1 : 0);
         const diff = win.screenX - pulseX;
         const pulseWave = Math.exp(-Math.pow(diff * 14.0, 2.0)) * pulseStrength * win.pulseEligible;
-        // En modo light las ventanas fuera del subconjunto quedan apagadas
-        // siempre (ciclos y pulso incluidos), no solo al inicio.
-        if (sparse && !win.sparseLit) return { settled: 0, pulseWave: 0 };
         return { settled: mix(win.lit, settled, win.animated), pulseWave };
       };
 
@@ -237,7 +235,7 @@ const CityWindowLights = ({ timeOfDay = 'afternoon', enabled = true, sparse = fa
             ? 1
             : 0.97 + 0.018 * Math.sin(time * 1.15 + win.phase) + 0.01 * Math.sin(time * 2.1 + win.phase * 1.7);
           const { settled, pulseWave } = frozen
-            ? { settled: sparse && !win.sparseLit ? 0 : win.lit, pulseWave: 0 }
+            ? { settled: win.lit, pulseWave: 0 }
             : liveStateOf(win, time);
           const liveState = Math.max(settled, pulseWave * 0.78);
           const lit = mix(0.008, mix(0.68, 0.94, win.depthN), liveState);
@@ -394,7 +392,7 @@ const CityWindowLights = ({ timeOfDay = 'afternoon', enabled = true, sparse = fa
       if (idleId) window.cancelIdleCallback(idleId);
       cleanup();
     };
-  }, [enabled, sparse, lowPower]);
+  }, [enabled, lowPower, hideWindows]);
 
   // Manual 1.4s power2.out tween (1 - (1 - t)^3), driven by the animation
   // loop clock (the loop reads periodTweenRef each frame).
