@@ -64,6 +64,21 @@ function ThreeShowcase({ active, copy, arcanaIndex = 0, onArcanaChange }) {
     let cancelled = false;
     let cleanup;
     (async () => {
+      // En móviles viejos sin WebGL2, three.js no puede ni arrancar: se usa
+      // un canvas temporal para no contaminar el canvas real y se va al
+      // fallback 2D directamente.
+      try {
+        const probe = document.createElement('canvas').getContext('webgl2');
+        if (!probe) {
+          setFallback(true);
+          return;
+        }
+        // @ts-ignore - some browsers type this as nullable only
+        probe.getExtension?.('WEBGL_lose_context')?.loseContext();
+      } catch {
+        setFallback(true);
+        return;
+      }
       const THREE = await import('three');
       if (cancelled) return;
 
@@ -209,7 +224,7 @@ function ThreeShowcase({ active, copy, arcanaIndex = 0, onArcanaChange }) {
       canvas.addEventListener('webglcontextlost', contextLostHandler);
       motionPreference.addEventListener?.('change', handleMotionPreference);
 
-      const animationController = { renderFrame };
+      const animationController = { renderFrame, resize };
       scene.userData.animationController = animationController;
       if (activeRef.current && !reducedMotionRef.current) frameRef.current = window.requestAnimationFrame(renderFrame);
     } catch {
@@ -261,10 +276,15 @@ function ThreeShowcase({ active, copy, arcanaIndex = 0, onArcanaChange }) {
 
   useEffect(() => {
     window.cancelAnimationFrame(frameRef.current);
-    if (active && !reducedMotionRef.current && sceneRef.current) {
-      frameRef.current = window.requestAnimationFrame(sceneRef.current.userData.animationController.renderFrame);
-    } else if (sceneRef.current?.userData.animationController) {
-      sceneRef.current.userData.animationController.renderFrame();
+    const controller = sceneRef.current?.userData.animationController;
+    if (!controller) return;
+    // Remedir al activar la pestaña: si el montaje ocurrió con el panel
+    // oculto (tamaño 0, típico en móvil), sin esto el canvas queda ciego.
+    controller.resize();
+    if (active && !reducedMotionRef.current) {
+      frameRef.current = window.requestAnimationFrame(controller.renderFrame);
+    } else {
+      controller.renderFrame();
     }
   }, [active]);
 
