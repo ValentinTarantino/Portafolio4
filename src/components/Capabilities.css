@@ -150,6 +150,12 @@
 .capabilities__demo--stack canvas { display: block; width: 100% !important; max-width: 800px; height: auto !important; border: 1px solid var(--cap-line); border-radius: 0 !important; }
 .capabilities__game-hint,.capabilities__game-loading { margin-top: .55rem; color: var(--cap-muted); font: .58rem 'Share Tech Mono', monospace; letter-spacing: .04em; text-align: left; }
 
+/* Game selector switcher (dino / tic-tac-toe) */
+.capabilities__game-selector { display: flex; gap: .4rem; margin-bottom: .6rem; }
+.capabilities__game-selector button { flex: 1; display: flex; align-items: center; justify-content: center; gap: .4rem; padding: .5rem .6rem; border: 1px solid var(--cap-line); border-radius: 5px; background: transparent; color: var(--cap-muted); font: .62rem 'Share Tech Mono', monospace; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; transition: border-color 160ms ease, color 160ms ease, background 160ms ease; }
+.capabilities__game-selector button:hover, .capabilities__game-selector button:focus-visible { border-color: var(--cap-accent); color: var(--cap-ink); outline: none; }
+.capabilities__game-selector button.is-active { border-color: var(--cap-accent); background: color-mix(in srgb, var(--cap-accent) 12%, transparent); color: var(--cap-accent); }
+
 /* This section uses quiet local states instead of the portfolio-wide red slash accent. */
 .App.persona-menu .capabilities :is(a[href], button, [role='button'], [role='tab'])::after {
   content: none !important;
@@ -207,7 +213,9 @@
   .capabilities__arcana-progress { margin-top: .85rem; }
   .capabilities__demo--stack { min-height: 0; padding: .2rem 0; }
   .capabilities__demo--stack canvas { height: clamp(145px, 46vw, 180px) !important; }
-  .capabilities__game-shell { width: calc(100% + 1rem); max-width: none; margin-inline: -.5rem; padding: .15rem; }
+  .capabilities__game-shell { width: calc(100% + 1rem); max-width: none; margin-inline: -.5rem; padding: .5rem .55rem; }
+  .capabilities__game-selector { margin: 0 0 .55rem; }
+  .capabilities__game-selector button { min-height: 44px; padding: .5rem .45rem; font-size: .6rem; gap: .3rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

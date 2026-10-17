@@ -1,0 +1,597 @@
+/* Tic-Tac-Toe — scoped under .ttt to avoid collisions.
+   Colors come from the parent .capabilities custom properties:
+   cyan/blue by default, green neon under .App.dark-hour-mode.
+   Exception: the X mark stays celeste (#63ddff) in every mode. */
+
+.ttt {
+  /* X is always celeste (#63ddff), even under dark-hour green theming. */
+  --ttt-x: #63ddff;
+  --ttt-o: color-mix(in srgb, var(--cap-accent) 55%, var(--cap-ink));
+  --ttt-cell: color-mix(in srgb, var(--cap-panel) 82%, transparent);
+  --ttt-cell-hover: color-mix(in srgb, var(--cap-accent) 9%, var(--cap-panel));
+  --ttt-win: color-mix(in srgb, var(--cap-accent) 30%, transparent);
+  width: 100%;
+  max-width: 420px;
+  margin-inline: auto;
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--cap-ink);
+}
+
+/* ── Mode menu ─────────────────────────────────────────── */
+
+.ttt__menu {
+  display: grid;
+  gap: 0.65rem;
+  padding: 0.4rem 0;
+}
+
+.ttt__mode-btn {
+  display: grid;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--cap-line);
+  border-radius: 6px;
+  background: var(--ttt-cell);
+  color: var(--cap-ink);
+  font-family: inherit;
+  font-size: 0.82rem;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 180ms ease, background 180ms ease, transform 140ms ease;
+}
+
+.ttt__mode-btn:hover,
+.ttt__mode-btn:focus-visible {
+  border-color: var(--cap-accent);
+  background: var(--ttt-cell-hover);
+  outline: none;
+}
+
+.ttt__mode-btn:active {
+  transform: scale(0.985);
+}
+
+.ttt__mode-copy strong {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.ttt__mode-copy span {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.62rem;
+  color: var(--cap-muted);
+  letter-spacing: 0.03em;
+}
+
+/* ── Difficulty selector ───────────────────────────────── */
+
+.ttt__difficulty {
+  display: flex;
+  gap: 0.45rem;
+  justify-content: center;
+  margin-bottom: 0.7rem;
+}
+
+.ttt__difficulty button {
+  padding: 0.42rem 0.85rem;
+  border: 1px solid var(--cap-line);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--cap-muted);
+  font-family: inherit;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+}
+
+.ttt__difficulty button:hover,
+.ttt__difficulty button:focus-visible {
+  border-color: var(--cap-accent);
+  color: var(--cap-ink);
+  outline: none;
+}
+
+.ttt__difficulty button.is-active {
+  border-color: var(--cap-accent);
+  background: color-mix(in srgb, var(--cap-accent) 14%, transparent);
+  color: var(--cap-accent);
+}
+
+/* ── Online lobby ──────────────────────────────────────── */
+
+.ttt__online {
+  display: grid;
+  gap: 0.65rem;
+  padding: 0.4rem 0;
+}
+
+.ttt__online-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.ttt__online-actions button {
+  padding: 0.7rem 0.6rem;
+  border: 1px solid var(--cap-line);
+  border-radius: 5px;
+  background: transparent;
+  color: var(--cap-ink);
+  font-family: inherit;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+.ttt__online-actions button:hover,
+.ttt__online-actions button:focus-visible {
+  border-color: var(--cap-accent);
+  background: color-mix(in srgb, var(--cap-accent) 10%, transparent);
+  outline: none;
+}
+
+.ttt__online-actions button.is-primary {
+  border-color: var(--cap-accent);
+  color: var(--cap-accent);
+}
+
+.ttt__join-row {
+  display: flex;
+  gap: 0.45rem;
+}
+
+.ttt__join-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--cap-line);
+  border-radius: 5px;
+  background: var(--ttt-cell);
+  color: var(--cap-ink);
+  font-family: inherit;
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-align: center;
+  transition: border-color 160ms ease;
+}
+
+.ttt__join-row input::placeholder {
+  color: var(--cap-muted);
+  letter-spacing: 0.06em;
+  text-transform: none;
+}
+
+.ttt__join-row input:focus {
+  border-color: var(--cap-accent);
+  outline: none;
+}
+
+.ttt__join-row button {
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--cap-accent);
+  border-radius: 5px;
+  background: transparent;
+  color: var(--cap-accent);
+  font-family: inherit;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 160ms ease;
+}
+
+.ttt__join-row button:hover,
+.ttt__join-row button:focus-visible {
+  background: color-mix(in srgb, var(--cap-accent) 14%, transparent);
+  outline: none;
+}
+
+.ttt__room-code {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.75rem;
+  border: 1px dashed var(--cap-accent);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--cap-accent) 6%, transparent);
+}
+
+.ttt__room-code-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: var(--cap-accent);
+  user-select: all;
+}
+
+.ttt__room-code button {
+  padding: 0.35rem 0.65rem;
+  border: 1px solid var(--cap-line);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--cap-muted);
+  font-family: inherit;
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 160ms ease, color 160ms ease;
+}
+
+.ttt__room-code button:hover,
+.ttt__room-code button:focus-visible {
+  border-color: var(--cap-accent);
+  color: var(--cap-ink);
+  outline: none;
+}
+
+.ttt__status-message {
+  padding: 0.65rem;
+  border: 1px solid var(--cap-line);
+  border-radius: 5px;
+  background: var(--ttt-cell);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-align: center;
+  color: var(--cap-muted);
+}
+
+.ttt__status-message.is-error {
+  border-color: color-mix(in srgb, #e5484d 55%, var(--cap-line));
+  color: #e5484d;
+}
+
+.ttt__status-message.is-waiting {
+  animation: ttt-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes ttt-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+/* ── Game header (turn / result) ───────────────────────── */
+
+.ttt__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.65rem;
+  min-height: 2rem;
+}
+
+.ttt__turn {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cap-muted);
+}
+
+.ttt__turn-mark {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--cap-line);
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.ttt__turn-mark[data-mark='X'] { color: var(--ttt-x); border-color: var(--ttt-x); }
+.ttt__turn-mark[data-mark='O'] { color: var(--ttt-o); border-color: var(--ttt-o); }
+
+.ttt__result {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-align: right;
+}
+
+.ttt__result[data-result='X'] { color: var(--ttt-x); }
+.ttt__result[data-result='O'] { color: var(--ttt-o); }
+.ttt__result[data-result='draw'] { color: var(--cap-muted); }
+
+/* ── Board ─────────────────────────────────────────────── */
+
+.ttt__board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+  width: 100%;
+  max-width: 320px;
+  margin-inline: auto;
+  aspect-ratio: 1;
+}
+
+.ttt__cell {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 0;
+  border: 1px solid var(--cap-line);
+  border-radius: 5px;
+  background: var(--ttt-cell);
+  font-family: inherit;
+  font-size: clamp(1.6rem, 6vw, 2.2rem);
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.ttt__cell:hover:not(:disabled),
+.ttt__cell:focus-visible:not(:disabled) {
+  border-color: var(--cap-accent);
+  background: var(--ttt-cell-hover);
+  outline: none;
+}
+
+.ttt__cell:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+.ttt__cell[data-mark='X'] {
+  color: var(--ttt-x);
+  animation: ttt-mark-in 220ms cubic-bezier(0.22, 1.25, 0.36, 1) both;
+}
+
+.ttt__cell[data-mark='O'] {
+  color: var(--ttt-o);
+  animation: ttt-mark-in 220ms cubic-bezier(0.22, 1.25, 0.36, 1) both;
+}
+
+.ttt__cell.is-win {
+  border-color: var(--cap-accent);
+  background: var(--ttt-win);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--cap-accent) 35%, transparent);
+  animation: ttt-win-pulse 900ms ease-in-out infinite alternate;
+}
+
+@keyframes ttt-mark-in {
+  from { opacity: 0; transform: scale(0.4); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes ttt-win-pulse {
+  from { box-shadow: 0 0 6px color-mix(in srgb, var(--cap-accent) 20%, transparent); }
+  to { box-shadow: 0 0 16px color-mix(in srgb, var(--cap-accent) 45%, transparent); }
+}
+
+/* ── Footer controls ───────────────────────────────────── */
+
+.ttt__footer {
+  display: flex;
+  gap: 0.45rem;
+  justify-content: center;
+  margin-top: 0.7rem;
+}
+
+.ttt__footer button {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--cap-line);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--cap-muted);
+  font-family: inherit;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 160ms ease, color 160ms ease;
+}
+
+.ttt__footer button:hover,
+.ttt__footer button:focus-visible {
+  border-color: var(--cap-accent);
+  color: var(--cap-ink);
+  outline: none;
+}
+
+.ttt__footer button.is-primary {
+  border-color: var(--cap-accent);
+  color: var(--cap-accent);
+}
+
+.ttt__footer button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.ttt__footer button.is-primary:disabled:hover {
+  border-color: var(--cap-accent);
+  color: var(--cap-accent);
+}
+
+/* ── Online rematch (request / accept) ─────────────────── */
+
+.ttt__rematch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.ttt__rematch .ttt__status-message {
+  max-width: 16rem;
+}
+
+.ttt__footer button.is-accept {
+  animation: ttt-accept-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes ttt-accept-pulse {
+  0%, 100% { box-shadow: 0 0 0 1px var(--cap-accent); }
+  50% { box-shadow: 0 0 0 5px color-mix(in srgb, var(--cap-accent) 25%, transparent); }
+}
+
+/* ── Symbol picker (local mode) ────────────────────────── */
+
+.ttt__symbol-picker {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 0.7rem;
+}
+
+.ttt__symbol-picker button {
+  padding: 0.55rem 1.1rem;
+  border: 1px solid var(--cap-line);
+  border-radius: 5px;
+  background: transparent;
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+.ttt__symbol-picker button[data-sym='X'] { color: var(--ttt-x); }
+.ttt__symbol-picker button[data-sym='O'] { color: var(--ttt-o); }
+
+.ttt__symbol-picker button:hover,
+.ttt__symbol-picker button:focus-visible {
+  border-color: var(--cap-accent);
+  outline: none;
+}
+
+.ttt__symbol-picker button.is-active {
+  border-color: var(--cap-accent);
+  background: color-mix(in srgb, var(--cap-accent) 12%, transparent);
+}
+
+.ttt__symbol-label {
+  margin: 0 0 0.35rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cap-muted);
+  text-align: center;
+}
+
+/* ── Player badges (online) ────────────────────────────── */
+
+.ttt__players {
+  display: flex;
+  gap: 0.45rem;
+  justify-content: center;
+  margin-bottom: 0.55rem;
+}
+
+.ttt__player-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--cap-line);
+  border-radius: 4px;
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cap-muted);
+}
+
+.ttt__player-badge.is-you {
+  border-color: var(--cap-accent);
+  color: var(--cap-accent);
+}
+
+.ttt__player-badge .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.ttt__player-badge.is-offline .dot {
+  background: #e5484d;
+}
+
+/* ── Responsive ────────────────────────────────────────── */
+
+@media (max-width: 560px) {
+  .ttt { max-width: 100%; }
+  .ttt__online-actions { grid-template-columns: 1fr; }
+  .ttt__board { max-width: 280px; }
+  .ttt__mode-btn { padding: 0.7rem 0.8rem; }
+}
+
+/* ── Phones (≤480px) ──────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .ttt { max-width: 100%; padding-inline: 0.1rem; }
+
+  /* Mode menu */
+  .ttt__menu { gap: 0.7rem; padding-top: 0.15rem; }
+  .ttt__mode-btn { padding: 0.9rem 0.85rem; }
+  .ttt__mode-copy strong { font-size: 0.98rem; }
+  .ttt__mode-copy span { font-size: 0.68rem; }
+
+  /* Turn / result header */
+  .ttt__header { min-height: 2rem; margin-bottom: 0.55rem; }
+  .ttt__turn { font-size: 0.66rem; }
+  .ttt__turn-mark { width: 30px; height: 30px; font-size: 0.95rem; }
+  .ttt__result { font-size: 0.74rem; }
+
+  /* Board: use the width, keep the square, stay inside 320px */
+  .ttt__board { max-width: min(100%, 340px); gap: 6px; }
+  .ttt__cell { font-size: clamp(1.8rem, 10vw, 2.6rem); }
+
+  /* Touch targets ≥ 44px */
+  .ttt__footer { flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+  .ttt__footer button { min-height: 44px; padding: 0.7rem 1.3rem; font-size: 0.7rem; }
+  .ttt__difficulty { flex-wrap: wrap; gap: 0.5rem; }
+  .ttt__difficulty button { min-height: 44px; padding: 0.65rem 1rem; font-size: 0.7rem; }
+  .ttt__symbol-picker { gap: 0.6rem; }
+  .ttt__symbol-picker button { flex: 1; min-height: 48px; padding: 0.6rem 0.5rem; font-size: 1.25rem; }
+  .ttt__symbol-label { font-size: 0.66rem; }
+
+  /* Online lobby: stack the join row so nothing cramps at 320px */
+  .ttt__online { gap: 0.7rem; padding-top: 0.15rem; }
+  .ttt__online-actions button { min-height: 46px; font-size: 0.76rem; }
+  .ttt__join-row { flex-direction: column; gap: 0.55rem; }
+  .ttt__join-row input { min-height: 46px; font-size: 0.9rem; }
+  .ttt__join-row button { min-height: 46px; font-size: 0.76rem; }
+
+  /* Waiting room */
+  .ttt__room-code { flex-wrap: wrap; padding: 0.7rem 0.5rem; }
+  .ttt__room-code-value { font-size: 1.3rem; letter-spacing: 0.26em; }
+  .ttt__room-code button { min-height: 44px; padding-inline: 0.8rem; }
+
+  /* Messages & badges */
+  .ttt__status-message { padding: 0.7rem 0.6rem; font-size: 0.7rem; }
+  .ttt__rematch .ttt__status-message { max-width: 100%; }
+  .ttt__players { gap: 0.5rem; }
+  .ttt__player-badge { padding: 0.42rem 0.75rem; font-size: 0.64rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ttt *,
+  .ttt *::before,
+  .ttt *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

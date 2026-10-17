@@ -4,6 +4,7 @@ import './Capabilities.css';
 
 const CAPABILITY_IDS = ['frontend', 'motion', 'threeD', 'fullStack'];
 const DinoGame = lazy(() => import('./DinoGame'));
+const TicTacToe = lazy(() => import('./TicTacToe'));
 const noop = () => {};
 const DEVICE_WIDTHS = { desktop: '100%', tablet: '72%', mobile: '36%' };
 const TAROT_ARCANA_FRONTS = [
@@ -309,6 +310,7 @@ const Capabilities = ({ t, language, isDarkHour }) => {
   const [viewport, setViewport] = useState('desktop');
   const [replayId, setReplayId] = useState(0);
   const [activeArcanaIndex, setActiveArcanaIndex] = useState(0);
+  const [activeGame, setActiveGame] = useState('dino');
   const interactiveStageRef = useRef(null);
   const copy = t.capabilities;
   const threeCopy = copy.arcanaDetails?.[activeArcanaIndex] || copy.arcanaDetails?.[0];
@@ -443,10 +445,38 @@ const Capabilities = ({ t, language, isDarkHour }) => {
                   <div className="capabilities__demo capabilities__demo--stack">
                     {activeCapability === index && (
                       <div className="capabilities__game-shell">
-                        <Suspense fallback={<p className="capabilities__game-loading">{copy.gameLoading}</p>}>
-                          <DinoGame onExit={noop} isSpanish={language === 'es'} />
-                        </Suspense>
-                        <p className="capabilities__game-hint">{copy.gameHint}</p>
+                        <div className="capabilities__game-selector" role="tablist" aria-label={copy.gameSelector}>
+                          <button
+                            type="button"
+                            role="tab"
+                            aria-selected={activeGame === 'dino'}
+                            className={activeGame === 'dino' ? 'is-active' : ''}
+                            onClick={() => setActiveGame('dino')}
+                          >
+                            <span aria-hidden="true">🦖</span> {copy.gameDino}
+                          </button>
+                          <button
+                            type="button"
+                            role="tab"
+                            aria-selected={activeGame === 'ttt'}
+                            className={activeGame === 'ttt' ? 'is-active' : ''}
+                            onClick={() => setActiveGame('ttt')}
+                          >
+                            {copy.gameTtt}
+                          </button>
+                        </div>
+                        {activeGame === 'dino' ? (
+                          <>
+                            <Suspense fallback={<p className="capabilities__game-loading">{copy.gameLoading}</p>}>
+                              <DinoGame onExit={noop} isSpanish={language === 'es'} />
+                            </Suspense>
+                            <p className="capabilities__game-hint">{copy.gameHint}</p>
+                          </>
+                        ) : (
+                          <Suspense fallback={<p className="capabilities__game-loading">{copy.gameLoading}</p>}>
+                            <TicTacToe t={t} onExit={() => setActiveGame('dino')} />
+                          </Suspense>
+                        )}
                       </div>
                     )}
                   </div>
