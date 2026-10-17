@@ -1553,8 +1553,11 @@
     font-size: 0.66rem;
   }
 
-  .transmission-console__station,
   .transmission-status {
+    display: none;
+  }
+
+  .transmission-console__station {
     min-width: 0;
     max-width: none;
     align-items: flex-start;
@@ -1563,8 +1566,7 @@
     line-height: 1.25;
   }
 
-  .transmission-console__station > span:last-child,
-  .transmission-status > span:last-child {
+  .transmission-console__station > span:last-child {
     min-width: 0;
     overflow: visible;
     text-overflow: clip;

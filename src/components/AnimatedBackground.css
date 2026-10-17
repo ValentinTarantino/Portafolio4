@@ -475,6 +475,15 @@
   filter: none;
 }
 
+/* Torre Tartarus estable en modo light: sin la coreografía de scroll
+   (is-hero-active), se mantiene visible mientras haya dark hour. */
+.dark-hour-scene.is-light-mode.is-dark-hour .dark-hour-scene__tartarus {
+  opacity: var(--tartarus-active-opacity);
+  transform: translate3d(-50%, 0, 0) scale(var(--tartarus-active-scale));
+  filter: blur(0.45px);
+  transition: transform 1.15s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 500ms ease;
+}
+
 .dark-hour-scene__mist::after {
   content: "";
   position: absolute;

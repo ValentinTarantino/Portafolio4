@@ -711,7 +711,8 @@ const Hero = ({ t, language, projectTerminalMount }) => {
                 </span>
                 <span className="title-bracket" aria-hidden="true">{'/>'}</span>
               </h2>
-              <p className="hero-description fade-in-up">{t.hero.description}</p>
+              <p className="hero-description hero-description--full fade-in-up">{t.hero.description}</p>
+              <p className="hero-description hero-description--short fade-in-up">{t.hero.descriptionShort}</p>
               <div className="hero-cta fade-in-up">
                 <button
                   type="button"

@@ -162,9 +162,12 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
   const sceneRef = useRef(null);
   const canvasRef = useRef(null);
   const drawRef = useRef(null);
-  const heroActiveRef = useRef(false);
   const [isMobileViewport, setIsMobileViewport] = useState(() => window.matchMedia(MOBILE_SCENE_QUERY).matches);
   const [starfield, setStarfield] = useState(() => buildStarfield(window.innerWidth, window.innerHeight));
+  // Clases de scroll gestionadas con estado para que sobrevivan re-renders
+  // (React reescribe el className al cambiar quality y borraba las de classList).
+  const [heroActive, setHeroActive] = useState(true);
+  const [tartarusRevealed, setTartarusRevealed] = useState(false);
   const lightweightScene = isMobileViewport && quality !== 'full';
   const lightMode = quality === 'light';
   const fullQualityOnMobile = isMobileViewport && quality === 'full';
@@ -200,16 +203,14 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
   }, []);
 
   useEffect(() => {
-    const scene = sceneRef.current;
     const hero = document.getElementById('home');
-    if (!scene || !hero) return undefined;
+    if (!hero) return undefined;
 
     if (lightweightScene) {
       // Mobile uses a fixed backdrop; don't defer/reveal Tartarus based on scroll.
-      heroActiveRef.current = true;
-      scene.classList.add('is-hero-active');
-      if (scene.classList.contains('is-dark-hour')) {
-        scene.classList.add('has-revealed-tartarus');
+      setHeroActive(true);
+      if (isDarkHour) {
+        setTartarusRevealed(true);
         rememberTartarusReveal();
       }
       return undefined;
@@ -218,30 +219,26 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
     if (!('IntersectionObserver' in window)) return undefined;
 
     const heroObserver = new IntersectionObserver(([entry]) => {
-      heroActiveRef.current = entry.isIntersecting;
-      scene.classList.toggle('is-hero-active', entry.isIntersecting);
-      if (entry.isIntersecting && scene.classList.contains('is-dark-hour')) {
-        scene.classList.add('has-revealed-tartarus');
+      setHeroActive(entry.isIntersecting);
+      if (entry.isIntersecting && modeRef.current) {
+        setTartarusRevealed(true);
         rememberTartarusReveal();
       }
     }, { threshold: 0 });
 
     heroObserver.observe(hero);
     return () => heroObserver.disconnect();
-  }, [lightweightScene]);
+  }, [lightweightScene, isDarkHour]);
 
   useEffect(() => {
-    const scene = sceneRef.current;
-    if (!scene) return;
-
     if (!isDarkHour) {
-      scene.classList.remove('has-revealed-tartarus');
+      setTartarusRevealed(false);
       return;
     }
 
     const pageRestoredBelowHero = window.scrollY > window.innerHeight * 0.25;
-    if (heroActiveRef.current || hasTartarusBeenRevealed() || pageRestoredBelowHero) {
-      scene.classList.add('has-revealed-tartarus');
+    if (heroActive || hasTartarusBeenRevealed() || pageRestoredBelowHero) {
+      setTartarusRevealed(true);
       rememberTartarusReveal();
     }
   }, [isDarkHour]);
@@ -523,7 +520,7 @@ const AnimatedBackground = ({ isDarkHour = false, timeOfDay = 'afternoon', quali
   }, [isDarkHour]);
 
   return (
-    <div className={`dark-hour-scene is-hero-active${isDarkHour ? ' is-dark-hour' : ''}${lightweightScene ? ' is-mobile-scene' : ''}${fullQualityOnMobile ? ' is-full-quality' : ''}${lightMode ? ' is-light-mode' : ''}`} data-time-of-day={timeOfDay} ref={sceneRef} aria-hidden="true">
+    <div className={`dark-hour-scene${heroActive ? ' is-hero-active' : ''}${isDarkHour ? ' is-dark-hour' : ''}${tartarusRevealed ? ' has-revealed-tartarus' : ''}${lightweightScene ? ' is-mobile-scene' : ''}${fullQualityOnMobile ? ' is-full-quality' : ''}${lightMode ? ' is-light-mode' : ''}`} data-time-of-day={timeOfDay} ref={sceneRef} aria-hidden="true">
       <div className="dark-hour-scene__sky" />
       <div className="dark-hour-scene__stars" aria-hidden="true">
         <i className="dark-hour-scene__stars--bright" style={{ boxShadow: starfield.bright }} />

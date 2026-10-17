@@ -12,6 +12,7 @@ const en = {
     name: 'Valentín Thomas Tarantino',
     title: 'Fullstack Developer',
     description: 'I design and build robust, scalable web applications. Specialized in bridging highly interactive, fluid, and optimized user interfaces with efficient and secure backend architectures.',
+    descriptionShort: 'I build robust web apps, connecting interactive interfaces with efficient backends.',
     downloadCV: 'Download CV',
     available: 'Available for new projects'
   },
