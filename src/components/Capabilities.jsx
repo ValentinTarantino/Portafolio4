@@ -92,6 +92,7 @@ function ThreeShowcase({ active, copy, arcanaIndex = 0, onArcanaChange }) {
     let contextLost = false;
     let contextLostHandler;
     const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const desktopSpinQuery = window.matchMedia('(min-width: 1024px)');
     const handleMotionPreference = (event) => {
       reducedMotionRef.current = event.matches;
       window.cancelAnimationFrame(frameRef.current);
@@ -179,7 +180,7 @@ function ThreeShowcase({ active, copy, arcanaIndex = 0, onArcanaChange }) {
       const renderFrame = (time = 0) => {
         if (contextLost || !renderer || !scene || !camera) return;
         if (!reducedMotionRef.current) {
-          card.rotation.y += 0.006;
+          card.rotation.y += desktopSpinQuery.matches ? 0.0045 : 0.006;
           card.rotation.x = 0.04 + Math.sin(time * 0.00032) * 0.025;
           const floatOffset = Math.sin(time * 0.0012) * 0.12;
           card.position.y = floatOffset;
@@ -344,7 +345,9 @@ const Capabilities = ({ t, language, isDarkHour }) => {
     >
       <div className="container capabilities__container">
         <header className="capabilities__header">
+          <p className="capabilities__eyebrow">{copy.eyebrow}</p>
           <h2 id="capabilities-title" className="section-title capabilities__section-title">{copy.title}</h2>
+          <p className="capabilities__intro">{copy.intro}</p>
         </header>
 
         <div className="capabilities__layout">

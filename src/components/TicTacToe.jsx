@@ -832,18 +832,10 @@ const TicTacToe = ({ t, onExit }) => {
     // playing
     return (
       <>
-        <div className="ttt__players">
-          <span className={`ttt__player-badge${onlineSymbol === 'X' ? ' is-you' : ''}${opponentConnected ? '' : ' is-offline'}`}>
-            <span className="dot" />✕
-          </span>
-          <span className={`ttt__player-badge${onlineSymbol === 'O' ? ' is-you' : ''}${opponentConnected ? '' : ' is-offline'}`}>
-            <span className="dot" />○
-          </span>
-        </div>
+        {renderHeader()}
         {!opponentConnected && !winner && (
           <p className="ttt__status-message is-error">{copy.opponentLeft}</p>
         )}
-        {renderHeader()}
         {renderBoard()}
         {renderFooter()}
       </>

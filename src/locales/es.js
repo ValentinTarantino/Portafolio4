@@ -218,6 +218,7 @@ const es = {
   },
   capabilities: {
     title: 'Capacidades',
+    eyebrow: 'SISTEMA / CAPACIDADES',
     intro: 'Cuatro formas de convertir una idea en una experiencia digital útil, clara y memorable.',
     indexLabel: 'Índice de capacidades',
     items: {

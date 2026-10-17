@@ -11,8 +11,6 @@
   --ttt-cell-hover: color-mix(in srgb, var(--cap-accent) 9%, var(--cap-panel));
   --ttt-win: color-mix(in srgb, var(--cap-accent) 30%, transparent);
   width: 100%;
-  max-width: 420px;
-  margin-inline: auto;
   font-family: 'Share Tech Mono', monospace;
   color: var(--cap-ink);
 }
@@ -22,6 +20,9 @@
 .ttt__menu {
   display: grid;
   gap: 0.65rem;
+  width: 100%;
+  max-width: 420px;
+  margin-inline: auto;
   padding: 0.4rem 0;
 }
 
@@ -109,6 +110,9 @@
 .ttt__online {
   display: grid;
   gap: 0.65rem;
+  width: 100%;
+  max-width: 420px;
+  margin-inline: auto;
   padding: 0.4rem 0;
 }
 
@@ -245,6 +249,8 @@
   letter-spacing: 0.06em;
   text-align: center;
   color: var(--cap-muted);
+  max-width: 420px;
+  margin-inline: auto;
 }
 
 .ttt__status-message.is-error {
@@ -266,8 +272,9 @@
 .ttt__header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 0.5rem;
+  margin-top: 0.9rem;
   margin-bottom: 0.65rem;
   min-height: 2rem;
 }
@@ -276,7 +283,7 @@
   display: flex;
   align-items: center;
   gap: 0.45rem;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--cap-muted);
@@ -285,11 +292,11 @@
 .ttt__turn-mark {
   display: grid;
   place-items: center;
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
   border: 1px solid var(--cap-line);
   border-radius: 4px;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 700;
 }
 
@@ -297,10 +304,10 @@
 .ttt__turn-mark[data-mark='O'] { color: var(--ttt-o); border-color: var(--ttt-o); }
 
 .ttt__result {
-  font-size: 0.82rem;
+  font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: 0.06em;
-  text-align: right;
+  text-align: center;
 }
 
 .ttt__result[data-result='X'] { color: var(--ttt-x); }
@@ -490,44 +497,6 @@
   text-align: center;
 }
 
-/* ── Player badges (online) ────────────────────────────── */
-
-.ttt__players {
-  display: flex;
-  gap: 0.45rem;
-  justify-content: center;
-  margin-bottom: 0.55rem;
-}
-
-.ttt__player-badge {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.3rem 0.6rem;
-  border: 1px solid var(--cap-line);
-  border-radius: 4px;
-  font-size: 0.6rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--cap-muted);
-}
-
-.ttt__player-badge.is-you {
-  border-color: var(--cap-accent);
-  color: var(--cap-accent);
-}
-
-.ttt__player-badge .dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: currentColor;
-}
-
-.ttt__player-badge.is-offline .dot {
-  background: #e5484d;
-}
-
 /* ── Responsive ────────────────────────────────────────── */
 
 @media (max-width: 560px) {
@@ -579,11 +548,9 @@
   .ttt__room-code-value { font-size: 1.3rem; letter-spacing: 0.26em; }
   .ttt__room-code button { min-height: 44px; padding-inline: 0.8rem; }
 
-  /* Messages & badges */
+  /* Messages */
   .ttt__status-message { padding: 0.7rem 0.6rem; font-size: 0.7rem; }
   .ttt__rematch .ttt__status-message { max-width: 100%; }
-  .ttt__players { gap: 0.5rem; }
-  .ttt__player-badge { padding: 0.42rem 0.75rem; font-size: 0.64rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

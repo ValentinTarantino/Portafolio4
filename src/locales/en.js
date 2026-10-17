@@ -218,13 +218,14 @@ const en = {
   },
   capabilities: {
     title: 'Capabilities',
+    eyebrow: 'SYSTEM / CAPABILITIES',
     intro: 'Four ways to turn an idea into a useful, clear, and memorable digital experience.',
     indexLabel: 'Capabilities index',
     items: {
       frontend: { title: 'Interfaces & Frontend', description: 'One interface reorganizes itself to fit the available space without losing hierarchy or clarity.' },
       motion: { title: 'Motion & Interaction', description: 'Type, timing, and cursor response guide attention without interrupting the reading flow.' },
       threeD: { title: '3D & Immersive Web', description: 'A 3D card cycles through Persona 3 arcana, revealing both sides with every turn.' },
-      fullStack: { title: 'Full Stack Development', description: 'Two playable games: the dinosaur responds to keyboard and touch, and tateti offers local, online, and AI matches.' }
+      fullStack: { title: 'Full Stack Development', description: 'Two playable games: the dinosaur responds to keyboard and touch, and tic-tac-toe offers local, online, and AI matches.' }
     },
     viewportLabel: 'Viewport size',
     devices: { desktop: 'Desktop', tablet: 'Tablet', mobile: 'Mobile' },
@@ -273,9 +274,9 @@ const en = {
     gameHint: 'SPACE / ↑ TO JUMP · TAP TO PLAY',
     gameSelector: 'Pick a game',
     gameDino: 'Dino Runner',
-    gameTtt: 'Tatetí',
+    gameTtt: 'Tic-Tac-Toe',
     ttt: {
-      title: 'Tatetí',
+      title: 'Tic-Tac-Toe',
       local: 'Local',
       localDesc: 'Two players taking turns on this device',
       online: 'Online',
