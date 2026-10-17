@@ -5,6 +5,7 @@ import Hero from './components/Hero';
 import AnimatedBackground from './components/AnimatedBackground';
 import About from './components/About';
 import Skills from './components/Skills';
+import SectionErrorBoundary from './components/SectionErrorBoundary';
 
 // Below-fold sections load in separate chunks so the initial bundle
 // stays lean. Fallbacks reserve space and keep anchor ids working.
@@ -19,6 +20,7 @@ import en from './locales/en';
 import { isArgentinaDarkHour } from './utils/argentinaTime';
 import { getArgentinaTimeParts } from './utils/argentinaTime';
 import { getDayPeriod } from './utils/dayPeriod';
+import { trackEvent } from './utils/analytics';
 
 const translations = { es, en };
 
@@ -63,12 +65,14 @@ const useNearViewport = (margin = '1200px 0px') => {
   return [ref, visible];
 };
 
-const NearViewportSection = ({ id, minHeight, children }) => {
+const NearViewportSection = ({ id, minHeight, t, children }) => {
   const [ref, visible] = useNearViewport();
   return (
     <div ref={ref}>
       {visible ? (
-        <Suspense fallback={<SectionFallback id={id} minHeight={minHeight} />}>{children}</Suspense>
+        <SectionErrorBoundary t={t}>
+          <Suspense fallback={<SectionFallback id={id} minHeight={minHeight} />}>{children}</Suspense>
+        </SectionErrorBoundary>
       ) : (
         <SectionFallback id={id} minHeight={minHeight} />
       )}
@@ -149,7 +153,9 @@ function App() {
   }, []);
 
   const toggleLanguage = () => {
-    setLanguage((current) => current === 'es' ? 'en' : 'es');
+    const next = language === 'es' ? 'en' : 'es';
+    trackEvent('language_toggle', { language: next });
+    setLanguage(next);
   };
 
 
@@ -166,20 +172,26 @@ function App() {
         onSceneQualityChange={setSceneQuality}
       />
       <main id="main-content">
-      <Hero t={t} language={language} projectTerminalMount={projectTerminalMount} />
-      <About t={t} />
-      <Skills t={t} />
-      <NearViewportSection id="projects" minHeight="110vh">
+      <SectionErrorBoundary t={t}>
+        <Hero t={t} language={language} projectTerminalMount={projectTerminalMount} />
+      </SectionErrorBoundary>
+      <SectionErrorBoundary t={t}>
+        <About t={t} />
+      </SectionErrorBoundary>
+      <SectionErrorBoundary t={t}>
+        <Skills t={t} />
+      </SectionErrorBoundary>
+      <NearViewportSection id="projects" minHeight="110vh" t={t}>
         <Projects t={t} language={language} isDarkHour={isDarkHour} sceneQuality={sceneQuality === 'light' ? 'optimized' : sceneQuality} setProjectTerminalMount={setProjectTerminalMount} />
       </NearViewportSection>
-      <NearViewportSection id="capabilities" minHeight="100vh">
+      <NearViewportSection id="capabilities" minHeight="100vh" t={t}>
         <Capabilities t={t} language={language} isDarkHour={isDarkHour} />
       </NearViewportSection>
-      <NearViewportSection id="contact" minHeight="80vh">
+      <NearViewportSection id="contact" minHeight="80vh" t={t}>
         <Contact t={t} />
       </NearViewportSection>
       </main>
-      <NearViewportSection minHeight="50vh">
+      <NearViewportSection minHeight="50vh" t={t}>
         <Footer t={t} />
       </NearViewportSection>
       <Analytics />

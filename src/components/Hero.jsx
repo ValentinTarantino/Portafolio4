@@ -2,6 +2,7 @@ import { lazy, memo, Suspense, useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import './Hero.css';
 import './HeroEditorial.css';
+import { trackEvent } from '../utils/analytics';
 const DinoGame = lazy(() => import('./DinoGame'));
 const CvModal = lazy(() => import('./CvModal'));
 
@@ -516,7 +517,7 @@ const Hero = ({ t, language, projectTerminalMount }) => {
         particleCount: 150,
         spread: 85,
         origin: { y: 0.6 },
-        colors: ['#667eea', '#764ba2', '#f093fb', '#38bdf8']
+        colors: ['#168dff', '#54e5ff', '#f51f45', '#69c9f5']
       });
     };
     document.body.appendChild(script);
@@ -716,7 +717,7 @@ const Hero = ({ t, language, projectTerminalMount }) => {
               <div className="hero-cta fade-in-up">
                 <button
                   type="button"
-                  onClick={() => setCvOpen(true)}
+                  onClick={() => { trackEvent('cv_open'); setCvOpen(true); }}
                   className="hero-action hero-action--primary"
                 >
                   <span>{t.hero.downloadCV}</span>

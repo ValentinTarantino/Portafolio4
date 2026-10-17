@@ -30,8 +30,8 @@
   width: 1000px;
   height: 400px;
   background: radial-gradient(ellipse at center, 
-    rgba(102, 126, 234, 0.2) 0%, 
-    rgba(118, 75, 162, 0.1) 40%, 
+    rgba(84, 229, 255, 0.2) 0%, 
+    rgba(24, 125, 255, 0.1) 40%, 
     transparent 70%
   );
   pointer-events: none;
@@ -60,7 +60,7 @@
   position: absolute;
   width: 4px;
   height: 4px;
-  background: rgba(102, 126, 234, 0.4);
+  background: rgba(84, 229, 255, 0.4);
   border-radius: 50%;
   animation: float 15s infinite;
 }
@@ -83,8 +83,8 @@
   position: absolute;
   inset: 0;
   background: 
-    radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 80% 50%, rgba(118, 75, 162, 0.05) 0%, transparent 50%);
+    radial-gradient(circle at 20% 50%, rgba(84, 229, 255, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(24, 125, 255, 0.05) 0%, transparent 50%);
   pointer-events: none;
   z-index: 0;
 }
@@ -123,8 +123,8 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.35), rgba(118, 75, 162, 0.35), rgba(240, 147, 251, 0.25));
-  border: 1px solid rgba(102, 126, 234, 0.5);
+  background: linear-gradient(135deg, rgba(84, 229, 255, 0.35), rgba(24, 125, 255, 0.35), rgba(105, 201, 245, 0.25));
+  border: 1px solid rgba(84, 229, 255, 0.5);
   border-radius: 30px;
   font-size: 0.9rem;
   font-weight: 600;
@@ -134,14 +134,14 @@
 }
 
 .cta-text {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background: linear-gradient(135deg, #168dff 0%, #54e5ff 50%, #69c9f5 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .cta-icon {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background: linear-gradient(135deg, #168dff 0%, #54e5ff 50%, #69c9f5 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -158,7 +158,7 @@
   align-items: center;
   gap: 0.8rem;
   padding: 1rem 2.5rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #168dff 0%, #54e5ff 100%);
   color: white;
   font-size: 1.1rem;
   font-weight: 600;
@@ -167,7 +167,7 @@
   border: none;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 20px rgba(84, 229, 255, 0.3);
   position: relative;
   overflow: hidden;
 }
@@ -189,7 +189,7 @@
 
 .cta-button:hover {
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 8px 30px rgba(102, 126, 234, 0.5);
+  box-shadow: 0 8px 30px rgba(84, 229, 255, 0.5);
 }
 
 .cta-subtitle {
@@ -277,7 +277,7 @@
 .logo-accent {
   font-size: 2.2rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background: linear-gradient(135deg, #168dff 0%, #54e5ff 50%, #69c9f5 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -364,8 +364,8 @@
 }
 
 .cv-download-btn:hover {
-  background: rgba(102, 126, 234, 0.15);
-  border-color: rgba(102, 126, 234, 0.4);
+  background: rgba(84, 229, 255, 0.15);
+  border-color: rgba(84, 229, 255, 0.4);
   color: #a5b4fc;
   transform: translateY(-2px);
 }
@@ -412,7 +412,7 @@
   height: 2px;
   bottom: 0;
   left: 0;
-  background: linear-gradient(90deg, #667eea, #764ba2);
+  background: linear-gradient(90deg, #168dff, #54e5ff);
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 2px;
 }

@@ -3,6 +3,7 @@ import {
   deleteDoc, doc, getDoc, onSnapshot, runTransaction, serverTimestamp, setDoc,
 } from 'firebase/firestore';
 import { db } from '../lib/firebase';
+import { trackEvent } from '../utils/analytics';
 import './TicTacToe.css';
 
 /* ── Pure game logic ───────────────────────────────────── */
@@ -232,6 +233,11 @@ const TicTacToe = ({ t, onExit }) => {
   }, [leaveRoom, resetGame]);
 
   /* ── Core move handler (shared by local / ai) ──────── */
+
+  useEffect(() => {
+    if (!winner || view === 'menu') return;
+    trackEvent('game_finish', { mode: view, result: winner === 'draw' ? 'draw' : winner });
+  }, [winner, view]);
 
   const applyMove = useCallback((index, mark) => {
     setBoard((prev) => {
@@ -623,13 +629,13 @@ const TicTacToe = ({ t, onExit }) => {
 
   const renderMenu = () => (
     <div className="ttt__menu">
-      <button type="button" className="ttt__mode-btn" onClick={() => { resetGame(); setView('local'); }}>
+      <button type="button" className="ttt__mode-btn" onClick={() => { trackEvent('game_mode_select', { mode: 'local' }); resetGame(); setView('local'); }}>
         <span className="ttt__mode-copy"><strong>{copy.local}</strong><span>{copy.localDesc}</span></span>
       </button>
-      <button type="button" className="ttt__mode-btn" onClick={() => { resetGame(); setOnlinePhase('lobby'); setOnlineStatus(null); setView('online'); }}>
+      <button type="button" className="ttt__mode-btn" onClick={() => { trackEvent('game_mode_select', { mode: 'online' }); resetGame(); setOnlinePhase('lobby'); setOnlineStatus(null); setView('online'); }}>
         <span className="ttt__mode-copy"><strong>{copy.online}</strong><span>{copy.onlineDesc}</span></span>
       </button>
-      <button type="button" className="ttt__mode-btn" onClick={() => { resetGame(); setSymbolPicked(false); setView('ai'); }}>
+      <button type="button" className="ttt__mode-btn" onClick={() => { trackEvent('game_mode_select', { mode: 'ai' }); resetGame(); setSymbolPicked(false); setView('ai'); }}>
         <span className="ttt__mode-copy"><strong>{copy.ai}</strong><span>{copy.aiDesc}</span></span>
       </button>
     </div>

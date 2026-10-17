@@ -246,7 +246,7 @@ html .App.persona-menu :is(
   }
 
   .App.persona-menu .scroll-indicator:is(:hover, :active) .scroll-arrow {
-    border-color: #667eea;
+    border-color: #54e5ff;
     filter: none;
   }
 }
@@ -307,8 +307,8 @@ html .App.persona-menu :is(
 }
 
 .App.persona-menu .testimonial-project-link:hover {
-  background: rgba(102, 126, 234, 0.08) !important;
-  border-color: rgba(102, 126, 234, 0.15) !important;
+  background: rgba(84, 229, 255, 0.08) !important;
+  border-color: rgba(84, 229, 255, 0.15) !important;
   color: #a3b3ed !important;
   box-shadow: none !important;
   text-shadow: none !important;

@@ -343,6 +343,10 @@ const en = {
     backToTop: 'Back to top',
     copyright: '© 2026 Valentín Thomas Tarantino. All rights reserved.',
     available: 'Available for new opportunities'
+  },
+  errorBoundary: {
+    title: 'SYSTEM ERROR · SECTION UNAVAILABLE',
+    retry: 'Retry'
   }
 };
 

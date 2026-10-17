@@ -73,11 +73,11 @@
 }
 
 .persona-calendar__weekday.is-saturday::before {
-  background: #1e3a8a;
+  background: #2fa8ef;
 }
 
 .persona-calendar__weekday.is-sunday::before {
-  background: #1e3a8a;
+  background: #f51f45;
 }
 
 .persona-calendar__weekday.is-workday::before {
@@ -85,11 +85,11 @@
 }
 
 .App.dark-hour-mode .persona-calendar__weekday.is-saturday::before {
-  background: #1e3a8a;
+  background: #2fa8ef;
 }
 
 .App.dark-hour-mode .persona-calendar__weekday.is-sunday::before {
-  background: #1e3a8a;
+  background: #f51f45;
 }
 
 .App.dark-hour-mode .persona-calendar__weekday.is-workday::before {

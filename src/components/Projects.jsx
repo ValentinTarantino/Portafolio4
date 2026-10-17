@@ -2,6 +2,7 @@ import { lazy, memo, Suspense, useCallback, useEffect, useLayoutEffect, useRef, 
 import './Projects.css';
 import projectsData from '../data/projects';
 import ProjectTechnology from './ProjectTechnology';
+import { trackEvent } from '../utils/analytics';
 
 const ProjectModal = lazy(() => import('./ProjectModal'));
 
@@ -332,7 +333,7 @@ const Projects = ({ t, language, isDarkHour = false, sceneQuality = 'optimized',
                   </div>
                   <div className="transmission-project-actions">
                     {activeProject.caseStudyKey && (
-                      <button type="button" className="project-btn case-study-btn" onClick={() => setActiveProjectModal(content.projectForModal)}>{t.projects.viewCaseStudy}</button>
+                      <button type="button" className="project-btn case-study-btn" onClick={() => { trackEvent('project_open', { project_id: activeProject.id }); setActiveProjectModal(content.projectForModal); }}>{t.projects.viewCaseStudy}</button>
                     )}
                     {activeProject.demoUrl && <a className="project-btn" href={activeProject.demoUrl} target="_blank" rel="noopener noreferrer">{labels.demo}</a>}
                     {activeProject.repoUrl && <a className="project-btn" href={activeProject.repoUrl} target="_blank" rel="noopener noreferrer">{labels.code}</a>}
