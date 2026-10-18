@@ -218,8 +218,6 @@ const es = {
   },
   capabilities: {
     title: 'Capacidades',
-    eyebrow: 'SISTEMA / CAPACIDADES',
-    intro: 'Cuatro formas de convertir una idea en una experiencia digital útil, clara y memorable.',
     indexLabel: 'Índice de capacidades',
     items: {
       frontend: { title: 'Interfaces & Frontend', description: 'Una misma interfaz se reorganiza según el espacio disponible, sin perder jerarquía ni claridad.' },
@@ -269,6 +267,8 @@ const es = {
       { roman: 'XXI', title: 'El Mundo', description: 'La culminación de un recorrido y la apertura hacia algo más amplio.' },
     ],
     canvasLabel: 'Carta de tarot tridimensional interactiva',
+    pauseCard: 'Pausar carta',
+    resumeCard: 'Reanudar carta',
     resetView: 'Centrar carta',
     gameLoading: 'Cargando juego…',
     gameHint: 'ESPACIO / ↑ PARA SALTAR · TOCÁ PARA JUGAR',

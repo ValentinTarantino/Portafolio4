@@ -1,5 +1,5 @@
 import { lazy, memo, Suspense, useEffect, useRef, useState } from 'react';
-import { ArrowDownRight, ArrowUpRight, CirclePlay, Monitor } from 'lucide-react';
+import { ArrowUpRight, CirclePlay, Monitor, Pause, Play } from 'lucide-react';
 import './Capabilities.css';
 
 const CAPABILITY_IDS = ['frontend', 'motion', 'threeD', 'fullStack'];
@@ -41,7 +41,7 @@ const TAROT_AURA_COLORS = [
   '#8fa8ff', '#ffcf3f', '#7dffd4', '#e8ecff', '#d4af37',
 ];
 
-function ThreeShowcase({ active, copy, arcanaIndex = 0, onArcanaChange }) {
+function ThreeShowcase({ active, copy, arcanaIndex = 0, onArcanaChange, paused = false, onFallbackChange }) {
   const mountRef = useRef(null);
   const sceneRef = useRef(null);
   const rendererRef = useRef(null);
@@ -52,8 +52,14 @@ function ThreeShowcase({ active, copy, arcanaIndex = 0, onArcanaChange }) {
   const wasBackFacingRef = useRef(false);
   const activeRef = useRef(active);
   const reducedMotionRef = useRef(false);
+  const isPausedRef = useRef(false);
   const [fallback, setFallback] = useState(false);
   activeRef.current = active;
+  isPausedRef.current = paused;
+
+  useEffect(() => {
+    onFallbackChange?.(fallback);
+  }, [fallback, onFallbackChange]);
 
   useEffect(() => {
     const host = mountRef.current;
@@ -180,6 +186,30 @@ function ThreeShowcase({ active, copy, arcanaIndex = 0, onArcanaChange }) {
       const renderFrame = (time = 0) => {
         if (contextLost || !renderer || !scene || !camera) return;
         if (!reducedMotionRef.current) {
+          if (isPausedRef.current) {
+            // Pausa: la carta gira hasta el frente (múltiplo de 2π más
+            // cercano) pero mantiene la levitación para poder inspeccionarla.
+            const targetY = Math.round(card.rotation.y / (Math.PI * 2)) * Math.PI * 2;
+            const dy = targetY - card.rotation.y;
+            if (Math.abs(dy) > 0.0015) {
+              card.rotation.y += dy * 0.09;
+            } else {
+              card.rotation.y = targetY;
+            }
+            card.rotation.x = 0.04 + Math.sin(time * 0.00032) * 0.025;
+            const floatOffset = Math.sin(time * 0.0012) * 0.12;
+            card.position.y = floatOffset;
+            card.rotation.z = Math.sin(time * 0.0008) * 0.018;
+            floatShadow.material.opacity = 0.24 - (floatOffset * 0.55);
+            floatShadow.scale.x = 1.15 + (floatOffset * 0.7);
+            // El flip de pausa solo reposiciona la carta de cara al usuario
+            // para inspección: no debe avanzar de arcano. Se mantiene el
+            // estado de cara visible para que la reanudación sea coherente.
+            wasBackFacingRef.current = Math.cos(card.rotation.y) < 0;
+            renderer.render(scene, camera);
+            if (activeRef.current) frameRef.current = window.requestAnimationFrame(renderFrame);
+            return;
+          }
           card.rotation.y += desktopSpinQuery.matches ? 0.0045 : 0.006;
           card.rotation.x = 0.04 + Math.sin(time * 0.00032) * 0.025;
           const floatOffset = Math.sin(time * 0.0012) * 0.12;
@@ -189,11 +219,18 @@ function ThreeShowcase({ active, copy, arcanaIndex = 0, onArcanaChange }) {
           floatShadow.scale.x = 1.15 + (floatOffset * 0.7);
           const isBackFacing = Math.cos(card.rotation.y) < 0;
           if (isBackFacing && !wasBackFacingRef.current) {
+            // Frente→dorso: solo se pre-cargan en GPU las texturas venideras
+            // (sin swap). La cara frontal sigue mostrando el arcano actual,
+            // de modo que un dorso visible nunca "adelanta" el revelado.
+            getFrontTexture(arcanaIndexRef.current + 1);
+            getFrontTexture(arcanaIndexRef.current + 2);
+          } else if (!isBackFacing && wasBackFacingRef.current) {
+            // Dorso→frente: acá ocurre el revelado. Textura y texto cambian
+            // juntos, en el momento en que el frente vuelve a la vista.
             arcanaIndexRef.current = (arcanaIndexRef.current + 1) % ARCANA_COUNT;
             retainTextureWindow(arcanaIndexRef.current);
             frontMaterial.map = getFrontTexture(arcanaIndexRef.current);
             frontMaterial.needsUpdate = true;
-          } else if (!isBackFacing && wasBackFacingRef.current) {
             onArcanaChange(arcanaIndexRef.current);
           }
           wasBackFacingRef.current = isBackFacing;
@@ -226,7 +263,16 @@ function ThreeShowcase({ active, copy, arcanaIndex = 0, onArcanaChange }) {
       canvas.addEventListener('webglcontextlost', contextLostHandler);
       motionPreference.addEventListener?.('change', handleMotionPreference);
 
-      const animationController = { renderFrame, resize };
+      const animationController = {
+        renderFrame,
+        resize,
+        resumeLoop: () => {
+          if (activeRef.current && !reducedMotionRef.current && !isPausedRef.current) {
+            window.cancelAnimationFrame(frameRef.current);
+            frameRef.current = window.requestAnimationFrame(renderFrame);
+          }
+        },
+      };
       scene.userData.animationController = animationController;
       if (activeRef.current && !reducedMotionRef.current) frameRef.current = window.requestAnimationFrame(renderFrame);
     } catch {
@@ -290,6 +336,19 @@ function ThreeShowcase({ active, copy, arcanaIndex = 0, onArcanaChange }) {
     }
   }, [active]);
 
+  useEffect(() => {
+    const controller = sceneRef.current?.userData.animationController;
+    if (paused) {
+      // Al pausar, arrancar un frame si el loop estaba detenido (p. ej. el
+      // RAF se agotó tras asentar en una pausa anterior) para que el flip
+      // al frente siempre se anime.
+      window.cancelAnimationFrame(frameRef.current);
+      frameRef.current = window.requestAnimationFrame(controller?.renderFrame || (() => {}));
+    } else {
+      controller?.resumeLoop?.();
+    }
+  }, [paused]);
+
   const auraColor = TAROT_AURA_COLORS[arcanaIndex % TAROT_AURA_COLORS.length];
 
   return (
@@ -312,6 +371,8 @@ const Capabilities = ({ t, language, isDarkHour }) => {
   const [replayId, setReplayId] = useState(0);
   const [activeArcanaIndex, setActiveArcanaIndex] = useState(0);
   const [activeGame, setActiveGame] = useState('dino');
+  const [cardPaused, setCardPaused] = useState(false);
+  const [threeFallback, setThreeFallback] = useState(false);
   const interactiveStageRef = useRef(null);
   const copy = t.capabilities;
   const threeCopy = copy.arcanaDetails?.[activeArcanaIndex] || copy.arcanaDetails?.[0];
@@ -345,9 +406,7 @@ const Capabilities = ({ t, language, isDarkHour }) => {
     >
       <div className="container capabilities__container">
         <header className="capabilities__header">
-          <p className="capabilities__eyebrow">{copy.eyebrow}</p>
           <h2 id="capabilities-title" className="section-title capabilities__section-title">{copy.title}</h2>
-          <p className="capabilities__intro">{copy.intro}</p>
         </header>
 
         <div className="capabilities__layout">
@@ -367,7 +426,6 @@ const Capabilities = ({ t, language, isDarkHour }) => {
               >
                 <span className="capabilities__number">0{index + 1}</span>
                 <span className="capabilities__index-copy"><strong>{copy.items[id].title}</strong></span>
-                <ArrowDownRight size={17} aria-hidden="true" />
               </button>
             ))}
           </nav>
@@ -429,11 +487,31 @@ const Capabilities = ({ t, language, isDarkHour }) => {
 
                 {id === 'threeD' && (
                   <div className="capabilities__demo capabilities__demo--three">
-                    <ThreeShowcase active={activeCapability === index} copy={copy} arcanaIndex={activeArcanaIndex} onArcanaChange={setActiveArcanaIndex} />
+                    <ThreeShowcase
+                      active={activeCapability === index}
+                      copy={copy}
+                      arcanaIndex={activeArcanaIndex}
+                      onArcanaChange={setActiveArcanaIndex}
+                      paused={cardPaused}
+                      onFallbackChange={setThreeFallback}
+                    />
                     <div className="capabilities__three-copy" aria-live="polite" data-arcana-roman={threeCopy?.roman} data-arcana-length={threeCopy?.roman?.length || 1}>
                       <div className="capabilities__arcana-meta">
                         <span className="capabilities__arcana-kicker">{copy.arcanaKicker}</span>
-                        <span className="capabilities__arcana-count">{String(activeArcanaIndex + 1).padStart(2, '0')} / {String(copy.arcanaDetails?.length || 23).padStart(2, '0')}</span>
+                        <div className="capabilities__arcana-meta-end">
+                          <span className="capabilities__arcana-count">{String(activeArcanaIndex + 1).padStart(2, '0')} / {String(copy.arcanaDetails?.length || 23).padStart(2, '0')}</span>
+                          {!threeFallback && (
+                            <button
+                              type="button"
+                              className="capabilities__tarot-toggle"
+                              aria-pressed={cardPaused}
+                              onClick={() => setCardPaused((current) => !current)}
+                            >
+                              {cardPaused ? <Play size={12} aria-hidden="true" /> : <Pause size={12} aria-hidden="true" />}
+                              {cardPaused ? copy.resumeCard : copy.pauseCard}
+                            </button>
+                          )}
+                        </div>
                       </div>
                       <h4 key={`arcana-title-${activeArcanaIndex}`} className="capabilities__arcana-title">{threeCopy?.title || copy.threeHeadline}</h4>
                       <p key={`arcana-description-${activeArcanaIndex}`} className="capabilities__arcana-description">{threeCopy?.description || copy.threeDescription}</p>

@@ -159,16 +159,16 @@ const Tartarus = ({ isDarkHour = false, lightweight = false, lowPower = false })
     <path
       d="M104 900 108 834Q89 818 93 798L75 778Q61 760 75 741L53 722Q46 704 68 689L62 669Q59 647 81 631L71 609Q65 587 89 570L78 546Q72 524 96 509L85 487Q80 466 104 450L93 428Q89 405 112 388L101 367Q98 345 122 329L107 310Q104 289 130 275L144 251 160 223 177 205 181 174 199 153 203 123 216 101 215 66 228 29 242 63 242 102 255 127 253 157 274 174 270 196 292 214 309 230 337 244 358 265 367 286 349 306 371 328 364 351 381 375 369 398 384 420 368 444 377 469 355 489 366 514 344 535 359 559 338 578 353 602 328 623 342 648 322 669 334 695 313 719 330 744 306 765 321 790 297 816 306 843 300 900Z"
       fill="url(#tartarus-shell)"
-      stroke="#176b4a"
-      strokeOpacity="0.52"
-      strokeWidth="1.5"
+      stroke="#051a0d"
+      strokeOpacity="0.92"
+      strokeWidth="2.2"
     />
 
     {/* Five larger, connected structures reshape the skyline into a vertical labyrinth. */}
     <g className="tartarus-architectural-modules" strokeLinejoin="bevel">
       {/* Upper relay keep: a stepped annex projects beyond the right shoulder. */}
       <g className="tartarus-module tartarus-module--upper">
-        <path d="M281 231C292 219 308 216 324 201C339 192 352 204 370 208C387 214 400 226 405 240C411 257 399 270 389 282C376 299 359 291 348 283C339 277 332 294 320 299C307 302 296 286 286 278C275 267 276 244 281 231Z" fill="url(#tartarus-annex-side)" stroke="#176b4a" strokeOpacity=".5" strokeWidth="2" />
+        <path d="M281 231C292 219 308 216 324 201C339 192 352 204 370 208C387 214 400 226 405 240C411 257 399 270 389 282C376 299 359 291 348 283C339 277 332 294 320 299C307 302 296 286 286 278C275 267 276 244 281 231Z" fill="url(#tartarus-annex-side)" stroke="#051a0d" strokeOpacity="0.9" strokeWidth="2" />
         <path d="M286 234C299 227 312 224 327 209C340 201 353 211 369 216C383 220 392 231 397 242C401 254 390 265 380 275C369 286 356 279 345 273C334 267 328 284 318 288C306 289 298 277 290 270C283 262 280 244 286 234Z" fill="url(#tartarus-annex-face)" stroke="#398b5b" strokeOpacity=".58" strokeWidth="1.7" />
         <path d="M311 228 330 225 330 258 311 258Z" fill="#061b14" stroke="#176b4a" strokeOpacity=".5" />
         <path d="M355 226H371V234H380V250H371V263H357V251H364V240H355Z" fill="#071a12" stroke="#247b50" strokeOpacity=".5" />
@@ -179,7 +179,7 @@ const Tartarus = ({ isDarkHour = false, lightweight = false, lowPower = false })
 
       {/* West bastion: a broad, split-level terrace with a recessed service court. */}
       <g className="tartarus-module tartarus-module--west">
-        <path d="M119 345C105 340 97 326 84 321C68 315 53 323 41 328C25 333 16 342 14 357C11 372 17 384 22 395C26 411 40 418 54 423C69 435 86 431 98 419C112 414 128 407 138 395C146 384 135 372 130 361C127 352 124 347 119 345Z" fill="url(#tartarus-annex-side)" stroke="#176b4a" strokeOpacity=".52" strokeWidth="2" />
+        <path d="M119 345C105 340 97 326 84 321C68 315 53 323 41 328C25 333 16 342 14 357C11 372 17 384 22 395C26 411 40 418 54 423C69 435 86 431 98 419C112 414 128 407 138 395C146 384 135 372 130 361C127 352 124 347 119 345Z" fill="url(#tartarus-annex-side)" stroke="#051a0d" strokeOpacity="0.9" strokeWidth="2" />
         <path d="M112 351C100 347 94 335 82 331C68 326 56 332 45 337C32 341 24 349 23 360C20 372 26 383 30 392C34 404 45 411 57 416C70 426 83 421 94 411C108 406 120 400 129 390C135 381 126 372 122 363C120 357 117 353 112 351Z" fill="url(#tartarus-annex-face)" stroke="#398b5b" strokeOpacity=".58" strokeWidth="1.7" />
         <path d="M42 360H56V354H70V369H82V383H69V397H54V385H42Z" fill="#061710" stroke="#206b47" strokeOpacity=".5" />
         <path d="M99 367H107V377H113V390H104V399H96V386H101V379H99Z" fill="#081b14" stroke="#206b47" strokeOpacity=".44" />
@@ -190,7 +190,7 @@ const Tartarus = ({ isDarkHour = false, lightweight = false, lowPower = false })
 
       {/* East transfer hall: an offset block and suspended lower platform. */}
       <g className="tartarus-module tartarus-module--east">
-        <path d="M300 406C309 398 319 399 329 386C339 376 351 382 365 389C378 387 390 398 393 411C405 418 411 432 405 445C401 458 389 465 376 469C368 483 352 488 339 480C324 479 315 468 313 456C300 453 289 442 290 429C291 419 295 412 300 406Z" fill="url(#tartarus-annex-side)" stroke="#176b4a" strokeOpacity=".5" strokeWidth="2" />
+        <path d="M300 406C309 398 319 399 329 386C339 376 351 382 365 389C378 387 390 398 393 411C405 418 411 432 405 445C401 458 389 465 376 469C368 483 352 488 339 480C324 479 315 468 313 456C300 453 289 442 290 429C291 419 295 412 300 406Z" fill="url(#tartarus-annex-side)" stroke="#051a0d" strokeOpacity="0.9" strokeWidth="2" />
         <path d="M305 413C314 407 323 408 332 395C341 387 351 391 362 397C374 396 383 405 386 417C396 423 400 434 396 444C392 455 382 460 370 464C362 475 350 479 340 472C327 471 321 461 319 449C308 446 299 438 300 429C300 421 302 417 305 413Z" fill="url(#tartarus-annex-face)" stroke="#398b5b" strokeOpacity=".54" strokeWidth="1.6" />
         <path d="M307 414 327 402 344 402 344 417 357 417 357 437 341 437 341 447 322 447 322 436 307 436Z" fill="#061710" stroke="#206b47" strokeOpacity=".56" />
         <path d="M365 419H376V427H384V440H376V455H364V444H370V433H365Z" fill="#081b14" stroke="#206b47" strokeOpacity=".44" />
@@ -200,7 +200,7 @@ const Tartarus = ({ isDarkHour = false, lightweight = false, lowPower = false })
 
       {/* Lower west root: a massive buttressed platform partly hidden by the city haze. */}
       <g className="tartarus-module tartarus-module--root">
-        <path d="M101 551C87 547 80 534 66 534C53 530 44 540 33 545C20 550 13 562 14 577C9 591 18 604 28 614C33 629 48 635 60 645C74 655 91 647 103 637C119 635 133 628 142 616C151 605 144 593 137 583C136 567 124 557 110 557C107 553 104 551 101 551Z" fill="url(#tartarus-annex-side)" stroke="#176b4a" strokeOpacity=".46" strokeWidth="2" />
+        <path d="M101 551C87 547 80 534 66 534C53 530 44 540 33 545C20 550 13 562 14 577C9 591 18 604 28 614C33 629 48 635 60 645C74 655 91 647 103 637C119 635 133 628 142 616C151 605 144 593 137 583C136 567 124 557 110 557C107 553 104 551 101 551Z" fill="url(#tartarus-annex-side)" stroke="#051a0d" strokeOpacity="0.9" strokeWidth="2" />
         <path d="M96 557C84 554 78 543 66 543C55 540 47 548 37 553C27 558 21 568 22 579C19 590 26 601 35 610C39 622 51 628 62 636C74 644 88 638 99 629C113 626 126 620 134 610C141 601 135 592 129 583C128 570 118 563 107 563C103 559 99 557 96 557Z" fill="url(#tartarus-annex-face)" stroke="#398b5b" strokeOpacity=".52" strokeWidth="1.6" />
         <path d="M35 579H49V573H66V587H77V600H65V614H49V603H35Z" fill="#061710" stroke="#206b47" strokeOpacity=".46" />
         <path d="M96 577H105V585H112V598H103V607H94V594H99V587H96Z" fill="#081b14" stroke="#206b47" strokeOpacity=".42" />
@@ -210,7 +210,7 @@ const Tartarus = ({ isDarkHour = false, lightweight = false, lowPower = false })
 
       {/* Hanging east annex: a narrow upper tower carried by deep diagonal braces. */}
       <g className="tartarus-module tartarus-module--hanging">
-        <path d="M299 621C309 617 315 604 329 602C340 594 350 601 361 605C375 602 388 612 389 627C401 635 407 649 400 662C399 678 386 687 376 692C369 707 356 716 341 712C327 719 315 708 311 696C297 692 288 681 291 667C281 655 282 640 291 631C293 626 296 623 299 621Z" fill="url(#tartarus-annex-side)" stroke="#176b4a" strokeOpacity=".48" strokeWidth="2" />
+        <path d="M299 621C309 617 315 604 329 602C340 594 350 601 361 605C375 602 388 612 389 627C401 635 407 649 400 662C399 678 386 687 376 692C369 707 356 716 341 712C327 719 315 708 311 696C297 692 288 681 291 667C281 655 282 640 291 631C293 626 296 623 299 621Z" fill="url(#tartarus-annex-side)" stroke="#051a0d" strokeOpacity="0.9" strokeWidth="2" />
         <path d="M304 627C313 624 319 613 331 611C341 604 350 610 360 614C372 612 382 620 383 632C393 639 397 650 391 661C390 674 380 681 370 686C364 699 353 706 341 701C329 707 319 698 316 687C304 683 297 674 299 663C290 653 291 642 299 634C300 631 302 629 304 627Z" fill="url(#tartarus-annex-face)" stroke="#398b5b" strokeOpacity=".5" strokeWidth="1.6" />
         <path d="M304 634 323 620 342 620 342 637 355 637 355 657 337 657 337 669 319 669 319 655 304 655Z" fill="#061710" stroke="#206b47" strokeOpacity=".5" />
         <path d="M361 632H372V641H380V655H372V672H360V660H366V648H361Z" fill="#081b14" stroke="#206b47" strokeOpacity=".42" />
@@ -239,7 +239,7 @@ const Tartarus = ({ isDarkHour = false, lightweight = false, lowPower = false })
     </g>
 
     {/* Rear wings sit behind the continuous spine and give the tower its broad shoulders. */}
-    <g stroke="#176b4a" strokeOpacity="0.34" strokeWidth="1.6">
+    <g stroke="#051a0d" strokeOpacity="0.8" strokeWidth="1.6">
       <path d="M118 337H151V315H173V344H190V373H177V415H156V435H121V411H103V370H118Z" fill="#0b2a20" />
       <path d="M260 196H294V215H330V257H347V282H321V312H283V292H264V256H250V225H260Z" fill="#0b2a20" />
       <path d="M280 387H307V405H339V439H357V470H331V499H293V477H274V443H286Z" fill="#0a261d" />
@@ -248,7 +248,7 @@ const Tartarus = ({ isDarkHour = false, lightweight = false, lowPower = false })
     </g>
 
     {/* Curved buttresses interrupt the box-like rhythm and make the outer mass feel grown. */}
-    <g stroke="#176b4a" strokeWidth="2" strokeLinejoin="round">
+    <g stroke="#051a0d" strokeWidth="2" strokeOpacity="0.85" strokeLinejoin="round">
       <path d="M174 264C155 250 140 260 143 279C146 296 157 302 149 316C143 328 127 331 113 340C98 350 98 364 111 375L124 366C117 358 122 352 135 346C158 336 174 322 169 305C165 291 158 282 166 274C170 271 175 273 181 279Z" fill="#102b1d" fillOpacity=".92" strokeOpacity=".72" />
       <path d="M164 277C157 286 169 294 164 307C160 319 148 328 133 335M119 358C131 351 143 350 151 340" fill="none" stroke="#36d99a" strokeOpacity=".46" strokeWidth="1.5" />
 

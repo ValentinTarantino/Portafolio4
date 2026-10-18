@@ -57,7 +57,7 @@
   padding: 4px 5px 6px;
   color: #fff;
   background: transparent;
-  font-size: 0.6rem;
+  font-size: 0.64rem;
   font-weight: 900;
   letter-spacing: -0.015em;
   text-transform: uppercase;
@@ -160,7 +160,7 @@
 
   .persona-calendar__weekday {
     padding: 2px 3px;
-    font-size: 0.53rem;
+    font-size: 0.6rem;
   }
 
   .persona-calendar__period {
@@ -182,7 +182,7 @@
   }
 
   .persona-calendar__weekday {
-    font-size: 0.48rem;
+    font-size: 0.56rem;
   }
 
   .persona-calendar__period {

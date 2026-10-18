@@ -181,11 +181,11 @@ function App() {
       <SectionErrorBoundary t={t}>
         <Skills t={t} />
       </SectionErrorBoundary>
-      <NearViewportSection id="projects" minHeight="110vh" t={t}>
-        <Projects t={t} language={language} isDarkHour={isDarkHour} sceneQuality={sceneQuality === 'light' ? 'optimized' : sceneQuality} setProjectTerminalMount={setProjectTerminalMount} />
-      </NearViewportSection>
       <NearViewportSection id="capabilities" minHeight="100vh" t={t}>
         <Capabilities t={t} language={language} isDarkHour={isDarkHour} />
+      </NearViewportSection>
+      <NearViewportSection id="projects" minHeight="110vh" t={t}>
+        <Projects t={t} language={language} isDarkHour={isDarkHour} sceneQuality={sceneQuality === 'light' ? 'optimized' : sceneQuality} setProjectTerminalMount={setProjectTerminalMount} />
       </NearViewportSection>
       <NearViewportSection id="contact" minHeight="80vh" t={t}>
         <Contact t={t} />

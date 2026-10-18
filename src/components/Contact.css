@@ -20,14 +20,6 @@
   text-align: center;
 }
 
-.persona-comms__eyebrow {
-  display: inline-block;
-  margin-bottom: 0.6rem;
-  color: var(--contact-cyan);
-  font: 700 0.76rem/1.3 'Share Tech Mono', 'Lucida Console', 'Courier New', monospace;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-}
 
 .persona-comms__heading .section-title { margin-bottom: 0.6rem; }
 .persona-comms__heading .section-subtitle { margin-inline: auto; }

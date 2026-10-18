@@ -339,10 +339,10 @@ const Header = ({ t, language, toggleLanguage, isDarkHour, sceneQuality, onScene
               {[
                 { id: 'home', label: t.nav.home },
                 { id: 'about', label: t.nav.about },
-                { id: 'skills', label: t.nav.skills },
-                { id: 'projects', label: t.nav.projects },
-                { id: 'capabilities', label: t.nav.capabilities },
-                { id: 'contact', label: t.nav.contact },
+                  { id: 'skills', label: t.nav.skills },
+                  { id: 'capabilities', label: t.nav.capabilities },
+                  { id: 'projects', label: t.nav.projects },
+                  { id: 'contact', label: t.nav.contact },
               ].map(({ id, label }) => (
                 <li key={id}>
                   <a

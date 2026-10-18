@@ -218,8 +218,6 @@ const en = {
   },
   capabilities: {
     title: 'Capabilities',
-    eyebrow: 'SYSTEM / CAPABILITIES',
-    intro: 'Four ways to turn an idea into a useful, clear, and memorable digital experience.',
     indexLabel: 'Capabilities index',
     items: {
       frontend: { title: 'Interfaces & Frontend', description: 'One interface reorganizes itself to fit the available space without losing hierarchy or clarity.' },
@@ -269,6 +267,8 @@ const en = {
       { roman: 'XXI', title: 'The World', description: 'A journey reaches completion and opens onto something larger.' },
     ],
     canvasLabel: 'Interactive three-dimensional tarot card',
+    pauseCard: 'Pause card',
+    resumeCard: 'Resume card',
     resetView: 'Center card',
     gameLoading: 'Loading game…',
     gameHint: 'SPACE / ↑ TO JUMP · TAP TO PLAY',

@@ -960,7 +960,7 @@
 
   .App.persona-menu .profile-identity-label {
     max-width: 9ch;
-    font-size: 0.58rem;
+    font-size: 0.64rem;
     line-height: 1.35;
   }
 
@@ -1205,7 +1205,7 @@
 @media (max-width: 360px) {
   .App.persona-menu .profile-identity-label {
     max-width: 10ch;
-    font-size: 0.52rem;
+    font-size: 0.64rem;
   }
 
   .App.persona-menu .profile-arcana-card {
@@ -1653,7 +1653,7 @@
   border: 1px solid rgba(82, 221, 255, 0.45);
   background: #071b31;
   color: #aeeeff;
-  font-size: 0.56rem;
+  font-size: 0.64rem;
   letter-spacing: 0.1em;
 }
 
@@ -1725,7 +1725,7 @@
   background: #0c579b;
   box-shadow: 2px 2px 0 #07111e;
   color: #f3fbff;
-  font-size: 0.59rem;
+  font-size: 0.64rem;
   font-weight: 850;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -1968,7 +1968,7 @@
   padding: 0;
   border: 0;
   background: transparent;
-  font-size: 0.58rem;
+  font-size: 0.64rem;
   letter-spacing: 0.1em;
 }
 
@@ -1978,7 +1978,7 @@
 
 .App.persona-menu .developer-card .profile-identity-label {
   max-width: none;
-  font-size: 0.54rem;
+  font-size: 0.64rem;
 }
 
 .App.persona-menu .developer-card .profile-arcana-card {
@@ -2029,7 +2029,7 @@
   border-radius: 2px;
   background: rgba(4, 19, 40, 0.5);
   color: #c5eeff;
-  font-size: 0.62rem;
+  font-size: 0.64rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -2445,7 +2445,7 @@
   background: rgba(11, 50, 87, 0.82);
   box-shadow: none;
   color: #a9e9ff;
-  font-size: 0.55rem;
+  font-size: 0.64rem;
 }
 
 .App.persona-menu .about-main > .education-card > .education-item .course-name {
@@ -2795,7 +2795,7 @@
 .App.persona-menu .about-sidebar > .education-card:first-child > .education-item .date-start,
 .App.persona-menu .about-sidebar > .education-card:first-child > .education-item .date-end {
   color: #ff8ea5;
-  font-size: 0.58rem;
+  font-size: 0.64rem;
   font-weight: 800;
   line-height: 1.25;
   white-space: nowrap;
@@ -2852,7 +2852,7 @@
 
 .App.persona-menu .about-sidebar > .education-card:first-child .experience-metric span {
   color: #c7d6e7;
-  font-size: 0.52rem;
+  font-size: 0.64rem;
   line-height: 1.15;
 }
 
@@ -2908,7 +2908,7 @@
 }
 
 .App.persona-menu .about-sidebar > .education-card:first-child .card-title::after {
-  font-size: 0.58rem;
+  font-size: 0.64rem;
 }
 
 .App.persona-menu .about-sidebar > .education-card:first-child > .education-item .education-header h4 {
@@ -2937,7 +2937,7 @@
 
 .App.persona-menu .about-sidebar > .education-card:first-child .experience-metric span {
   color: #e0e9f4;
-  font-size: 0.62rem;
+  font-size: 0.64rem;
   line-height: 1.25;
 }
 
@@ -2969,7 +2969,7 @@
   }
 
   .App.persona-menu .about-sidebar > .education-card:first-child .experience-metric span {
-    font-size: 0.58rem;
+    font-size: 0.64rem;
   }
 }
 
@@ -3527,7 +3527,7 @@
 
   .App.persona-menu .developer-card .role-tags .tag {
     padding: 0.32rem 0.48rem;
-    font-size: 0.62rem;
+    font-size: 0.64rem;
     letter-spacing: 0.055em;
   }
 
@@ -3575,7 +3575,7 @@
 
   .App.persona-menu .developer-card .role-tags .tag {
     padding-inline: 0.36rem;
-    font-size: 0.57rem;
+    font-size: 0.64rem;
   }
 
   .App.persona-menu .about-sidebar > .education-card:nth-child(2) .soft-skill-list {
