@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import './About.css';
+import SweepTitle from './SweepTitle';
 
 const About = ({ t }) => {
   const softSkillIcons = [
@@ -16,7 +17,7 @@ const About = ({ t }) => {
   return (
     <section id="about" className="section about">
       <div className="container">
-        <h2 className="section-title">{t.about.title}</h2>
+        <SweepTitle>{t.about.title}</SweepTitle>
         
         <div className="about-content">
           <div className="about-main">

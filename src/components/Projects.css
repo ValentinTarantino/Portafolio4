@@ -35,6 +35,7 @@
   position: relative;
   width: min(100%, 1160px);
   margin-inline: auto;
+  margin-top: 2.6rem;
   padding: clamp(0.85rem, 2vw, 1.2rem);
   border: 1px solid var(--tx-line);
   border-radius: 12px;
@@ -1099,7 +1100,8 @@
 
   .transmission-power-button {
     grid-column: 2;
-    grid-row: 2;
+    grid-row: 1;
+    align-self: start;
     justify-self: end;
     padding-inline: 0.55rem;
     font-size: 0.64rem;

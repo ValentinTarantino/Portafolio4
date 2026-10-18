@@ -1,5 +1,6 @@
 import { memo, useMemo } from 'react';
 import './Skills.css';
+import SweepTitle from './SweepTitle';
 import { SiNextdotjs, SiTypescript, SiTailwindcss, SiReact, SiHtml5, SiJavascript, SiCss, SiSass, SiFirebase, SiFigma, SiGit, SiGithub, SiNodedotjs, SiExpress, SiPostgresql, SiPython, SiPrisma, SiFastapi, SiBootstrap, SiVite, SiDocker, SiJest, SiTestinglibrary, SiCypress, SiMongodb, SiThreedotjs, SiGithubactions, SiSqlite, SiOpenai } from 'react-icons/si';
 import claudeIcon from '../assets/icons/claude-96.webp';
 import cursorIcon from '../assets/icons/cursor-96.webp';
@@ -68,7 +69,7 @@ const Skills = ({ t }) => {
   return (
     <section id="skills" className="section skills">
       <div className="container">
-        <h2 className="section-title skills-section-title">{t.skills.listLabel}</h2>
+        <SweepTitle className="skills-section-title">{t.skills.listLabel}</SweepTitle>
 
         <div className="skills-layout">
           <div className="skills-grid-container skills-grid-container--compact">

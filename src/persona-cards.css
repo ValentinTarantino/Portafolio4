@@ -3215,12 +3215,12 @@
 }
 
 .App.persona-menu .developer-card .name-section::before {
-  background-color: #0348c9;
+  background-color: #023a9e;
   background-image:
-    linear-gradient(132deg, transparent 0 43%, rgba(0, 92, 255, 0.7) 43% 53%, transparent 53%),
-    linear-gradient(132deg, transparent 0 62%, rgba(22, 92, 231, 0.62) 62% 76%, transparent 76%),
-    repeating-linear-gradient(132deg, transparent 0 56px, rgba(4, 110, 255, 0.16) 57px 60px, transparent 61px 112px),
-    linear-gradient(125deg, #003cae, #0752d4 56%, #0642b7);
+    linear-gradient(132deg, transparent 0 43%, rgba(0, 72, 200, 0.55) 43% 53%, transparent 53%),
+    linear-gradient(132deg, transparent 0 62%, rgba(12, 68, 175, 0.5) 62% 76%, transparent 76%),
+    repeating-linear-gradient(132deg, transparent 0 56px, rgba(4, 90, 210, 0.14) 57px 60px, transparent 61px 112px),
+    linear-gradient(125deg, #01286e, #04409f 56%, #033385);
 }
 
 .App.persona-menu .developer-card .dev-name span:nth-child(2) {

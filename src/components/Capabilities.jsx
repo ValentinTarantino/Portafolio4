@@ -1,6 +1,7 @@
 import { lazy, memo, Suspense, useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, CirclePlay, Monitor, Pause, Play } from 'lucide-react';
 import './Capabilities.css';
+import SweepTitle from './SweepTitle';
 
 const CAPABILITY_IDS = ['frontend', 'motion', 'threeD', 'fullStack'];
 const DinoGame = lazy(() => import('./DinoGame'));
@@ -406,7 +407,7 @@ const Capabilities = ({ t, language, isDarkHour }) => {
     >
       <div className="container capabilities__container">
         <header className="capabilities__header">
-          <h2 id="capabilities-title" className="section-title capabilities__section-title">{copy.title}</h2>
+          <SweepTitle id="capabilities-title" className="capabilities__section-title">{copy.title}</SweepTitle>
         </header>
 
         <div className="capabilities__layout">

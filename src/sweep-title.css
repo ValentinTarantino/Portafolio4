@@ -1,0 +1,139 @@
+.sweep-title__fill-shadow {
+  position: absolute;
+  z-index: -2;
+  top: -0.25em;
+  bottom: -0.2em;
+  left: -0.12em;
+  width: calc(min(1200px, 100vw - 15px) - 40px + 0.12em);
+  background: #016de9;
+  transform: translate(9px, 10px);
+  clip-path: polygon(calc(0% - 1.5em) 0%, calc(0% - 3em) 100%, 0% 100%, 0% 0%);
+  pointer-events: none;
+}
+
+.sweep-title__fill {
+  position: absolute;
+  z-index: -1;
+  top: -0.25em;
+  bottom: -0.2em;
+  left: -0.12em;
+  width: calc(min(1200px, 100vw - 15px) - 40px + 0.12em);
+  background: linear-gradient(120deg, #064bff 0%, #0540d8 100%);
+  clip-path: polygon(calc(0% - 1.5em) 0%, calc(0% - 3em) 100%, 0% 100%, 0% 0%);
+  pointer-events: none;
+}
+
+.sweep-title--open .sweep-title__fill,
+.sweep-title--open .sweep-title__fill-shadow {
+  animation: sweep-title-fill 1.2s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+.sweep-title--closed .sweep-title__fill,
+.sweep-title--closed .sweep-title__fill-shadow {
+  animation: sweep-title-fill-close 1.2s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+@keyframes sweep-title-fill {
+  from {
+    clip-path: polygon(calc(0% - 1.5em) 0%, calc(0% - 3em) 100%, 0% 100%, 0% 0%);
+  }
+
+  to {
+    clip-path: polygon(calc(100% - 0.8em) 0%, calc(100% - 2.3em) 100%, 0% 100%, 0% 0%);
+  }
+}
+
+@keyframes sweep-title-fill-close {
+  from {
+    clip-path: polygon(calc(100% - 0.8em) 0%, calc(100% - 2.3em) 100%, 0% 100%, 0% 0%);
+  }
+
+  to {
+    clip-path: polygon(calc(0% - 1.5em) 0%, calc(0% - 3em) 100%, 0% 100%, 0% 0%);
+  }
+}
+
+.sweep-title--static .sweep-title__fill,
+.sweep-title--static .sweep-title__fill-shadow {
+  clip-path: polygon(calc(100% - 0.8em) 0%, calc(100% - 2.3em) 100%, 0% 100%, 0% 0%);
+}
+
+.sweep-title__letter {
+  display: inline-block;
+  transition:
+    color 0.18s ease,
+    -webkit-text-fill-color 0.18s ease,
+    text-shadow 0.18s ease;
+}
+
+.sweep-title__letter--hollow {
+  color: #064bff;
+  -webkit-text-fill-color: #064bff;
+  -webkit-text-stroke: 0;
+  text-shadow:
+    0 -2px 0 #ffffff,
+    0 2px 0 #ffffff,
+    -2px 0 0 #ffffff,
+    2px 0 0 #ffffff,
+    -2px -2px 0 #ffffff,
+    2px -2px 0 #ffffff,
+    -2px 2px 0 #ffffff,
+    2px 2px 0 #ffffff;
+}
+
+@media (max-width: 768px) {
+
+  .sweep-title__fill,
+  .sweep-title__fill-shadow {
+    width: calc(100vw - 30px + 0.12em);
+  }
+
+  html body .App.persona-menu .section:is(.about, .projects, .capabilities, .contact) .section-title {
+    font-size: clamp(1.7rem, 8vw, 2.9rem);
+  }
+
+  html body .App.persona-menu .skills .section-title.skills-section-title {
+    font-size: clamp(1.7rem, 8vw, 2.9rem);
+  }
+
+  @keyframes sweep-title-fill {
+    from {
+      clip-path: polygon(calc(0% - 1.5em) 0%, calc(0% - 3em) 100%, 0% 100%, 0% 0%);
+    }
+
+    to {
+      clip-path: polygon(calc(100% - 0.8em) 0%, calc(100% - 1.9em) 100%, 0% 100%, 0% 0%);
+    }
+  }
+
+  @keyframes sweep-title-fill-close {
+    from {
+      clip-path: polygon(calc(100% - 0.8em) 0%, calc(100% - 1.9em) 100%, 0% 100%, 0% 0%);
+    }
+
+    to {
+      clip-path: polygon(calc(0% - 1.5em) 0%, calc(0% - 3em) 100%, 0% 100%, 0% 0%);
+    }
+  }
+
+  .sweep-title--static .sweep-title__fill,
+  .sweep-title--static .sweep-title__fill-shadow {
+    clip-path: polygon(calc(100% - 0.8em) 0%, calc(100% - 1.9em) 100%, 0% 100%, 0% 0%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .sweep-title__fill,
+  .sweep-title__fill-shadow {
+    clip-path: polygon(calc(100% - 0.8em) 0%, calc(100% - 2.3em) 100%, 0% 100%, 0% 0%);
+  }
+}
+
+@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+
+  .sweep-title__fill,
+  .sweep-title__fill-shadow {
+    clip-path: polygon(calc(100% - 0.8em) 0%, calc(100% - 1.9em) 100%, 0% 100%, 0% 0%);
+  }
+}

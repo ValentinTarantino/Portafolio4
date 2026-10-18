@@ -1,5 +1,6 @@
 import { memo, useState } from 'react';
 import './Contact.css';
+import SweepTitle from './SweepTitle';
 
 const ContactIcon = ({ type }) => {
   if (type === 'email') {
@@ -72,7 +73,7 @@ const Contact = ({ t }) => {
     <section id="contact" className="section contact persona-comms" aria-labelledby="contact-title">
       <div className="container">
         <header className="persona-comms__heading">
-          <h2 className="section-title" id="contact-title">{t.contact.title}</h2>
+          <SweepTitle id="contact-title">{t.contact.title}</SweepTitle>
         </header>
 
         <div className="persona-link-grid" role="group" aria-label={labels.listLabel}>

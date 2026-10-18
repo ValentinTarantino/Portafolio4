@@ -5,6 +5,7 @@ import './index.css'
 import './persona-menu.css'
 import './persona-interactions.css'
 import './persona-cards.css'
+import './sweep-title.css'
 
 if ('scrollRestoration' in window.history) {
   window.history.scrollRestoration = 'manual';

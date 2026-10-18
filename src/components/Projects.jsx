@@ -1,5 +1,6 @@
 import { lazy, memo, Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import './Projects.css';
+import SweepTitle from './SweepTitle';
 import projectsData from '../data/projects';
 import ProjectTechnology from './ProjectTechnology';
 import { trackEvent } from '../utils/analytics';
@@ -204,7 +205,7 @@ const Projects = ({ t, language, isDarkHour = false, sceneQuality = 'optimized',
       aria-labelledby="projects-title"
     >
       <div className="container">
-        <h2 className="section-title" id="projects-title">{t.projects.title}</h2>
+        <SweepTitle id="projects-title">{t.projects.title}</SweepTitle>
 
         <div className={`transmission-console${isDarkHour ? ' is-dark-hour' : ''}${isStationPowered ? ' is-powered' : ''}`}>
           <header className="transmission-console__header">
