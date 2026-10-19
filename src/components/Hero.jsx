@@ -827,10 +827,11 @@ const Hero = ({ t, language, projectTerminalMount }) => {
       </div>
 
       {/* CV preview modal — shows the PDF instead of downloading it */}
-      {cvOpen && (
+      {cvOpen && createPortal(
         <Suspense fallback={null}>
           <CvModal t={t} cvUrl={cvUrl} cvSrc={cvSrc} onClose={() => setCvOpen(false)} />
-        </Suspense>
+        </Suspense>,
+        document.body
       )}
     </section>
   );
