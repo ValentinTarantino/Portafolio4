@@ -394,14 +394,15 @@
   inset: 1%;
   border-radius: inherit;
   background:
-    radial-gradient(ellipse at 27% 25%, rgba(245, 251, 255, 0.3), transparent 39%),
-    radial-gradient(ellipse at 72% 69%, rgba(11, 35, 42, 0.14), transparent 47%),
+    radial-gradient(ellipse at 27% 25%, rgba(250, 252, 255, 0.3), transparent 39%),
+    radial-gradient(ellipse at 72% 69%, rgba(20, 26, 36, 0.14), transparent 47%),
     url('../assets/moon-terrain.svg');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   box-shadow:
-    inset -11px -9px 26px rgba(7, 28, 42, 0.23),
-    inset 4px 3px 16px rgba(222, 245, 242, 0.12);
+    inset -11px -9px 26px rgba(20, 26, 36, 0.23),
+    inset 4px 3px 16px rgba(245, 248, 252, 0.12);
+  filter: grayscale(1);
   opacity: 0.74;
   mix-blend-mode: normal;
   pointer-events: none;
