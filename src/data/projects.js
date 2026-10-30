@@ -4,7 +4,7 @@ import luminaImage from '../assets/ecommerce.webp';
 import blogImage from '../assets/blog.webp';
 import consorcioImage from '../assets/consorcio.webp';
 import turnoImage from '../assets/turnos.webp';
-import clipDropImage from '../assets/youtube.webp';
+import clipDropImage from '../assets/clipydropy.png';
 import chromaFlowImage from '../assets/flow.webp';
 import googleKeepImage from '../assets/googlekeep.webp';
 import weatherImage from '../assets/clima.webp';
@@ -73,10 +73,10 @@ const projects = [
     featured: true, arcana: 'XIV', signal: 3, available: true, caseStudyKey: 'TurnoApp'
   },
   {
-    id: 'clipdrop', number: 7, name: 'ClipDrop', type: { es: 'Descargador de videos', en: 'Video downloader' },
+    id: 'clipdrop', number: 7, name: { es: 'ClipyDropy', en: 'ClipyDropy' }, type: { es: 'Pegá el link. Llevate el clip.', en: 'Drop a link. Grab your clip.' },
     description: {
-      es: 'Descargador de videos optimizado para TikTok. El soporte para YouTube e Instagram se encuentra pausado por restricciones técnicas de las plataformas.',
-      en: 'High-performance video downloader optimized for TikTok. YouTube and Instagram support is currently paused due to platform restrictions.'
+      es: 'Descargador de video y audio para YouTube, TikTok e Instagram. En algunas ocasiones pueden ocurrir bloqueos o restricciones por parte de YouTube.',
+      en: 'Video and audio downloader for YouTube, TikTok, and Instagram. In some cases, YouTube may block or restrict downloads.'
     },
     stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'API'], image: clipDropImage,
     demoUrl: 'https://youtube-downloader2-1-ibdv.vercel.app/', repoUrl: 'https://github.com/ValentinTarantino/Youtube-Downloader2.1',

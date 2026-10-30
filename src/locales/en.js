@@ -141,7 +141,7 @@ const en = {
       todoApp: 'Creation of an interactive application to manage tasks with JavaScript and DOM manipulation. Implementation of events and higher-order functions to enhance user experience.',
       WeatherReport: 'Weather report app in React. Using an API to retrieve real-time weather data from https://openweathermap.org/. Global state management with Zustand.',
       googleKeep: 'Replica of the Google Keep notes app, developed in React. Allows you to create, edit, and delete notes. Includes dark mode and translations in Spanish and English. Uses LocalStorage to save the notes.',
-      ClipDrop: 'High-performance video downloader optimized for TikTok. YouTube and Instagram support is currently restricted due to platform updates.',
+      ClipDrop: 'Video and audio downloader for YouTube, TikTok, and Instagram. In some cases, YouTube may block or restrict downloads.',
       LuminaCommerce: 'Ultra-modern tech E-commerce. Full-stack built with Next.js, Python (FastAPI), PostgreSQL, and Prisma. Premium design with fluid animations and Zustand state management.',
       ChromaFlow: 'Freelance project for Juan Ramirez. Site specialized in creating color palettes to customize CSS, contains these color generation modes: Random, Analogous, Monochromatic, Complementary and Triadic',
       LucasCaudanaBlog: 'Freelance personal blog for sports journalism student Lucas Ezequiel Caudana, featuring note creation and editing with images, portfolio mode using LocalStorage, and Firebase-based login.',
