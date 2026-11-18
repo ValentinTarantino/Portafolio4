@@ -6,6 +6,9 @@ import ProjectTechnology from './ProjectTechnology';
 import { trackEvent } from '../utils/analytics';
 
 const ProjectModal = lazy(() => import('./ProjectModal'));
+const visibleProjects = projectsData
+  .filter((project) => !project.hidden)
+  .map((project, index) => ({ ...project, number: index + 1 }));
 
 const pad = (value) => String(value).padStart(2, '0');
 
@@ -125,7 +128,6 @@ const Projects = ({ t, language, isDarkHour = false, sceneQuality = 'optimized',
     window.clearTimeout(terminalOpeningTimerRef.current);
   }, []);
 
-  const visibleProjects = projectsData;
   const activeProject = visibleProjects.find((project) => project.id === activeId && project.available)
     || visibleProjects.find((project) => project.available);
   const activeNumber = activeProject?.number || 1;
@@ -309,7 +311,7 @@ const Projects = ({ t, language, isDarkHour = false, sceneQuality = 'optimized',
                 <div className="transmission-readouts">
                   <div className="transmission-readout">
                     <span className="transmission-readout__label">{labels.file}</span>
-                    <strong>{pad(activeNumber)} / {pad(projectsData.length)}</strong>
+                    <strong>{pad(activeNumber)} / {pad(visibleProjects.length)}</strong>
                   </div>
                   <div className="transmission-readout transmission-readout--signal">
                     <span className="transmission-readout__label">{labels.signalStatus}</span>

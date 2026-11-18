@@ -19,7 +19,7 @@ const projects = [
       en: 'Project for a client in the sports sector: a free web platform to track and watch live football matches. Features a Neo-Brutalist interface, integrated HLS player, live chat, and coverage of 25+ leagues with real-time updates.'
     },
     stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'MongoDB', 'Docker', 'Jest', 'Testing Library', 'Cypress', 'CI/CD'], image: goltvImage,
-    demoUrl: 'https://goltv.vercel.app/', repoUrl: 'https://github.com/ValentinTarantino/GolTV',
+    demoUrl: 'https://goltv.onrender.com/', repoUrl: 'https://github.com/ValentinTarantino/GolTV',
     featured: true, arcana: 'VII', signal: 4, available: true, caseStudyKey: 'GolTV'
   },
   {
@@ -49,7 +49,7 @@ const projects = [
       en: 'Freelance personal blog for sports journalism student Lucas Ezequiel Caudana, featuring article creation and editing with images, a portfolio mode using LocalStorage, and Firebase login.'
     },
     stack: ['React', 'JavaScript', 'CSS3', 'Bootstrap', 'Firebase'], image: blogImage,
-    demoUrl: 'https://lucas-caudana-blog.vercel.app/', repoUrl: 'https://github.com/ValentinTarantino/LucasCaudanaBlog',
+    demoUrl: 'https://lucas-caudana-blog.netlify.app/', repoUrl: 'https://github.com/ValentinTarantino/LucasCaudanaBlog',
     featured: true, arcana: 'XVII', signal: 3, available: true, caseStudyKey: 'LucasCaudanaBlog'
   },
   {
@@ -69,8 +69,8 @@ const projects = [
       en: 'Appointment-management app for independent professionals, with Client and Professional roles. Clients can create appointments and cancel them once confirmed; professionals can accept, assign, cancel, and delete appointments, manage profiles, receive notifications, and sign in with Google.'
     },
     stack: ['React', 'JavaScript', 'CSS3', 'Bootstrap', 'PostgreSQL'], image: turnoImage,
-    demoUrl: 'https://turno-app.vercel.app/', repoUrl: 'https://github.com/ValentinTarantino/TurnoApp',
-    featured: true, arcana: 'XIV', signal: 3, available: true, caseStudyKey: 'TurnoApp'
+    demoUrl: 'https://turno-app1.netlify.app/login', repoUrl: 'https://github.com/ValentinTarantino/TurnoApp',
+    featured: true, arcana: 'XIV', signal: 3, available: true, hidden: true, caseStudyKey: 'TurnoApp'
   },
   {
     id: 'clipdrop', number: 7, name: { es: 'ClipyDropy', en: 'ClipyDropy' }, type: { es: 'Pegá el link. Llevate el clip.', en: 'Drop a link. Grab your clip.' },
@@ -79,7 +79,7 @@ const projects = [
       en: 'Video and audio downloader for YouTube, TikTok, and Instagram. In some cases, YouTube may block or restrict downloads.'
     },
     stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'API'], image: clipDropImage,
-    demoUrl: 'https://youtube-downloader2-1-ibdv.vercel.app/', repoUrl: 'https://github.com/ValentinTarantino/Youtube-Downloader2.1',
+    demoUrl: 'https://clipydropy.netlify.app/', repoUrl: 'https://github.com/ValentinTarantino/Youtube-Downloader2.1',
     featured: false, arcana: 'XXI', signal: 3, available: true
   },
   {
@@ -89,7 +89,7 @@ const projects = [
       en: 'Freelance project for Juan Ramirez: a site for creating color palettes to customize CSS, with random, analogous, monochromatic, complementary, and triadic generation modes.'
     },
     stack: ['React', 'JavaScript', 'CSS3', 'Bootstrap'], image: chromaFlowImage,
-    demoUrl: 'https://chorma-flow.vercel.app', repoUrl: 'https://github.com/ValentinTarantino/ChormaFlow',
+    demoUrl: 'https://chromaflow1.netlify.app/', repoUrl: 'https://github.com/ValentinTarantino/ChormaFlow',
     featured: false, arcana: 'XIV', signal: 3, available: true
   },
   {
@@ -99,7 +99,7 @@ const projects = [
       en: 'Replica of the Google Keep notes app, developed in React. It allows you to create, edit, and delete notes, includes dark mode and English and Spanish translations, and uses LocalStorage to save notes.'
     },
     stack: ['React', 'JavaScript', 'CSS3'], image: googleKeepImage,
-    demoUrl: 'https://google-keep-replica.vercel.app/', repoUrl: 'https://github.com/ValentinTarantino/Google-Keep-Replica-',
+    demoUrl: 'https://google-keep-replica.netlify.app/', repoUrl: 'https://github.com/ValentinTarantino/Google-Keep-Replica-',
     featured: false, arcana: 'I', signal: 3, available: true
   },
   {
@@ -109,7 +109,7 @@ const projects = [
       en: 'Weather report app in React. It uses an API to retrieve real-time weather data from OpenWeatherMap and manages global state with Zustand.'
     },
     stack: ['React', 'JavaScript', 'CSS3', 'API', 'Zustand'], image: weatherImage,
-    demoUrl: 'https://weather-report-oraora.vercel.app', repoUrl: 'https://github.com/ValentinTarantino/Weather',
+    demoUrl: 'https://weather-report2.netlify.app/', repoUrl: 'https://github.com/ValentinTarantino/Weather',
     featured: false, arcana: 'XIX', signal: 3, available: true
   }
 ];
