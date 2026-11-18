@@ -362,7 +362,7 @@ const Hero = ({ t, language, projectTerminalMount }) => {
     () => typeof window !== 'undefined' && window.matchMedia('(max-width: 600px)').matches
   );
 
-  const cvUrl = language === 'es' ? '/CV_Valentin_Tarantino_ES.pdf' : '/CV_Valentin_Tarantino.pdf';
+  const cvUrl = `${import.meta.env.BASE_URL}${language === 'es' ? 'CV_Valentin_Tarantino_ES.pdf' : 'CV_Valentin_Tarantino.pdf'}`;
   // On narrow screens ask the PDF viewer to fit the page width so nothing gets cut off
   const cvSrc = isNarrowScreen ? `${cvUrl}#view=FitH` : cvUrl;
 

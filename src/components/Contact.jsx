@@ -2,20 +2,22 @@ import { memo, useState } from 'react';
 import './Contact.css';
 import SweepTitle from './SweepTitle';
 
+const publicAsset = (filename) => `${import.meta.env.BASE_URL}${filename}`;
+
 const ContactIcon = ({ type }) => {
   if (type === 'email') {
-    return <img src="/gmail.png" alt="" aria-hidden="true" width="32" height="32" className="pixel-avatar" />;
+    return <img src={publicAsset('gmail.png')} alt="" aria-hidden="true" width="32" height="32" className="pixel-avatar" />;
   }
 
   if (type === 'linkedin') {
-    return <img src="/avatar-pixel.png" alt="" aria-hidden="true" width="32" height="32" className="pixel-avatar" />;
+    return <img src={publicAsset('avatar-pixel.png')} alt="" aria-hidden="true" width="32" height="32" className="pixel-avatar" />;
   }
 
   if (type === 'whatsapp') {
-    return <img src="/wsp.webp" alt="" aria-hidden="true" width="32" height="32" className="pixel-avatar" />;
+    return <img src={publicAsset('wsp.webp')} alt="" aria-hidden="true" width="32" height="32" className="pixel-avatar" />;
   }
 
-  return <img src="/github.png" alt="" aria-hidden="true" width="32" height="32" className="pixel-avatar" />;
+  return <img src={publicAsset('github.png')} alt="" aria-hidden="true" width="32" height="32" className="pixel-avatar" />;
 };
 
 const ContactCard = ({ type, number, labels, detail, action, href, onCopy, copied }) => {

@@ -8,32 +8,33 @@ const DinoGame = lazy(() => import('./DinoGame'));
 const TicTacToe = lazy(() => import('./TicTacToe'));
 const noop = () => {};
 const DEVICE_WIDTHS = { desktop: '100%', tablet: '72%', mobile: '36%' };
+const PUBLIC_ASSET_BASE = import.meta.env.BASE_URL;
 const TAROT_ARCANA_FRONTS = [
-  '/Fool-0.webp',
-  '/mago.webp',
-  '/3.png',
-  '/83px-P3P_Empress_Arcana_Graphic.png',
-  '/83px-P3P_Emperor_Arcana_Graphic.png',
-  '/83px-P3P_Hierophant_Arcana_Graphic.png',
-  '/83px-P3P_Lovers_Arcana_Graphic.png',
-  '/83px-P3P_Chariot_Arcana_Graphic.png',
-  '/83px-P3P_Justice_Arcana_Graphic.png',
-  '/83px-P3P_Hermit_Arcana_Graphic.png',
-  '/83px-P3P_Fortune_Arcana_Graphic.png',
-  '/85px-P3P_Strength_Arcana_Graphic.png',
-  '/83px-P3P_Hanged_Man_Arcana_Graphic.png',
-  '/83px-P3P_Death_Arcana_Graphic.png',
-  '/83px-P3P_Temperance_Arcana_Graphic.png',
-  '/83px-P3P_Devil_Arcana_Graphic.png',
-  '/83px-P3P_Tower_Arcana_Graphic.png',
-  '/83px-P3P_Star_Arcana_Graphic.png',
-  '/83px-P3P_Moon_Arcana_Graphic.png',
-  '/83px-P3P_Sun_Arcana_Graphic.png',
-  '/83px-P3P_Aeon_Arcana_Graphic.png',
-  '/83px-P3P_Judgement_Arcana_Graphic.png',
-  '/83px-P3P_World_Arcana_Graphic.png',
-];
-const TAROT_FOOL_BACK = '/behind.webp';
+  'Fool-0.webp',
+  'mago.webp',
+  '3.png',
+  '83px-P3P_Empress_Arcana_Graphic.png',
+  '83px-P3P_Emperor_Arcana_Graphic.png',
+  '83px-P3P_Hierophant_Arcana_Graphic.png',
+  '83px-P3P_Lovers_Arcana_Graphic.png',
+  '83px-P3P_Chariot_Arcana_Graphic.png',
+  '83px-P3P_Justice_Arcana_Graphic.png',
+  '83px-P3P_Hermit_Arcana_Graphic.png',
+  '83px-P3P_Fortune_Arcana_Graphic.png',
+  '85px-P3P_Strength_Arcana_Graphic.png',
+  '83px-P3P_Hanged_Man_Arcana_Graphic.png',
+  '83px-P3P_Death_Arcana_Graphic.png',
+  '83px-P3P_Temperance_Arcana_Graphic.png',
+  '83px-P3P_Devil_Arcana_Graphic.png',
+  '83px-P3P_Tower_Arcana_Graphic.png',
+  '83px-P3P_Star_Arcana_Graphic.png',
+  '83px-P3P_Moon_Arcana_Graphic.png',
+  '83px-P3P_Sun_Arcana_Graphic.png',
+  '83px-P3P_Aeon_Arcana_Graphic.png',
+  '83px-P3P_Judgement_Arcana_Graphic.png',
+  '83px-P3P_World_Arcana_Graphic.png',
+].map((filename) => `${PUBLIC_ASSET_BASE}${filename}`);
+const TAROT_FOOL_BACK = `${PUBLIC_ASSET_BASE}behind.webp`;
 // Aura glow color per arcana index (0 El Loco … XXI El Mundo).
 const TAROT_AURA_COLORS = [
   '#8fd0ff', '#c084fc', '#9db8e8', '#7ddc8e', '#ff9a5c', '#c98f4e',
